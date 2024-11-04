@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const usercontroller =require("../controllers/userController");
+const usercontroller =require("../controllers/authController");
 
 
 router.post("/register", usercontroller.register);

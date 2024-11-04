@@ -42,9 +42,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    otp: { type: String },           // For storing OTP
-    otpExpires: { type: Date }       // For OTP expiration
+    otp: { 
+        type: String 
+    },         
+    otpExpires: { 
+        type: Date 
+    }      
 });
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("auth", userSchema);
 module.exports = User;
