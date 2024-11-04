@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function CreateSocietyForm({setAllSocites,allsocites}) {
+export default function CreateSocietyForm({ setAllSocites, allsocites }) {
     const [societyDetails, setSocietyDetails] = useState({
         societyName: '',
         societyAddress: '',
@@ -10,10 +10,12 @@ export default function CreateSocietyForm({setAllSocites,allsocites}) {
         city: '',
         zipCode: ''
     });
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setSocietyDetails({ ...societyDetails, [name]: value });
     };
+
     const handleCancel = () => {
         setSocietyDetails({
             societyName: '',
@@ -51,14 +53,14 @@ export default function CreateSocietyForm({setAllSocites,allsocites}) {
     return (
         <div>
             <div className="modal fade" id="createSocietyModal" tabIndex="-1" aria-labelledby="createSocietyModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-dialog modal-dialog-centered modal-lg">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="createSocietyModalLabel">Create New Society</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form >
+                            <form>
                                 <div className="mb-3">
                                     <label htmlFor="societyName" className="form-label">Society Name<span className="text-danger">*</span></label>
                                     <input
@@ -84,7 +86,7 @@ export default function CreateSocietyForm({setAllSocites,allsocites}) {
                                     />
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-6 mb-3">
+                                    <div className="col-12 col-md-6 mb-3">
                                         <label htmlFor="country" className="form-label">Country<span className="text-danger">*</span></label>
                                         <input
                                             type="text"
@@ -96,7 +98,7 @@ export default function CreateSocietyForm({setAllSocites,allsocites}) {
                                             required
                                         />
                                     </div>
-                                    <div className="col-md-6 mb-3">
+                                    <div className="col-12 col-md-6 mb-3">
                                         <label htmlFor="state" className="form-label">State<span className="text-danger">*</span></label>
                                         <input
                                             type="text"
@@ -110,7 +112,7 @@ export default function CreateSocietyForm({setAllSocites,allsocites}) {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-6 mb-3">
+                                    <div className="col-12 col-md-6 mb-3">
                                         <label htmlFor="city" className="form-label">City<span className="text-danger">*</span></label>
                                         <input
                                             type="text"
@@ -122,7 +124,7 @@ export default function CreateSocietyForm({setAllSocites,allsocites}) {
                                             required
                                         />
                                     </div>
-                                    <div className="col-md-6 mb-3">
+                                    <div className="col-12 col-md-6 mb-3">
                                         <label htmlFor="zipCode" className="form-label">Zip Code<span className="text-danger">*</span></label>
                                         <input
                                             type="text"

@@ -22,12 +22,6 @@
 body{
   overflow-x: hidden
 }
-/* .stack{
-  position: absolute;
-  width: 253px;
-  height: 68px;
-  left: 60px;
-} */
 
 .register-image{
   position: absolute;
@@ -35,6 +29,14 @@ body{
   width: 552px;
   /* top: 221px; */
   /* left: 196px; */
+}
+
+.mainColor{
+  color: #FE512E;
+  
+}
+.mainColor2{
+  background: linear-gradient(90deg, #FE512E 0%, #F09619 100%);
 }
 
 /* create new society */
