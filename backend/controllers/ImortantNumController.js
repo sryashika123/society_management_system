@@ -3,7 +3,6 @@ const ImportantNumber = require("../models/ImportantNumModel"); // Make sure thi
 module.exports.createImportantNum = async (req, res) => {
     try {
         const { Full_name, Phone_number, Work } = req.body;
-        
         const newImportantNumber = new ImportantNumber({
             Full_name,
             Phone_number,
@@ -33,7 +32,6 @@ module.exports.getImportantNum = async(req,res) =>{
 module.exports.deleteImportantNum = async(req,res)=>{
     try{
         const { id } = req.params;
-
         const deleteImportantNum = await ImportantNumber.findByIdAndDelete(id);
         if(!deleteImportantNum){
             return res.status(404).json({ msg : "ImportantNumber Not Found" });

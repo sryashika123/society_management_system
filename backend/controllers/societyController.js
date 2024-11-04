@@ -4,12 +4,10 @@ const Society = require("../models/societyModel"); // Adjust the path as necessa
 module.exports.createSociety = async (req, res) => {
     try {
         const { societyName, address, country, state, city, Zip_code } = req.body;
-        // Check if the society already exists
         let society = await Society.findOne({ societyName });
         if (society) {
             return res.status(400).json({ msg: 'Society already exists' });
         }
-        // Create a new society
         society = new Society({
             societyName,
             address,

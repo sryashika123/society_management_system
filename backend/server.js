@@ -22,7 +22,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded());
 
-app.use("/api/users", require("./routes/userRoute"));
+app.use("/api/users", require("./routes/authRoute"));
 app.use("/api/users", require("./routes/societyroutes"))
 app.use("/api/users", require("./routes/ImportantNumroute"));
 
