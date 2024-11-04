@@ -8,7 +8,7 @@ import Logo from '../Logo';
 export default function ForgotPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState(''); // To handle server errors
+  const [serverError, setServerError] = useState('');
 
   const onSubmit = async (data) => {
     try {
@@ -32,15 +32,15 @@ export default function ForgotPassword() {
     <div className="container-fluid d-flex align-items-center min-vh-100">
       <div className="row w-100">
         <Logo />
-        <div className="left-side col-lg-6 col-md-6 col-sm-12 align-items-center d-flex flex-column justify-content-center">
+        <div className="left-side col-lg-6 col-md-6 col-12 d-flex flex-column justify-content-center align-items-center">
           <img
-            className="ForgotPassword-image mx-5 mt-5"
+            className="ForgotPassword-image"
             src={ForgotPasswordImage}
             alt="Forgot Password Illustration"
             style={{ maxWidth: '80%' }}
           />
         </div>
-        <div className="right-sec col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+        <div className="right-sec col-lg-6 col-md-6 col-12 d-flex justify-content-center align-items-center">
           <div className="forgot-form-container p-4 shadow-lg bg-white rounded">
             <h2>Forgot Password</h2>
             <p>Enter your email or phone, and we will send you an OTP to reset your password.</p>
