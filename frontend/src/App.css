@@ -1,0 +1,73 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+}
+
+.stack {
+  position: absolute;
+  width: 253px;
+  height: 68px;
+  left: 60px;
+  margin-bottom: 20px;
+}
+
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  overflow-x: hidden
+}
+/* .stack{
+  position: absolute;
+  width: 253px;
+  height: 68px;
+  left: 60px;
+} */
+
+.register-image{
+  position: absolute;
+  height: 508px;
+  width: 552px;
+  /* top: 221px; */
+  /* left: 196px; */
+}
+
+/* create new society */
+
+.container {
+  max-width: 500px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  font-weight: 600;
+}
+
+input, button {
+  border-radius: 6px;
+}
+
+button {
+  width: 120px;
+}
+
+button[type="submit"] {
+  background-color: #2b6cda;
+  color: #fff;
+}
+
+button[type="button"] {
+  border-color: #6c757d;
+}
+
+
+
+

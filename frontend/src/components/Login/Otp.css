@@ -1,0 +1,48 @@
+.right-sec {
+    background-image: url('../images/background.jpg'); /* Correct path to your image */
+   background-size: cover;
+    height: 100vh; /* Full viewport height */
+}
+.left-side {
+    background-color: #F6F8FB;
+    height: 100vh; /* Full viewport height for the left section */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  @media (max-width: 768px) {
+    .right-sec {
+        background-size: contain; /* Ensure image scales down but stays visible */
+        background-position: top; /* Adjust the position for smaller devices */
+    }  
+    .EnterOtp-form-container {
+        width: 100%;
+        padding: 20px;
+        border: none;
+    }
+}
+.container-fluid {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+.left-side {
+    background-color: #F6F8FB;
+    height: 100vh;
+}
+h2 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+.EnterOtp-form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+button {
+    margin-top: 20px;
+}
