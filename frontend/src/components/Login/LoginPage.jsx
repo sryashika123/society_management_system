@@ -57,7 +57,7 @@ export default function LoginPage() {
             } catch (error) {
                 console.error('Login error:', error);
                 if (error.response) {
-                    setLoginError(error.response.data.message || 'Login failed. Please try again.'); // Update error state
+                    setLoginError(error.response.data.message || 'password is not valid. Please try again.'); // Update error state
                 } else {
                     setLoginError('An error occurred. Please try again later.');
                 }

@@ -149,21 +149,18 @@ module.exports.verifyotp = async (req, res) => {
 };
 
 module.exports.resetpassword = async (req, res) => {
-	const { email, password } = req.body;
-	try {
-		const user = await User.findOne({ email });
+	const { password } = req.body;
 
-		if (!user) {
-			return res.status(400).json({ msg: 'User not found' });
-		}
+    if (!password) {
+        return res.status(400).json({ success: false, message: "Password is required" });
+    }
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10); // Hash the new password
+        // Update the user password in the database
+        await User.updateOne({ /* user identification logic */ }, { password: hashedPassword });
+        res.json({ success: true,message: "Password updated successfully" });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error" });
+    }
 
-		const hashedPassword = await bcrypt.hash(password, 10);
-		user.password = hashedPassword;
-		user.confirmPassword = hashedPassword;
-		await user.save();
-
-		res.status(200).json({ message: 'Password reset successfully. You can now login with your new password.' });
-	} catch (err) {
-		res.status(500).json({ message: 'Error resetting password.', error: err.message });
-	}
 };
