@@ -11,7 +11,6 @@ export default function ResetPassword() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const { state } = useLocation();
-
     // State for passwords and error message
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -19,19 +18,15 @@ export default function ResetPassword() {
 
     const email = state?.email; 
      // Check if email is defined
-    
-
+ 
     const onSubmit = async (data) => {
         const { password, confirmPassword } = data;
-    
+
         setPasswordError('');
-    
         if (password !== confirmPassword) {
             setPasswordError("Passwords do not match.");
             return;
         }
-
-
         // Debug: Check the payload before sending
         console.log('Payload:', { email, password  });
     
