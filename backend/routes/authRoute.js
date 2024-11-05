@@ -11,9 +11,12 @@ router.post("/login", usercontroller.login);
 
 router.post("/forgot-password", usercontroller.forgotpassword);
 
+router.post("/resendotp", usercontroller.resendotp);
+
 router.post("/verify-otp", usercontroller.verifyotp);
 
 router.post("/reset-password", usercontroller.resetpassword);
+
 
 
 module.exports = router;
