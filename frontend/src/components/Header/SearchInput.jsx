@@ -22,7 +22,7 @@ const SearchInput = () => {
                 <Col></Col>
 
                 <Col className="text-center">
-                    <InputGroup>
+                    <InputGroup className='d-flex'>
                         <InputGroup.Text style={{ border: "none" }}>
                             <FaBell style={{  fontSize: "20px", }} />
                         </InputGroup.Text>
