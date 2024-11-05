@@ -57,22 +57,27 @@ export default function EnterOtp() {
   };
   
 
-  const resendOtp = async () => {
+  const resendOtp = async (email) => {
+    console.log("Email being sent to backend:", email); // Log the email
     setCounter(30);
     setResendAvailable(false);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/users/resend-otp');
+      const response = await axios.post('http://localhost:8000/api/users/resendotp', { email: state.email });
+      if (response.status === 200) {
       if (response.data) {
         alert('OTP resent successfully.');
       } else {
         alert('Failed to resend OTP. Please try again later.');
       }
+    }
     } catch (error) {
+  
       console.error('Error resending OTP:', error);
+      alert('Error resending OTP. Please try again later.');
+
     }
   };
-
   return (
     <div className="container-fluid min-vh-100 d-flex align-items-center">
       <div className="row w-100">

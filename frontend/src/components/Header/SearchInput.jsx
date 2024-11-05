@@ -21,13 +21,37 @@ const SearchInput = () => {
 
                 <Col></Col>
 
-                <Col className="text-center">
-                    <InputGroup className='d-flex'>
-                        <InputGroup.Text style={{ border: "none" }}>
-                            <FaBell style={{  fontSize: "20px", }} />
+                <Col></Col>
+
+                <Col></Col>
+
+                <Col className="text-center" style={{ cursor: "pointer", color: "#ee6a42" }}>
+                    <InputGroup className='d-flex' >
+                        <InputGroup.Text >
+                            <FaBell style={{ fontSize: "20px", }} />
                         </InputGroup.Text>
                     </InputGroup>
                 </Col>
+
+                <Col >
+                <div className='d-flex'>
+                <img
+                src="https://via.placeholder.com/30" // Replace with actual profile image URL
+                alt="profile"
+                className="rounded-circle me-2"
+                style={{ width: '40px', height: '40px', objectFit: 'cover' }}
+              />
+                    <h5 style={{fontWeight: "bold"}}>Moni Roy</h5>
+                    <span>Admin</span>
+                </div>
+                    
+             
+                </Col>
+
+               
+
+        
+
             </Row>
         </Container>
 

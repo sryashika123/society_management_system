@@ -38,7 +38,7 @@ export default function CreateSocietyForm({ setAllSocites, allsocites }) {
                 state: societyDetails.state,
                 city: societyDetails.city,
             };
-            const response = await axios.post('http://localhost:8000/api/users/createSociety', payload);
+            const response = await axios.post('http://localhost:8000/api/users/v2/createSociety', payload);
             setAllSocites([...allsocites, response.data.society]);
             handleCancel();
             const modal = window.bootstrap.Modal.getInstance(document.getElementById('createSocietyModal'));
