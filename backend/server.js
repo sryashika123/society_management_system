@@ -25,7 +25,7 @@ app.use(express.urlencoded());
 app.use("/api/users", require("./routes/authRoute"));
 app.use("/api/users/v2", require("./routes/societyroutes"))
 app.use("/api/users/v3", require("./routes/ImportantNumroute"));
-app.use("/api/users/v4", require("./routes/CompalintRoute"));
+// app.use("/api/users/v4", require("./routes/CompalintRoute"));
 
 app.listen(port, (e)=>{
     if(e) return false;
