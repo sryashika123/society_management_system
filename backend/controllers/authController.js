@@ -87,6 +87,7 @@ module.exports.forgotpassword = async (req, res) => {
 
 module.exports.resendotp = async (req, res) => {
 	const email = req.body.email;
+	
 	try{
 	 	const user = await User.findOne({ email });
 		if(!user) {

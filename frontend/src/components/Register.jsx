@@ -26,7 +26,7 @@ export default function Register() {
 
     useEffect(() => {
         const fetchSocieties = async () => {
-            const response = await axios.get('http://localhost:8000/api/users/getSociytey');
+            const response = await axios.get('http://localhost:8000/api/users/v2/getSociytey');
             setAllSocites(response.data);
         };
         fetchSocieties();
