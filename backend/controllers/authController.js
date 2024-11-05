@@ -85,6 +85,29 @@ module.exports.forgotpassword = async (req, res) => {
 	}
 };
 
+module.exports.resendotp = async (req, res) => {
+	const email = req.body.email;
+	try{
+	 	const user = await User.findOne({ email });
+		if(!user) {
+				return res.status(400).json({ msg: 'User not found' });
+		}
+  
+		const otp = otpService.generateOTP();
+		user.otp = otp;
+		user.otpExpires = Date.now() + 10 * 60 * 1000; // OTP valid for 10 minutes
+		await user.save();
+
+		const mal = await (sendMail)(user.email,otp)
+		res.status(200).json({ message: 'Resended OTP sent to your email.' });
+	} 
+	catch(err){
+		console.error('Error during password reset:', err);
+		res.status(500).json({ message: 'Error processing request.', error: err.message });
+	}
+};
+
+
 module.exports.verifyotp = async (req, res) => {
 	const { email, otp } = req.body;
 	try{
