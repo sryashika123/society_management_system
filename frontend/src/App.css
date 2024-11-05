@@ -57,9 +57,9 @@ input, button {
   border-radius: 6px;
 }
 
-button {
+/* button {
   width: 120px;
-}
+} */
 
 button[type="submit"] {
   background-color: #2b6cda;
@@ -70,6 +70,14 @@ button[type="button"] {
   border-color: #6c757d;
 }
 
+.table td, .table th {
+  vertical-align: middle;
+  text-align: center;
+}
 
+h2 {
+  color: #333;
+  font-weight: bold;
+}
 
 

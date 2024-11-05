@@ -21,7 +21,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/enter-otp" element={<EnterOtp />} />
           <Route path="/resetPassword" element={<ResetPassword />} />   
-          <Route path='/home' element={<Home />} />
+          <Route path='/home/*' element={<Home />} />
 
           
           
