@@ -4,10 +4,10 @@ import { FaTh, FaUser, FaDollarSign, FaBuilding, FaExclamationCircle, FaShieldAl
 
 const SideBar = () => {
   const [showOffcanvas] = useState(true);
-  const [activeItem, setActiveItem] = useState("dashboard")
+  const [activeItem, setActiveItem] = useState("dashboard");
 
   const handleClick = (item) => {
-    setActiveItem(item); // Update active item on click
+    setActiveItem(item); // Update active item on click
   };
 
   return (
@@ -29,8 +29,6 @@ const SideBar = () => {
         <div className="offcanvas-body p-0">
           <ul className="list-unstyled">
             <li className={`p-3 rounded ${activeItem === "dashboard" ? "mainColor2" : ""}`}>
-            <li className={`p-3 rounded ${activeItem === "dashboard" ? "mainColor2" : ""}`}>
-
               <Link to="/home/dashboard" className="d-flex align-items-center" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("dashboard")}>
                 <FaTh className="me-3" />
                 <span className="text-dark">Dashboard</span>
@@ -49,7 +47,7 @@ const SideBar = () => {
               </Link>
             </li>
             <li className={`p-3 rounded ${activeItem === "facility-management" ? "mainColor2" : ""}`}>
-              <Link to="/facility-management" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("facility-management")}>
+              <Link to="/home/facility-management" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("facility-management")}>
                 <FaBuilding className="me-3" />
                 <span>Facility Management</span>
               </Link>
@@ -61,13 +59,13 @@ const SideBar = () => {
               </Link>
             </li>
             <li className={`p-3 rounded ${activeItem === "security-management" ? "mainColor2" : ""}`}>
-              <Link to="/security-management" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("dashboard")}>
+              <Link to="/security-management" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("security-management")}>
                 <FaShieldAlt className="me-3" />
                 <span>Security Management</span>
               </Link>
             </li>
             <li className={`p-3 rounded ${activeItem === "announcement" ? "mainColor2" : ""}`}>
-              <Link to="/announcement" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("dashboard")}>
+              <Link to="/announcement" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("announcement")}>
                 <FaBullhorn className="me-3" />
                 <span>Announcement</span>
               </Link>
