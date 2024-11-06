@@ -29,6 +29,8 @@ const SideBar = () => {
         <div className="offcanvas-body p-0">
           <ul className="list-unstyled">
             <li className={`p-3 rounded ${activeItem === "dashboard" ? "mainColor2" : ""}`}>
+            <li className={`p-3 rounded ${activeItem === "dashboard" ? "mainColor2" : ""}`}>
+
               <Link to="/home/dashboard" className="d-flex align-items-center" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("dashboard")}>
                 <FaTh className="me-3" />
                 <span className="text-dark">Dashboard</span>

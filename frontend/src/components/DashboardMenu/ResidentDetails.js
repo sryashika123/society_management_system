@@ -1,36 +1,64 @@
 import React, { useState } from "react";
-import { Table, Button, Badge } from "react-bootstrap";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { Table, Button, Badge, Modal, Form } from "react-bootstrap";
+import { FaEdit, FaEye } from "react-icons/fa";
 import SideBar from "../Layouts/Sidebar";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 const ResidentTable = () => {
-  const [residents] = useState([
+  const [residents, setResidents] = useState([
     { id: 1, name: "Evelyn Harper", unitNumber: "1001", unitStatus: "Occupied", residentStatus: "Tenant", phone: "97587 85828", members: 1, vehicles: 2 },
     { id: 2, name: "", unitNumber: "1002", unitStatus: "Vacate", residentStatus: "", phone: "", members: "-", vehicles: "-" },
     { id: 3, name: "Evelyn Harper", unitNumber: "1003", unitStatus: "Occupied", residentStatus: "Owner", phone: "97587 85828", members: 1, vehicles: 4 },
   ]);
 
-  const handleEdit = (id) => {
-    alert(`Edit resident with ID: ${id}`);
+  const [showModal, setShowModal] = useState(false);
+  const [currentResident, setCurrentResident] = useState({});
+  const [unitStatus, setUnitStatus] = useState("");
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [selectedResident, setSelectedResident] = useState(null); // Added state for viewing resident
+
+  const handleEditClick = (resident) => {
+    setCurrentResident(resident);
+    setUnitStatus(resident.unitStatus); // Set the initial unit status from the resident
+    setShowModal(true);
   };
 
-  const handleDelete = (id) => {
-    alert(`Delete resident with ID: ${id}`);
+  const handleSave = () => {
+    // Update the resident's unit status and other details as needed
+    const updatedResidents = residents.map((resident) =>
+      resident.id === currentResident.id ? { ...resident, unitStatus } : resident
+    );
+    setResidents(updatedResidents);
+    setShowModal(false);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+  };
+
+  const handleView = (resident) => {
+    setSelectedResident(resident);
+    setShowViewModal(true); // Show view modal
+  };
+
+  const handleCloseViewModal = () => {
+    setShowViewModal(false);
+    setSelectedResident(null);
   };
 
   return (
     <div className="d-flex flex-column flex-md-row vh-100">
-      {/* Sidebar Section */}
       <div className="col-12 col-md-3 flex-shrink-0" style={{ maxWidth: "300px" }}>
         <SideBar />
       </div>
 
-      {/* Main Content Section */}
       <div className="col-12 col-md-9 p-4 flex-grow-1">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Resident Tenant and Owner Details</h2>
-          <Button className="mainColor2">Add New Resident Details</Button>
+          <Link to="/home/addresidents">
+            <Button className="mainColor2">Add New Resident Details</Button>
+          </Link>
         </div>
 
         <Table responsive="sm" bordered hover className="text-center">
@@ -65,17 +93,88 @@ const ResidentTable = () => {
                 <td>{resident.members}</td>
                 <td>{resident.vehicles}</td>
                 <td>
-                  <button className="btn btn-success me-2" onClick={() => handleEdit(resident.id)}>
+                  <button className="btn btn-success me-2" onClick={() => handleEditClick(resident)}>
                     <FaEdit />
                   </button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(resident.id)}>
-                    <FaTrashAlt />
+                  <button className="btn btn-info" onClick={() => handleView(resident)}>
+                    <FaEye />
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
+
+        {/* Edit Modal */}
+        <Modal show={showModal} onHide={handleCancel} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Update Resident Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group>
+                <div className="flex-container">
+                  <div className="radio-input-field me-2">
+                    <Form.Check
+                      type="radio"
+                      label="Occupied"
+                      name="unitStatus"
+                      value="Occupied"
+                      checked={unitStatus === "Occupied"}
+                      onChange={(e) => setUnitStatus(e.target.value)}
+                    />
+                  </div>
+                  <div className="radio-input-field">
+                    <Form.Check
+                      type="radio"
+                      label="Vacate"
+                      name="unitStatus"
+                      value="Vacate"
+                      checked={unitStatus === "Vacate"}
+                      onChange={(e) => setUnitStatus(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <Form.Text className="text-muted">
+                  By selecting, you agree to choose <strong>{unitStatus}</strong>.
+                </Form.Text>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className="btn btn-secondary" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button onClick={handleSave} className="mainColor2">
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* View Modal */}
+        <Modal show={showViewModal} onHide={handleCloseViewModal} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Resident Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {selectedResident && (
+              <>
+                <p><strong>Name:</strong> {selectedResident.name || "-"}</p>
+                <p><strong>Unit Number:</strong> {selectedResident.unitNumber}</p>
+                <p><strong>Unit Status:</strong> {selectedResident.unitStatus}</p>
+                <p><strong>Resident Status:</strong> {selectedResident.residentStatus || "--"}</p>
+                <p><strong>Phone Number:</strong> {selectedResident.phone || "--"}</p>
+                <p><strong>Members:</strong> {selectedResident.members}</p>
+                <p><strong>Vehicles:</strong> {selectedResident.vehicles}</p>
+              </>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className="btn btn-secondary" onClick={handleCloseViewModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );
