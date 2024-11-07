@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Button, Badge, Modal, Form } from "react-bootstrap";
 import { FaEdit, FaEye } from "react-icons/fa";
 import SideBar from "../Layouts/Sidebar";
@@ -15,19 +15,21 @@ const ResidentTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentResident, setCurrentResident] = useState({});
   const [unitStatus, setUnitStatus] = useState("");
+  const [residentStatus, setResidentStatus] = useState("");  // Added state for resident status
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedResident, setSelectedResident] = useState(null); // Added state for viewing resident
 
   const handleEditClick = (resident) => {
     setCurrentResident(resident);
     setUnitStatus(resident.unitStatus); // Set the initial unit status from the resident
+    setResidentStatus(resident.unitStatus === "Occupied" ? (resident.residentStatus || "Tenant") : "--"); // Set resident status based on unit status
     setShowModal(true);
   };
 
   const handleSave = () => {
-    // Update the resident's unit status and other details as needed
+    // Update the resident's unit status and resident status as needed
     const updatedResidents = residents.map((resident) =>
-      resident.id === currentResident.id ? { ...resident, unitStatus } : resident
+      resident.id === currentResident.id ? { ...resident, unitStatus, residentStatus } : resident
     );
     setResidents(updatedResidents);
     setShowModal(false);
@@ -46,6 +48,15 @@ const ResidentTable = () => {
     setShowViewModal(false);
     setSelectedResident(null);
   };
+
+  // Update resident status automatically when unit status changes
+  useEffect(() => {
+    if (unitStatus === "Occupied") {
+      setResidentStatus("Tenant"); // Or use any logic to set "Owner" based on some condition
+    } else {
+      setResidentStatus("--");
+    }
+  }, [unitStatus]);
 
   return (
     <div className="d-flex flex-column flex-md-row vh-100">

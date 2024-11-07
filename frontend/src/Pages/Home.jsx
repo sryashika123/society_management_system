@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import ResidentDetails from '../components/DashboardMenu/ResidentDetails'
 import Dashboard from '../components/DashboardMenu/Dashboard'
 import ResidentForm from '../components/DashboardMenu/ResidentForm'
+import FacilityManagement from '../components/DashboardMenu/FacilityManagement'
 
 
 const Home = () => {
@@ -14,11 +15,8 @@ const Home = () => {
         <Routes>
           <Route path='/residentmanagement' element={<ResidentDetails/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
-        </Routes>
-        
-
-          {/* <Route path='/search' element={<SearchInput/>}/> */}
           <Route path='/addresidents' element={<ResidentForm/>}/>
+          <Route path='/facility-management' element={<FacilityManagement/>}/>
         </Routes>
     </div>
   )
