@@ -33,15 +33,12 @@ const RightSection = () => {
 		{ name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
 		{ name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
 	]);
-
 	const [editIndex, setEditIndex] = useState(null);
 	const [editData, setEditData] = useState({ name: '', phone: '', work: '' });
 	const [showModal, setShowModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false); // New state for delete confirmation modal
 	const [isAddMode, setIsAddMode] = useState(false); // Add mode flag
 	const [selectedIndex, setSelectedIndex] = useState(null); // Track index to delete
-
-
 	// Handle add
 	const handleAdd = () => {
 		setEditData({ name: '', phone: '', work: '' });
