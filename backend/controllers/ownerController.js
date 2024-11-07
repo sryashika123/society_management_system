@@ -48,16 +48,13 @@ module.exports.getAllOwner = async(req,res) => {
 }
 
 module.exports.deleteOwner = async (req, res) => {
-    try {
-        const ownerId = req.params.id;
-
-        // Find the owner by ID
-        const owner = await Owner.findById(ownerId);
-        if (!owner) {
+    try{
+        const id = req.params.id;
+        const owner = await Owner.findById(id);
+        if(!owner){
             return res.status(404).json({ msg: "Owner not found" });
         }
 
-        // List of file fields to delete
         const fileFields = [
             "Profile_Photo",
             "Aadhar_card_frontSide",
@@ -66,24 +63,22 @@ module.exports.deleteOwner = async (req, res) => {
             "Rent_Agreement"
         ];
 
-        // Delete each file if it exists
         fileFields.forEach(field => {
-            if (owner[field]) {
+            if(owner[field]) {
                 const filePath = path.join(__dirname, "..", owner[field]);
-                if (fs.existsSync(filePath)) {
+                if(fs.existsSync(filePath)) {
                     fs.unlinkSync(filePath); // Delete file from the server
-                } else {
+                } 
+                else {
                     console.warn(`Image file does not exist at: ${filePath}`);
                 }
             }
         });
 
-        // Delete the owner document from the database
-        await Owner.findByIdAndDelete(ownerId);
-
-        res.json({ msg: "Owner deleted successfully" });
+        const deletedOwner = await Owner.findByIdAndDelete(id);
+        res.json({ msg: "Owner deleted successfully" , deletedOwner });
     } 
-    catch (err) {
+    catch(err){
         console.error("Error deleting owner:", err.message);
         res.status(500).send("Server error");
     }
