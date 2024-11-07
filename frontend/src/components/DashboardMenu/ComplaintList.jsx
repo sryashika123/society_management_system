@@ -426,7 +426,6 @@ const ComplaintList = () => {
                         >
                             Month
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu aria-labelledby="dropdownMenuButton">
                             <Dropdown.Item as="button">
                                 <Form.Check

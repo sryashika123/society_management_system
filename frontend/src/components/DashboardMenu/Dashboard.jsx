@@ -269,8 +269,6 @@ const RightSection = () => {
 								))}
 							</ListGroup>
 						</Card>
-
-
 						<Modal show={showModal} onHide={handleCloseModal}>
 							<Modal.Header closeButton style={{ border: 'none' }}>
 								<Modal.Title>Add Important Number</Modal.Title>

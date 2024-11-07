@@ -77,4 +77,31 @@ h2 {
   font-weight: bold;
 }
 
+/* in resident edit section */
+
+.radio-input-field {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ced4da;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  margin-top: 10px;
+  margin-right: 10px; /* Space between input fields */
+  width: 200px; /* Adjust width to your liking */
+}
+
+.radio-input-field .form-check-input {
+  margin-right: 5px;
+}
+
+.radio-input-field .form-check-label {
+  font-size: 14px;
+  margin-left: 5px; /* Ensure label isn't too close to the radio button */
+}
+
+.flex-container{
+  display: flex;
+  justify-content:space-evenly;
+}
 
