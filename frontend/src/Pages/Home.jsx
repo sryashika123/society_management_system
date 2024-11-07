@@ -5,6 +5,7 @@ import ResidentDetails from '../components/DashboardMenu/ResidentDetails'
 import Dashboard from '../components/DashboardMenu/Dashboard'
 import ResidentForm from '../components/DashboardMenu/ResidentForm'
 import FacilityManagement from '../components/DashboardMenu/FacilityManagement'
+import ComplaintTracking from '../components/DashboardMenu/ComplaintTracking'
 
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/addresidents' element={<ResidentForm/>}/>
           <Route path='/facility-management' element={<FacilityManagement/>}/>
+          <Route path='/create-complaint' element={<ComplaintTracking/>}/>
         </Routes>
     </div>
   )
