@@ -126,7 +126,7 @@ module.exports.verifyotp = async (req, res) => {
 };
 
 module.exports.resetpassword = async (req, res) => {
-	const { password } = req.body;
+	const { password , confirmPassword} = req.body;
     if(!password) {
         return res.status(400).json({ success: false, message: "Password is required" });
     }

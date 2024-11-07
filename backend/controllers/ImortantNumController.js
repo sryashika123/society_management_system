@@ -1,4 +1,4 @@
-const ImportantNumber = require("../models/ImportantNumModel"); // Make sure this path is correct
+const ImportantNumber = require("../models/ImportantNumModel"); 
 
 module.exports.createImportantNum = async (req, res) => {
     try {
