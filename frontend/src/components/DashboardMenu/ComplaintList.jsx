@@ -289,7 +289,6 @@ const EditComplaintModal = ({ show, handleClose, complaintData, onSave }) => {
                                 />
                                 <span>Pending</span>  {/* Label text inside the box */}
                             </Form.Check>
-
                             <Form.Check
                                 inline
                                 label="Solve"
@@ -309,6 +308,7 @@ const EditComplaintModal = ({ show, handleClose, complaintData, onSave }) => {
                                     backgroundColor: '#fff',           // Background color of the box
                                 }}
                             >
+                                
                                 <input
                                     type="radio"
                                     name="status"
