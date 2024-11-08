@@ -7,6 +7,10 @@ import ResidentForm from '../components/DashboardMenu/ResidentForm'
 import FacilityManagement from '../components/DashboardMenu/FacilityManagement'
 import ComplaintTracking from '../components/DashboardMenu/ComplaintTracking'
 
+// import FinanceManagement from '../components/DashboardMenu/FinanceManagement'
+import Income from '../components/DashboardMenu/Income'
+
+
 
 const Home = () => {
   return (
@@ -18,7 +22,9 @@ const Home = () => {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/addresidents' element={<ResidentForm/>}/>
           <Route path='/facility-management' element={<FacilityManagement/>}/>
+
           <Route path='/create-complaint' element={<ComplaintTracking/>}/>
+          <Route path='/financialmanagement' element={<Income/>}/>
         </Routes>
     </div>
   )

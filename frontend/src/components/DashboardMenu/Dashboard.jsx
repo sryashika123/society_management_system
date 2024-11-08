@@ -2,27 +2,21 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Col, Row, Card, ListGroup, Button, Form, Modal, Image, Dropdown } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { FaRegFileAlt, FaDollarSign, FaCreditCard, FaBuilding, FaTrashAlt, FaRegEdit} from 'react-icons/fa';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import { FaTrashAlt, FaRegEdit} from 'react-icons/fa';
+
 import './RightSection.css';
 import SideBar from '../Layouts/Sidebar';
 import { FaSquarePlus } from "react-icons/fa6";
 import './PendingMaintenances.css';
 import ComplaintList from './ComplaintList';
 import { Link } from 'react-router-dom';
+import BalanceInformation from './BalanceInformation';
 
 // Register the necessary components from Chart.js
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const RightSection = () => {
 	const chartRef = useRef(null); // To hold the reference of the chart for cleanup
-
-	const [cards] = useState([
-		{ title: 'Total Balance', amount: '₹ 2,22,520', color: 'danger', icon: <FaRegFileAlt color='#ee6a42' /> },
-		{ title: 'Total Income', amount: '₹ 55,000', color: 'success', icon: <FaDollarSign color='green' /> },
-		{ title: 'Total Expense', amount: '₹ 20,550', color: 'info', icon: <FaCreditCard color='skyblue' /> },
-		{ title: 'Total Unit', amount: '₹ 20,550', color: 'primary', icon: <FaBuilding color='purple' /> },
-	]);
 
 	// State hooks to manage dynamic data
 	const [importantNumbers, setImportantNumbers] = useState([
@@ -168,21 +162,7 @@ const RightSection = () => {
 
 				{/* Top Cards for Balance Information */}
 				<Row className="mb-3">
-					{cards.map((card, idx) => (
-						<div key={idx} className="col-12 col-md-6 col-lg-3 mb-3">
-							<div className={`card border-${card.color}`} style={{ backgroundColor: 'white', borderRadius: '10px', border: 'none' }}>
-								<div className="card-body d-flex align-items-center">
-									<div>
-										<h5 className="card-title" style={{ color: "black", fontSize: '16px' }}>{card.title}</h5>
-										<p className="card-text fw-bold" style={{ color: "black", fontSize: '22px' }}>{card.amount}</p>
-									</div>
-									<div className="ms-auto text-end" style={{ fontSize: '22px', border: 'none', padding: '5px', borderRadius: '5px', backgroundColor: '#F6F8FB' }}>
-										{card.icon}
-									</div>
-								</div>
-							</div>
-						</div>
-					))}
+				<BalanceInformation />
 				</Row>
 
 				{/* Line Chart for Balance */}
@@ -415,50 +395,8 @@ const RightSection = () => {
 					<Col md={9}>
 						<ComplaintList />
 					</Col>
-					{/* <Col md={9}>
-						<Card >
-							<Card.Header style={{ backgroundColor: 'white', borderRadius: '10px', border: 'none' }} >Complaint List</Card.Header>
-							<Table responsive>
-								<thead >
-									<tr >
-										<th >Complainer Name</th>
-										<th>Complaint Name</th>
-										<th>Date</th>
-										<th>Priority</th>
-										<th>Complain Status</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody className='ms-2'>
-									{complaints.map((complaint, index) => (
-										<tr key={index} >
-											<td className="d-flex align-items-center"  style={{border: 'none'}}>
-												
-												<Image src={complaint.imageUrl || "https://via.placeholder.com/40"} roundedCircle width={40} height={40} className="me-3" alt="User Avatar" />
-												{complaint.name}
-											</td>
-											<td style={{border: 'none'}}>{complaint.complaint}</td>
-											<td style={{border: 'none'}}>{complaint.date}</td>
-											<td style={{border: 'none'}}>
-												<Badge pill style={{ width: '70px', padding: '10px', fontSize: '12px' }} bg={complaint.priority === "High" ? "danger" : complaint.priority === "Medium" ? "primary" : "success"}>{complaint.priority}</Badge>
-											</td>
-											<td style={{border: 'none'}}>{complaint.status}</td>
-											<td style={{border: 'none'}}>
-												<Button variant="success" size="sm" className="me-2"><FaEdit /></Button>
-												<Button variant="info" size="sm" className="me-2"><FaEye /></Button>
-												<Button variant="danger" size="sm" onClick={() => handleDelete(index, "complaint")}><FaTrash /></Button>
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</Table>
-						</Card>
-					</Col> */}
-
-
 
 					{/* Upcoming Activity Form */}
-
 					<Col md={3}
 						style={{
 							overflowY: 'scroll', // Prevent overflow on the column
