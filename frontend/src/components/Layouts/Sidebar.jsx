@@ -23,28 +23,31 @@ export default function Sidebar() {
 
   useEffect(() => {
     const path = location.pathname.split("/")[2] || "dashboard"; // Extract the part after "/home/"
-    setActiveItem(path);
-
-    // Open relevant dropdown based on the path
-    if (path === "create-complaint" || path === "request-tracking") {
-      setComplaintDropdownOpen(true);
-      setSecurityDropdownOpen(false); // Close Security Management dropdown
-      setFinancialDropdownOpen(false); // Close Financial Management dropdown
-    } else if (path === "visitors-log" || path === "security-protocols") {
-      setSecurityDropdownOpen(true);
-      setComplaintDropdownOpen(false); // Close Complaint Tracking dropdown
-      setFinancialDropdownOpen(false); // Close Financial Management dropdown
-    } else if (path === "financialmanagement") {
+  
+    // Check for submenu items in Financial Management
+    if (path === "income" || path === "expense" || path === "note") {
+      setActiveItem(path);
       setFinancialDropdownOpen(true);
-      setComplaintDropdownOpen(false); // Close Complaint Tracking dropdown
-      setSecurityDropdownOpen(false); // Close Security Management dropdown
+      setComplaintDropdownOpen(false);
+      setSecurityDropdownOpen(false);
+    } else if (path === "create-complaint" || path === "request-tracking") {
+      setActiveItem(path);
+      setComplaintDropdownOpen(true);
+      setSecurityDropdownOpen(false);
+      setFinancialDropdownOpen(false);
+    } else if (path === "visitors-log" || path === "security-protocols") {
+      setActiveItem(path);
+      setSecurityDropdownOpen(true);
+      setComplaintDropdownOpen(false);
+      setFinancialDropdownOpen(false);
     } else {
-      // Close all dropdowns for other paths
+      setActiveItem(path);
       setComplaintDropdownOpen(false);
       setSecurityDropdownOpen(false);
       setFinancialDropdownOpen(false);
     }
   }, [location]);
+  
 
   const handleComplaintClick = () => {
     setComplaintDropdownOpen(!isComplaintDropdownOpen);
@@ -62,15 +65,25 @@ export default function Sidebar() {
 
   const handleFinancialClick = () => {
     setFinancialDropdownOpen(!isFinancialDropdownOpen);
-    setComplaintDropdownOpen(false); // Close Complaint Tracking dropdown
-    setSecurityDropdownOpen(false); // Close Security Management dropdown
+    setComplaintDropdownOpen(false);
+    setSecurityDropdownOpen(false);
     setActiveItem("financialmanagement");
   };
+  
 
   const menuItems = [
     { key: "dashboard", label: "Dashboard", icon: <FaTh />, path: "/home/dashboard" },
     { key: "residentmanagement", label: "Resident Management", icon: <FaUser />, path: "/home/residentmanagement" },
-    { key: "financialmanagement", label: "Financial Management", icon: <FaDollarSign />, path: "/home/financialmanagement" },
+    {
+      key: "financialmanagement",
+      label: "Financial Management",
+      icon: <FaDollarSign />,
+      subItems: [
+        { key: "income", label: "Income", path: "/home/income" },
+        { key: "expense", label: "Expense", path: "/home/expense" },
+        { key: "note", label: "Note", path: "/home/note" },
+      ],
+    },
     { key: "facility-management", label: "Facility Management", icon: <FaBuilding />, path: "/home/facility-management" },
     {
       key: "complaint-tracking",
@@ -151,7 +164,12 @@ export default function Sidebar() {
                           className={`p-2 rounded ${
                             activeItem === subItem.key ? "mainColor2 text-white" : ""
                           }`}
-                          onClick={() => setActiveItem(subItem.key)}
+                          onClick={() => {
+                            setActiveItem(subItem.key);
+                            setFinancialDropdownOpen(true);
+                          }}
+                          
+
                         >
                           <Link
                             to={subItem.path}

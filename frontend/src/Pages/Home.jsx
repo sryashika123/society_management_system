@@ -26,7 +26,7 @@ const Home = () => {
           <Route path='/create-complaint' element={<ComplaintTracking/>}/>
           <Route path='/request-tracking' element={<RequestTracking/>}/>
           <Route path='/visitors-log' element={<VisitorLog/>}/>
-          <Route path='/financialmanagement' element={<Income/>}/>
+          <Route path='/income' element={<Income/>}/>
         </Routes>
     </div>
   )
