@@ -84,51 +84,6 @@ module.exports.deleteOwner = async (req, res) => {
     }
 };
 
-
-
-// module.exports.updateOwner = async (req, res) => {
-//     try {
-//         const id = req.params.id;
-//         let owner = await Owner.findById(id);
-//         if (!owner) {
-//             return res.status(404).json({ msg: "Owner not found" });
-//         }
-
-//         const { Full_name, Phone_number, Email, age, gender, wing, unit, Relation, Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number } = req.body;
-//         let ownerData = { Full_name, Phone_number, Email, age, gender, wing, unit, Relation, Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number };
-//         const fileFields = [
-//             "Profile_Photo",
-//             "Aadhar_card_frontSide",
-//             "Aadhar_card_backSide",
-//             "Address_Proof_VeraBill_or_LightBill",
-//             "Rent_Agreement"
-//         ];
-
-//         if (req.files) {
-//             fileFields.forEach(field => {
-//                 if (req.files[field]) {
-//                     if (ownerData[field]) {
-//                         const oldFilePath = path.join(__dirname, "..", ownerData[field]);
-//                         if (fs.existsSync(oldFilePath)) {
-//                             fs.unlinkSync(oldFilePath);
-//                         }
-//                     }
-//                     ownerData[field] = path.join(Owner.filePath, req.files[field][0].filename);
-//                 }
-//             });
-//         }
-
-//         const updatedOwner = await Owner.findByIdAndUpdate(id, ownerData, { new: true });
-//         res.json({ msg: "Owner updated successfully",  updatedOwner });
-   
-//     } 
-//     catch (err) {
-//         console.error("Error updating owner:", err.message);
-//         res.status(500).send("Server error");
-//     }
-// };
-
-
 module.exports.updateOwner = async (req, res) => {
     try {
         const id = req.params.id;
