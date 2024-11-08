@@ -22,7 +22,6 @@ const Home = () => {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/addresidents' element={<ResidentForm/>}/>
           <Route path='/facility-management' element={<FacilityManagement/>}/>
-
           <Route path='/create-complaint' element={<ComplaintTracking/>}/>
           <Route path='/financialmanagement' element={<Income/>}/>
         </Routes>

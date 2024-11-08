@@ -52,11 +52,7 @@ const SideBar = () => {
             </li>
 
             {/* Financial Management with Dropdown */}
-
-            <li className="p-3 rounded">
-
             <li className={`p-3 rounded ${activeItem === "financialmanagement" ? "mainColor2" : ""}`}>
-
               <div className="d-flex align-items-center justify-content-between text-dark" style={{ cursor: "pointer" }} onClick={toggleDropdownFinancial}>
                 <div className="d-flex align-items-center">
                   <FaDollarSign className="me-3" />
@@ -72,31 +68,17 @@ const SideBar = () => {
               </div>
               {showDropdownFinancial && (
                 <ul className="list-unstyled ps-4 mt-2">
-
                   <li className={`p-2 ${activeItem === "income" ? "mainColor2" : ""}`}>
-                    <Link to="/home/financialmanagement/income" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("income")}>
+                    <Link to="/home/financialmanagement" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("income")}>
                       Income
                     </Link>
                   </li>
                   <li className={`p-2 ${activeItem === "expense" ? "mainColor2" : ""}`}>
-                  <li className={`p-2 rounded ${activeItem === "income" ? "active" : ""}`}>
-                    <Link
-                      to="/home/financialmanagement"
-                      style={{ textDecoration: "none", color: "black" }}
-                      onClick={() => handleClick("income")}
-                    >
-                      Income
-                    </Link>
-                  </li>
-
-                  <li className={`p-2 rounded ${activeItem === "expense" ? "mainColor2" : ""}`}>
                     <Link to="/home/financialmanagement/expense" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("expense")}>
                       Expense
                     </Link>
                   </li>
-
                   <li className={`p-2 ${activeItem === "note" ? "mainColor2" : ""}`}>
-                  <li className={`p-2 rounded ${activeItem === "note" ? "mainColor2" : ""}`}>
                     <Link to="/home/financialmanagement/note" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("note")}>
                       Note
                     </Link>
@@ -132,13 +114,11 @@ const SideBar = () => {
                 <ul className="list-unstyled ps-4 mt-2">
                   <li className={`p-2 ${activeItem === "create-complaint" ? "mainColor2" : ""}`}>
                     <Link to="/home/create-complaint" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("create-complaint")}>
-                    <Link to="/complaint-tracking/create-complaint" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("create-complaint")}>
                       Create Complaint
                     </Link>
                   </li>
                   <li className={`p-2 ${activeItem === "request-tracking" ? "mainColor2" : ""}`}>
                     <Link to="/home/request-tracking" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("request-tracking")}>
-                    <Link to="/complaint-tracking/request-tracking" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("request-tracking")}>
                       Request Tracking
                     </Link>
                   </li>
