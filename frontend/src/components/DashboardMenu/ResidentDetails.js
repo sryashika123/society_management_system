@@ -4,6 +4,7 @@ import { FaEdit, FaEye } from "react-icons/fa";
 import SideBar from "../Layouts/Sidebar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import Avatar   from "../images/Avatar.png";
 
 const ResidentTable = () => {
   const [residents, setResidents] = useState([
@@ -49,6 +50,22 @@ const ResidentTable = () => {
     setSelectedResident(null);
   };
 
+  const tableColumnStyle = {
+    whiteSpace: "normal",
+    wordWrap: "break-word",
+    padding: "15px",
+    textAlign: "center",
+    verticalAlign: "middle",
+    maxWidth: "350px",
+};
+
+const imageColumnStyle = {
+    display: "flex",
+    alignItems: "center", // Aligns the image and text horizontally
+    justifyContent: "flex-start", // Ensures the content starts from the left
+    gap: "10px", // Space between the image and the name
+};
+
   // Update resident status automatically when unit status changes
   useEffect(() => {
     if (unitStatus === "Occupied") {
@@ -72,7 +89,7 @@ const ResidentTable = () => {
           </Link>
         </div>
 
-        <Table responsive="sm" bordered hover className="text-center">
+        <Table responsive="sm"  hover className="text-center">
           <thead>
             <tr>
               <th>Full Name</th>
@@ -88,7 +105,17 @@ const ResidentTable = () => {
           <tbody>
             {residents.map((resident) => (
               <tr key={resident.id}>
-                <td>{resident.name || "-"}</td>
+                <td style={tableColumnStyle} className="text-start" >
+                                    <div style={imageColumnStyle} className="text-center">
+                                        <img
+                                            src={Avatar}
+                                            alt="avatar"
+                                            className="rounded-circle"
+                                            style={{ width: "30px", height: "30px" }}
+                                        />
+                                        {resident.name}
+                                    </div>
+                                </td>
                 <td>{resident.unitNumber}</td>
                 <td>
                   <Badge bg={resident.unitStatus === "Occupied" ? "success" : "secondary"}>
