@@ -8,6 +8,9 @@ import FacilityManagement from '../components/DashboardMenu/FacilityManagement'
 import ComplaintTracking from '../components/DashboardMenu/ComplaintTracking'
 import RequestTracking from '../components/DashboardMenu/RequestTracking'
 import VisitorLog from '../components/DashboardMenu/VisitorLog'
+// import FinanceManagement from '../components/DashboardMenu/FinanceManagement'
+import Income from '../components/DashboardMenu/Income'
+
 
 
 const Home = () => {
@@ -23,7 +26,7 @@ const Home = () => {
           <Route path='/create-complaint' element={<ComplaintTracking/>}/>
           <Route path='/request-tracking' element={<RequestTracking/>}/>
           <Route path='/visitors-log' element={<VisitorLog/>}/>
-
+          <Route path='/financialmanagement' element={<Income/>}/>
         </Routes>
     </div>
   )
