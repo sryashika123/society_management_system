@@ -88,18 +88,18 @@ const imageColumnStyle = {
             <Button className="mainColor2">Add New Resident Details</Button>
           </Link>
         </div>
-
+<div  style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
         <Table responsive="sm"  hover className="text-center">
-          <thead>
-            <tr>
-              <th>Full Name</th>
-              <th>Unit Number</th>
-              <th>Unit Status</th>
-              <th>Resident Status</th>
-              <th>Phone Number</th>
-              <th>Member</th>
-              <th>Vehicle</th>
-              <th>Action</th>
+          <thead  >
+            <tr >
+              <th style={{backgroundColor: 'rgb(185, 198, 242)'}} className="text-start">Full Name</th>
+              <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Unit Number</th>
+              <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Unit Status</th>
+              <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Resident Status</th>
+              <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Phone Number</th>
+              <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Member</th>
+              <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Vehicle</th>
+              <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -142,7 +142,7 @@ const imageColumnStyle = {
             ))}
           </tbody>
         </Table>
-
+</div>
         {/* Edit Modal */}
         <Modal show={showModal} onHide={handleCancel} centered>
           <Modal.Header closeButton>

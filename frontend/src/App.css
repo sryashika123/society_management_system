@@ -1,7 +1,7 @@
-*{
+* {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .stack {
@@ -14,16 +14,17 @@
 
 
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-body{
+
+body {
   overflow-x: hidden
 }
 
-.register-image{
+.register-image {
   position: absolute;
   height: 508px;
   width: 552px;
@@ -31,19 +32,21 @@ body{
   /* left: 196px; */
 }
 
-.mainColor{
+.mainColor {
   color: #FE512E;
-  
+
 }
-.mainColor2{
+
+.mainColor2 {
   background: linear-gradient(90deg, #FE512E 0%, #F09619 100%);
 }
 
-.active{
-  color:#202224;
+.active {
+  color: #202224;
   font-weight: bold;
- 
+
 }
+
 /* create new society */
 
 .container {
@@ -58,7 +61,8 @@ h3 {
   font-weight: 600;
 }
 
-input, button {
+input,
+button {
   border-radius: 6px;
 }
 
@@ -72,7 +76,8 @@ button[type="button"] {
   border-color: #6c757d;
 }
 
-.table td, .table th {
+.table td,
+.table th {
   vertical-align: middle;
   /* text-align: center; */
 }
@@ -92,8 +97,10 @@ h2 {
   border-radius: 5px;
   background-color: #f8f9fa;
   margin-top: 10px;
-  margin-right: 10px; /* Space between input fields */
-  width: 200px; /* Adjust width to your liking */
+  margin-right: 10px;
+  /* Space between input fields */
+  width: 200px;
+  /* Adjust width to your liking */
 }
 
 .radio-input-field .form-check-input {
@@ -102,11 +109,11 @@ h2 {
 
 .radio-input-field .form-check-label {
   font-size: 14px;
-  margin-left: 5px; /* Ensure label isn't too close to the radio button */
+  margin-left: 5px;
+  /* Ensure label isn't too close to the radio button */
 }
 
-.flex-container{
+.flex-container {
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
 }
-

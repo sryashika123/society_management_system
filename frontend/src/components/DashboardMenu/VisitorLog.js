@@ -19,52 +19,68 @@ const VisitorTable = () => {
 
             {/* Visitor Table */}
             <div style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
-                <Table hover responsive>
-                    <thead style={{ background: "#5678E9", color: "#ffffff" }}>
-                        <tr className="text-start">
-                            <th>Visitor Name</th>
-                            <th>Phone Number</th>
-                            <th className="text-center">Date</th>
-                            <th className="text-center">Unit Number</th>
-                            <th className="text-center">Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {visitors.map((visitor) => (
-                            <tr key={visitor.id} className="text-start">
-                                <td style={{ padding: "15px" }}>
-                                    <div style={{ display: "flex", alignItems: "start", justifyContent: "start" }}>
-                                        <img
-                                            src={Avatar}
-                                            alt="avatar"
-                                            className="rounded-circle"
-                                            style={{ width: "30px", height: "30px", marginRight: "10px" }}
-                                        />
-                                        {visitor.name}
-                                    </div>
-                                </td>
-                                <td>{visitor.PhoneNumber}</td>
-                                <td className="text-center">{visitor.Date}</td>
-                                <td className="text-center">
-                                    {/* Unit in a round circle */}
-                                    <div className="d-flex align-items-center justify-content-center gap-2">
-                                        <div
-                                            style={{
-                                                border: "1px solid ", borderRadius: "50%", width: "28px", height: "28px", display: "inline-flex", justifyContent: "center", alignItems: "center", color: "skyblue"
-                                            }}
-                                        >
-                                            {visitor.unit}
-                                        </div>
-                                        {/* Unit number without any special formatting */}
-                                        <div>{visitor.number}</div>
+               <Table hover responsive >
+              <thead style={{ background: "#5678E9", color: "#ffffff" }}>
+                <tr className="text-start">
+                  <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Visitor Name</th>
+                  <th  style={{backgroundColor: 'rgb(185, 198, 242)'}}>Phone Number</th>
+                  <th className="text-center"  style={{backgroundColor: 'rgb(185, 198, 242)'}}>Date</th>
+                  <th className="text-center"  style={{backgroundColor: 'rgb(185, 198, 242)'}}>Unit Number</th>
+                  <th className="text-center"  style={{backgroundColor: 'rgb(185, 198, 242)'}}>Time</th>
+                </tr>
+              </thead>
+              <tbody >
+                {visitors.map((visitors) => (
+                  <tr key={visitors.id} className="text-start">
+                    <td style={{ padding: "15px" }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "start" }}>
+                        <img
+                          src={Avatar}
+                          alt="avatar"
+                          className="rounded-circle"
+                          style={{ width: "30px", height: "30px", marginRight: "10px" }}
+                        />
+                        {visitors.name}
+                      </div>
+                    </td>
+                    <td style={{ verticalAlign: "middle" }}>{visitors.PhoneNumber}</td>
+                    <td style={{ verticalAlign: "middle" }} className="text-center">{visitors.Date}</td>
+                    <td style={{ verticalAlign: "middle" }} className="text-center">
+                      {/* Unit in a round circle */}
+                      <div className="d-flex align-items-center justify-content-center gap-2">
+                        <div
+                          style={{
+                            border: "1px solid ", borderRadius: "50%", width: "28px", height: "28px", display: "inline-flex", justifyContent: "center", alignItems: "center", color: "skyblue", verticalAlign: "middle"
+                          }}
+                        >
+                          {visitors.unit}
+                        </div>
+                        {/* Unit number without any special formatting */}
+                        <div>{visitors.number}</div>
 
-                                    </div>
-                                </td>
-                                <td className="text-center">{visitor.Time}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                      </div>
+                    </td>
+                    <td style={{ verticalAlign: "middle" }} className="text-center">
+                      <div
+                        style={{
+                          width: "100px",
+                          height: "34px",
+                          padding: "5px 15px",
+                          gap: "10px",
+                          borderRadius: "50px",
+                          background: "#F6F8FB",
+                          color: "#4F4F4F",
+                          display: "inline-block", // Ensures width and height are applied properly
+                        }}
+                      >
+                        {visitors.Time}
+                      </div>
+                    </td>
+
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
             </div>
         </Container>
     );

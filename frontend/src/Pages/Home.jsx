@@ -9,7 +9,8 @@ import ComplaintTracking from '../components/DashboardMenu/ComplaintTracking'
 import RequestTracking from '../components/DashboardMenu/RequestTracking'
 import VisitorLog from '../components/DashboardMenu/VisitorLog'
 // import FinanceManagement from '../components/DashboardMenu/FinanceManagement'
-import Income from '../components/DashboardMenu/Income'
+import Income from '../components/DashboardMenu/FinancialManagement/Income'
+import SecurityProtocol from '../components/DashboardMenu/SecurityProtocol'
 
 
 
@@ -27,6 +28,7 @@ const Home = () => {
           <Route path='/request-tracking' element={<RequestTracking/>}/>
           <Route path='/visitors-log' element={<VisitorLog/>}/>
           <Route path='/income' element={<Income/>}/>
+          <Route path='/security-protocols' element={<SecurityProtocol/>}/>
         </Routes>
     </div>
   )
