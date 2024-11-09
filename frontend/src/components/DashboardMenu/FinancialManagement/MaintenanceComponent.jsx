@@ -152,7 +152,7 @@ const MaintenanceComponent = () => {
 								<Row>
 									{/* Maintenance Amount */}
 									<Col md={6}>
-										<Form.Label>Maintenance Amount</Form.Label>
+										<Form.Label style={{ color: '#202224', fontWeight: '500' }}>Maintenance Amount</Form.Label>
 										<InputGroup>
 											<InputGroup.Text className='fw-bold'>₹</InputGroup.Text>
 											<Form.Control
@@ -166,7 +166,7 @@ const MaintenanceComponent = () => {
 
 									{/* Penalty Amount */}
 									<Col md={6}>
-										<Form.Label>Penalty Amount</Form.Label>
+										<Form.Label style={{ color: '#202224', fontWeight: '500' }}>Penalty Amount</Form.Label>
 										<InputGroup>
 											<InputGroup.Text className='fw-bold'>₹</InputGroup.Text>
 											<Form.Control
@@ -182,7 +182,7 @@ const MaintenanceComponent = () => {
 
 							{/* Maintenance Due Date */}
 							<Form.Group className="mb-3">
-								<Form.Label>Maintenance Due Date</Form.Label>
+								<Form.Label style={{ color: '#202224', fontWeight: '500' }}>Maintenance Due Date</Form.Label>
 								<Form.Control
 									type="date"
 									value={dueDate}
@@ -192,7 +192,7 @@ const MaintenanceComponent = () => {
 
 							{/* Penalty Days Selection */}
 							<Form.Group >
-								<Form.Label>Penalty Applied After Day Selection</Form.Label>
+								<Form.Label style={{ color: '#202224', fontWeight: '500' }}>Penalty Applied After Day Selection</Form.Label>
 								<Form.Select
 									value={penaltyDays}
 									onChange={(e) => setPenaltyDays(e.target.value)}

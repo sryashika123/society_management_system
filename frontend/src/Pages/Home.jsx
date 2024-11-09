@@ -10,6 +10,7 @@ import RequestTracking from '../components/DashboardMenu/RequestTracking'
 import VisitorLog from '../components/DashboardMenu/VisitorLog'
 // import FinanceManagement from '../components/DashboardMenu/FinanceManagement'
 import Income from '../components/DashboardMenu/FinancialManagement/Income'
+import Expense from '../components/DashboardMenu/FinancialManagement/Expense'
 
 
 
@@ -27,6 +28,7 @@ const Home = () => {
           <Route path='/request-tracking' element={<RequestTracking/>}/>
           <Route path='/visitors-log' element={<VisitorLog/>}/>
           <Route path='/income' element={<Income/>}/>
+          <Route path='/expenses' element={<Expense/>}/>
         </Routes>
     </div>
   )

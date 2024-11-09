@@ -22,44 +22,40 @@ export default function Sidebar() {
   const [isFinancialDropdownOpen, setFinancialDropdownOpen] = useState(false);
 
   useEffect(() => {
-    const path = location.pathname.split("/")[2] || "dashboard"; // Extract the part after "/home/"
-  
-    // Check for submenu items in Financial Management
-    if (path === "income" || path === "expense" || path === "note") {
-      setActiveItem(path);
-      setFinancialDropdownOpen(true);
-      setComplaintDropdownOpen(false);
-      setSecurityDropdownOpen(false);
-    } else if (path === "create-complaint" || path === "request-tracking") {
-      setActiveItem(path);
+    const path = location.pathname.split("/")[2] || "dashboard";
+    setActiveItem(path);
+
+    // Open relevant dropdown based on the path
+    if (path === "create-complaint" || path === "request-tracking") {
       setComplaintDropdownOpen(true);
       setSecurityDropdownOpen(false);
       setFinancialDropdownOpen(false);
     } else if (path === "visitors-log" || path === "security-protocols") {
-      setActiveItem(path);
       setSecurityDropdownOpen(true);
       setComplaintDropdownOpen(false);
       setFinancialDropdownOpen(false);
+    } else if (path === "income" || path === "expenses" || path === "note") {
+      setFinancialDropdownOpen(true);
+      setComplaintDropdownOpen(false);
+      setSecurityDropdownOpen(false);
     } else {
-      setActiveItem(path);
       setComplaintDropdownOpen(false);
       setSecurityDropdownOpen(false);
       setFinancialDropdownOpen(false);
     }
   }, [location]);
-  
 
   const handleComplaintClick = () => {
     setComplaintDropdownOpen(!isComplaintDropdownOpen);
-    setSecurityDropdownOpen(false); // Close Security Management dropdown
-    setFinancialDropdownOpen(false); // Close Financial Management dropdown
+    setSecurityDropdownOpen(false);
+    setFinancialDropdownOpen(false);
     setActiveItem("complaint-tracking");
   };
 
   const handleSecurityClick = () => {
     setSecurityDropdownOpen(!isSecurityDropdownOpen);
-    setComplaintDropdownOpen(false); // Close Complaint Tracking dropdown
-    setFinancialDropdownOpen(false); // Close Financial Management dropdown
+    setComplaintDropdownOpen(false);
+    setFinancialDropdownOpen(false);
     setActiveItem("security-management");
   };
 
@@ -69,7 +65,6 @@ export default function Sidebar() {
     setSecurityDropdownOpen(false);
     setActiveItem("financialmanagement");
   };
-  
 
   const menuItems = [
     { key: "dashboard", label: "Dashboard", icon: <FaTh />, path: "/home/dashboard" },
@@ -80,7 +75,7 @@ export default function Sidebar() {
       icon: <FaDollarSign />,
       subItems: [
         { key: "income", label: "Income", path: "/home/income" },
-        { key: "expense", label: "Expense", path: "/home/expense" },
+        { key: "expenses", label: "Expenses", path: "/home/expenses" },
         { key: "note", label: "Note", path: "/home/note" },
       ],
     },
@@ -129,12 +124,10 @@ export default function Sidebar() {
               item.subItems ? (
                 <li key={item.key} className="p-3 rounded">
                   <div
-                    className={`d-flex align-items-center justify-content-between ${
-                      activeItem === item.key ? "mainColor2 text-white" : ""
-                    }`}
+                    className="d-flex align-items-center justify-content-between"
                     style={{
                       cursor: "pointer",
-                      color: activeItem === item.key ? "white" : "black",
+                      color: "black",
                     }}
                     onClick={() => {
                       if (item.key === "complaint-tracking") {
@@ -161,22 +154,15 @@ export default function Sidebar() {
                       {item.subItems.map((subItem) => (
                         <li
                           key={subItem.key}
-                          className={`p-2 rounded ${
-                            activeItem === subItem.key ? "mainColor2 text-white" : ""
-                          }`}
-                          onClick={() => {
-                            setActiveItem(subItem.key);
-                            setFinancialDropdownOpen(true);
-                          }}
-                          
-
+                          className={`p-2 rounded ${activeItem === subItem.key ? "active" : ""}`}
+                          onClick={() => setActiveItem(subItem.key)}
                         >
                           <Link
                             to={subItem.path}
                             className="d-flex align-items-center"
                             style={{
                               textDecoration: "none",
-                              color: activeItem === subItem.key ? "white" : "black",
+                              color: activeItem === subItem.key ? "black" : "black",
                             }}
                           >
                             <span>{subItem.label}</span>
