@@ -9,7 +9,7 @@ import ComplaintTracking from '../components/DashboardMenu/ComplaintTracking'
 import RequestTracking from '../components/DashboardMenu/RequestTracking'
 import VisitorLog from '../components/DashboardMenu/VisitorLog'
 // import FinanceManagement from '../components/DashboardMenu/FinanceManagement'
-import Income from '../components/DashboardMenu/Income'
+import Income from '../components/DashboardMenu/FinancialManagement/Income'
 
 
 
