@@ -23,28 +23,31 @@ export default function Sidebar() {
 
   useEffect(() => {
     const path = location.pathname.split("/")[2] || "dashboard"; // Extract the part after "/home/"
-    setActiveItem(path);
-
-    // Open relevant dropdown based on the path
-    if (path === "create-complaint" || path === "request-tracking") {
-      setComplaintDropdownOpen(true);
-      setSecurityDropdownOpen(false); // Close Security Management dropdown
-      setFinancialDropdownOpen(false); // Close Financial Management dropdown
-    } else if (path === "visitors-log" || path === "security-protocols") {
-      setSecurityDropdownOpen(true);
-      setComplaintDropdownOpen(false); // Close Complaint Tracking dropdown
-      setFinancialDropdownOpen(false); // Close Financial Management dropdown
-    } else if (path === "financialmanagement") {
+  
+    // Check for submenu items in Financial Management
+    if (path === "income" || path === "expense" || path === "note") {
+      setActiveItem(path);
       setFinancialDropdownOpen(true);
-      setComplaintDropdownOpen(false); // Close Complaint Tracking dropdown
-      setSecurityDropdownOpen(false); // Close Security Management dropdown
+      setComplaintDropdownOpen(false);
+      setSecurityDropdownOpen(false);
+    } else if (path === "create-complaint" || path === "request-tracking") {
+      setActiveItem(path);
+      setComplaintDropdownOpen(true);
+      setSecurityDropdownOpen(false);
+      setFinancialDropdownOpen(false);
+    } else if (path === "visitors-log" || path === "security-protocols") {
+      setActiveItem(path);
+      setSecurityDropdownOpen(true);
+      setComplaintDropdownOpen(false);
+      setFinancialDropdownOpen(false);
     } else {
-      // Close all dropdowns for other paths
+      setActiveItem(path);
       setComplaintDropdownOpen(false);
       setSecurityDropdownOpen(false);
       setFinancialDropdownOpen(false);
     }
   }, [location]);
+  
 
   const handleComplaintClick = () => {
     setComplaintDropdownOpen(!isComplaintDropdownOpen);
@@ -62,15 +65,25 @@ export default function Sidebar() {
 
   const handleFinancialClick = () => {
     setFinancialDropdownOpen(!isFinancialDropdownOpen);
-    setComplaintDropdownOpen(false); // Close Complaint Tracking dropdown
-    setSecurityDropdownOpen(false); // Close Security Management dropdown
+    setComplaintDropdownOpen(false);
+    setSecurityDropdownOpen(false);
     setActiveItem("financialmanagement");
   };
+  
 
   const menuItems = [
     { key: "dashboard", label: "Dashboard", icon: <FaTh />, path: "/home/dashboard" },
     { key: "residentmanagement", label: "Resident Management", icon: <FaUser />, path: "/home/residentmanagement" },
-    { key: "financialmanagement", label: "Financial Management", icon: <FaDollarSign />, path: "/home/financialmanagement" },
+    {
+      key: "financialmanagement",
+      label: "Financial Management",
+      icon: <FaDollarSign />,
+      subItems: [
+        { key: "income", label: "Income", path: "/home/income" },
+        { key: "expense", label: "Expense", path: "/home/expense" },
+        { key: "note", label: "Note", path: "/home/note" },
+      ],
+    },
     { key: "facility-management", label: "Facility Management", icon: <FaBuilding />, path: "/home/facility-management" },
     {
       key: "complaint-tracking",
@@ -112,106 +125,6 @@ export default function Sidebar() {
 
         <div className="offcanvas-body p-0">
           <ul className="list-unstyled">
-            <li className={`p-3 rounded ${activeItem === "dashboard" ? "mainColor2" : ""}`}>
-              <Link to="/home/dashboard" className="d-flex align-items-center" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("dashboard")}>
-                <FaTh className="me-3" />
-                <span className="text-dark">Dashboard</span>
-              </Link>
-            </li>
-            <li className={`p-3 rounded ${activeItem === "residentmanagement" ? "mainColor2" : ""}`}>
-              <Link to="/home/residentmanagement" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("residentmanagement")}>
-                <FaUser className="me-3" />
-                <span>Resident Management</span>
-              </Link>
-            </li>
-
-            {/* Financial Management with Dropdown */}
-            <li className={`p-3 rounded ${activeItem === "financialmanagement" ? "mainColor2" : ""}`}>
-              <div className="d-flex align-items-center justify-content-between text-dark" style={{ cursor: "pointer" }} onClick={toggleDropdownFinancial}>
-                <div className="d-flex align-items-center">
-                  <FaDollarSign className="me-3" />
-                  <span>Financial Management</span>
-                </div>
-                <FaChevronDown
-                  className="ms-2"
-                  style={{
-                    transition: "transform 0.3s ease",
-                    transform: showDropdownFinancial ? "rotate(180deg)" : "rotate(0deg)"
-                  }}
-                />
-              </div>
-              {showDropdownFinancial && (
-                <ul className="list-unstyled ps-4 mt-2">
-                  <li className={`p-2 ${activeItem === "income" ? "active" : ""}`}>
-                    <Link to="/home/financialmanagement" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("income")}>
-                      Income
-                    </Link>
-                  </li>
-                  <li className={`p-2 ${activeItem === "expense" ? "active" : ""}`}>
-                    <Link to="/home/financialmanagement/expense" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("expense")}>
-                      Expense
-                    </Link>
-                  </li>
-                  <li className={`p-2 ${activeItem === "note" ? "active" : ""}`}>
-                    <Link to="/home/financialmanagement/note" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("note")}>
-                      Note
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            {/* Facility Management */}
-            <li className={`p-3 rounded ${activeItem === "facility-management" ? "mainColor2" : ""}`}>
-              <Link to="/home/facility-management" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("facility-management")}>
-                <FaBuilding className="me-3" />
-                <span>Facility Management</span>
-              </Link>
-            </li>
-
-            {/* Complaint Tracking with Dropdown */}
-            <li className="p-3 rounded">
-              <div className="d-flex align-items-center justify-content-between text-dark" style={{ cursor: "pointer" }} onClick={toggleDropdownComplaint}>
-                <div className="d-flex align-items-center">
-                  <FaExclamationCircle className="me-3" />
-                  <span>Complaint Tracking</span>
-                </div>
-                <FaChevronDown
-                  className="ms-2"
-                  style={{
-                    transition: "transform 0.3s ease",
-                    transform: showDropdownComplaint ? "rotate(180deg)" : "rotate(0deg)"
-                  }}
-                />
-              </div>
-              {showDropdownComplaint && (
-                <ul className="list-unstyled ps-4 mt-2">
-                  <li className={`p-2 ${activeItem === "create-complaint" ? "mainColor2" : ""}`}>
-                    <Link to="/home/create-complaint" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("create-complaint")}>
-                      Create Complaint
-                    </Link>
-                  </li>
-                  <li className={`p-2 ${activeItem === "request-tracking" ? "mainColor2" : ""}`}>
-                    <Link to="/home/request-tracking" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("request-tracking")}>
-                      Request Tracking
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            <li className={`p-3 rounded ${activeItem === "security-management" ? "mainColor2" : ""}`}>
-              <Link to="/security-management" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("security-management")}>
-                <FaShieldAlt className="me-3" />
-                <span>Security Management</span>
-              </Link>
-            </li>
-            <li className={`p-3 rounded ${activeItem === "announcement" ? "mainColor2" : ""}`}>
-              <Link to="/announcement" className="d-flex align-items-center text-dark" style={{ textDecoration: "none" }} onClick={() => handleClick("announcement")}>
-                <FaBullhorn className="me-3" />
-                <span>Announcement</span>
-              </Link>
-            </li>
             {menuItems.map((item) =>
               item.subItems ? (
                 <li key={item.key} className="p-3 rounded">
@@ -251,7 +164,12 @@ export default function Sidebar() {
                           className={`p-2 rounded ${
                             activeItem === subItem.key ? "mainColor2 text-white" : ""
                           }`}
-                          onClick={() => setActiveItem(subItem.key)}
+                          onClick={() => {
+                            setActiveItem(subItem.key);
+                            setFinancialDropdownOpen(true);
+                          }}
+                          
+
                         >
                           <Link
                             to={subItem.path}
