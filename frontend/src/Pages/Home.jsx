@@ -6,7 +6,8 @@ import Dashboard from '../components/DashboardMenu/Dashboard'
 import ResidentForm from '../components/DashboardMenu/ResidentForm'
 import FacilityManagement from '../components/DashboardMenu/FacilityManagement'
 import ComplaintTracking from '../components/DashboardMenu/ComplaintTracking'
-
+import RequestTracking from '../components/DashboardMenu/RequestTracking'
+import VisitorLog from '../components/DashboardMenu/VisitorLog'
 // import FinanceManagement from '../components/DashboardMenu/FinanceManagement'
 import Income from '../components/DashboardMenu/FinancialManagement/Income'
 
@@ -23,6 +24,8 @@ const Home = () => {
           <Route path='/addresidents' element={<ResidentForm/>}/>
           <Route path='/facility-management' element={<FacilityManagement/>}/>
           <Route path='/create-complaint' element={<ComplaintTracking/>}/>
+          <Route path='/request-tracking' element={<RequestTracking/>}/>
+          <Route path='/visitors-log' element={<VisitorLog/>}/>
           <Route path='/financialmanagement' element={<Income/>}/>
         </Routes>
     </div>
