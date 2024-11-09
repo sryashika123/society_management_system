@@ -25,7 +25,7 @@ function EditModal({ show, handleClose, income, onSave }) {
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton style={{ borderBottom: 'none' }}>
-                    <Modal.Title>Edit Income</Modal.Title>
+                    <Modal.Title>Edit {income.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={(e) => e.preventDefault()}>
@@ -51,6 +51,7 @@ function EditModal({ show, handleClose, income, onSave }) {
                                 onChange={(e) => setDate(e.target.value)}
                             />
                         </Form.Group>
+                        
                         </Col>
                         <Col md={6}>
                         <Form.Group className="mb-3" style={{ color: '#202224', fontWeight: '500' }}>

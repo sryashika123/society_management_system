@@ -154,7 +154,9 @@ export default function Sidebar() {
                       {item.subItems.map((subItem) => (
                         <li
                           key={subItem.key}
+
                           className={`p-2 rounded ${activeItem === subItem.key ? "mainColor2 text-white" : ""}`}
+                          className={`p-2 rounded ${activeItem === subItem.key ? "active" : ""}`}
                           onClick={() => setActiveItem(subItem.key)}
                         >
                           <Link
@@ -162,7 +164,7 @@ export default function Sidebar() {
                             className="d-flex align-items-center"
                             style={{
                               textDecoration: "none",
-                              color: activeItem === subItem.key ? "white" : "black",
+                              color: activeItem === subItem.key ? "black" : "black",
                             }}
                           >
                             <span>{subItem.label}</span>
