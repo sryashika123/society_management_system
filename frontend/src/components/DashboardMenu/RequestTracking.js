@@ -106,7 +106,7 @@ const RequestTable = () => {
   };
 
   const titleStyle = { width: "371px", height: "40px", display: "flex", alignItems: "center", gap: "10px" };
-  const contentStyle = { width: "371px", height: "316px", display: "flex", flexDirection: "column", gap: "25px", fontFamily: "Poppins, sans-serif" };
+  const contentStyle = { width: "371px", height: "380px", display: "flex", flexDirection: "column", gap: "25px", fontFamily: "Poppins, sans-serif" };
   const sectionStyle = { width: "285px", height: "70px", display: "flex", gap: "15px" };
   const smallTextStyle = { fontFamily: "Poppins", fontSize: "16px", fontWeight: "400", lineHeight: "24px", color: "#A7A7A7" };
 
@@ -229,7 +229,7 @@ const RequestTable = () => {
             <Modal.Header closeButton>
                 <Modal.Title style={titleStyle}>View Request</Modal.Title>
             </Modal.Header>
-            <Modal.Body style={contentStyle}>
+            <Modal.Body style={contentStyle} >
                 {selectedRequest && (
                     <div>
                         <div style={sectionStyle}>
@@ -268,7 +268,7 @@ const RequestTable = () => {
 
                             <div style={{ textAlign: "center" }}>
                                 <strong style={smallTextStyle}>Priority</strong>
-                                <p style={{ borderRadius: "50px", background: badgeStyle(selectedRequest.priority).backgroundColor, color: "white" }}>{selectedRequest.priority}</p>
+                                <p style={{ borderRadius: "50px", padding: "2px 10px", background: badgeStyle(selectedRequest.priority).backgroundColor, color: "white" }}>{selectedRequest.priority}</p>
                             </div>
 
                             <div style={{ textAlign: "center" }}>
@@ -350,14 +350,14 @@ const RequestTable = () => {
             <Table hover responsive>
                 <thead style={{ background: "#5678E9", color: "#ffffff" }}>
                     <tr>
-                        <th className="text-start">Requester Name</th>
-                        <th>Request Name</th>
-                        <th className="text-center">Description</th>
-                        <th className="text-center">Request date</th>
-                        <th className="text-center">Unit Number</th>
-                        <th className="text-center">Priority</th>
-                        <th className="text-center">Status</th>
-                        <th className="text-center">Action</th>
+                        <th className="text-start" style={{backgroundColor: 'rgb(185, 198, 242)'}}>Requester Name</th>
+                        <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Request Name</th>
+                        <th className="text-center" style={{backgroundColor: 'rgb(185, 198, 242)'}}>Description</th>
+                        <th className="text-center" style={{backgroundColor: 'rgb(185, 198, 242)'}}>Request date</th>
+                        <th className="text-center" style={{backgroundColor: 'rgb(185, 198, 242)'}}>Unit Number</th>
+                        <th className="text-center" style={{backgroundColor: 'rgb(185, 198, 242)'}}>Priority</th>
+                        <th className="text-center" style={{backgroundColor: 'rgb(185, 198, 242)'}}>Status</th>
+                        <th className="text-center" style={{backgroundColor: 'rgb(185, 198, 242)'}}>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -447,7 +447,7 @@ const RequestTable = () => {
 
 const Dashboard2 = () => {
     return (
-        <Container fluid className="p-0" style={{ maxWidth: "100%", overflowX: "hidden" }}>
+        <Container fluid className="p-0 " style={{ maxWidth: "100%", overflowX: "hidden" }}>
             <Row className="m-0">
                 <Col xs={2} className="p-0">
                     <SideBar />

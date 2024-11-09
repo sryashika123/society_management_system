@@ -458,14 +458,14 @@ const ComplaintList = () => {
                     </Dropdown>
                 </Card.Header>
                 <Table responsive>
-                    <thead>
+                    <thead style={{ background: "#5678E9", color: "#ffffff" }}>
                         <tr>
-                            <th style={{ background: 'rgb(141, 165, 245)' }}>Complainer Name</th>
-                            <th style={{ background: 'rgb(141, 165, 245)' }}>Complaint Name</th>
-                            <th style={{ background: 'rgb(141, 165, 245)' }}>Date</th>
-                            <th style={{ background: 'rgb(141, 165, 245)' }}>Priority</th>
-                            <th style={{ background: 'rgb(141, 165, 245)' }}>Status</th>
-                            <th style={{ background: 'rgb(141, 165, 245)' }}>Action</th>
+                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Complainer Name</th>
+                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Complaint Name</th>
+                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Date</th>
+                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Priority</th>
+                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Status</th>
+                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
