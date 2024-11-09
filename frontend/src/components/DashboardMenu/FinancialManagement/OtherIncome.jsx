@@ -3,8 +3,9 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import CreateOtherIncome from './CreateOtherIncome';
 import EditModal from './EditModal';
 import ViewIncomeModal from './ViewIncomeModal';
+import { Modal } from 'react-bootstrap';
 
-const OtherIncome = () => {
+const OtherIncome = ({ income }) => {
     // State to control visibility of Create modal and Edit modal
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -12,6 +13,32 @@ const OtherIncome = () => {
 
     // State to store selected income data for editing
     const [selectedIncome, setSelectedIncome] = useState(null);
+
+
+    const [showModal, setShowModal] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(null);
+
+    // Open Delete Modal
+    const openDeleteModal = (index) => {
+        setSelectedIncome(incomes[index]); // Set the selected income
+        setSelectedIndex(index);
+        setShowModal(true);
+    };
+
+    // Confirm Delete
+    const handleConfirmDelete = () => {
+        handleDeleteIncome(selectedIndex);
+        setShowModal(false);
+        setSelectedIndex(null);
+    };
+
+    // Cancel Delete
+    const handleCancelDelete = () => {
+        setShowModal(false);
+        setSelectedIndex(null);
+        setSelectedIncome(null); // Reset selected income
+    };
+
 
     // State for storing the list of incomes
     const [incomes, setIncomes] = useState([
@@ -177,12 +204,16 @@ const OtherIncome = () => {
                                                     >
                                                         View
                                                     </li>
+                                                    {/* Example list items */}
+
                                                     <li
+
                                                         style={{ padding: '8px 0', cursor: 'pointer' }}
-                                                        onClick={() => handleDeleteIncome(index)} // Delete action
+                                                        onClick={() => openDeleteModal(index)}
                                                     >
                                                         Delete
                                                     </li>
+
                                                 </ul>
                                             </div>
                                         )}
@@ -259,11 +290,45 @@ const OtherIncome = () => {
                 />
             )}
 
-           {/* ViewIncomeModal component */}
-           {showViewModal && (
+            {/* ViewIncomeModal component */}
+            {showViewModal && (
                 <ViewIncomeModal income={selectedIncome} onClose={closeModals} />
             )}
 
+            {/* Bootstrap Modal */}
+            <Modal show={showModal} onHide={handleCancelDelete} centered>
+                <Modal.Header closeButton style={{ borderBottom: 'none' }}>
+                    <Modal.Title><strong>Delete {selectedIncome?.title || 'This Item'}</strong></Modal.Title>
+                </Modal.Header>
+                <Modal.Body >
+                    <p>Are you sure you want to delete this?</p>
+                </Modal.Body>
+                <div className="d-flex justify-content-between">
+                    <button type="button" className="btn btn-outline-secondary"
+                        style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                        onClick={handleCancelDelete}>
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn"
+                        style={{
+                            background: 'rgba(231, 76, 60, 1)',
+                            color: 'White',
+                            width: '45%',
+                            borderRadius: '10px',
+                            marginBottom: '15px',
+                            marginRight: '15px',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                        }}
+                        data-bs-dismiss="modal"
+                        onClick={handleConfirmDelete}
+                    >
+                        Delete
+                    </button>
+                </div>
+            </Modal>
         </>
     );
 };

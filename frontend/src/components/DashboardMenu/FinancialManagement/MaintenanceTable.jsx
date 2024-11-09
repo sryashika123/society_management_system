@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
-import { Table, Modal, Nav, Button } from 'react-bootstrap';
+import { Table, Modal, Nav } from 'react-bootstrap';
 import { FaCheckCircle, FaClock, FaCreditCard, FaEye, FaHome, FaMoneyBillWave, FaUser } from 'react-icons/fa';
 import OtherIncome from './OtherIncome';
+import Avatar from "../../images/Avatar.png";
 
 const MaintenanceTable = () => {
   const [activeTab, setActiveTab] = useState('maintenance');
-
-  const [showModal, setShowModal] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
+
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleViewDetails = (data) => {
+    setSelectedData(data);
+    setShow(true);
+  };
+
 
   const handleSelect = (selectedTab) => {
     setActiveTab(selectedTab);
   };
 
-  const handleViewDetails = (data) => {
-    setSelectedData(data);
-    setShowModal(true);
-  };
+
 
   const maintenanceData = [
     {
@@ -185,7 +191,7 @@ const MaintenanceTable = () => {
                     <td style={tableColumnStyle} className="text-start" >
                       <div style={imageColumnStyle} className="text-center">
                         <img
-                          src="https://via.placeholder.com/30"
+                          src={Avatar}
                           alt="avatar"
                           className="rounded-circle"
                           style={{ width: "40px", height: "40px" }}
@@ -221,12 +227,11 @@ const MaintenanceTable = () => {
                     <td className="text-center">{data.date}</td>
 
                     <td className="text-center">
-                      <span className="badge rounded-pill d-flex align-items-center " style={badgeStyle(data.status)}>
+                      <span className="badge rounded-pill  " style={badgeStyle(data.status)}>
                         {data.status === "Tenant" && <FaUser className="me-2" style={{ color: 'rgba(236, 72, 153, 1)' }} />}
                         {data.status === "Owner" && <FaHome className="me-2" style={{ color: 'rgba(79, 70, 229, 1)' }} />}
                         {data.status}
                       </span>
-
                     </td>
 
                     <td className='text-center'>{data.phoneNumber}</td>
@@ -238,7 +243,7 @@ const MaintenanceTable = () => {
                     </td>
 
                     <td className="text-center">
-                      <span className="badge rounded-pill d-flex align-items-center" style={PaymentbadgeStyle(data.paymentStatus)}>
+                      <span className="badge rounded-pill " style={PaymentbadgeStyle(data.paymentStatus)}>
                         {data.paymentStatus === "Pending" && <FaClock className="me-2" style={{ color: 'rgba(255, 195, 19, 1)' }} />}
                         {data.paymentStatus === "Done" && <FaCheckCircle className="me-2" style={{ color: 'rgba(57, 151, 61, 1)' }} />}
                         {data.paymentStatus}
@@ -246,7 +251,7 @@ const MaintenanceTable = () => {
 
                     </td>
                     <td className='text-center'>
-                      <span className="badge rounded-pill d-flex align-items-center" style={PaymentMethodbadgeStyle(data.paymentMethod)}>
+                      <span className="badge rounded-pill " style={PaymentMethodbadgeStyle(data.paymentMethod)}>
                         {data.paymentMethod === "Online" && <FaCreditCard className="me-2" style={{ color: 'rgba(86, 120, 233, 1)' }} />}
                         {data.paymentMethod === "Cash" && <FaMoneyBillWave className="me-2" style={{ color: 'rgba(32, 34, 36, 1)' }} />}
                         {data.paymentMethod}
@@ -268,31 +273,89 @@ const MaintenanceTable = () => {
             </Table>
           </div>
 
-          <Modal show={showModal} onHide={() => setShowModal(false)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Details for {selectedData?.name}</Modal.Title>
+          {/* View Modal */}
+          <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header closeButton style={{ borderBottom: 'none' }}>
+              <Modal.Title >View Maintenance Details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {selectedData && (
-                <>
-                  <p><strong>Name:</strong> {selectedData.name}</p>
-                  <p><strong>Unit:</strong> {selectedData.unit} - {selectedData.number}</p>
-                  <p><strong>Date:</strong> {selectedData.date}</p>
-                  <p><strong>Status:</strong> {selectedData.status}</p>
-                  <p><strong>Phone Number:</strong> {selectedData.phoneNumber}</p>
-                  <p><strong>Amount:</strong> {selectedData.amount}</p>
-                  <p><strong>Penalty:</strong> {selectedData.penalty}</p>
-                  <p><strong>Payment Status:</strong> {selectedData.paymentStatus}</p>
-                  <p><strong>Payment Method:</strong> {selectedData.paymentMethod}</p>
-                </>
-              )}
+              <div className="d-flex align-items-center mb-3" style={imageColumnStyle}>
+                <img
+                  src={Avatar}
+                  alt="Profile"
+                  className="rounded-circle"
+                  style={{ width: '60px', height: '60px' }}
+                />
+                <div className="ms-3">
+                  <h5 className="mt-2 mb-0">{selectedData?.name}</h5>
+                  <p className="text-muted mb-0" style={{ fontSize: '0.9rem' }}>{selectedData?.date}</p>
+                </div>
+              </div>
+              <div className="d-flex justify-content-between mb-3">
+                <div className="d-flex flex-column align-items-center">
+                  <span className="text-muted">Wing</span>
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "30px", // Set the width of the circle
+                      height: "30px", // Set the height of the circle
+                      borderRadius: "50%", // This makes the div a circle
+                      backgroundColor: "#5678E9", // Circle background color
+                      color: "#fff", // Text color
+                      fontWeight: "bold", // Makes the unit text bold
+
+                    }}
+                  >{selectedData?.unit}</span>
+                </div>
+                <div className="d-flex flex-column align-items-center">
+                  <span className="text-muted">Unit</span>
+                  <span >{selectedData?.number}</span>
+                </div>
+
+                <div className="d-flex flex-column align-items-center">
+                  <span className="text-muted">Status</span>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <span className="badge rounded-pill " style={badgeStyle(selectedData?.status)}>
+                      {selectedData?.status === "Tenant" && <FaUser className="me-2" style={{ color: 'rgba(236, 72, 153, 1)' }} />}
+                      {selectedData?.status === "Owner" && <FaHome className="me-2" style={{ color: 'rgba(79, 70, 229, 1)' }} />}
+                      {selectedData?.status}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="d-flex flex-column align-items-center">
+                  <span className="text-muted">Amount</span>
+                  <span style={{ color: 'green' }}>{selectedData?.amount}</span>
+                </div>
+              </div>
+              <div className="d-flex justify-content-between mb-3">
+                <div className="d-flex flex-column align-items-center">
+                  <span className="text-muted">Penalty</span>
+                  <span className="badge rounded-pill" style={PaneltybadgeStyle(selectedData?.penalty)}>{selectedData?.penalty}</span>
+                </div>
+                <div className="d-flex flex-column align-items-center">
+                  <span className="text-muted">Status</span>
+                  <span className="badge rounded-pill " style={PaymentbadgeStyle(selectedData?.paymentStatus)}>
+                    {selectedData?.paymentStatus === "Pending" && <FaClock className="me-2" style={{ color: 'rgba(255, 195, 19, 1)' }} />}
+                    {selectedData?.paymentStatus === "Done" && <FaCheckCircle className="me-2" style={{ color: 'rgba(57, 151, 61, 1)' }} />}
+                    {selectedData?.paymentStatus}
+                  </span>
+                </div>
+                <div className="d-flex flex-column align-items-center">
+                  <span className="mb-2">Payment</span>
+                  <span className="badge rounded-pill " style={PaymentMethodbadgeStyle(selectedData?.paymentMethod)}>
+                    {selectedData?.paymentMethod === "Online" && <FaCreditCard className="me-2" style={{ color: 'rgba(86, 120, 233, 1)' }} />}
+                    {selectedData?.paymentMethod === "Cash" && <FaMoneyBillWave className="me-2" style={{ color: 'rgba(32, 34, 36, 1)' }} />}
+                    {selectedData?.paymentMethod}
+                  </span>
+                </div>
+              </div>
             </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShowModal(false)}>
-                Close
-              </Button>
-            </Modal.Footer>
+
           </Modal>
+
 
         </>
       )}
