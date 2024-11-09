@@ -168,8 +168,8 @@ const MaintenanceTable = () => {
               <thead style={{ color: "#ffffff" }}>
                 <tr >
                   <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-start">Name</th>
-                  <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Date</th>
                   <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className='text-center'>Unit Number</th>
+                  <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Date</th>
                   <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Status</th>
                   <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Phone Number</th>
                   <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Amount</th>
@@ -221,7 +221,7 @@ const MaintenanceTable = () => {
                     <td className="text-center">{data.date}</td>
 
                     <td className="text-center">
-                      <span className="badge rounded-pill d-flex align-items-center" style={badgeStyle(data.status)}>
+                      <span className="badge rounded-pill d-flex align-items-center " style={badgeStyle(data.status)}>
                         {data.status === "Tenant" && <FaUser className="me-2" style={{ color: 'rgba(236, 72, 153, 1)' }} />}
                         {data.status === "Owner" && <FaHome className="me-2" style={{ color: 'rgba(79, 70, 229, 1)' }} />}
                         {data.status}
