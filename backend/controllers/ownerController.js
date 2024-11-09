@@ -52,7 +52,7 @@ module.exports.deleteOwner = async (req, res) => {
         const id = req.params.id;
         const owner = await Owner.findById(id);
         if(!owner){
-            return res.status(404).json({ msg: "Owner not found" });
+            return res.status(404).json({ msg: "Owner data not found" });
         }
 
         const fileFields = [
@@ -88,7 +88,7 @@ module.exports.updateOwner = async (req, res) => {
     try {
         const id = req.params.id;
         const ownerData = await Owner.findById(id);
-        if (!ownerData) return res.status(404).json({ msg: "Owner not found" });
+        if (!ownerData) return res.status(404).json({ msg: "Owner data not found" });
 
         const updateFields = { Full_name, Phone_number, Email, age, gender, wing, unit, Relation, Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number } = req.body;
 

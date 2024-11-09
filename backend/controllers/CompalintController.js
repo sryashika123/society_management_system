@@ -35,7 +35,7 @@ module.exports.deleteComplaints = async(req,res)=>{
         const { id } = req.params;
         const deleteComplaints = await Complaint.findByIdAndDelete(id);
         if(!deleteComplaints){
-            return res.status(404).json({ msg : "Complaint Not Found" });
+            return res.status(404).json({ msg : "Complaint Data Not Found" });
         }
         res.json({ msg: "Complaint deleted succsessfully", deleteComplaints });
     }

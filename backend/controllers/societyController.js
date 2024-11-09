@@ -30,8 +30,8 @@ module.exports.createSociety = async (req, res) => {
 
 module.exports.getSociety = async (req, res) => {
     try {
-        const societies = await Society.find();
-        res.json(societies);
+        const ViewAllSociety = await Society.find();
+        res.json(ViewAllSociety);
     }
     catch (err) {
         console.error(err.message);
@@ -45,7 +45,7 @@ module.exports.deleteSociytey = async (req, res) => {
 
         const deletedSociety = await Society.findByIdAndDelete(id);
         if (!deletedSociety) {
-            return res.status(404).json({ msg: "Society not found" });
+            return res.status(404).json({ msg: "Society data not found" });
         }
 
         res.json({ msg: "Society deleted successfully", deletedSociety });
@@ -63,7 +63,7 @@ module.exports.updateSociety = async (req, res) => {
 
         const updatedSociety = await Society.findByIdAndUpdate(id, { societyName, address, country, state, city, Zip_code }, { new: true });
         if (!updatedSociety) {
-            return res.status(404).json({ msg: "Society not found" });
+            return res.status(404).json({ msg: "Society data not found" });
         }
 
         res.json({ msg: "Society updated successfully", updatedSociety });

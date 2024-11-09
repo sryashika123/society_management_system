@@ -13,6 +13,7 @@ module.exports.viewProfile = async(req,res)=>{
     }
 }
 
+
 module.exports.updateProfile = async (req, res) => {
     try{
         const { id } = req.params;
@@ -21,13 +22,24 @@ module.exports.updateProfile = async (req, res) => {
         let profileData = { firstName, lastName, email, phone, country, state, city, select_society };
 
         if(req.file){
+            const existingProfile = await Profile.findById(id);
+            if(existingProfile && existingProfile.ProfileImage) {
+                const oldImagePath = path.join(__dirname, "..", existingProfile.ProfileImage);
+                if(fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);  // Delete the old image
+                    console.log("Old image deleted: ", oldImagePath);
+                } 
+                else{
+                    console.log("Old image not found, skipping deletion.");
+                }
+            }
             profileData.ProfileImage = Profile.avatarPath + "/" + req.file.filename;
         }
 
         const updateProfile = await Profile.findByIdAndUpdate(id, profileData, { new: true });
-
-        if(!updateProfile){
-            return res.status(404).json({ msg: "Profile Not Found" });
+        if
+        (!updateProfile){
+            return res.status(404).json({ msg: "Profile Data Not Found" });
         }
 
         res.json({ msg: "Profile updated successfully", updateProfile });
@@ -45,7 +57,7 @@ module.exports.deleteProfile = async (req, res) => {
         const { id } = req.params;
         const profileToDelete = await Profile.findById(id);
         if(!profileToDelete) {
-            return res.status(404).json({ msg: "Profile Not Found" });
+            return res.status(404).json({ msg: "Profile Data Not Found" });
         }
 
         if(profileToDelete.ProfileImage) {

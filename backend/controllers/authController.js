@@ -54,7 +54,7 @@ module.exports.login = async (req, res,err) => {
 		// console.log(payload);
 		
 		const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-		res.cookie('token', token, { httpOnly: true, secure: true });
+		// res.cookie('token', token, { httpOnly: true, secure: true });
 		res.status(200).json({ msg: 'Logged in successfully', token });
 	} 
 	catch(err){
