@@ -53,6 +53,7 @@ const SideBar = () => {
 
             {/* Financial Management with Dropdown */}
             <li className="p-3 rounded">
+            <li className={`p-3 rounded ${activeItem === "financialmanagement" ? "mainColor2" : ""}`}>
               <div className="d-flex align-items-center justify-content-between text-dark" style={{ cursor: "pointer" }} onClick={toggleDropdownFinancial}>
                 <div className="d-flex align-items-center">
                   <FaDollarSign className="me-3" />
@@ -69,7 +70,7 @@ const SideBar = () => {
               {showDropdownFinancial && (
                 <ul className="list-unstyled ps-4 mt-2">
                   <li className={`p-2 ${activeItem === "income" ? "mainColor2" : ""}`}>
-                    <Link to="/home/financialmanagement/income" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("income")}>
+                    <Link to="/home/financialmanagement" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("income")}>
                       Income
                     </Link>
                   </li>
