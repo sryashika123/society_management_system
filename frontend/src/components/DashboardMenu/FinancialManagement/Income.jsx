@@ -1,5 +1,5 @@
 import React from 'react'
-import SideBar from '../Layouts/Sidebar'
+import SideBar from '../../Layouts/Sidebar'
 import MaintenanceComponent from './MaintenanceComponent'
 import MaintenanceTable from './MaintenanceTable'
 

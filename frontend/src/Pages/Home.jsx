@@ -8,7 +8,7 @@ import FacilityManagement from '../components/DashboardMenu/FacilityManagement'
 import ComplaintTracking from '../components/DashboardMenu/ComplaintTracking'
 
 // import FinanceManagement from '../components/DashboardMenu/FinanceManagement'
-import Income from '../components/DashboardMenu/Income'
+import Income from '../components/DashboardMenu/FinancialManagement/Income'
 
 
 

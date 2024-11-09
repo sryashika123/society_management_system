@@ -68,17 +68,17 @@ const SideBar = () => {
               </div>
               {showDropdownFinancial && (
                 <ul className="list-unstyled ps-4 mt-2">
-                  <li className={`p-2 ${activeItem === "income" ? "mainColor2" : ""}`}>
+                  <li className={`p-2 ${activeItem === "income" ? "active" : ""}`}>
                     <Link to="/home/financialmanagement" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("income")}>
                       Income
                     </Link>
                   </li>
-                  <li className={`p-2 ${activeItem === "expense" ? "mainColor2" : ""}`}>
+                  <li className={`p-2 ${activeItem === "expense" ? "active" : ""}`}>
                     <Link to="/home/financialmanagement/expense" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("expense")}>
                       Expense
                     </Link>
                   </li>
-                  <li className={`p-2 ${activeItem === "note" ? "mainColor2" : ""}`}>
+                  <li className={`p-2 ${activeItem === "note" ? "active" : ""}`}>
                     <Link to="/home/financialmanagement/note" style={{ textDecoration: "none", color: "black" }} onClick={() => handleClick("note")}>
                       Note
                     </Link>
