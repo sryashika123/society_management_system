@@ -13,11 +13,11 @@ const SideBar = () => {
   };
 
   const toggleDropdownComplaint = () => {
-    setShowDropdownComplaint(!showDropdownComplaint);
+    setShowDropdownComplaint(!showDropdownComplaint); // Toggle only complaint dropdown
   };
 
   const toggleDropdownFinancial = () => {
-    setShowDropdownFinancial(!showDropdownFinancial);
+    setShowDropdownFinancial(!showDropdownFinancial); // Toggle only financial management dropdown
   };
 
   return (
@@ -52,6 +52,7 @@ const SideBar = () => {
             </li>
 
             {/* Financial Management with Dropdown */}
+            <li className="p-3 rounded">
             <li className={`p-3 rounded ${activeItem === "financialmanagement" ? "mainColor2" : ""}`}>
               <div className="d-flex align-items-center justify-content-between text-dark" style={{ cursor: "pointer" }} onClick={toggleDropdownFinancial}>
                 <div className="d-flex align-items-center">
