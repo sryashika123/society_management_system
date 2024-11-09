@@ -34,7 +34,7 @@ module.exports.deleteImportantNum = async(req,res)=>{
         const { id } = req.params;
         const deleteImportantNum = await ImportantNumber.findByIdAndDelete(id);
         if(!deleteImportantNum){
-            return res.status(404).json({ msg : "ImportantNumber Not Found" });
+            return res.status(404).json({ msg : "ImportantNumber Data Not Found" });
         }
         res.json({ msg: "ImportantNumber deleted succsessfully", deleteImportantNum });
     }
@@ -51,7 +51,7 @@ module.exports.updateImportantNum = async(req,res)=>{
         
         const updateImportantNum = await ImportantNumber.findByIdAndUpdate(id, { Full_name, Phone_number, Work}, { new : true });
         if(!updateImportantNum){
-            res.status(404).json({ msg : "ImportantNumber Not Found" });
+            res.status(404).json({ msg : "ImportantNumber Data Not Found" });
         }
         res.json({ msg: "ImportantNumber updated Succsessfully", updateImportantNum});
     }
