@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Table } from 'react-bootstrap';
 import Sidebar from '../../Layouts/Sidebar';
-import { FaEdit, FaEye, FaTrashAlt } from 'react-icons/fa';
+import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 
 const Expense = () => {
     const [expenses, setExpenses] = useState([
@@ -47,21 +47,21 @@ const Expense = () => {
                                     <tr >
                                         <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-start">Title</th>
                                         <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className='text-start'>Description</th>
-                                        <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-start">Date</th>
-                                        <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-start">Amount</th>
-                                        <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-start">Bill Format</th>
-                                        <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-start">Action</th>
+                                        <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Date</th>
+                                        <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Amount</th>
+                                        <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Bill Format</th>
+                                        <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {expenses.map((expense, index) => (
                                         <tr key={index}>
                                             <td>{expense.title}</td>
-                                            <td>{expense.description}</td>
-                                            <td >{expense.date}</td>
-                                            <td style={{ color: 'green' }}>{expense.amount}</td>
-                                            <td>
-                                                <span className="badge bg-light text-dark">
+                                            <td style={{width:'300px'}}>{expense.description}</td>
+                                            <td className="text-center">{expense.date}</td>
+                                            <td className="text-center" style={{ color: 'green' }}>{expense.amount}</td>
+                                            <td className="text-center">
+                                                <span className="badge bg-light text-dark " >
                                                     <i
                                                         className={`fas ${expense.billFormat === 'PDF' ? 'fa-file-pdf text-danger' : 'fa-file-image text-primary'}`}
                                                         style={{ marginRight: '5px' }}
@@ -70,15 +70,14 @@ const Expense = () => {
                                                 </span>
                                             </td>
                                             <td>
-                                                <Button variant="link" className="text-success">
-                                                    <FaEdit/>
-                                                </Button>
-                                                <Button variant="link" className="text-primary">
-                                                    <FaEye/>
-                                                </Button>
-                                                <Button variant="link" className="text-danger">
-                                                    <FaTrashAlt/>   
-                                                </Button>
+                                                <div className='d-flex   align-items-center justify-content-center' style={{padding:'10px'}}>
+                                                    <FaEye className="text-primary me-2" style={{ cursor: "pointer" }}/>
+                                                    <FaEdit
+                                                        className="text-success me-2"
+                                                        style={{ cursor: "pointer" }}
+                                                    />
+                                                    <FaTrash className="text-danger" style={{ cursor: "pointer" }}  />
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
