@@ -154,8 +154,6 @@ export default function Sidebar() {
                       {item.subItems.map((subItem) => (
                         <li
                           key={subItem.key}
-
-                          className={`p-2 rounded ${activeItem === subItem.key ? "mainColor2 text-white" : ""}`}
                           className={`p-2 rounded ${activeItem === subItem.key ? "active" : ""}`}
                           onClick={() => setActiveItem(subItem.key)}
                         >

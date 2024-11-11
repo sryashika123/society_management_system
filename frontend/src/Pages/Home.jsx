@@ -12,6 +12,7 @@ import VisitorLog from '../components/DashboardMenu/VisitorLog'
 import Income from '../components/DashboardMenu/FinancialManagement/Income'
 import SecurityProtocol from '../components/DashboardMenu/SecurityProtocol'
 import Expense from '../components/DashboardMenu/FinancialManagement/Expense'
+import SecurityGuard from '../components/DashboardMenu/SecurityGuard'
 
 
 
@@ -32,6 +33,7 @@ const Home = () => {
           <Route path='/income' element={<Income/>}/>
           <Route path='/security-protocols' element={<SecurityProtocol/>}/>
           <Route path='/expenses' element={<Expense/>}/>
+          <Route path='/security-guard' element={< SecurityGuard/>}/>
 
         </Routes>
     </div>
