@@ -22,8 +22,6 @@ const MaintenanceTable = () => {
     setActiveTab(selectedTab);
   };
 
-
-
   const maintenanceData = [
     {
       name: 'Cody Fisher',
