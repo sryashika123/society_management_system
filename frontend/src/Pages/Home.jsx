@@ -23,6 +23,7 @@ const Home = () => {
         <SideBar/>
         <Routes>
           <Route path='/residentmanagement' element={<ResidentDetails/>}/>
+          <Route path='/' element={<Dashboard/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/addresidents' element={<ResidentForm/>}/>
           <Route path='/facility-management' element={<FacilityManagement/>}/>
