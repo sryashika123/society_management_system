@@ -4,9 +4,23 @@ const multer = require("multer");
 
 const path = require("path");
 
-const FILE_PATH  = "/uploads/owner_image";
+const FILE_PATH = "/uploads/resident_image";
 
-const ownerSchema = new monggose.Schema({
+
+const residentSchema = new monggose.Schema({
+    role: {
+        type: String,
+        enum: ['owner', 'tenant'], // Define the possible roles    
+    },
+    ownerName: {
+        type: String,
+    },
+    ownerPhone: {
+        type: String,
+    },
+    ownerAddress: {
+        type: String,
+    },
     Full_name: {
         type: String,
         required: true
@@ -42,43 +56,48 @@ const ownerSchema = new monggose.Schema({
     Profile_Photo: {
         type: String,
     },
-    Aadhar_card_frontSide :{
+    Aadhar_card_frontSide: {
         type: String,
     },
-    Aadhar_card_backSide :{
+    Aadhar_card_backSide: {
         type: String,
     },
-    Address_Proof_VeraBill_or_LightBill :{
+    Address_Proof_VeraBill_or_LightBill: {
         type: String,
     },
-    Rent_Agreement :{
+    Rent_Agreement: {
         type: String,
     },
-    Member_Counting :{
+    Member_Counting: {
         type: Number,
         required: true
     },
-    vehicle_Counting :{
+    vehicle_Counting: {
         type: Number,
         required: true
     },
-    vehicle_Type :{
+    vehicle_Type: {
         type: String,
         required: true
     },
-    vehicle_Name :{
+    vehicle_Name: {
         type: String,
         required: true
     },
-    vehicle_Number :{
+    vehicle_Number: {
         type: String,
         required: true
-    },  
+    },
+    
+    residentStatus: {
+        type: String,
+        enum: ['Occupied', 'Vacate'],
+        default: 'Occupied' 
+    },
 });
-
 const storage1 = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, "..", FILE_PATH ));
+        cb(null, path.join(__dirname, "..", FILE_PATH));
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
@@ -86,7 +105,7 @@ const storage1 = multer.diskStorage({
 });
 
 // Specify fields for multiple file uploads
-ownerSchema.statics.uploadFiles = multer({storage: storage1}).fields([
+residentSchema.statics.uploadFiles = multer({ storage: storage1 }).fields([
     { name: "Profile_Photo", maxCount: 1 },
     { name: "Aadhar_card_frontSide", maxCount: 1 },
     { name: "Aadhar_card_backSide", maxCount: 1 },
@@ -94,9 +113,8 @@ ownerSchema.statics.uploadFiles = multer({storage: storage1}).fields([
     { name: "Rent_Agreement", maxCount: 1 }
 ]);
 
-ownerSchema.statics.filePath = FILE_PATH;
+residentSchema.statics.filePath = FILE_PATH;
 
 
-
-const Owner = monggose.model("Owner", ownerSchema);
-module.exports = Owner;
+const Resident = monggose.model("Resident", residentSchema);
+module.exports = Resident;

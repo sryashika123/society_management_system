@@ -58,49 +58,6 @@ export default function Register() {
                 console.log(err);
             })
     }
-    //     e.preventDefault();
-
-    //     if (formData.password !== formData.confirmPassword) {
-    //         alert('Passwords do not match');
-    //         return;
-    //     }
-
-    //     const payload = {
-    //         ...formData,
-    //         select_society: formData.society
-    //     };
-
-    //     console.log('Payload being sent:', payload);
-
-    //     try {
-    //         const response = await axios.post('http://localhost:8000/api/users/register', payload);
-    //         console.log('Response from server:', response.data);
-
-    //         if (response.data) {
-    //             console.log('Received data:', response.data);
-
-    //             if (response.data.status === 'success') {
-    //                 alert('Registration successful');
-    //                 navigate('/'); // Use navigate to redirect on success
-    //             } else {
-    //                 alert('Registration failed: ' + (response.data.message || 'Unknown error'));
-    //             }
-    //         } else {
-    //             alert('Unexpected response structure: ' + JSON.stringify(response.data));
-    //         }
-    //     } catch (error) {
-    //         console.error('Error response:', error.response);
-
-    //         if (error.response) {
-    //             alert('Error: ' + (error.response.data.message || 'Registration failed. Please try again.'));
-    //         } else if (error.request) {
-    //             alert('No response received from server. Please try again later.');
-    //         } else {
-    //             alert('An error occurred: ' + error.message);
-    //         }
-    //     }
-    // };
-
     return (
         <div className='container-fluid d-flex justify-content-center align-items-center min-vh-100'>
             <div className='row w-100'>
