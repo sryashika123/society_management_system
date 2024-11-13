@@ -107,7 +107,7 @@ export default function Sidebar() {
       <div
         className="offcanvas offcanvas-start show"
         tabIndex="-1"
-        style={{ visibility: "visible", width: "280px" }}
+        style={{ visibility: "visible", width: "318px" }}
         aria-labelledby="offcanvasExampleLabel"
         data-bs-backdrop="false"
       >

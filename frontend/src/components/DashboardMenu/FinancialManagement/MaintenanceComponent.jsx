@@ -52,8 +52,9 @@ const MaintenanceComponent = () => {
 	return (
 		<>
 			<div
-				className="d-flex align-items-center justify-content-between p-4"
-				style={{ backgroundColor: '#ffffff', borderRadius: '8px' }}
+				className="d-flex align-items-center justify-content-between p-3 ms-4 me-4"
+				style={{ backgroundColor: '#ffffff',  border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden"}}
+				
 			>
 				<Row>
 					<Col>

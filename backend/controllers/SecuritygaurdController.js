@@ -32,10 +32,7 @@ module.exports.createSecuritygaurd = async (req, res) => {
         });
 
         await newSecurityGaurd.save();
-        res.status(201).json({
-            message: 'Security Guard created successfully',
-            data: newSecurityGaurd
-        });
+        res.status(201).json({ message: 'Security Guard created successfully', data: newSecurityGaurd });
     } 
     catch(err){
         console.error("Error creating SecurityGaurd:", err.message);
@@ -138,11 +135,7 @@ module.exports.updateSecuritygaurd = async (req, res) => {
         }
 
         const updatedSecurityGaurd = await Securitygaurd.findByIdAndUpdate(id, updatedData, { new: true });
-        res.status(200).json({
-            message: 'Security Guard updated successfully',
-            data: updatedSecurityGaurd,
-        });
-
+        res.status(200).json({ message: 'Security Guard updated successfully', data: updatedSecurityGaurd, });
     } 
     catch(error){
         console.error(error);
