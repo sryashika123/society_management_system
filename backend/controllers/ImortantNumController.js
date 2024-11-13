@@ -1,18 +1,17 @@
 const ImportantNumber = require("../models/ImportantNumModel"); 
 
 module.exports.createImportantNum = async (req, res) => {
-    try {
+    try{
         const { Full_name, Phone_number, Work } = req.body;
         const newImportantNumber = new ImportantNumber({
             Full_name,
             Phone_number,
             Work
         });
-        
         await newImportantNumber.save();    
         res.json(newImportantNumber);
     } 
-    catch (err) { 
+    catch(err){ 
         console.error(err.message);
         res.status(500).send("Server error");
     }
