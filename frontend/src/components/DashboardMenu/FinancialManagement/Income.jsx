@@ -13,8 +13,8 @@ const Income = () => {
                 </div>
 
                 {/* Main Content Column */}
-                <div className="col d-flex flex-column overflow-auto">
-                    <div className="container-fluid d-flex flex-column">
+                <div className="col d-flex flex-column overflow-auto"  >
+                    <div className="container-fluid d-flex flex-column" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
                         <MaintenanceComponent />
                         {/* <br/> */}
                         <MaintenanceTable />

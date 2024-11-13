@@ -2,8 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Col, Row, Card, ListGroup, Button, Form, Modal, Image, Dropdown } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { FaTrashAlt, FaRegEdit} from 'react-icons/fa';
-
+import { FaTrashAlt, FaRegEdit } from 'react-icons/fa';
 import './RightSection.css';
 import SideBar from '../Layouts/Sidebar';
 import { FaSquarePlus } from "react-icons/fa6";
@@ -112,7 +111,7 @@ const RightSection = () => {
 
 
 	// Upcoming activities state
-	const [upcomingActivities ] = useState([
+	const [upcomingActivities] = useState([
 		{ title: 'Society Meeting', time: '8:00 PM to 10:00 PM', date: '24-09-2024' },
 		{ title: 'Holi Festival', time: '8:00 PM to 10:00 PM', date: '24-09-2024' },
 		{ title: 'Ganesh Chaturthi', time: '8:00 PM to 10:00 PM', date: '24-09-2024' },
@@ -158,11 +157,15 @@ const RightSection = () => {
 			<div className="col-12 col-md-3 flex-shrink-0" style={{ maxWidth: "300px" }}>
 				<SideBar />
 			</div>
+
+			{/* Right Section */}
+
 			<Col xs={12} md={10} className="right-section p-3">
 
+				
 				{/* Top Cards for Balance Information */}
 				<Row className="mb-3">
-				<BalanceInformation />
+					<BalanceInformation />
 				</Row>
 
 				{/* Line Chart for Balance */}

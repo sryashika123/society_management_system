@@ -70,7 +70,9 @@ const FacilityManagement = () => {
         <SideBar />
       </div>
 
+
       <div className="col p-4 flex-grow-1 d-flex flex-column align-items-center" style={{ borderRadius: "20px", backgroundColor: "#F6F8FB" }}>
+       
         <div className="d-flex justify-content-between align-items-center w-100 m-4" >
           <h3 style={{marginLeft: "40px"}}>Facility Management</h3>
           <Button

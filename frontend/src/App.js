@@ -20,12 +20,10 @@ function App() {
           <Route path='/Register' element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/enter-otp" element={<EnterOtp />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />   
+          <Route path="/resetPassword" element={<ResetPassword />} />
           <Route path='/home/*' element={<Home />} />
 
-          
-          
-               </Routes>
+        </Routes>
       </BrowserRouter>
     </div>
   );
