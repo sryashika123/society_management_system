@@ -122,7 +122,7 @@ module.exports.updateResident = async (req, res) => {
                 "Address_Proof_VeraBill_or_LightBill", "Rent_Agreement"
             ];
             fileFields.forEach(field => {
-                if (req.files[field]) {
+                if (req.files[field]) {                         
                     const oldFilePath = path.join(__dirname, "..", residentData[field]);                    
                     if (residentData[field] && fs.existsSync(oldFilePath)) {
                         fs.unlinkSync(oldFilePath); // Delete the old file
@@ -132,10 +132,12 @@ module.exports.updateResident = async (req, res) => {
                         fs.unlinkSync(oldFilePath); 
 
                     }
-                    
-                    updateFields[field] = path.join(Resident.filePath, req.files[field][0].filename);
                 }
-            });
+                    updateFields[field] = path.join(Resident.filePath, req.files[field][0].filename);
+            }  
+          }
+        });
+            
         }
         
         const updatedResident = await Resident.findByIdAndUpdate(id, updateFields, { new: true });

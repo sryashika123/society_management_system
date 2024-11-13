@@ -51,7 +51,7 @@ module.exports.login = async (req, res,err) => {
 		const payload = {
 			user: { id: user.id, },
 		};
-		// console.log(payload);
+		console.log(payload);
 		
 		const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 		// res.cookie('token', token, { httpOnly: true, secure: true });
