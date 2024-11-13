@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { FaCamera } from 'react-icons/fa';
+import { LuImagePlus } from 'react-icons/lu';
+import { RxAvatar } from 'react-icons/rx';
 import { useNavigate } from 'react-router-dom';
 
 export default function ResidentForm() {
   const navigate = useNavigate();
+  const [formType, setFormType] = useState('owner');
+  const [photo, setPhoto] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -19,25 +25,53 @@ export default function ResidentForm() {
     aadharBack: null,
     addressProof: null,
     rentAgreement: null,
-    memberCount: 0,
-    vehicleCount: 0,
-    members: [],
-    vehicles: [],
-    ownerName: '', // Tenant-specific field
-    ownerPhoneNumber: '', // Tenant-specific field
-    ownerAddress: '' // Tenant-specific field
+    aadharFrontPreview: '',
+    aadharBackPreview: '',
+    addressProofPreview: '',
+    rentAgreementPreview: '',
+    uploadErrors: {
+      aadharFront: '',
+      aadharBack: '',
+      addressProof: '',
+      rentAgreement: '',
+    },
   });
 
-  const [formType, setFormType] = useState('owner');
+
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
+      setPhoto(file);
+      setPhotoPreview(URL.createObjectURL(file));
+    } else {
+      alert("Please upload a valid image (PNG or JPEG).");
+    }
+  };
+
+  const [memberDropdownOpen, setMemberDropdownOpen] = useState(false);
+  const [vehicleDropdownOpen, setVehicleDropdownOpen] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    setFormData({ ...formData, [name]: files[0] });
+  const handleMemberCountChange = (e) => {
+    const count = Number(e.target.value);
+    setFormData({
+      ...formData,
+      memberCount: count,
+      members: count > 0 ? Array.from({ length: count }, (_, i) => formData.members[i] || {}) : [],
+    });
+  };
+
+  const handleVehicleCountChange = (e) => {
+    const count = Number(e.target.value);
+    setFormData({
+      ...formData,
+      vehicleCount: count,
+      vehicles: count > 0 ? Array.from({ length: count }, (_, i) => formData.vehicles[i] || {}) : [],
+    });
   };
 
   const handleMemberChange = (index, e) => {
@@ -54,11 +88,83 @@ export default function ResidentForm() {
     setFormData({ ...formData, vehicles: updatedVehicles });
   };
 
+  const toggleMemberDropdown = () => {
+    if (memberDropdownOpen) {
+      // When the dropdown is toggled off, reset to default 0
+      setFormData({
+        ...formData,
+        memberCount: 0,
+        members: [],
+      });
+    }
+    setMemberDropdownOpen(!memberDropdownOpen);
+  };
+
+  // Toggle vehicle dropdown
+  const toggleVehicleDropdown = () => {
+    if (vehicleDropdownOpen) {
+      // When the dropdown is toggled off, reset to default 0
+      setFormData({
+        ...formData,
+        vehicleCount: 0,
+        vehicles: [],
+      });
+    }
+    setVehicleDropdownOpen(!vehicleDropdownOpen);
+  };
+  const handleFileChange = (e, fileType) => {
+    const file = e.target.files[0];
+    if (file) {
+      const allowedTypes = ["image/png", "image/jpeg", "application/pdf"];
+      const maxSize = 10 * 1024 * 1024; // 10 MB
+
+      if (!allowedTypes.includes(file.type)) {
+        setFormData((prevState) => ({
+          ...prevState,
+          uploadErrors: {
+            ...prevState.uploadErrors,
+            [fileType]: "Invalid file type. Only PNG, JPG, and PDF are allowed.",
+          },
+        }));
+        return;
+      }
+
+      if (file.size > maxSize) {
+        setFormData((prevState) => ({
+          ...prevState,
+          uploadErrors: {
+            ...prevState.uploadErrors,
+            [fileType]: "File size exceeds 10 MB.",
+          },
+        }));
+        return;
+      }
+
+      const previewURL = file.type.startsWith("image/")
+        ? URL.createObjectURL(file)
+        : '';
+
+      setFormData((prevState) => ({
+        ...prevState,
+        [fileType]: file,
+        [`${fileType}Preview`]: previewURL,
+        uploadErrors: {
+          ...prevState.uploadErrors,
+          [fileType]: "",
+        },
+      }));
+    }
+  };
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Perform form validation or submission logic here
     console.log("Form submitted:", formData);
 
-    // Reset form data
+    // Reset form data (optional if needed after submission)
     setFormData({
       fullName: '',
       phoneNumber: '',
@@ -75,76 +181,109 @@ export default function ResidentForm() {
       aadharBack: null,
       addressProof: null,
       rentAgreement: null,
-      memberCount: 0,
-      vehicleCount: 0,
-      members: [],
-      vehicles: [],
-      ownerName: '',
-      ownerPhoneNumber: '',
-      ownerAddress: ''
+      aadharFrontPreview: '',
+      aadharBackPreview: '',
+      addressProofPreview: '',
+      rentAgreementPreview: '',
+      uploadErrors: {},
     });
 
+    // Redirect to the resident management page
     navigate('/home/residentmanagement');
   };
-
   return (
-    <div className="container-fluid p-0">
-      <div className="row">
-        {/* Left Sidebar */}
-        <div className="col-2 bg-light p-4">
-          <h5 className="mb-4">Sidebar Content</h5>
-          <ul className="list-unstyled">
-            <li><a href="##">Dashboard</a></li>
-            <li><a href="##">Resident Management</a></li>
-            <li><a href="##">Settings</a></li>
-          </ul>
+    <>
+
+
+      <div className="container p-4" style={{ maxWidth: '1570px', marginLeft: '310px', marginTop: '100px' }}>
+        <div className="mb-4">
+          <button
+            className={`btn ${formType === 'owner' ? 'mainColor2' : 'btn'} me-2`}
+            onClick={() => setFormType('owner')}
+          >
+            Owner
+          </button>
+          <button
+            className={`btn ${formType === 'tenant' ? 'mainColor2' : 'btn'}`}
+            onClick={() => setFormType('tenant')}
+          >
+            Tenant
+          </button>
         </div>
 
-        {/* Right Form */}
-        <div className="col-10">
-          <div className="container p-4" style={{ maxWidth: '1500px', marginTop: '100px' }}>
-            <div className="mb-4">
-              <button
-                className={`btn ${formType === 'owner' ? 'mainColor2' : 'btn'} me-2`}
-                onClick={() => setFormType('owner')}
-              >
-                Owner
-              </button>
-              <button
-                className={`btn ${formType === 'tenant' ? 'mainColor2' : 'btn'}`}
-                onClick={() => setFormType('tenant')}
-              >
-                Tenant
-              </button>
+        <form onSubmit={handleSubmit}>
+
+
+
+          {/* Tenant-Specific Owner Fields */}
+          {formType === 'tenant' && (
+            <div className="row mb-3">
+              <div className="col-md-4">
+                <label>Owner Name*</label>
+                <input type="text" name="ownerName" className="form-control" value={formData.ownerName} onChange={handleInputChange} required />
+              </div>
+              <div className="col-md-4">
+                <label>Owner Phone Number*</label>
+                <input type="text" name="ownerPhoneNumber" className="form-control" value={formData.ownerPhoneNumber} onChange={handleInputChange} required />
+              </div>
+              <div className="col-md-4">
+                <label>Owner Email Address</label>
+                <input type="email" name="emailAddress" className="form-control" value={formData.emailAddress} onChange={handleInputChange} />
+              </div>
+            </div>
+          )}
+          {/* Basic Info Fields */}
+          <div className="d-flex flex-wrap mb-3">
+            {/* Photo Upload Section */}
+            {/* Profile Photo Section */}
+            <div className="col-md-1 d-flex mb-3">
+              <label htmlFor="photo-upload" style={{ cursor: 'pointer' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                  <div
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "50%",
+                      background: "rgba(211, 211, 211, 1)",
+                      overflow: "hidden",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "2px solid #ddd",
+                    }}
+                  >
+                    {photoPreview ? (
+                      <img
+                        src={photoPreview}
+                        alt="Uploaded Photo"
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    ) : (
+                      <FaCamera style={{ color: "rgba(255, 255, 255, 1)", fontSize: "16px" }} />
+                    )}
+                  </div>
+                  <div className='text-center p-2' style={{ color: "#007bff" }}>Add Photo</div>
+                </div>
+              </label>
+              <input
+                id="photo-upload"
+                type="file"
+                accept="image/png, image/jpeg"
+                style={{ display: 'none' }}
+                onChange={handlePhotoUpload}
+              />
             </div>
 
-            <form onSubmit={handleSubmit}>
-              {/* Tenant-Specific Owner Fields */}
-              {formType === 'tenant' && (
-                <div className="row mb-3">
-                  <div className="col-md-4">
-                    <label>Owner Name*</label>
-                    <input type="text" name="ownerName" className="form-control" value={formData.ownerName} onChange={handleInputChange} required />
-                  </div>
-                  <div className="col-md-4">
-                    <label>Owner Phone Number*</label>
-                    <input type="text" name="ownerPhoneNumber" className="form-control" value={formData.ownerPhoneNumber} onChange={handleInputChange} required />
-                  </div>
-                  <div className="col-md-4">
-                    <label>Owner Email Address</label>
-                    <input type="email" name="emailAddress" className="form-control" value={formData.emailAddress} onChange={handleInputChange} />
-                  </div>
-                </div>
-              )}
 
-              {/* Basic Info Fields */}
+            {/* Form Fields */}
+            <div className="col-md-11"  >
               <div className="row mb-3">
                 <div className="col-md-4">
-                  <label>Full Name*</label>
+                  <label>Full Name<span className="text-danger">*</span></label>
                   <input type="text" name="fullName" className="form-control" value={formData.fullName} onChange={handleInputChange} required />
                 </div>
                 <div className="col-md-4">
-                  <label>Phone Number*</label>
+                  <label>Phone Number<span className="text-danger">*</span></label>
                   <input type="text" name="phoneNumber" className="form-control" value={formData.phoneNumber} onChange={handleInputChange} required />
                 </div>
                 <div className="col-md-4">
@@ -155,11 +294,11 @@ export default function ResidentForm() {
 
               <div className="row mb-3">
                 <div className="col-md-2">
-                  <label>Age*</label>
+                  <label>Age<span className="text-danger">*</span></label>
                   <input type="number" name="age" className="form-control" value={formData.age} onChange={handleInputChange} required />
                 </div>
                 <div className="col-md-2">
-                  <label>Gender*</label>
+                  <label>Gender<span className="text-danger">*</span></label>
                   <select name="gender" className="form-control" value={formData.gender} onChange={handleInputChange} required>
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
@@ -167,172 +306,339 @@ export default function ResidentForm() {
                     <option value="Other">Other</option>
                   </select>
                 </div>
-                <div className="col-md-4">
-                  <label>Wing*</label>
+                <div className="col-md-2">
+                  <label>Wing<span className="text-danger">*</span></label>
                   <input type="text" name="wing" className="form-control" value={formData.wing} onChange={handleInputChange} required />
                 </div>
-                <div className="col-md-4">
-                  <label>Unit*</label>
+                <div className="col-md-3">
+                  <label>Unit<span className="text-danger">*</span></label>
                   <input type="text" name="unit" className="form-control" value={formData.unit} onChange={handleInputChange} required />
                 </div>
-              </div>
-
-              <div className="row mb-3">
-                <div className="col-md-4">
-                  <label>Relation*</label>
+                <div className="col-md-3">
+                  <label>Relation<span className="text-danger">*</span></label>
                   <input type="text" name="relation" className="form-control" value={formData.relation} onChange={handleInputChange} required />
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Document Upload Section */}
-              <div className="row mb-3">
-                <div className="col-md-3">
-                  <label>Upload Aadhar Card (Front Side)</label>
-                  <input type="file" name="aadharFront" className="form-control" onChange={handleFileChange} accept=".png, .jpg, .jpeg, .gif" />
-                </div>
-                <div className="col-md-3">
-                  <label>Upload Aadhar Card (Back Side)</label>
-                  <input type="file" name="aadharBack" className="form-control" onChange={handleFileChange} accept=".png, .jpg, .jpeg, .gif" />
-                </div>
-                <div className="col-md-3">
-                  <label>Address Proof (Vera Bill / Light Bill)</label>
-                  <input type="file" name="addressProof" className="form-control" onChange={handleFileChange} accept=".png, .jpg, .jpeg, .gif" />
-                </div>
-                <div className="col-md-3">
-                  <label>Rent Agreement</label>
-                  <input type="file" name="rentAgreement" className="form-control" onChange={handleFileChange} accept=".png, .jpg, .jpeg, .gif" />
+
+
+          <div className="row mb-3">
+            {['aadharFront', 'aadharBack', 'addressProof', 'rentAgreement'].map((fileType, index) => (
+              <div className="col-md-3" key={index}>
+                <label>
+                  {fileType === 'aadharFront' && 'Upload Aadhar Card (Front Side)'}
+                  {fileType === 'aadharBack' && 'Upload Aadhar Card (Back Side)'}
+                  {fileType === 'addressProof' && 'Address Proof (Vera Bill / Light Bill)'}
+                  {fileType === 'rentAgreement' && 'Rent Agreement'}
+                </label>
+                <div
+                  className="text-center"
+                  style={{
+                    border: "2px dashed rgba(211, 211, 211, 1)",
+                    borderRadius: "8px",
+                    padding: "20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    cursor: "pointer",
+                  }}
+                >
+                  <label htmlFor={`${fileType}-upload} style={{ cursor: 'pointer', color: '#007bff' }`}>
+                    <LuImagePlus
+                      className="text-center"
+                      style={{
+                        fontSize: '24px',
+                        marginBottom: '8px',
+                        width: '40px',
+                        height: '50px',
+                        color: "rgba(167, 167, 167, 1)",
+                      }}
+                    />
+                    <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
+                  </label>
+                  <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
+                  <input
+                    id={`${fileType}-upload`}
+                    type="file"
+                    accept="image/png, image/jpeg, application/pdf"
+                    style={{ display: 'none' }}
+                    onChange={(e) => handleFileChange(e, fileType)}
+                  />
+
+                  {/* Display file preview or error */}
+                  {formData.uploadErrors[fileType] && (
+                    <small style={{ color: "red" }}>{formData.uploadErrors[fileType]}</small>
+                  )}
+                  {formData[`${fileType}Preview`] && (
+                    <div style={{ marginTop: '15px', textAlign: 'center' }}>
+                      <img
+                        src={`formData[${fileType}Preview]`}
+                        alt={`${fileType} Preview`}
+                        style={{ width: '80px', height: '80px', borderRadius: '8px', objectFit: 'cover' }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
+            ))}
+          </div>
 
-              {/* Member and Vehicle Count */}
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <label>Select Member Count</label>
+
+
+        </form>
+
+
+      </div>
+
+
+      <div className="container p-4" style={{ maxWidth: '1570px', marginLeft: '310px', marginTop: '20px' }}>
+        <form>
+          {/* Member Count Dropdown Toggle */}
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333' }}>
+                Member Counting:
+                <span style={{ color: '#aaa', marginLeft: '8px' }}>(Other Members)</span>
+              </label>
+            </div>
+            <div className="col-md-6 text-end">
+              <div style={{ display: 'inline-block', position: 'relative' }}>
+                <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333', marginRight: '10px' }}>
+                  Select Member
+                </label>
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    padding: '4px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={toggleMemberDropdown}
+                >
                   <select
                     name="memberCount"
                     className="form-control"
-                    value={formData.memberCount}
-                    onChange={(e) => {
-                      const count = Number(e.target.value);
-                      setFormData({
-                        ...formData,
-                        memberCount: count,
-                        members: Array(count).fill({ name: '', age: '', relation: '' }) // Initialize members array based on count
-                      });
+                    style={{
+                      width: '60px',
+                      border: 'none',
+                      appearance: 'none',
+                      background: 'none',
+                      fontSize: '14px',
+                      color: '#333',
+                      outline: 'none',
                     }}
+                    value={formData.memberCount}
+                    onChange={handleMemberCountChange}
+                    onClick={(e) => e.stopPropagation()} // Prevent dropdown toggle when selecting an option
                   >
-                    {[...Array(6).keys()].map((i) => (
-                      <option key={i} value={i}>
-                        {i}
-                      </option>
+                    {[...Array(7).keys()].map((num) => (
+                      <option key={num} value={num}>{num}</option>
                     ))}
                   </select>
+                  <span style={{ fontSize: '16px', marginLeft: '5px' }}>
+                    {memberDropdownOpen ? '▲' : '▼'}
+                  </span>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Render Member Fields Dynamically */}
-              {formData.members.map((member, index) => (
-                <div className="row mb-3" key={index}>
-                  <div className="col-md-4">
-                    <label>Member Name*</label>
-                    <input
-                      type="text"
-                      name="name"
-                      className="form-control"
-                      value={member.name}
-                      onChange={(e) => handleMemberChange(index, e)}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <label>Age*</label>
-                    <input
-                      type="number"
-                      name="age"
-                      className="form-control"
-                      value={member.age}
-                      onChange={(e) => handleMemberChange(index, e)}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <label>Relation*</label>
-                    <input
-                      type="text"
-                      name="relation"
-                      className="form-control"
-                      value={member.relation}
-                      onChange={(e) => handleMemberChange(index, e)}
-                      required
-                    />
-                  </div>
-                </div>
-              ))}
+          {/* Member Entry Fields - Conditional Rendering */}
+          {memberDropdownOpen && formData.memberCount > 0 && formData.members.map((member, index) => (
 
-              {/* Vehicle Count and Fields */}
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <label>Select Vehicle Count</label>
+            <div key={index} className="row mb-3">
+              <div className="col-md-2">
+                <label>Full Name<span className="text-danger">*</span></label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter Full Name"
+                  value={member.fullName || ''}
+                  onChange={(e) => handleMemberChange(index, 'fullName', e.target.value)}
+                />
+              </div>
+              <div className="col-md-2">
+                <label>Phone No<span className="text-danger">*</span></label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="+91"
+                  value={member.phone || ''}
+                  onChange={(e) => handleMemberChange(index, 'phone', e.target.value)}
+                />
+              </div>
+              <div className="col-md-2">
+                <label>Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter Email Address"
+                  value={member.email || ''}
+                  onChange={(e) => handleMemberChange(index, 'email', e.target.value)}
+                />
+              </div>
+              <div className="col-md-2">
+                <label>Age<span className="text-danger">*</span></label>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Enter Age"
+                  value={member.age || ''}
+                  onChange={(e) => handleMemberChange(index, 'age', e.target.value)}
+                />
+              </div>
+              <div className="col-md-2">
+                <label>Gender<span className="text-danger">*</span></label>
+                <select
+                  className="form-control"
+                  value={member.gender || ''}
+                  onChange={(e) => handleMemberChange(index, 'gender', e.target.value)}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div className="col-md-2">
+                <label>Relation<span className="text-danger">*</span></label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter Relation"
+                  value={member.relation || ''}
+                  onChange={(e) => handleMemberChange(index, 'relation', e.target.value)}
+                />
+              </div>
+            </div>
+          ))}
+        </form>
+      </div>
+
+
+      <div className="container p-4" style={{ maxWidth: '1570px', marginLeft: '310px', marginTop: '20px' }}>
+        <form>
+          {/* Vehicle Count Dropdown Toggle */}
+          <div className="row mb-6 align-items-center">
+            <div className="col-md-6">
+              <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333' }}>Vehicle Counting:</label>
+            </div>
+            <div className="col-md-6 text-end">
+              <div style={{ display: 'inline-block', position: 'relative' }}>
+                <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333', marginRight: '10px' }}>Select Vehicle</label>
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    padding: '4px 8px',
+                    cursor: 'pointer',
+                    marginBottom: "10px"
+                  }}
+                  onClick={toggleVehicleDropdown}
+                >
                   <select
                     name="vehicleCount"
                     className="form-control"
-                    value={formData.vehicleCount}
-                    onChange={(e) => {
-                      const count = Number(e.target.value);
-                      setFormData({
-                        ...formData,
-                        vehicleCount: count,
-                        vehicles: Array(count).fill({ vehicleType: '', vehicleNumber: '' }) // Initialize vehicles array based on count
-                      });
+                    style={{
+                      width: '60px',
+                      border: 'none',
+                      appearance: 'none',
+                      background: 'none',
+                      fontSize: '14px',
+                      color: '#333',
+                      outline: 'none',
                     }}
+                    value={formData.vehicleCount}
+                    onChange={handleVehicleCountChange}
+                    onClick={(e) => e.stopPropagation()}// Prevent toggle on selection
                   >
-                    {[...Array(6).keys()].map((i) => (
-                      <option key={i} value={i}>
-                        {i}
-                      </option>
+                    {[...Array(7).keys()].map((num) => (
+                      <option key={num} value={num}>{num}</option>
                     ))}
                   </select>
+                  <span style={{ fontSize: '16px', marginLeft: '5px' }}>{vehicleDropdownOpen ? '▲' : '▼'}</span>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Render Vehicle Fields Dynamically */}
+          {/* Vehicle Input Fields - Conditional Rendering */}
+          {vehicleDropdownOpen && formData.vehicleCount > 0 && (
+            <div className="row">
               {formData.vehicles.map((vehicle, index) => (
-                <div className="row mb-3" key={index}>
-                  <div className="col-md-4">
-                    <label>Vehicle Type*</label>
-                    <input
-                      type="text"
-                      name="vehicleType"
-                      className="form-control"
-                      value={vehicle.vehicleType}
-                      onChange={(e) => handleVehicleChange(index, e)}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <label>Vehicle Number*</label>
-                    <input
-                      type="text"
-                      name="vehicleNumber"
-                      className="form-control"
-                      value={vehicle.vehicleNumber}
-                      onChange={(e) => handleVehicleChange(index, e)}
-                      required
-                    />
+                <div
+                  key={index}
+                  className="col-md-6 mb-4" // Adds bottom margin to each item
+                  style={{
+                    padding: '15px',
+                    border: '1px solid #ddd',
+                    borderRadius: '5px',
+                    backgroundColor: '#fff',
+                  }}
+                >
+                  <div className="row">
+                    <div className="col-md-4">
+                      <label style={{ fontWeight: 'bold' }}>Vehicle Type*</label>
+                      <select
+                        name="vehicleType"
+                        className="form-control"
+                        value={vehicle.vehicleType || ''}
+                        onChange={(e) => handleVehicleChange(index, e)}
+                        required
+                      >
+                        <option value="">Select Vehicle Type</option>
+                        <option value="Two Wheeler">Two Wheeler</option>
+                        <option value="Four Wheeler">Four Wheeler</option>
+                      </select>
+                    </div>
+                    <div className="col-md-4">
+                      <label style={{ fontWeight: 'bold' }}>Vehicle Name</label>
+                      <input
+                        type="text"
+                        name="vehicleName"
+                        className="form-control"
+                        placeholder="Enter Name"
+                        value={vehicle.vehicleName || ''}
+                        onChange={(e) => handleVehicleChange(index, e)}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <label style={{ fontWeight: 'bold' }}>Vehicle Number</label>
+                      <input
+                        type="text"
+                        name="vehicleNumber"
+                        className="form-control"
+                        placeholder="Enter Number"
+                        value={vehicle.vehicleNumber || ''}
+                        onChange={(e) => handleVehicleChange(index, e)}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
+            </div>
+          )}
 
-              {/* Submit Button */}
-              <div className="text-center">
-                <button type="submit" className="btn mainColor2">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+
+        </form>
+
       </div>
-    </div>
+      <form onSubmit={handleSubmit}>
+        <div className="d-flex justify-content-end mt-4">
+          <button type="button" className="btn btn-secondary me-2">Cancel</button>
+          <button type="submit" className="btn btn-primary">Create</button>
+        </div>
+      </form>
+
+
+    </>
+
   );
 }
