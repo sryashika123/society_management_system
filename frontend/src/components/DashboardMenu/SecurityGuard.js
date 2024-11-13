@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Table, Modal, Form } from "react-bootstrap";
 import { RiAddBoxFill } from "react-icons/ri";
-import { FaCamera, FaClock, FaEdit, FaEye, FaFemale, FaMale, FaMoon, FaSun, FaTrash,  } from "react-icons/fa";
-import {LuImagePlus} from "react-icons/lu"
+import { FaCamera, FaClock, FaEdit, FaEye, FaFemale, FaMale, FaMoon, FaSun, FaTrash, } from "react-icons/fa";
+import { LuImagePlus } from "react-icons/lu"
 import SideBar from "../Layouts/Sidebar";
 import Avatar from "../images/Avatar.png";
 import { useEffect } from "react";
 
-const ComplaintTracking =()=> {
+
+const ComplaintTracking = () => {
     const [guards, setGuards] = useState([
         { name: 'Brooklyn Simmons ', phone: '94564 96321', shift: 'Day', date: '10/02/2024', time: '2:45 PM', gender: 'Male' },
         { name: 'Brooklyn Simmons', phone: '94564 96321', shift: 'Day', date: '10/02/2024', time: '2:45 PM', gender: 'Female' },
@@ -35,7 +36,7 @@ const ComplaintTracking =()=> {
     });
 
     const [editingguardIndex, setEditingguardIndex] = useState(null); // To track the index of the guard being edited
-    
+
 
     useEffect(() => {
         console.log('guard list updated', guards);
@@ -105,11 +106,13 @@ const ComplaintTracking =()=> {
     //     setEditingguardIndex(index); // Set the index of the guard being edited
     //     setShowModal(true); // Show the modal for editing
     // };
-    
-    return (
-        <Container fluid style={{ marginTop: "20px" }}>
 
+    return (
+       <> 
+        <Container fluid style={{ marginTop: "20px" }}>
+            
             <Row className="py-4">
+
                 <Col className="d-flex justify-content-between align-items-center">
                     <h2>Security guard Details</h2>
                     <Button variant="warning" className="text-white mainColor2 d-flex align-items-center" onClick={setShowModal}>
@@ -165,7 +168,7 @@ const ComplaintTracking =()=> {
                                         <div style={{
                                             color: "rgba(255, 255, 255, 1)",
                                             fontSize: "16px"
-                                        }}><FaCamera/></div>
+                                        }}><FaCamera /></div>
                                     )}
                                 </div>
                                 <div style={{ color: "#007bff" }}>Add Photo</div>
@@ -358,31 +361,31 @@ const ComplaintTracking =()=> {
                     <tbody>
                         {guards.map((guard) => (
                             <tr key={guard.id}>
-                               <td style={{ verticalAlign: "middle", width: "300px" }}>
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={Avatar}
-                          alt="avatar"
-                          className="rounded-circle"
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                            borderRadius: "36px",
-                            border: "2px solid #F4F4F4",
-                          }}
-                        />
-                        <span
-                          style={{
-                            fontSize: "16px",
-                         
-                            lineHeight: "24px",
-                            textAlign: "left",
-                          }}
-                        >
-                          {guard.name}
-                        </span>
-                      </div>
-                    </td>
+                                <td style={{ verticalAlign: "middle", width: "300px" }}>
+                                    <div className="d-flex align-items-center gap-2">
+                                        <img
+                                            src={Avatar}
+                                            alt="avatar"
+                                            className="rounded-circle"
+                                            style={{
+                                                width: "40px",
+                                                height: "40px",
+                                                borderRadius: "36px",
+                                                border: "2px solid #F4F4F4",
+                                            }}
+                                        />
+                                        <span
+                                            style={{
+                                                fontSize: "16px",
+
+                                                lineHeight: "24px",
+                                                textAlign: "left",
+                                            }}
+                                        >
+                                            {guard.name}
+                                        </span>
+                                    </div>
+                                </td>
                                 <td>{guard.phone}</td>
                                 <td className='text-center'>
                                     {guard.shift === 'Day' ? (
@@ -460,13 +463,13 @@ const ComplaintTracking =()=> {
                                 </td>
                                 <td className="text-center">
                                     <div className="d-flex align-items-center justify-content-center">
-                                        <FaEye className="text-primary me-2" style={{ cursor: "pointer" }}  />
+                                        <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} />
                                         <FaEdit
                                             className="text-success me-2"
                                             style={{ cursor: "pointer" }}
                                         />
 
-                                        <FaTrash className="text-danger" style={{ cursor: "pointer" }}  />
+                                        <FaTrash className="text-danger" style={{ cursor: "pointer" }} />
                                     </div>
                                 </td>
                             </tr>
@@ -475,6 +478,7 @@ const ComplaintTracking =()=> {
                 </Table>
             </div>
         </Container>
+        </>
     );
 };
 const Dashboard = () => {
@@ -485,6 +489,7 @@ const Dashboard = () => {
                     <SideBar />
                 </Col>
                 <Col xs={10} className="p-4" style={{ overflowX: "auto", minHeight: "100vh" }}>
+
                     <ComplaintTracking />
                 </Col>
             </Row>

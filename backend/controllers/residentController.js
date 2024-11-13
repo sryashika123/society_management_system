@@ -135,14 +135,16 @@ module.exports.updateResident = async (req, res) => {
             ];
             fileFields.forEach(field => {
                 if (req.files[field]) {
-                    const oldFilePath = path.join(__dirname, "..", residentData[field]);
+                    const oldFilePath = path.join(__dirname, "..", residentData[field]);                    
                     if (residentData[field] && fs.existsSync(oldFilePath)) {
                         fs.unlinkSync(oldFilePath); // Delete the old file
                     }
+                    
                     updateFields[field] = path.join(Resident.filePath, req.files[field][0].filename);
                 }
             });
         }
+        
         const updatedResident = await Resident.findByIdAndUpdate(id, updateFields, { new: true });
         if (!updatedResident) {
             return res.status(404).json({ msg: "Resident not found" });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Form, InputGroup, Row, Col } from 'react-bootstrap';
-import { TbPhotoUp } from "react-icons/tb";
+import { LuImagePlus } from 'react-icons/lu';
 
 const ExpenseModal = ({ showModal, handleClose, handleSubmit }) => {
     const [title, setTitle] = useState('');
@@ -30,12 +30,22 @@ const ExpenseModal = ({ showModal, handleClose, handleSubmit }) => {
     };
 
     // Handle form submission
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        const formData = { title, description, date, amount, file };
-        handleSubmit(formData);  // Send form data to the parent component
-        handleClose();  // Close modal after submission
+const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // Create new expense object with all required fields
+    const newExpense = {
+        title,
+        description,
+        date,
+        amount: `₹ ${amount}`, // Add currency symbol
+        billFormat: fileName.split('.').pop().toUpperCase(), // Extract file format (JPG, PNG, etc.)
     };
+
+    handleSubmit(newExpense); // Send form data to the parent component
+    handleClose(); // Close modal after submission
+};
+
 
 
     return (
@@ -116,7 +126,7 @@ const ExpenseModal = ({ showModal, handleClose, handleSubmit }) => {
                                 required
                                 className="file-input"
                             />
-                            <div className="upload-icon"><TbPhotoUp style={{ fontSize: '40px' }} /></div>
+                            <div className="upload-icon"><LuImagePlus style={{ fontSize: '40px' }} /></div>
                             <p className="upload-text">Upload a file <strong className='text-dark'>or drag and drop</strong></p>
                             <small className="text-muted">PNG, JPG, GIF up to 10MB</small>
                             {fileName && <p><strong>Selected file:</strong> {fileName}</p>}

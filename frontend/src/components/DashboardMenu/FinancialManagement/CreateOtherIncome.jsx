@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
 import { Modal, Form, Col, Row, InputGroup } from 'react-bootstrap';
 
-function CreateOtherIncome({ showModal, onClose }) {
+function CreateOtherIncome({ showModal, onClose , onSave  }) {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const handleSave = () => {
-        console.log({ title, date, dueDate, description, amount });
-
-        // const incomeData = { title, date, dueDate, description, amount };
-        onClose(); // Close modal after saving
+        // Create new income object
+        const newIncome = {
+            title,
+            date,
+            dueDate,
+            description,
+            amountPerMember: amount,
+            totalMembers: 0, // Optional: You can modify this field as needed
+        };
+    
+        // Pass the new income object to the parent component
+        onSave(newIncome);
+    
+        // Reset form fields
+        setTitle('');
+        setDate('');
+        setDueDate('');
+        setDescription('');
+        setAmount('');
     };
+    
     const handleCancel = () => {
         setTitle('');
         setDate('');

@@ -18,6 +18,13 @@ const OtherIncome = ({ income }) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
 
+    // Function to handle saving new income
+    const handleSaveIncome = (newIncome) => {
+        setIncomes([...incomes, newIncome]); // Add new income to the list
+        setShowCreateModal(false); // Close the modal
+    };
+
+
     // Open Delete Modal
     const openDeleteModal = (index) => {
         setSelectedIncome(incomes[index]); // Set the selected income
@@ -151,11 +158,13 @@ const OtherIncome = ({ income }) => {
                     >
                         Create Other Income
                     </button>
+
                     {/* Show CreateOtherIncome modal */}
                     {showCreateModal && (
                         <CreateOtherIncome
                             showModal={showCreateModal}
                             onClose={closeCreateModal}
+                            onSave={handleSaveIncome} // Pass the save handler
                         />
                     )}
                 </div>
