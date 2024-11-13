@@ -30,13 +30,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", require("./routes/authRoute"));
 app.use("/api/users/v2", require("./routes/societyRoutes.js"))
 app.use("/api/users/v3", require("./routes/ImportantNumRoute.js"));
-app.use("/api/users/v4", require("./routes/CompalintRoute"));
-app.use("/api/users/v5", require("./routes/profileRoute"));
-app.use("/api/users/v6", require("./routes/residenttRoute"));
-app.use("/api/users/v7", require("./routes/requestRoute"));
-app.use("/api/users/v8", require("./routes/security_protocol_Route"));
+app.use("/api/users/v4", require("./routes/CompalintRoute.js"));
+app.use("/api/users/v5", require("./routes/profileRoute.js"));
+app.use("/api/users/v6", require("./routes/residentRoute.js"));
+app.use("/api/users/v7", require("./routes/requestRoute.js"));
+app.use("/api/users/v8", require("./routes/security_protocol_Route.js"));
 app.use("/api/users/v9", require("./routes/visitorLogRoute.js"));
-app.use("/api/users/v10", require("./routes/SecuritygaurdRoute.js"))
+app.use("/api/users/v10", require("./routes/SecuritygaurdRoute.js"));
+app.use("/api/users/v11", require("./routes/NoteRoute.js"));
+app.use("/api/users/v12", require("./routes/ExpensesRoute.js"));
+app.use("/api/users/v13", require("./routes/OtherIncomeRoute.js"));
+app.use("/api/users/v14", require("./routes/FacilityRoute.js"));
 
 
 app.listen(port, (e)=>{
