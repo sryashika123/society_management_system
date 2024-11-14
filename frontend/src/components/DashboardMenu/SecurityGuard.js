@@ -167,12 +167,8 @@ const ComplaintTracking = () => {
 
     return (
         <Container fluid style={{ marginTop: "20px" }}>
-
             <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px"}}>
                 <div className="d-flex justify-content-between align-items-center">
-            <Row className="py-4">
-                <Col className="d-flex justify-content-between align-items-center">
-
                     <h2>Security guard Details</h2>
                     <Button variant="warning" className="text-white mainColor2 d-flex align-items-center" onClick={setShowModal}>
                         <RiAddBoxFill className="me-2" style={{ height: "24px", width: "24px" }} />
@@ -180,8 +176,6 @@ const ComplaintTracking = () => {
                     </Button>
                 </div>
             
-                </Col>
-            </Row>
 
             <Modal show={showViewGuard} onHide={handleClose} centered>
                 <Modal.Header closeButton>
@@ -207,7 +201,6 @@ const ComplaintTracking = () => {
                                 {guardData.shift}
                             </span>
                         </div>
-
 
                         <div style={{ textAlign: 'center' }}>
                             <p>Shift Time</p>
@@ -284,67 +277,6 @@ const ComplaintTracking = () => {
                             accept="image/png, image/jpeg"
                             style={{ display: 'none' }}
                         />
-
-            <div style={{ textAlign: 'center' }}>
-                <span>Gender</span>
-                <span style={{
-                    background: guardData.gender === 'Male' ? 'rgba(33, 168, 228, 0.1)' : 'rgba(254, 118, 168, 0.1)',
-                    color: guardData.gender === 'Male' ? 'rgba(86, 120, 233, 1)' : 'rgba(254, 118, 168, 1)',
-                    padding: '5px 15px',
-                    borderRadius: '25px',
-                    fontWeight: '500'
-                }}>
-                    {guardData.gender === 'Male' ? <FaMale /> : <FaFemale />}
-                    {guardData.gender}
-                </span>
-            </div>
-        </div>
-    </Modal.Body>
-</Modal>
-
-<Modal show={showDeleteGuard} onHide={handleClose} centered>
-    <Modal.Header closeButton>
-        <Modal.Title>Delete Protocol?</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-        <p>Are you sure you want to delete this protocol?</p>
-    </Modal.Body>
-    <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDelete} style={{ background: '#FF0000', color: 'white' }}>Delete</Button>
-    </Modal.Footer>
-</Modal>
-
-<Modal show={showModal} onHide={handleClose} centered>
-    <Modal.Header closeButton>
-        <Modal.Title>{isEdit ? 'Edit Security' : 'Add Security'}</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-        <div style={{ display: 'flex', marginBottom: '20px' }}>
-            <label htmlFor="photo-upload">
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer'
-                }}>
-                    <div style={{
-                        width: '50px',
-                        height: '50px',
-                        borderRadius: '50%',
-                        background: 'rgba(211, 211, 211, 1)',
-                        overflow: 'hidden',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginRight: '10px'
-                    }}>
-                        {newGuard.photo?.preview ? (
-                            <img src={newGuard.photo.preview} alt="Uploaded" style={{ width: '100%', height: '100%' }} />
-                        ) : (
-                            <FaCamera style={{ color: 'rgba(255, 255, 255, 1)', fontSize: '16px' }} />
-                        )}
-
                     </div>
 
                     <Form>
