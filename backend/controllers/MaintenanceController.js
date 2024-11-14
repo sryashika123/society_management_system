@@ -11,6 +11,7 @@ exports.createMaintenance = async (req, res) => {
     }
 };
 
+
 exports.getAllMaintenances = async (req, res) => {
     try{
         const maintenances = await Maintenance.find();

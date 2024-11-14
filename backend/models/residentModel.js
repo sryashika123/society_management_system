@@ -88,7 +88,6 @@ const residentSchema = new monggose.Schema({
         type: String,
         required: true
     },
-    
     residentStatus: {
         type: String,
         enum: ['Occupied', 'Vacate'],
@@ -104,7 +103,6 @@ const storage1 = multer.diskStorage({
     }
 });
 
-// Specify fields for multiple file uploads
 residentSchema.statics.uploadFiles = multer({ storage: storage1 }).fields([
     { name: "Profile_Photo", maxCount: 1 },
     { name: "Aadhar_card_frontSide", maxCount: 1 },
@@ -114,7 +112,6 @@ residentSchema.statics.uploadFiles = multer({ storage: storage1 }).fields([
 ]);
 
 residentSchema.statics.filePath = FILE_PATH;
-
 
 const Resident = monggose.model("Resident", residentSchema);
 module.exports = Resident;
