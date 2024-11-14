@@ -137,7 +137,6 @@ module.exports.updateResident = async (req, res) => {
             }  
           }
         });
-            
         }
         
         const updatedResident = await Resident.findByIdAndUpdate(id, updateFields, { new: true });
