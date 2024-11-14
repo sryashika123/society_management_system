@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendMail } = require('../utils/nodemailer');
 const otpService = require('../utils/otpService');
+const Society = require("../models/societyModel");
 
 // Register
 module.exports.register = async (req, res) => {
@@ -10,6 +11,11 @@ module.exports.register = async (req, res) => {
 		const { firstName, lastName, email, phone, country, state, city, select_society, password, confirmPassword } = req.body;
 		let user = await User.findOne({ email });
 		
+
+		const society = await Society.findById(select_society);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
 		if(user) {
 			return res.status(400).json({ msg: 'User already exists' });
 		}
@@ -28,9 +34,7 @@ module.exports.register = async (req, res) => {
 		console.error(err.message);
 		res.status(500).send('Server error');
 	}
-};
-
-// Login                                          
+};                                
 module.exports.login = async (req, res,err) => {
 	// console.log(req.body);
 	// console.log("JWT_SECRET:", process.env.JWT_SECRET);
@@ -49,9 +53,9 @@ module.exports.login = async (req, res,err) => {
 		}
 
 		const payload = {
-			user: { id: user.id, },
+			user: { user: user },
+			user: { id: user.id,email: user.email, password: user.password },
 		};
-		// console.log(payload);
 		
 		const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 		// res.cookie('token', token, { httpOnly: true, secure: true });
