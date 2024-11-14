@@ -11,15 +11,15 @@ const VisitorTable = () => {
 
     return (
         <Container fluid style={{ marginTop: "20px" }}>
-            <Row className="py-4">
-                <Col className="d-flex justify-content-between align-items-center">
+            <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
+                <div className="d-flex justify-content-between align-items-center">
                     <h2>Visitor Logs</h2>
-                </Col>
-            </Row>
+                </div>
+            
 
             {/* Visitor Table */}
-            <div style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
-               <Table hover responsive >
+          
+               <Table style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" , marginTop: "20px" }} >
               <thead style={{ background: "#5678E9", color: "#ffffff" }}>
                 <tr className="text-start">
                   <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Visitor Name</th>
@@ -81,6 +81,7 @@ const VisitorTable = () => {
                 ))}
               </tbody>
             </Table>
+            
             </div>
         </Container>
     );

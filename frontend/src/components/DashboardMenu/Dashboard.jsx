@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Col, Row, Card, ListGroup, Button, Form, Modal, Image, Dropdown } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { FaTrashAlt, FaRegEdit } from 'react-icons/fa';
+import { FaTrashAlt } from 'react-icons/fa';
+import { MdEditSquare } from "react-icons/md";
 import './RightSection.css';
 import SideBar from '../Layouts/Sidebar';
 import { FaSquarePlus } from "react-icons/fa6";
@@ -152,7 +153,7 @@ const RightSection = () => {
 
 
 	return (
-		<div className="d-flex flex-column flex-md-row vh-100">
+		<div className="d-flex flex-column flex-md-row vh-100 ms-4">
 			{/* Sidebar Section */}
 			<div className="col-12 col-md-3 flex-shrink-0" style={{ maxWidth: "300px" }}>
 				<SideBar />
@@ -162,236 +163,293 @@ const RightSection = () => {
 
 			<Col xs={12} md={10} className="right-section p-3">
 
-				
+
 				{/* Top Cards for Balance Information */}
-				<Row className="mb-3">
-					<BalanceInformation />
-				</Row>
+				<div>
+					<Row className="">
+						<BalanceInformation />
+					</Row>
 
-				{/* Line Chart for Balance */}
-				<Row className="mb-3">
-					<Col md={6} >
-						<Card className='p-3' style={{ minHeight: '400px' }}>
-							<Card.Title>
-								<span>Total Balance</span>
-								{/* React Bootstrap Dropdown with Radio Buttons */}
-								<Dropdown className="d-inline-flex" style={{ float: 'right' }}>
-									<Dropdown.Toggle id="dropdownMenuButton" className="d-flex align-items-center" style={{ background: 'white', border: '1px solid #ced4da', color: 'black' }}>
-										Month
-									</Dropdown.Toggle>
+					{/* Line Chart for Balance */}
+					<Row className="mb-3 ">
+						<Col md={6} lg={6}>
+							<Card className=" p-3 shadow-sm" style={{ minHeight: '400px', borderRadius: '10px' }}>
+								<Card.Title>
+									<span>Total Balance</span>
+									{/* React Bootstrap Dropdown with Radio Buttons */}
+									<Dropdown className="d-inline-flex" style={{ float: 'right' }}>
+										<Dropdown.Toggle id="dropdownMenuButton" className="d-flex align-items-center" style={{ background: 'white', border: '1px solid #ced4da', color: 'black' }}>
+											Month
+										</Dropdown.Toggle>
 
-									<Dropdown.Menu aria-labelledby="dropdownMenuButton">
-										<Dropdown.Item as="button">
-											<Form.Check
-												type="radio"
-												id="last-week"
-												label="Last Week"
-												checked={selectedPeriod === 'Last Week'}
-												onChange={() => setSelectedPeriod('Last Week')}
-											/>
-										</Dropdown.Item>
-										<Dropdown.Item as="button">
-											<Form.Check
-												type="radio"
-												id="last-month"
-												label="Last Month"
-												checked={selectedPeriod === 'Last Month'}
-												onChange={() => setSelectedPeriod('Last Month')}
-											/>
-										</Dropdown.Item>
-										<Dropdown.Item as="button">
-											<Form.Check
-												type="radio"
-												id="last-year"
-												label="Last Year"
-												checked={selectedPeriod === 'Last Year'}
-												onChange={() => setSelectedPeriod('Last Year')}
-											/>
-										</Dropdown.Item>
-									</Dropdown.Menu>
-								</Dropdown>
-							</Card.Title>
-							<div style={{ height: '300px' }}>
-								<Line ref={chartRef} data={balanceData} options={{ maintainAspectRatio: false }} />
-							</div>
-						</Card>
-					</Col>
+										<Dropdown.Menu aria-labelledby="dropdownMenuButton">
+											<Dropdown.Item as="button">
+												<Form.Check
+													type="radio"
+													id="last-week"
+													label="Last Week"
+													checked={selectedPeriod === 'Last Week'}
+													onChange={() => setSelectedPeriod('Last Week')}
+												/>
+											</Dropdown.Item>
+											<Dropdown.Item as="button">
+												<Form.Check
+													type="radio"
+													id="last-month"
+													label="Last Month"
+													checked={selectedPeriod === 'Last Month'}
+													onChange={() => setSelectedPeriod('Last Month')}
+												/>
+											</Dropdown.Item>
+											<Dropdown.Item as="button">
+												<Form.Check
+													type="radio"
+													id="last-year"
+													label="Last Year"
+													checked={selectedPeriod === 'Last Year'}
+													onChange={() => setSelectedPeriod('Last Year')}
+												/>
+											</Dropdown.Item>
+										</Dropdown.Menu>
+									</Dropdown>
+								</Card.Title>
+								<div style={{ height: '300px' }}>
+									<Line ref={chartRef} data={balanceData} options={{ maintainAspectRatio: false }} />
+								</div>
+							</Card>
+						</Col>
 
-					{/* Important Numbers Section */}
-					<Col md={3} style={{
-						overflowY: 'scroll', // Prevent overflow on the column
-						height: '42vh', // Set the height of the column
-					}}
-						className="custom-scrollbar">
-						<Card style={{ borderRadius: '10px', border: 'none' }}>
-							<Card.Header style={{ borderBottom: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white' }}>
-								<span style={{ fontSize: '18px' }}>Important Numbers</span>
-								<Button variant="primary" size="sm" className="float-end" style={{ backgroundColor: '#ee6a42', border: 'none', display: 'flex', alignItems: 'center', padding: '8px', borderRadius: '5px' }}
-									onClick={handleAdd}>
-									<FaSquarePlus />&nbsp; <span style={{ color: 'white', fontSize: '16px', fontWeight: '500' }}> Add</span>
-								</Button>
-							</Card.Header>
-							<ListGroup variant="flush" >
-								{importantNumbers.map((contact, index) => (
-									<ListGroup.Item key={index} className="d-flex justify-content-between align-items-center" style={{ border: 'none' }}>
-										<div>
-											<strong>Name:</strong> {contact.name}<br />
-											<strong>Phone:</strong> {contact.phone}<br />
-											<strong>Work:</strong> {contact.work}
-										</div>
-										<div>
-											<Button variant="danger" size="sm" className="me-2" onClick={() => handleDelete(index)}>
-												<FaTrashAlt />
-
-											</Button>
-											<Button variant="success" size="sm" onClick={() => handleEdit(index)}>
-												<FaRegEdit />
-											</Button>
-										</div>
-									</ListGroup.Item>
-								))}
-							</ListGroup>
-						</Card>
-						<Modal show={showModal} onHide={handleCloseModal}>
-							<Modal.Header closeButton style={{ border: 'none' }}>
-								<Modal.Title>Add Important Number</Modal.Title>
-							</Modal.Header>
-							<Modal.Body >
-								<Form.Group controlId="editName">
-									<Form.Label style={{ color: '#202224', fontWeight: '500' }}>Full Name
-										<span className="text-danger">*</span>
-									</Form.Label>
-									<Form.Control
-										type="text"
-										name="name"
-										placeholder='Enter Full  Name'
-										value={editData.name}
-										onChange={handleInputChange}
-										required
-									/>
-									<br></br>
-								</Form.Group>
-								<Form.Group controlId="editPhone">
-									<Form.Label style={{ color: '#202224', fontWeight: '500' }}>Phone
-										<span className="text-danger">*</span>
-									</Form.Label>
-									<Form.Control
-										type="text"
-										name="phone"
-										placeholder='+91 '
-										value={editData.phone}
-										onChange={handleInputChange}
-										required
-									/>
-									<br></br>
-								</Form.Group>
-								<Form.Group controlId="editWork">
-									<Form.Label style={{ color: '#202224', fontWeight: '500' }}>Work
-										<span className="text-danger">*</span>
-									</Form.Label>
-									<Form.Control
-										type="text"
-										name="work"
-										placeholder='Enter Work'
-										value={editData.work}
-										onChange={handleInputChange}
-										required
-									/>
-
-
-								</Form.Group>
-							</Modal.Body>
-							<div className="d-flex justify-content-between">
-								<button type="button" className="btn btn-outline-secondary" onClick={handleCloseModal}
-									style={{ width: '45%', borderRadius: '10px', marginBottom: '10px', marginLeft: '10px' }}
-									data-bs-dismiss="modal">Cancel</button>
-								<button
-									type="submit"
-									className="btn"
-									onClick={handleSaveEdit}
+						{/* Important Numbers Section */}
+						<Col
+							xs={12}        // Full width on extra small screens (mobile)
+							sm={12}        // Full width on small screens (tablet portrait)
+							md={6}         // Half width on medium screens (tablet landscape)
+							lg={4}         // One-third width on large screens (desktop)
+							xl={3}         // Quarter width on extra-large screens
+							style={{
+								overflowY: 'scroll', // Enable scroll for overflow content
+								maxHeight: '42vh',   // Set max height for column
+							}}
+							className="custom-scrollbar"
+						>
+							<Card className="shadow-sm" style={{ borderRadius: '10px' }}>
+								<Card.Header
 									style={{
-										background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
-										color: 'White',
-										width: '45%',
-										borderRadius: '10px',
-										marginBottom: '10px',
-										marginRight: '10px'
+										borderBottom: 'none',
+										display: 'flex',
+										justifyContent: 'space-between',
+										alignItems: 'center',
+										backgroundColor: 'white',
 									}}
-									data-bs-dismiss="modal"
 								>
-									Save
-								</button>
-							</div>
-						</Modal>
-
-						{/* Delete Confirmation Modal */}
-						<Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
-							<Modal.Header closeButton style={{ border: 'none' }}>
-								<Modal.Title>Delete Number ?</Modal.Title>
-							</Modal.Header>
-							<Modal.Body style={{ color: '#A7A7A7' }}>Are you sure you want to delete this contact?</Modal.Body>
-							<Modal.Footer style={{ border: 'none' }}>
-								<button type="button" className="btn btn-outline-secondary"
-									style={{ width: '45%', borderRadius: '10px', marginBottom: '10px', color: '#202224', marginRight: '20px' }}
-									onClick={handleCloseDeleteModal}>Cancel
-								</button>
-								<button
-									type="submit"
-									className="btn"
-									style={{ color: 'white', background: '#E74C3C', width: '45%', borderRadius: '10px', marginBottom: '10px', marginRight: '10px' }}
-									onClick={confirmDelete}>Delete</button>
-							</Modal.Footer>
-						</Modal>
-
-					</Col>
-
-					{/* Pending Maintenances Section */}
-					<Col md={3} style={{
-						overflowY: 'scroll', // Prevent overflow on the column
-						height: '42vh', // Set the height of the column
-					}}
-						className="custom-scrollbar" >
-						<Card style={{ borderRadius: '10px', border: 'none' }}>
-							<Card.Header
-								style={{
-									borderBottom: 'none',
-									display: 'flex',
-									justifyContent: 'space-between',
-									alignItems: 'center',
-									backgroundColor: 'white',
-									marginTop: '16px',
-								}}
-							>
-								<span style={{ fontSize: '18px' }}>Pending Maintenances</span>
-								<Link to="#">View All</Link>
-							</Card.Header>
-							<ListGroup variant="flush">
-								{maintenances.map((maintenance, index) => (
-									<ListGroup.Item
-										key={index}
-										className="d-flex justify-content-between align-items-center"
-										style={{ border: 'none' }}
+									<span style={{ fontSize: '18px' }}>Important Numbers</span>
+									<Button
+										variant="primary"
+										size="sm"
+										className="float-end"
+										style={{
+											backgroundColor: '#ee6a42',
+											border: 'none',
+											display: 'flex',
+											alignItems: 'center',
+											padding: '8px',
+											borderRadius: '5px',
+										}}
+										onClick={handleAdd}
 									>
-										<div className="d-flex align-items-center">
-											<Image
-												src="https://via.placeholder.com/40"
-												roundedCircle
-												alt="User Avatar"
-												className="me-2"
-												style={{ width: '40px', height: '40px' }}
-											/>
+										<FaSquarePlus />
+										&nbsp; <span style={{ color: 'white', fontSize: '16px', fontWeight: '500' }}>Add</span>
+									</Button>
+								</Card.Header>
+
+								<ListGroup variant="flush">
+									{importantNumbers.map((contact, index) => (
+										<ListGroup.Item
+											key={index}
+											className="d-flex justify-content-between align-items-center"
+											style={{ border: 'none' }}
+										>
 											<div>
-												<div><div style={{ color: '#202224', fontWeight: '500' }}>{maintenance.name}</div>
-													<div style={{ color: '#A7A7A7', fontWeight: '500', fontSize: '12px' }}> {maintenance.monthsPending} Month Pending</div></div>
+												<strong>Name:</strong> {contact.name}<br />
+												<strong>Phone:</strong> {contact.phone}<br />
+												<strong>Work:</strong> {contact.work}
 											</div>
-										</div>
-										<div className='mainColor fw-bold'>₹ {maintenance.amount.toLocaleString()}</div>
-									</ListGroup.Item>
-								))}
-							</ListGroup>
-						</Card>
-					</Col>
-				</Row>
+											<div>
+												<Button
+													style={{ backgroundColor: 'white', border: 'none' }}
+													size="sm"
+													className="me-2"
+													onClick={() => handleDelete(index)}
+												>
+													<FaTrashAlt style={{ color: 'red', fontSize: '20px' }} />
+												</Button>
+												<Button
+													style={{ backgroundColor: 'white', border: 'none' }}
+													size="sm"
+													onClick={() => handleEdit(index)}
+												>
+													<MdEditSquare style={{ color: 'green', fontSize: '24px' }} />
+												</Button>
+											</div>
+										</ListGroup.Item>
+									))}
+								</ListGroup>
+							</Card>
+
+							{/* Add/Edit Modal */}
+							<Modal show={showModal} onHide={handleCloseModal} centered className="square-modal">
+								<Modal.Header closeButton style={{ border: 'none' }}>
+									<Modal.Title>Add Important Number</Modal.Title>
+								</Modal.Header>
+								<Modal.Body>
+									<Form.Group controlId="editName">
+										<Form.Label>Full Name <span className="text-danger">*</span></Form.Label>
+										<Form.Control
+											type="text"
+											name="name"
+											placeholder="Enter Full Name"
+											value={editData.name}
+											onChange={handleInputChange}
+											required
+										/>
+									</Form.Group>
+									<Form.Group controlId="editPhone" className="mt-3">
+										<Form.Label>Phone <span className="text-danger">*</span></Form.Label>
+										<Form.Control
+											type="text"
+											name="phone"
+											placeholder="+91"
+											value={editData.phone}
+											onChange={handleInputChange}
+											required
+										/>
+									</Form.Group>
+									<Form.Group controlId="editWork" className="mt-3">
+										<Form.Label>Work <span className="text-danger">*</span></Form.Label>
+										<Form.Control
+											type="text"
+											name="work"
+											placeholder="Enter Work"
+											value={editData.work}
+											onChange={handleInputChange}
+											required
+										/>
+									</Form.Group>
+								</Modal.Body>
+								<Modal.Footer>
+									<button
+										type="button"
+										className="btn btn-outline-secondary"
+										onClick={handleCloseModal}
+										style={{ width: '45%', borderRadius: '10px' }}
+									>
+										Cancel
+									</button>
+									<button
+										type="submit"
+										className="btn"
+										onClick={handleSaveEdit}
+										style={{
+											background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+											color: 'white',
+											width: '45%',
+											borderRadius: '10px',
+										}}
+									>
+										Save
+									</button>
+								</Modal.Footer>
+							</Modal>
+
+							{/* Delete Confirmation Modal */}
+							<Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+								<Modal.Header closeButton style={{ border: 'none' }}>
+									<Modal.Title>Delete Number?</Modal.Title>
+								</Modal.Header>
+								<Modal.Body>Are you sure you want to delete this contact?</Modal.Body>
+								<Modal.Footer className='d-flex justify-content-between' style={{ borderTop: 'none' }}>
+									<button
+										type="button"
+										className="btn btn-outline-secondary"
+										onClick={handleCloseDeleteModal}
+										style={{ width: '45%', borderRadius: '10px' }}
+									>
+										Cancel
+									</button>
+									<button
+										type="button"
+										className="btn btn-danger"
+										onClick={confirmDelete}
+										style={{ width: '45%', borderRadius: '10px' }}
+									>
+										Delete
+									</button>
+								</Modal.Footer>
+							</Modal>
+						</Col>
+
+
+						{/* Pending Maintenances Section */}
+						<Col
+							xs={12}        // Full width on extra small screens (mobile)
+							sm={12}        // Full width on small screens (tablet portrait)
+							md={6}         // Half width on medium screens (tablet landscape)
+							lg={4}         // One-third width on large screens (desktop)
+							xl={3}         // Quarter width on extra-large screens
+							style={{
+								overflowY: 'scroll', // Enable scroll for overflow content
+								maxHeight: '42vh',   // Set max height for column
+							}}
+							className="custom-scrollbar"
+						>
+							<Card className="shadow-sm" style={{ borderRadius: '10px' }}>
+								<Card.Header
+									style={{
+										borderBottom: 'none',
+										display: 'flex',
+										justifyContent: 'space-between',
+										alignItems: 'center',
+										backgroundColor: 'white',
+										marginTop: '16px',
+									}}
+								>
+									<span style={{ fontSize: '18px' }}>Pending Maintenances</span>
+									<Link to="#" style={{ fontSize: '14px', color: '#007bff', textDecoration: 'none' }}>View All</Link>
+								</Card.Header>
+
+								<ListGroup variant="flush">
+									{maintenances.map((maintenance, index) => (
+										<ListGroup.Item
+											key={index}
+											className="d-flex justify-content-between align-items-center"
+											style={{ border: 'none' }}
+										>
+											<div className="d-flex align-items-center">
+												<Image
+													src="https://via.placeholder.com/40"
+													roundedCircle
+													alt="User Avatar"
+													className="me-2"
+													style={{ width: '40px', height: '40px' }}
+												/>
+												<div>
+													<div style={{ color: '#202224', fontWeight: '500' }}>{maintenance.name}</div>
+													<div style={{ color: '#A7A7A7', fontWeight: '500', fontSize: '12px' }}>
+														{maintenance.monthsPending} Month Pending
+													</div>
+												</div>
+											</div>
+											<div className="mainColor fw-bold">
+												₹ {maintenance.amount.toLocaleString()}
+											</div>
+										</ListGroup.Item>
+									))}
+								</ListGroup>
+							</Card>
+						</Col>
+
+					</Row>
+				</div>
 
 				{/* Complaint List */}
 				<Row className="mb-3">
@@ -400,13 +458,17 @@ const RightSection = () => {
 					</Col>
 
 					{/* Upcoming Activity Form */}
-					<Col md={3}
+					<Col xs={12}        // Full width on extra small screens (mobile)
+							sm={12}        // Full width on small screens (tablet portrait)
+							md={6}         // Half width on medium screens (tablet landscape)
+							lg={4}         // One-third width on large screens (desktop)
+							xl={3}         // Quarter width on extra-large screens
 						style={{
 							overflowY: 'scroll', // Prevent overflow on the column
-							height: '33vh', // Set the height of the column
+							height: '33vh', // Set the height of the column for larger screens
 						}}
 						className="custom-scrollbar">
-						<Card style={{ borderRadius: '10px', border: 'none' }}>
+						<Card className="shadow-sm" style={{ borderRadius: '10px' }}>
 							<Card.Header style={{
 								borderBottom: 'none',
 								display: 'flex',
@@ -414,7 +476,8 @@ const RightSection = () => {
 								alignItems: 'center',
 								backgroundColor: 'white',
 								fontSize: '18px'
-							}}><div >Upcoming Activity</div>
+							}}>
+								<div>Upcoming Activity</div>
 
 								{/* React Bootstrap Dropdown with Radio Buttons */}
 								<Dropdown className="d-inline-flex">
@@ -478,6 +541,7 @@ const RightSection = () => {
 							</ListGroup>
 						</Card>
 					</Col>
+
 				</Row>
 			</Col>
 		</div>

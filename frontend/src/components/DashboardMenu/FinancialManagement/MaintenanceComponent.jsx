@@ -143,7 +143,7 @@ const MaintenanceComponent = () => {
 				</Modal>
 
 				{/* Maintenance Modal */}
-				<Modal show={showMaintenanceModal} onHide={handleMaintenanceModalClose} centered >
+				<Modal show={showMaintenanceModal} onHide={handleMaintenanceModalClose} centered className='square-modal'>
 					<Modal.Header closeButton style={{ borderBottom: 'none' }}>
 						<Modal.Title >Add Maintenance Detail</Modal.Title>
 					</Modal.Header>

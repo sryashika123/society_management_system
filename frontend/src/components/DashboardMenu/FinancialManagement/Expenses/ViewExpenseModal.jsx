@@ -17,7 +17,7 @@ const ViewExpenseModal = ({ expense, onClose }) => {
                         <p><span className='text-muted fw-bold'>Date:</span><br /> {expense.date}</p>
                         <p className='ms-5'>
                             <span className='text-muted fw-bold'>Amount:</span><br />
-                            <span className="badge bg-light text-dark py-2 px-3 rounded-pill">{`₹${expense.amount}`}</span>
+                            <span className="badge bg-light text-dark py-2 px-3 rounded-pill">{`${expense.amount}`}</span>
                         </p>
                     </div>
                 </div>

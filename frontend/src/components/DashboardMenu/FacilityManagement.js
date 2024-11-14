@@ -72,9 +72,10 @@ const FacilityManagement = () => {
 
 
       <div className="col p-4 flex-grow-1 d-flex flex-column align-items-center" style={{ borderRadius: "20px", backgroundColor: "#F6F8FB" }}>
-       
-        <div className="d-flex justify-content-between align-items-center w-100 m-4" >
-          <h3 style={{marginLeft: "40px"}}>Facility Management</h3>
+      <div className="shadow p-4 rounded" style={{ width: "95%", backgroundColor: "#FFFFFF", borderRadius: "15px", boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", marginTop: "20px" }}>
+        
+      <div className="d-flex justify-content-between align-items-center w-100 m-4">
+          <h3>Facility Management</h3>
           <Button
             className="text-white mainColor2"
             onClick={() => {
@@ -90,7 +91,7 @@ const FacilityManagement = () => {
         </div>
 
         {/* Main container with shadow/border effect */}
-        <div className="shadow p-4 rounded" style={{ width: "95%", backgroundColor: "#FFFFFF", borderRadius: "15px", boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)" }}>
+        <div>
           <div className="row m-2">
             {facilities.map((facility, index) => (
               <div className="col-12 col-md-6 col-lg-3 mb-4" key={index}>
@@ -115,6 +116,7 @@ const FacilityManagement = () => {
               </div>
             ))}
           </div>
+        </div>
         </div>
 
         <Modal show={showModal} onHide={handleCloseModal} centered>
