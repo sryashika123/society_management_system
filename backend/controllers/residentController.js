@@ -92,6 +92,64 @@ module.exports.deleteResident = async (req, res) => {
 };
 
 module.exports.updateResident = async (req, res) => {
+
+    try{
+        const id = req.params.id;
+        const residentData = await Resident.findById(id);
+        if(!residentData) return res.status(404).json({ msg: "Resident data not found" });
+        const {
+            role,ownerName, ownerPhone, ownerAddress,
+            Full_name, Phone_number, Email, age, gender,
+            wing, unit, Relation, Member_Counting,
+            vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number,
+            residentStatus
+        } = req.body;
+        let updateFields = {};
+        const addFields = (fields) => {
+            fields.forEach(field => {
+                if(req.body[field]) updateFields[field] = req.body[field];
+            });
+        };
+        addFields([
+            'Full_name', 'Phone_number', 'Email', 'age', 'gender', 'wing', 'unit', 'Relation',
+            'Member_Counting', 'vehicle_Counting', 'vehicle_Type', 'vehicle_Name', 'vehicle_Number', 'residentStatus'
+        ]);
+        if(role && role.toLowerCase() === "tenant"){
+            addFields(['ownerName', 'ownerPhone', 'ownerAddress']);
+        }
+        if(req.files){
+            const fileFields = [
+                "Profile_Photo", "Aadhar_card_frontSide", "Aadhar_card_backSide",
+                "Address_Proof_VeraBill_or_LightBill", "Rent_Agreement"
+            ];
+            fileFields.forEach(field => {
+                if (req.files[field]) {                         
+                    const oldFilePath = path.join(__dirname, "..", residentData[field]);                    
+                    if (residentData[field] && fs.existsSync(oldFilePath)) {
+                        fs.unlinkSync(oldFilePath); // Delete the old file
+                if(req.files[field]){
+                    const oldFilePath = path.join(__dirname, "..", residentData[field]);
+                    if(residentData[field] && fs.existsSync(oldFilePath)){
+                        fs.unlinkSync(oldFilePath); 
+
+                    }
+                }
+                    updateFields[field] = path.join(Resident.filePath, req.files[field][0].filename);
+            }  
+          }
+        });
+        }
+        
+        const updatedResident = await Resident.findByIdAndUpdate(id, updateFields, { new: true });
+        if(!updatedResident){
+            return res.status(404).json({ msg: "Resident not found" });
+        }
+        res.json({ msg: "Resident updated successfully", updatedResident });
+    } 
+    catch(err){
+        console.error("Error updating resident:", err.message);
+        res.status(500).json({ msg: "Server error", error: err.message });
+
     try {
       const id = req.params.id;
   

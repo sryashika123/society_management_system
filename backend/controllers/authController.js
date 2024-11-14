@@ -34,9 +34,7 @@ module.exports.register = async (req, res) => {
 		console.error(err.message);
 		res.status(500).send('Server error');
 	}
-};
-
-// Login                                          
+};                                
 module.exports.login = async (req, res,err) => {
 	// console.log(req.body);
 	// console.log("JWT_SECRET:", process.env.JWT_SECRET);
@@ -55,9 +53,9 @@ module.exports.login = async (req, res,err) => {
 		}
 
 		const payload = {
-			user: { id: user.id, },
+			user: { user: user },
+			user: { id: user.id,email: user.email, password: user.password },
 		};
-		// console.log(payload);
 		
 		const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 		// res.cookie('token', token, { httpOnly: true, secure: true });
