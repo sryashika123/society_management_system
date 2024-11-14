@@ -13,7 +13,6 @@ module.exports.viewProfile = async(req,res)=>{
     }
 }
 
-
 module.exports.updateProfile = async (req, res) => {
     try{
         const { id } = req.params;
@@ -49,8 +48,6 @@ module.exports.updateProfile = async (req, res) => {
         res.status(500).send("Data not updated");
     }
 };
-
-
 
 module.exports.deleteProfile = async (req, res) => {
     try{

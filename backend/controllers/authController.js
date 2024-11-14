@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendMail } = require('../utils/nodemailer');
 const otpService = require('../utils/otpService');
+const Society = require("../models/societyModel");
 
 // Register
 module.exports.register = async (req, res) => {
@@ -10,6 +11,11 @@ module.exports.register = async (req, res) => {
 		const { firstName, lastName, email, phone, country, state, city, select_society, password, confirmPassword } = req.body;
 		let user = await User.findOne({ email });
 		
+
+		const society = await Society.findById(select_society);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
 		if(user) {
 			return res.status(400).json({ msg: 'User already exists' });
 		}
