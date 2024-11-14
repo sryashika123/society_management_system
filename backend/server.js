@@ -43,11 +43,8 @@ app.use("/api/users/v13", require("./routes/OtherIncomeRoute.js"));
 app.use("/api/users/v14", require("./routes/FacilityRoute.js"));
 app.use("/api/users/v15", require("./routes/MaintenanceRoute.js"));
 app.use("/api/users/v16", require("./routes/PollRoute.js"));
-
 app.use("/api/users/v17", require("./routes/AlertRoute.js"));
 app.use("/api/users/v18", require("./routes/VisitortrackingRoute.js"));
-
-
 app.use("/api/users/v19", require("./routes/PaymentRoute.js"));
 
 
