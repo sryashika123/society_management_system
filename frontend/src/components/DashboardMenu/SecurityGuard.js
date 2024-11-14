@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button, Table, Modal, Form, } from "react-bootstrap";
 import { RiAddBoxFill } from "react-icons/ri";
 import { FaCamera, FaEdit, FaEye, FaFemale, FaMale, FaMoon, FaSun, FaTrash, } from "react-icons/fa";
-import { FaCamera, FaClock, FaEdit, FaEye, FaFemale, FaMale, FaMoon, FaSun, FaTrash, } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu"
 import SideBar from "../Layouts/Sidebar";
 import Avatar from "../images/Avatar.png";
 import { useEffect } from "react";
-
 
 const ComplaintTracking = () => {
     const [guards, setGuards] = useState([
@@ -44,7 +42,6 @@ const ComplaintTracking = () => {
         aadhaar: null,
     });
 
-
     const handleShowCreate = () => {
         setIsEdit(false);
         setEditGuardId(null);
@@ -70,10 +67,6 @@ const ComplaintTracking = () => {
         setDeleteGuardId(guardId);
         setShowDeleteGuard(true);
     };
-
-    const [editingguardIndex, setEditingguardIndex] = useState(null); // To track the index of the guard being edited
-
-
 
     const handleShowView = (guard) => {
         setGuardData(guard);
@@ -172,21 +165,9 @@ const ComplaintTracking = () => {
     };
 
 
-
-    // const handleEditguard = (index) => {
-    //     const guard = guards[index];
-    //     setNewguard(guard);
-    //     setEditingguardIndex(index); // Set the index of the guard being edited
-    //     setShowModal(true); // Show the modal for editing
-    // };
-
-
     return (
-       <> 
         <Container fluid style={{ marginTop: "20px" }}>
-
             <Row className="py-4">
-
                 <Col className="d-flex justify-content-between align-items-center">
                     <h2>Security guard Details</h2>
                     <Button variant="warning" className="text-white mainColor2 d-flex align-items-center" onClick={setShowModal}>
@@ -195,7 +176,6 @@ const ComplaintTracking = () => {
                     </Button>
                 </Col>
             </Row>
-
 
             <Modal show={showViewGuard} onHide={handleClose} centered>
     <Modal.Header closeButton>
@@ -286,68 +266,6 @@ const ComplaintTracking = () => {
                         ) : (
                             <FaCamera style={{ color: 'rgba(255, 255, 255, 1)', fontSize: '16px' }} />
                         )}
-
-            {/* Modal for Create guard Form */}
-            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add Security</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {/* Add Photo Section */}
-                    <div className="text-start" style={{ display: 'flex', marginBottom: '20px' }}>
-                        <label htmlFor="photo-upload" style={{ cursor: 'pointer', textAlign: 'center' }}>
-                            <div
-                                style={{
-                                    display: 'flex',             // Use flex layout for the row
-                                    flexDirection: 'row',        // Align the image and text horizontally (side by side)
-                                    alignItems: 'center',        // Vertically center the content
-                                    justifyContent: 'center',    // Center the content horizontally
-                                    textAlign: 'center',
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        width: "50px",
-                                        height: "50px",
-                                        borderRadius: "50%",
-                                        background: "rgba(211, 211, 211, 1)",
-                                        overflow: "hidden",
-                                        display: "flex",             // Ensure flex layout for the circle
-                                        alignItems: "center",       // Center the image inside the circle
-                                        justifyContent: "center",   // Center the image inside the circle
-                                        border: "2px solid #ddd",
-                                        marginRight: "10px",        // Add some spacing between the image and text
-                                    }}
-                                >
-                                    {newguard.photo?.preview ? (
-                                        <img
-                                            src={newguard.photo.preview}  // Access preview here
-                                            alt="Uploaded"
-                                            style={{
-                                                width: "100%",
-                                                height: "100%",
-                                                objectFit: "cover",
-                                                borderRadius: "50%",        // Keep the circle shape
-                                            }}
-                                        />
-                                    ) : (
-                                        <div style={{
-                                            color: "rgba(255, 255, 255, 1)",
-                                            fontSize: "16px"
-                                        }}><FaCamera /></div>
-                                    )}
-                                </div>
-                                <div style={{ color: "#007bff" }}>Add Photo</div>
-                            </div>
-                        </label>
-                        <input
-                            id="photo-upload"
-                            type="file"
-                            onChange={(e) => handleFileChange(e, 'photo')}
-                            accept="image/png, image/jpeg"
-                            style={{ display: 'none' }}
-                        />
-
                     </div>
                     <div>Add Photo</div>
                 </div>
@@ -487,83 +405,9 @@ const ComplaintTracking = () => {
                     <tbody>
                         {guards.map((guard) => (
                             <tr key={guard.id}>
-
                                 <td className="d-flex align-items-center gap-2">
                                     <img src={Avatar} alt="avatar" className="rounded-circle" style={{ width: "40px", height: "40px", borderRadius: "36px", border: "2px solid #F4F4F4" }} />
                                     <span style={{ fontSize: "16px", lineHeight: "24px", textAlign: "left" }}>{guard.name}</span>
-
-                                <td style={{ verticalAlign: "middle", width: "300px" }}>
-                                    <div className="d-flex align-items-center gap-2">
-                                        <img
-                                            src={Avatar}
-                                            alt="avatar"
-                                            className="rounded-circle"
-                                            style={{
-                                                width: "40px",
-                                                height: "40px",
-                                                borderRadius: "36px",
-                                                border: "2px solid #F4F4F4",
-                                            }}
-                                        />
-                                        <span
-                                            style={{
-                                                fontSize: "16px",
-
-                                                lineHeight: "24px",
-                                                textAlign: "left",
-                                            }}
-                                        >
-                                            {guard.name}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td>{guard.phone}</td>
-                                <td className='text-center'>
-                                    {guard.shift === 'Day' ? (
-                                        <span
-                                            style={{
-                                                display: "inline-flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                width: "113px",
-                                                height: "31px",
-                                                textAlign: "center",
-                                                fontFamily: "Poppins",
-                                                borderRadius: "50px",
-                                                background: "rgba(244, 244, 244, 1)",
-                                                color: "rgba(255, 147, 0, 1)", // Text and icon color
-                                                fontSize: "16px", // Optional for font size
-                                                fontWeight: "500", // Optional for font weight
-                                            }}
-                                            role="img"
-                                            aria-label="Day"
-                                        >
-                                            <FaSun style={{ marginRight: "5px" }} />
-                                            Day
-                                        </span>
-                                    ) : (
-                                        <span
-                                            style={{
-                                                display: "inline-flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                fontFamily: "Poppins",
-                                                width: "113px",
-                                                height: "31px",
-                                                borderRadius: "50px",
-                                                background: "rgba(79, 79, 79, 1)",  // Dark background
-                                                color: "rgba(255, 255, 255, 1)",    // White text and icon color
-                                                fontSize: "16px",                   // Optional font size
-                                                fontWeight: "500",                  // Optional font weight
-                                            }}
-                                            role="img"
-                                            aria-label="Night"
-                                        >
-                                            <FaMoon style={{ marginRight: "5px" }} />
-                                            Night
-                                        </span>
-                                    )}
-
                                 </td>
                                 <td>{guard.phone}</td>
                                 <td className="text-center">
@@ -600,18 +444,9 @@ const ComplaintTracking = () => {
                     </td>
                                 <td className='text-center' style={{ verticalAlign: "middle" }}>
                                     <div className="d-flex align-items-center justify-content-center">
-
                                         <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShowEdit(guard)} />
                                         <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShowView(guard)} />
                                         <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(guard.id)} />
-                                        <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} />
-                                        <FaEdit
-                                            className="text-success me-2"
-                                            style={{ cursor: "pointer" }}
-                                        />
-
-                                        <FaTrash className="text-danger" style={{ cursor: "pointer" }} />
-
                                     </div>
                                 </td>
                             </tr>
@@ -620,7 +455,6 @@ const ComplaintTracking = () => {
                 </Table>
             </div>
         </Container>
-        </>
     );
 };
 const Dashboard = () => {
@@ -631,7 +465,6 @@ const Dashboard = () => {
                     <SideBar />
                 </Col>
                 <Col xs={10} className="p-4" style={{ overflowX: "auto", minHeight: "100vh" }}>
-
                     <ComplaintTracking />
                 </Col>
             </Row>
@@ -640,5 +473,3 @@ const Dashboard = () => {
 
 };
 export default Dashboard;
-
-
