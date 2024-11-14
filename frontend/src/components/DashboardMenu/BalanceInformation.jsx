@@ -1,32 +1,50 @@
-import React, { useState } from 'react'
-import { FaBuilding, FaCreditCard, FaDollarSign, FaRegFileAlt } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { Row, Col, Card } from 'react-bootstrap';
 
 const BalanceInformation = () => {
     const [cards] = useState([
-        { title: 'Total Balance', amount: '₹ 2,22,520', color: 'danger', icon: <FaRegFileAlt color='#ee6a42' /> },
-        { title: 'Total Income', amount: '₹ 55,000', color: 'success', icon: <FaDollarSign color='green' /> },
-        { title: 'Total Expense', amount: '₹ 20,550', color: 'info', icon: <FaCreditCard color='skyblue' /> },
-        { title: 'Total Unit', amount: '₹ 20,550', color: 'primary', icon: <FaBuilding color='purple' /> },
+        { title: 'Total Balance', amount: '₹ 2,22,520', img: require('../images/dash1.png') },
+        { title: 'Total Income', amount: '₹ 55,000', img: require('../images/dash2.png') },
+        { title: 'Total Expense', amount: '₹ 20,550', img: require('../images/dash3.png') },
+        { title: 'Total Unit', amount: '₹ 20,550', img: require('../images/dash4.png') },
     ]);
-    return (
-        <div className="row">
-            {cards.map((card, idx) => (
-                <div key={idx} className="col-12 col-md-6 col-lg-3 mb-3">
-                    <div className={`card border-${card.color}`} style={{ backgroundColor: 'white', borderRadius: '10px', border: 'none' }}>
-                        <div className="card-body d-flex align-items-center">
-                            <div>
-                                <h5 className="card-title" style={{ color: "black", fontSize: '16px' }}>{card.title}</h5>
-                                <p className="card-text fw-bold" style={{ color: "black", fontSize: '22px' }}>{card.amount}</p>
-                            </div>
-                            <div className="ms-auto text-end" style={{ fontSize: '22px', border: 'none', padding: '5px', borderRadius: '5px', backgroundColor: '#F6F8FB' }}>
-                                {card.icon}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
-    )
-}
 
-export default BalanceInformation
+    return (
+        <div className="mt-2">
+            <Row className="mb-3">
+                {cards.map((card, idx) => (
+                    <Col
+                        key={idx}
+                        xs={12}      // Full width on extra small screens
+                        sm={6}       // Half width on small screens (>=576px)
+                        md={4}       // One-third width on medium screens (>=768px)
+                        lg={3}       // Quarter width on large screens (>=992px)
+                        xl={3}       // Quarter width on extra large screens (>=1200px)
+                    >
+                        <Card className="shadow-sm" style={{ borderRadius: '10px' }}>
+                            <Card.Body className="d-flex align-items-center">
+                                <div>
+                                    <Card.Title style={{ color: 'black', fontSize: '16px' }}>
+                                        {card.title}
+                                    </Card.Title>
+                                    <Card.Text className="fw-bold" style={{ color: 'black', fontSize: '22px' }}>
+                                        {card.amount}
+                                    </Card.Text>
+                                </div>
+                                <div className="ms-auto d-flex align-items-center">
+                                    <img
+                                        src={card.img}
+                                        alt={card.title}
+                                        style={{ width: '40px', height: '40px', borderRadius: '5px' }}
+                                    />
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
+        </div>
+    );
+};
+
+export default BalanceInformation;

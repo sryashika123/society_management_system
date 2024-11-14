@@ -167,45 +167,123 @@ const ComplaintTracking = () => {
 
     return (
         <Container fluid style={{ marginTop: "20px" }}>
+
+            <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px"}}>
+                <div className="d-flex justify-content-between align-items-center">
             <Row className="py-4">
                 <Col className="d-flex justify-content-between align-items-center">
+
                     <h2>Security guard Details</h2>
                     <Button variant="warning" className="text-white mainColor2 d-flex align-items-center" onClick={setShowModal}>
                         <RiAddBoxFill className="me-2" style={{ height: "24px", width: "24px" }} />
                         Add Security
                     </Button>
+                </div>
+            
                 </Col>
             </Row>
 
             <Modal show={showViewGuard} onHide={handleClose} centered>
-    <Modal.Header closeButton>
-        <Modal.Title>View Security Protocols</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', fontFamily: 'Poppins', marginTop: '20px' }}>
-            <img src={Avatar} alt="avatar" style={{ width: '70px', height: '70px', borderRadius: '50%', border: '3px solid #F4F4F4' }} />
-            <p>{guardData.name}<br />{guardData.date}</p>
-        </div>
+                <Modal.Header closeButton>
+                    <Modal.Title>View Security Protocols</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px', fontFamily: 'Poppins', marginTop: '20px' }}>
+                        <img src={Avatar} alt="avatar" style={{ width: '70px', height: '70px', borderRadius: '50%', border: '3px solid #F4F4F4' }} />
+                        <p>{guardData.name}<br />{guardData.date}</p>
+                    </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: 'Poppins' }}>
-            <div style={{ textAlign: 'center' }}>
-                <span>Select Shift</span>
-                <span style={{
-                    background: guardData.shift === 'Day' ? 'rgba(244, 244, 244, 1)' : 'rgba(79, 79, 79, 1)',
-                    color: guardData.shift === 'Day' ? 'rgba(255, 147, 0, 1)' : 'rgba(255, 255, 255, 1)',
-                    padding: '5px 15px',
-                    borderRadius: '25px',
-                    fontWeight: '500'
-                }}>
-                    {guardData.shift === 'Day' ? <FaSun /> : <FaMoon />}
-                    {guardData.shift}
-                </span>
-            </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: 'Poppins' }}>
+                        <div style={{ textAlign: 'center' }}>
+                            <span>Select Shift</span>
+                            <span style={{
+                                background: guardData.shift === 'Day' ? 'rgba(244, 244, 244, 1)' : 'rgba(79, 79, 79, 1)',
+                                color: guardData.shift === 'Day' ? 'rgba(255, 147, 0, 1)' : 'rgba(255, 255, 255, 1)',
+                                padding: '5px 15px',
+                                borderRadius: '25px',
+                                fontWeight: '500'
+                            }}>
+                                {guardData.shift === 'Day' ? <FaSun /> : <FaMoon />}
+                                {guardData.shift}
+                            </span>
+                        </div>
 
-            <div style={{ textAlign: 'center' }}>
-                <p>Shift Time</p>
-                <div>{guardData.time}</div>
-            </div>
+
+                        <div style={{ textAlign: 'center' }}>
+                            <p>Shift Time</p>
+                            <div>{guardData.time}</div>
+                        </div>
+
+                        <div style={{ textAlign: 'center' }}>
+                            <span>Gender</span>
+                            <span style={{
+                                background: guardData.gender === 'Male' ? 'rgba(33, 168, 228, 0.1)' : 'rgba(254, 118, 168, 0.1)',
+                                color: guardData.gender === 'Male' ? 'rgba(86, 120, 233, 1)' : 'rgba(254, 118, 168, 1)',
+                                padding: '5px 15px',
+                                borderRadius: '25px',
+                                fontWeight: '500'
+                            }}>
+                                {guardData.gender === 'Male' ? <FaMale /> : <FaFemale />}
+                                {guardData.gender}
+                            </span>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+            <Modal show={showDeleteGuard} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete Protocol?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Are you sure you want to delete this protocol?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleDelete} style={{ background: '#FF0000', color: 'white' }}>Delete</Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={showModal} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>{isEdit ? 'Edit Security' : 'Add Security'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div style={{ display: 'flex', marginBottom: '20px' }}>
+                        <label htmlFor="photo-upload">
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer'
+                            }}>
+                                <div style={{
+                                    width: '50px',
+                                    height: '50px',
+                                    borderRadius: '50%',
+                                    background: 'rgba(211, 211, 211, 1)',
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    marginRight: '10px'
+                                }}>
+                                    {newGuard.photo?.preview ? (
+                                        <img src={newGuard.photo.preview} alt="Uploaded" style={{ width: '100%', height: '100%' }} />
+                                    ) : (
+                                        <FaCamera style={{ color: 'rgba(255, 255, 255, 1)', fontSize: '16px' }} />
+                                    )}
+                                </div>
+                                <div>Add Photo</div>
+                            </div>
+                        </label>
+                        <input
+                            id="photo-upload"
+                            type="file"
+                            onChange={(e) => handleFileChange(e, 'photo')}
+                            accept="image/png, image/jpeg"
+                            style={{ display: 'none' }}
+                        />
 
             <div style={{ textAlign: 'center' }}>
                 <span>Gender</span>
@@ -266,131 +344,121 @@ const ComplaintTracking = () => {
                         ) : (
                             <FaCamera style={{ color: 'rgba(255, 255, 255, 1)', fontSize: '16px' }} />
                         )}
+
                     </div>
-                    <div>Add Photo</div>
-                </div>
-            </label>
-            <input
-                id="photo-upload"
-                type="file"
-                onChange={(e) => handleFileChange(e, 'photo')}
-                accept="image/png, image/jpeg"
-                style={{ display: 'none' }}
-            />
-        </div>
 
-        <Form>
-            <Form.Group controlId="formName">
-                <Form.Label>Full Name</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={newGuard.name}
-                    onChange={(e) => setNewGuard({ ...newGuard, name: e.target.value })}
-                />
-            </Form.Group>
+                    <Form>
+                        <Form.Group controlId="formName">
+                            <Form.Label>Full Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newGuard.name}
+                                onChange={(e) => setNewGuard({ ...newGuard, name: e.target.value })}
+                            />
+                        </Form.Group>
 
-            <Form.Group controlId="formPhone">
-                <Form.Label>Phone Number</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={newGuard.phone}
-                    onChange={(e) => setNewGuard({ ...newGuard, phone: e.target.value })}
-                />
-            </Form.Group>
+                        <Form.Group controlId="formPhone">
+                            <Form.Label>Phone Number</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newGuard.phone}
+                                onChange={(e) => setNewGuard({ ...newGuard, phone: e.target.value })}
+                            />
+                        </Form.Group>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Form.Group controlId="formGender">
-                    <Form.Label>Gender</Form.Label>
-                    <Form.Select
-                        value={newGuard.gender}
-                        onChange={(e) => setNewGuard({ ...newGuard, gender: e.target.value })}
-                    >
-                        <option>Select Gender</option>
-                        <option>Male</option>
-                        <option>Female</option>
-                    </Form.Select>
-                </Form.Group>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Form.Group controlId="formGender">
+                                <Form.Label>Gender</Form.Label>
+                                <Form.Select
+                                    value={newGuard.gender}
+                                    onChange={(e) => setNewGuard({ ...newGuard, gender: e.target.value })}
+                                >
+                                    <option>Select Gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </Form.Select>
+                            </Form.Group>
 
-                <Form.Group controlId="formShift">
-                    <Form.Label>Shift</Form.Label>
-                    <Form.Select
-                        value={newGuard.shift}
-                        onChange={(e) => setNewGuard({ ...newGuard, shift: e.target.value })}
-                    >
-                        <option>Select Shift</option>
-                        <option>Day</option>
-                        <option>Night</option>
-                    </Form.Select>
-                </Form.Group>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Form.Group controlId="formDate">
-                    <Form.Label>Shift Date</Form.Label>
-                    <Form.Control
-                        type="date"
-                        value={newGuard.date}
-                        onChange={(e) => setNewGuard({ ...newGuard, date: e.target.value })}
-                    />
-                </Form.Group>
-
-                <Form.Group controlId="formTime">
-                    <Form.Label>Shift Time</Form.Label>
-                    <Form.Control
-                        type="time"
-                        value={newGuard.time}
-                        onChange={(e) => formatTime(e.target.value)}
-                    />
-                </Form.Group>
-            </div>
-
-            <Form.Group controlId="formAadhaar">
-                <Form.Label>Upload Aadhaar Card</Form.Label>
-                <div style={{
-                    border: '2px dashed rgba(211, 211, 211, 1)',
-                    borderRadius: '8px',
-                    padding: '20px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    cursor: 'pointer'
-                }}>
-                    <label htmlFor="aadhaar-upload">
-                        <LuImagePlus style={{ fontSize: '24px', marginBottom: '8px', width: '40px', height: '50px', color: 'rgba(167, 167, 167, 1)' }} />
-                        <div>Upload a file <span>or drag and drop</span></div>
-                    </label>
-                    <input
-                        id="aadhaar-upload"
-                        type="file"
-                        onChange={(e) => handleFileChange(e, 'aadhaar')}
-                        accept="image/png, image/jpeg, application/pdf"
-                        style={{ display: 'none' }}
-                    />
-                    {newGuard.aadhaar && (
-                        <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                            {newGuard.aadhaar.preview && newGuard.aadhaar.file.type.startsWith('image/') ? (
-                                <img src={newGuard.aadhaar.preview} alt="Aadhaar Preview" style={{ width: '80px', height: '80px', objectFit: 'cover' }} />
-                            ) : (
-                                <div>{newGuard.aadhaar.file.name}</div>
-                            )}
+                            <Form.Group controlId="formShift">
+                                <Form.Label>Shift</Form.Label>
+                                <Form.Select
+                                    value={newGuard.shift}
+                                    onChange={(e) => setNewGuard({ ...newGuard, shift: e.target.value })}
+                                >
+                                    <option>Select Shift</option>
+                                    <option>Day</option>
+                                    <option>Night</option>
+                                </Form.Select>
+                            </Form.Group>
                         </div>
-                    )}
-                </div>
-            </Form.Group>
-        </Form>
-    </Modal.Body>
-    <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-        <Button style={{ backgroundColor: '#007bff', color: 'white' }} onClick={handleSave}>
-            {isEdit ? 'Create' : 'Create'}
-        </Button>
-    </Modal.Footer>
-</Modal>
+
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Form.Group controlId="formDate">
+                                <Form.Label>Shift Date</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    value={newGuard.date}
+                                    onChange={(e) => setNewGuard({ ...newGuard, date: e.target.value })}
+                                />
+                            </Form.Group>
+
+                            <Form.Group controlId="formTime">
+                                <Form.Label>Shift Time</Form.Label>
+                                <Form.Control
+                                    type="time"
+                                    value={newGuard.time}
+                                    onChange={(e) => formatTime(e.target.value)}
+                                />
+                            </Form.Group>
+                        </div>
+
+                        <Form.Group controlId="formAadhaar">
+                            <Form.Label>Upload Aadhaar Card</Form.Label>
+                            <div style={{
+                                border: '2px dashed rgba(211, 211, 211, 1)',
+                                borderRadius: '8px',
+                                padding: '20px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                flexDirection: 'column',
+                                cursor: 'pointer'
+                            }}>
+                                <label htmlFor="aadhaar-upload">
+                                    <LuImagePlus style={{ fontSize: '24px', marginBottom: '8px', width: '40px', height: '50px', color: 'rgba(167, 167, 167, 1)' }} />
+                                    <div>Upload a file <span>or drag and drop</span></div>
+                                </label>
+                                <input
+                                    id="aadhaar-upload"
+                                    type="file"
+                                    onChange={(e) => handleFileChange(e, 'aadhaar')}
+                                    accept="image/png, image/jpeg, application/pdf"
+                                    style={{ display: 'none' }}
+                                />
+                                {newGuard.aadhaar && (
+                                    <div style={{ marginTop: '15px', textAlign: 'center' }}>
+                                        {newGuard.aadhaar.preview && newGuard.aadhaar.file.type.startsWith('image/') ? (
+                                            <img src={newGuard.aadhaar.preview} alt="Aadhaar Preview" style={{ width: '80px', height: '80px', objectFit: 'cover' }} />
+                                        ) : (
+                                            <div>{newGuard.aadhaar.file.name}</div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+                    <Button style={{ backgroundColor: '#007bff', color: 'white' }} onClick={handleSave}>
+                        {isEdit ? 'Create' : 'Create'}
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
 
-            <div style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
-                <Table hover responsive>
+            
+                <Table hover responsive style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" , marginTop: "20px" }}>
                     <thead style={{ background: "#5678E9", color: "#ffffff" }}>
                         <tr>
                             <th className="text-start">Security guard Name</th>
@@ -419,29 +487,29 @@ const ComplaintTracking = () => {
                                 <td className="text-center">{guard.date}</td>
                                 <td className="text-center">{guard.time}</td>
                                 <td className='text-center' style={{ verticalAlign: "middle" }}>
-                      <span
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          width: "113px",
-                          height: "31px",
-                          padding: "5px 12px",
-                          gap: "5px",
-                          borderRadius: "50px",
-                          fontFamily: "Poppins",
-                          background:
-                            guard.gender === "Male" ? "rgba(33, 168, 228, 0.1)" : "rgba(254, 118, 168, 0.1)",
-                          color:
-                            guard.gender === "Male" ? "rgba(86, 120, 233, 1)" : "rgba(254, 118, 168, 1)",
-                          fontSize: "16px",
-                          fontWeight: "500",
-                        }}
-                      >
-                        {guard.gender === "Male" ? <FaMale /> : <FaFemale />}
-                        {guard.gender}
-                      </span>
-                    </td>
+                                    <span
+                                        style={{
+                                            display: "inline-flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            width: "113px",
+                                            height: "31px",
+                                            padding: "5px 12px",
+                                            gap: "5px",
+                                            borderRadius: "50px",
+                                            fontFamily: "Poppins",
+                                            background:
+                                                guard.gender === "Male" ? "rgba(33, 168, 228, 0.1)" : "rgba(254, 118, 168, 0.1)",
+                                            color:
+                                                guard.gender === "Male" ? "rgba(86, 120, 233, 1)" : "rgba(254, 118, 168, 1)",
+                                            fontSize: "16px",
+                                            fontWeight: "500",
+                                        }}
+                                    >
+                                        {guard.gender === "Male" ? <FaMale /> : <FaFemale />}
+                                        {guard.gender}
+                                    </span>
+                                </td>
                                 <td className='text-center' style={{ verticalAlign: "middle" }}>
                                     <div className="d-flex align-items-center justify-content-center">
                                         <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShowEdit(guard)} />

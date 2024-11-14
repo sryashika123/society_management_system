@@ -3,358 +3,12 @@ import { Card, Table, Button, Dropdown, Badge, Modal, Image, Form, Col, Row } fr
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 
 // Reusable modal component for editing complaints
-const EditComplaintModal = ({ show, handleClose, complaintData, onSave }) => {
-    const [formData, setFormData] = useState({
-        complainerName: complaintData ? complaintData.name : '',
-        complaintName: complaintData ? complaintData.complaint : '',
-        description: complaintData ? complaintData.description : '',
-        wing: complaintData ? complaintData.wing : '',
-        unit: complaintData ? complaintData.unit : '',
-        priority: complaintData ? complaintData.priority : 'Medium',
-        status: complaintData ? complaintData.status : 'Open',
-    });
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSave(formData);  // Send updated data to parent
-        handleClose();     // Close the modal
-    };
-
-
-    return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Edit Complaint</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form onSubmit={handleSubmit} className="p-3" style={{ color: '#202224', fontWeight: '500' }}>
-                    <Form.Group controlId="complainerName" className="mb-2" >
-                        <Form.Label>Complainer Name
-                            <span className="text-danger">*</span>
-                        </Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="complainerName"
-                            value={formData.complainerName}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group controlId="complaintName" className="mb-3">
-                        <Form.Label>Complaint Name
-                            <span className="text-danger">*</span>
-                        </Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="complaintName"
-                            value={formData.complaintName}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Form.Group controlId="description" className="mb-3">
-                        <Form.Label>Description
-                            <span className="text-danger">*</span>
-                        </Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={2}
-                            name="description"
-                            value={formData.description}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </Form.Group>
-
-                    <Row className="mb-3">
-                        <Col>
-                            <Form.Group controlId="wing">
-                                <Form.Label>Wing
-                                    <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="wing"
-                                    value={formData.wing}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <Form.Group controlId="unit">
-                                <Form.Label>Unit
-                                    <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="unit"
-                                    value={formData.unit}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-
-                    <Form.Group controlId="priority" className="mb-3">
-                        <Form.Label>Priority
-                            <span className="text-danger">*</span>
-                        </Form.Label>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
-                            <Form.Check
-                                inline
-                                label="High"
-                                type="radio"
-                                name="priority"
-                                value=" High"
-                                checked={formData.priority === ' High'}
-                                onChange={handleInputChange}
-                                custom
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    padding: '10px',  // Padding around the entire radio button
-                                    border: '1px solid #ddd',  // Border around the box
-                                    borderRadius: '10px',  // Rounded corners for the box
-                                    marginRight: '10px',  // Space between buttons
-                                    marginBottom: '10px',  // Vertical margin
-                                    backgroundColor: '#fff',  // Background color for the box
-                                }}
-                            >
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <input
-                                        type="radio"
-                                        name="priority"
-                                        value="Medium"
-                                        checked={formData.priority === 'Medium'}
-                                        onChange={handleInputChange}
-                                        style={{
-                                            marginRight: '5px',  // Space between radio button and label
-                                        }}
-                                    />
-                                    <span>High</span>  {/* Label text inside the box */}
-                                </div>
-                            </Form.Check>
-
-                            <Form.Check
-                                inline
-                                label="Medium"
-                                type="radio"
-                                name="priority"
-                                value="Medium"
-                                checked={formData.priority === 'Medium'}
-                                onChange={handleInputChange}
-                                custom
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    padding: '10px',  // Padding around the entire radio button
-                                    border: '1px solid #ddd',  // Border around the box
-                                    borderRadius: '10px',  // Rounded corners for the box
-                                    marginRight: '10px',  // Space between buttons
-                                    marginBottom: '10px',  // Vertical margin
-                                    backgroundColor: '#fff',  // Background color for the box
-                                }}
-                            >
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <input
-                                        type="radio"
-                                        name="priority"
-                                        value="Medium"
-                                        checked={formData.priority === 'Medium'}
-                                        onChange={handleInputChange}
-                                        style={{
-                                            marginRight: '5px',  // Space between radio button and label
-                                        }}
-                                    />
-                                    <span>Medium</span>  {/* Label text inside the box */}
-                                </div>
-                            </Form.Check>
-
-                            <Form.Check
-                                inline
-                                label="Low"
-                                type="radio"
-                                name="priority"
-                                value="Low"
-                                checked={formData.priority === 'Low'}
-                                onChange={handleInputChange}
-                                custom
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    padding: '10px',  // Padding around the entire radio button
-                                    border: '1px solid #ddd',  // Border around the box
-                                    borderRadius: '10px',  // Rounded corners for the box
-                                    marginRight: '10px',  // Space between buttons
-                                    marginBottom: '10px',  // Vertical margin
-                                    backgroundColor: '#fff',  // Background color for the box
-
-                                }}
-                            >
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <input
-                                        type="radio"
-                                        name="priority"
-                                        value="Low"
-                                        checked={formData.priority === 'Low'}
-                                        onChange={handleInputChange}
-                                        style={{
-                                            marginRight: '5px',  // Space between radio button and label
-
-                                        }}
-                                    />
-                                    <span>Low</span>  {/* Label text inside the box */}
-                                </div>
-                            </Form.Check>
-                        </div>
-                    </Form.Group>
-
-
-                    <Form.Group controlId="status" className="mb-3">
-                        <Form.Label>Status
-                            <span className="text-danger">*</span>
-                        </Form.Label>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
-                            <Form.Check
-                                inline
-                                label="Open"
-                                type="radio"
-                                name="status"
-                                value="Open"
-                                checked={formData.status === 'Open'}
-                                onChange={handleInputChange}
-                                style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    border: '1px solid #ddd',  // Border around the radio button
-                                    borderRadius: '10px',      // Rounded corners for the box
-                                    padding: '10px',           // Padding inside the box
-                                    marginRight: '10px',       // Space between radio buttons
-                                    marginBottom: '10px',      // Space below the radio button
-                                    backgroundColor: '#fff',   // Background color for the box
-                                }}
-                            >
-                                <input
-                                    type="radio"
-                                    name="status"
-                                    value="Open"
-                                    checked={formData.status === 'Open'}
-                                    onChange={handleInputChange}
-                                    style={{
-                                        marginRight: '5px',  // Space between radio button and label
-                                    }}
-                                />
-                                <span>Open</span>  {/* Label text inside the box */}
-                            </Form.Check>
-
-                            <Form.Check
-                                inline
-                                label="Pending"
-                                type="radio"
-                                name="status"
-                                value="Pending"
-                                checked={formData.status === 'Pending'}
-                                onChange={handleInputChange}
-                                style={{
-                                    display: 'inline-flex',             // Ensure the radio button and label are inline
-                                    alignItems: 'center',              // Vertically center the radio button and label
-                                    justifyContent: 'center',          // Center the content in the box
-                                    border: '1px solid #ddd',          // Border around the radio button and label
-                                    borderRadius: '10px',              // Rounded corners for the box
-                                    padding: '10px',                   // Padding inside the box
-                                    marginRight: '10px',               // Space between buttons
-                                    marginBottom: '10px',              // Vertical margin between radio buttons
-                                    backgroundColor: '#fff',           // Background color for the box
-                                }}
-                            >
-                                <input
-                                    type="radio"
-                                    name="status"
-                                    value="Pending"
-                                    checked={formData.status === 'Pending'}
-                                    onChange={handleInputChange}
-                                    style={{
-                                        marginRight: '5px',  // Space between radio button and label
-                                    }}
-                                />
-                                <span>Pending</span>  {/* Label text inside the box */}
-                            </Form.Check>
-                            <Form.Check
-                                inline
-                                label="Solve"
-                                type="radio"
-                                name="status"
-                                value="Solve"
-                                checked={formData.status === 'Solve'}
-                                onChange={handleInputChange}
-                                style={{
-                                    display: 'inline-flex',             // Ensures radio button and label are inline
-                                    alignItems: 'center',              // Vertically center the radio button and label
-                                    justifyContent: 'center',          // Centers the content in the box
-                                    border: '1px solid #ddd',          // Border around the radio button and label
-                                    borderRadius: '10px',              // Rounded corners for the box
-                                    padding: '10px',                   // Padding inside the box for space around radio button
-                                    marginBottom: '10px',              // Vertical space between radio buttons
-                                    backgroundColor: '#fff',           // Background color of the box
-                                }}
-                            >
-                                <input
-                                    type="radio"
-                                    name="status"
-                                    value="Solve"
-                                    checked={formData.status === 'Solve'}
-                                    onChange={handleInputChange}
-                                    style={{
-                                        marginRight: '5px',  // Space between radio button and label
-                                    }}
-                                />
-                                <span>Solve</span>  {/* Label text inside the box */}
-                            </Form.Check>
-
-                        </div>
-                    </Form.Group>
-
-                    <div className="d-flex justify-content-between">
-                        <button type="button" className="btn btn-outline-secondary"
-                            style={{ width: '45%', borderRadius: '10px', marginBottom: '10px', marginLeft: '5px' }}
-                            onClick={handleClose}>
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            className="btn"
-                            style={{
-                                background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
-                                color: 'White',
-                                width: '45%',
-                                borderRadius: '10px',
-                                marginBottom: '10px',
-                                marginRight: '5px'
-                            }}
-                            data-bs-dismiss="modal"
-                        >
-                            Save
-                        </button>
-                    </div>
-                </Form>
-            </Modal.Body>
-        </Modal>
-    );
-};
 
 const ComplaintList = () => {
     const [complaints, setComplaints] = useState([
+
         {
+            id: 1,
             name: 'John Doe',
             complaint: 'Unethical Behavior',
             date: '01/02/2024',
@@ -363,26 +17,37 @@ const ComplaintList = () => {
             imageUrl: 'https://via.placeholder.com/40',
         },
         {
+            id: 2,
             name: 'Jane Smith',
             complaint: 'Noise Disturbance',
             date: '02/02/2024',
             priority: 'High',
-            status: 'Resolved',
+            status: 'Pending',
             imageUrl: 'https://via.placeholder.com/40',
         },
         {
+            id: 3,
             name: 'Jane Smith',
             complaint: 'Noise Disturbance',
             date: '02/02/2024',
             priority: 'Low',
-            status: 'Resolved',
+            status: 'Solve',
             imageUrl: 'https://via.placeholder.com/40',
         },
     ]);
 
+    const statusBadgeStyle = (status) => {
+        if (status === "Pending") return { backgroundColor: " #FFC3131A", color: "#FFC313", fontWeight: '500' };
+        if (status === "Open") return { backgroundColor: "#5678E91A", color: "#5678E9", fontWeight: '500' };
+        if (status === "Solve") return { backgroundColor: "#39973D1A", color: "#39973D", fontWeight: '500' };
+        return { backgroundColor: "#f8f9fa", color: "black" };
+    };
+
     const [showViewModal, setShowViewModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [selectedComplaint, setSelectedComplaint] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
+
 
     const [selectedPeriod, setSelectedPeriod] = useState(''); // To store selected period
 
@@ -391,29 +56,40 @@ const ComplaintList = () => {
         setShowViewModal(true);
     };
 
-    const handleEdit = (complaint) => {
-        setSelectedComplaint(complaint);
-        setShowEditModal(true);
-    };
-
     const handleCloseViewModal = () => setShowViewModal(false);
-    const handleCloseEditModal = () => setShowEditModal(false);
+    const handleCloseModal = () => setShowModal(false);
 
-    const handleSaveEdit = (updatedComplaint) => {
-        const updatedComplaints = complaints.map((c) =>
-            c.date === updatedComplaint.date ? updatedComplaint : c
-        );
-        setComplaints(updatedComplaints);
-        setShowEditModal(false);
+    const handleEdit = (complaint) => {
+        setSelectedComplaint(complaint);  // Set the selected complaint for editing
+        setShowModal(true);  // Open the modal
     };
+
+    const handleSave = () => {
+        if (!selectedComplaint.name || !selectedComplaint.complaint || !selectedComplaint.priority || !selectedComplaint.status) {
+            setErrorMessage("All fields are required.");
+            return;
+        }
+
+        // Update complaints state with the new complaint data
+        setComplaints((prevComplaints) =>
+            prevComplaints.map((complaint) =>
+                complaint.id === selectedComplaint.id ? selectedComplaint : complaint
+            )
+        );
+
+        setShowModal(false);  // Close the modal after saving
+        setErrorMessage("");  // Clear any error messages
+    };
+
 
     const handleDelete = (index) => {
         setComplaints(complaints.filter((_, i) => i !== index));
     };
 
+
     return (
         <>
-            <Card className="mb-4">
+            <Card className="mb-4 shadow-sm">
                 <Card.Header style={{ background: 'white', display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ marginTop: '15px' }}>Complaint List</div>
 
@@ -457,67 +133,71 @@ const ComplaintList = () => {
                         </Dropdown.Menu>
                     </Dropdown>
                 </Card.Header>
-                <Table responsive>
-                    <thead style={{ background: "#5678E9", color: "#ffffff" }}>
-                        <tr>
-                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Complainer Name</th>
-                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Complaint Name</th>
-                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Date</th>
-                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Priority</th>
-                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Status</th>
-                            <th style={{backgroundColor: 'rgb(185, 198, 242)'}}>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {complaints.map((complaint, index) => (
-                            <tr key={index}>
-                                <td className="d-flex align-items-center" style={{ border: 'none' }}>
-                                    <Image
-                                        src={complaint.imageUrl}
-                                        roundedCircle
-                                        width={40}
-                                        height={40}
-                                        className="me-3"
-                                    />
-                                    {complaint.name}
-                                </td>
-                                <td style={{ border: 'none' }}>{complaint.complaint}</td>
-                                <td style={{ border: 'none' }}>{complaint.date}</td>
-                                <td style={{ border: 'none' }}>
-                                    <Badge
-                                        pill
-                                        style={{ width: '80px', padding: '10px' }}
-                                        bg={
-                                            complaint.priority === 'High'
-                                                ? 'danger'
-                                                : complaint.priority === 'Medium'
-                                                    ? 'primary'
-                                                    : 'success'
-                                        }
-                                    >
-                                        {complaint.priority}
-                                    </Badge>
-                                </td>
-                                <td style={{ border: 'none' }}>{complaint.status}</td>
-                                <td style={{ border: 'none' }}>
-                                    <Button variant="success" size="sm" className="me-2" onClick={() => handleEdit(complaint)}>
-                                        <FaEdit />
-                                    </Button>
-                                    <Button variant="info" size="sm" className="me-2" onClick={() => handleView(complaint)}>
-                                        <FaEye />
-                                    </Button>
-                                    <Button variant="danger" size="sm" onClick={() => handleDelete(index)}>
-                                        <FaTrash />
-                                    </Button>
-                                </td>
+
+                {/* Table wrapped inside a div with class 'table-responsive' */}
+                <div className="table-responsive">
+                    <Table responsive>
+                        <thead style={{ background: "#5678E9", color: "#ffffff" }}>
+                            <tr>
+                                <th style={{ backgroundColor: 'rgb(185, 198, 242)' }}>Complainer Name</th>
+                                <th style={{ backgroundColor: 'rgb(185, 198, 242)' }}>Complaint Name</th>
+                                <th className='text-center' style={{ backgroundColor: 'rgb(185, 198, 242)' }}>Date</th>
+                                <th className='text-center' style={{ backgroundColor: 'rgb(185, 198, 242)' }}>Priority</th>
+                                <th className='text-center' style={{ backgroundColor: 'rgb(185, 198, 242)' }}>Status</th>
+                                <th className='text-center' style={{ backgroundColor: 'rgb(185, 198, 242)' }}>Action</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {complaints.map((complaint, index) => (
+                                <tr key={index}>
+                                    <td className="d-flex align-items-center" style={{ border: 'none' }}>
+                                        <Image
+                                            src={complaint.imageUrl}
+                                            roundedCircle
+                                            width={40}
+                                            height={40}
+                                            className="me-3"
+                                        />
+                                        {complaint.name}
+                                    </td>
+                                    <td style={{ border: 'none' }}>{complaint.complaint}</td>
+                                    <td className='text-center' style={{ border: 'none' }}>{complaint.date}</td>
+                                    <td className='text-center' style={{ border: 'none' }}>
+                                        <Badge
+                                            pill
+                                            style={{ width: '80px', padding: '10px' }}
+                                            bg={
+                                                complaint.priority === 'High'
+                                                    ? 'danger'
+                                                    : complaint.priority === 'Medium'
+                                                        ? 'primary'
+                                                        : 'success'
+                                            }
+                                        >
+                                            {complaint.priority}
+                                        </Badge>
+                                    </td>
+                                    <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle", borderBottom: 'none' }}>
+                                        <span style={{ ...statusBadgeStyle(complaint.status), width: "80px", height: "31px", padding: "5px 12px", gap: "5px", borderRadius: "50px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                                            {complaint.status}
+                                        </span>
+                                    </td>
+                                    <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle", borderBottom: 'none' }}>
+                                        <div className="d-flex align-items-center justify-content-center">
+                                            <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(complaint)} />
+                                            <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
+                                            <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(index)} />
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </div>
             </Card>
 
             {/* View Complaint Modal */}
-            <Modal show={showViewModal} onHide={handleCloseViewModal} centered>
+            < Modal show={showViewModal} onHide={handleCloseViewModal} centered >
                 <Modal.Header closeButton>
                     <Modal.Title>Complaint Details</Modal.Title>
                 </Modal.Header>
@@ -538,12 +218,159 @@ const ComplaintList = () => {
             </Modal>
 
             {/* Edit Complaint Modal */}
-            <EditComplaintModal
-                show={showEditModal}
-                handleClose={handleCloseEditModal}
-                complaintData={selectedComplaint}
-                onSave={handleSaveEdit}
-            />
+            <Modal show={showModal} onHide={handleCloseModal} centered >
+                <Modal.Header closeButton style={{ borderBottom: 'none' }}>
+                    <Modal.Title>Edit Complaint</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {errorMessage && (
+                        <div className="alert alert-danger">{errorMessage}</div>
+                    )}
+                    <Form style={{ color: '#202224', fontWeight: '500' }}>
+                        <Form.Group >
+                            <Form.Label>Complainer Name
+                                <span className='text-danger'>*</span>
+                            </Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={selectedComplaint?.name || ""}
+                                onChange={(e) =>
+                                    setSelectedComplaint((prev) => ({
+                                        ...prev,
+                                        name: e.target.value,
+                                    }))
+                                }
+                            />
+                        </Form.Group>
+                        <Form.Group className='mt-3'>
+                            <Form.Label>Complaint Type
+                                <span className='text-danger'>*</span>
+                            </Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={selectedComplaint?.complaint || ""}
+                                onChange={(e) =>
+                                    setSelectedComplaint((prev) => ({
+                                        ...prev,
+                                        type: e.target.value,
+                                    }))
+                                }
+                            />
+                        </Form.Group>
+                        <Form.Group className='mt-3'>
+                            <Form.Label>Date
+                                <span className='text-danger'>*</span>
+                            </Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={selectedComplaint?.date || ""}
+                                onChange={(e) =>
+                                    setSelectedComplaint((prev) => ({
+                                        ...prev,
+                                        description: e.target.value,
+                                    }))
+                                }
+                            />
+                        </Form.Group>
+
+                        <div className='d-flex justify-content-between'>
+                            <Form.Group className='mt-3'>
+                                <Form.Label>Wing
+                                    <span className='text-danger'>*</span>
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={selectedComplaint?.unit || ""}
+                                    onChange={(e) =>
+                                        setSelectedComplaint((prev) => ({
+                                            ...prev,
+                                            unit: e.target.value,
+                                        }))
+                                    }
+                                />
+                            </Form.Group>
+                            <Form.Group className='mt-3'>
+                                <Form.Label>Unit
+                                    <span className='text-danger'>*</span>
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={selectedComplaint?.number || ""}
+                                    onChange={(e) =>
+                                        setSelectedComplaint((prev) => ({
+                                            ...prev,
+                                            number: e.target.value,
+                                        }))
+                                    }
+                                />
+                            </Form.Group>
+                        </div>
+
+                        <Form.Group className='mt-3'>
+                            <Form.Label>Priority
+                                <span className='text-danger'>*</span>
+                            </Form.Label>
+                            <div className="d-flex justify-content-around  " >
+
+                                {["High", "Medium", "Low"].map((priority) => (
+                                    <Form.Check
+                                        style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingRight: "30px", borderRadius: "5px", paddingTop: "8px", paddingBottom: "8px" }}
+                                        type="radio"
+                                        label={priority}
+                                        name="priority"
+                                        value={priority}
+                                        checked={selectedComplaint?.priority === priority}
+                                        onChange={(e) =>
+                                            setSelectedComplaint((prev) => ({
+                                                ...prev,
+                                                priority: e.target.value,
+                                            }))
+                                        }
+                                        key={priority}
+                                    />
+
+                                ))}
+
+                            </div>
+                        </Form.Group>
+                        <Form.Group className='mt-3'>
+                            <Form.Label>Status
+                                <span className='text-danger'>*</span>
+                            </Form.Label>
+                            <div className="d-flex justify-content-around">
+                                {["Open", "Pending", "Solve"].map((status) => (
+                                    <Form.Check
+                                        style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingRight: "30px", borderRadius: "5px", paddingTop: "8px", paddingBottom: "8px" }}
+                                        type="radio"
+                                        label={status}
+                                        name="status"
+                                        value={status}
+                                        checked={selectedComplaint?.status === status}
+                                        onChange={(e) =>
+                                            setSelectedComplaint((prev) => ({
+                                                ...prev,
+                                                status: e.target.value,
+                                            }))
+                                        }
+                                        key={status}
+                                    />
+                                ))}
+                            </div>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer style={{ display: "flex", justifyContent: "space-between", borderTop: "none" }}>
+                    <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={handleCloseModal}>
+                        Cancel
+                    </Button>
+                    <Button style={{
+                        width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
+
+                    }} className='mainColor2' onClick={handleSave}>
+                        Save
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 };

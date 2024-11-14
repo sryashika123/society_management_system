@@ -159,14 +159,14 @@ const RequestTable = () => {
 
   return (
     <Container fluid style={{ marginTop: "20px" }}>
-        <Row className="py-4">
-            <Col className="d-flex justify-content-between align-items-center">
+       <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
+            <div className="d-flex justify-content-between align-items-center">
                 <h2>Requests</h2>
                 <Button variant="warning" className="text-white mainColor2" onClick={handleShowModal}>
                     Create Request
                 </Button>
-            </Col>
-        </Row>
+            </div>
+       
 
         {/* Modal for Create Request Form */}
 
@@ -346,8 +346,7 @@ const RequestTable = () => {
         </Modal>
 
         {/* Requests Table */}
-        <div style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
-            <Table hover responsive>
+            <Table responsive hover className="mt-3" style={{ backgroundColor: '#f5f8ff', borderRadius: '8px', border: "1px solid #ddd", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
                 <thead style={{ background: "#5678E9", color: "#ffffff" }}>
                     <tr>
                         <th className="text-start" style={{backgroundColor: 'rgb(185, 198, 242)'}}>Requester Name</th>
@@ -440,6 +439,7 @@ const RequestTable = () => {
                     ))}
                 </tbody>
             </Table>
+        
         </div>
     </Container>
 );

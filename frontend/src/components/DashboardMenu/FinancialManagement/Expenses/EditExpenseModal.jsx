@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form, Col, Row } from 'react-bootstrap';
+import { Modal, Form, Col, Row } from 'react-bootstrap';
 import { LuImagePlus } from 'react-icons/lu';
 
 const EditExpenseModal = ({ isOpen, onClose, expense , handleSubmit }) => {

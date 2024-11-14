@@ -30,7 +30,7 @@ const Home = () => {
           <Route path='/residentmanagement' element={<ResidentDetails />} />
           <Route path='/' element={<Dashboard />} />
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/addresidents' element={<ResidentForm />} />
+          <Route path='/residentForm' element={<ResidentForm />} />
           <Route path='/facility-management' element={<FacilityManagement />} />
           <Route path='/create-complaint' element={<ComplaintTracking />} />
           <Route path='/request-tracking' element={<RequestTracking />} />

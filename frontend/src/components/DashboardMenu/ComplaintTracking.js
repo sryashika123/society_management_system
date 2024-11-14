@@ -162,14 +162,14 @@ const ComplaintTable = () => {
 
     return (
         <Container fluid style={{ marginTop: "20px" }}>
-            <Row className="py-4">
-                <Col className="d-flex justify-content-between align-items-center">
+            <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
+                <div className="d-flex justify-content-between align-items-center">
                     <h2>Complaints</h2>
                     <Button variant="warning" className="text-white mainColor2" onClick={handleShowModal}>
                         Create Complaint
                     </Button>
-                </Col>
-            </Row>
+                </div>
+            
 
             {/* Modal for Create Complaint Form */}
 
@@ -308,6 +308,7 @@ const ComplaintTable = () => {
                         <div className="d-flex justify-content-around">
                             {["High", "Medium", "Low"].map((priority) => (
                                 <Form.Check
+                                
                                     key={priority}
                                     type="radio"
                                     label={priority}
@@ -346,17 +347,17 @@ const ComplaintTable = () => {
 
 
             {/* Complaints Table */}
-            <div style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
-                <Table hover responsive>
+            
+                <Table responsive hover className="mt-3" style={{ backgroundColor: '#f5f8ff', borderRadius: '8px', border: "1px solid #ddd", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
                     <thead style={{ background: "#5678E9", color: "#ffffff" }}>
                         <tr>
-                            <th className="text-start">Complainer Name</th>
-                            <th>Complaint Name</th>
-                            <th className="text-center">Description</th>
-                            <th className="text-center">Unit Number</th>
-                            <th className="text-center">Priority</th>
-                            <th className="text-center">Status</th>
-                            <th className="text-center">Action</th>
+                            <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-start">Complainer Name</th>
+                            <th style={{ backgroundColor: 'rgb(185, 198, 242)' }}>Complaint Name</th>
+                            <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Description</th>
+                            <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Unit Number</th>
+                            <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Priority</th>
+                            <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Status</th>
+                            <th style={{ backgroundColor: 'rgb(185, 198, 242)' }} className="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>

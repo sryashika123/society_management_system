@@ -38,6 +38,7 @@ export default function ResidentForm() {
   });
 
 
+
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
@@ -112,45 +113,48 @@ export default function ResidentForm() {
     }
     setVehicleDropdownOpen(!vehicleDropdownOpen);
   };
+
   const handleFileChange = (e, fileType) => {
     const file = e.target.files[0];
     if (file) {
-      const allowedTypes = ["image/png", "image/jpeg", "application/pdf"];
+      const allowedTypes = ['image/png', 'image/jpeg', 'application/pdf'];
       const maxSize = 10 * 1024 * 1024; // 10 MB
 
+      // Check file type
       if (!allowedTypes.includes(file.type)) {
         setFormData((prevState) => ({
           ...prevState,
           uploadErrors: {
             ...prevState.uploadErrors,
-            [fileType]: "Invalid file type. Only PNG, JPG, and PDF are allowed.",
+            [fileType]: 'Invalid file type. Only PNG, JPG, and PDF are allowed.',
           },
         }));
         return;
       }
 
+      // Check file size
       if (file.size > maxSize) {
         setFormData((prevState) => ({
           ...prevState,
           uploadErrors: {
             ...prevState.uploadErrors,
-            [fileType]: "File size exceeds 10 MB.",
+            [fileType]: 'File size exceeds 10 MB.',
           },
         }));
         return;
       }
 
-      const previewURL = file.type.startsWith("image/")
-        ? URL.createObjectURL(file)
-        : '';
+      // Create preview URL for images
+      const previewURL = file.type.startsWith('image/') ? URL.createObjectURL(file) : '';
 
+      // Update state with file data and preview
       setFormData((prevState) => ({
         ...prevState,
         [fileType]: file,
         [`${fileType}Preview`]: previewURL,
         uploadErrors: {
           ...prevState.uploadErrors,
-          [fileType]: "",
+          [fileType]: '', // Reset error message if file is valid
         },
       }));
     }
@@ -158,13 +162,12 @@ export default function ResidentForm() {
 
 
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('Form submitted:', formData);
 
-    // Perform form validation or submission logic here
-    console.log("Form submitted:", formData);
-
-    // Reset form data (optional if needed after submission)
+    // Reset form data
     setFormData({
       fullName: '',
       phoneNumber: '',
@@ -185,17 +188,22 @@ export default function ResidentForm() {
       aadharBackPreview: '',
       addressProofPreview: '',
       rentAgreementPreview: '',
-      uploadErrors: {},
+      uploadErrors: {
+        aadharFront: '',
+        aadharBack: '',
+        addressProof: '',
+        rentAgreement: '',
+      },
     });
 
-    // Redirect to the resident management page
     navigate('/home/residentmanagement');
   };
+
   return (
     <>
 
 
-      <div className="container p-4" style={{ maxWidth: '1570px', marginLeft: '310px', marginTop: '100px' }}>
+      <div className="container p-4" style={{ maxWidth: '1500px', marginLeft: '365px', marginTop: '30px' }}>
         <div className="mb-4">
           <button
             className={`btn ${formType === 'owner' ? 'mainColor2' : 'btn'} me-2`}
@@ -236,7 +244,7 @@ export default function ResidentForm() {
           <div className="d-flex flex-wrap mb-3">
             {/* Photo Upload Section */}
             {/* Profile Photo Section */}
-            <div className="col-md-1 d-flex mb-3">
+            <div className="col-md-2 d-flex mb-3">
               <label htmlFor="photo-upload" style={{ cursor: 'pointer' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                   <div
@@ -276,7 +284,7 @@ export default function ResidentForm() {
 
 
             {/* Form Fields */}
-            <div className="col-md-11"  >
+            <div className="col-md-10"  >
               <div className="row mb-3">
                 <div className="col-md-4">
                   <label>Full Name<span className="text-danger">*</span></label>
@@ -324,67 +332,81 @@ export default function ResidentForm() {
 
 
 
-          <div className="row mb-3">
-            {['aadharFront', 'aadharBack', 'addressProof', 'rentAgreement'].map((fileType, index) => (
-              <div className="col-md-3" key={index}>
-                <label>
-                  {fileType === 'aadharFront' && 'Upload Aadhar Card (Front Side)'}
-                  {fileType === 'aadharBack' && 'Upload Aadhar Card (Back Side)'}
-                  {fileType === 'addressProof' && 'Address Proof (Vera Bill / Light Bill)'}
-                  {fileType === 'rentAgreement' && 'Rent Agreement'}
-                </label>
-                <div
-                  className="text-center"
-                  style={{
-                    border: "2px dashed rgba(211, 211, 211, 1)",
-                    borderRadius: "8px",
-                    padding: "20px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    cursor: "pointer",
-                  }}
-                >
-                  <label htmlFor={`${fileType}-upload} style={{ cursor: 'pointer', color: '#007bff' }`}>
-                    <LuImagePlus
-                      className="text-center"
-                      style={{
-                        fontSize: '24px',
-                        marginBottom: '8px',
-                        width: '40px',
-                        height: '50px',
-                        color: "rgba(167, 167, 167, 1)",
-                      }}
-                    />
-                    <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
-                  </label>
-                  <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
-                  <input
-                    id={`${fileType}-upload`}
-                    type="file"
-                    accept="image/png, image/jpeg, application/pdf"
-                    style={{ display: 'none' }}
-                    onChange={(e) => handleFileChange(e, fileType)}
+          
+      <div className="row mb-3">
+        {['aadharFront', 'aadharBack', 'addressProof', 'rentAgreement'].map((fileType, index) => (
+          <div className="col-md-3" key={index}>
+            <label>
+              {fileType === 'aadharFront' && 'Upload Aadhar Card (Front Side)'}
+              {fileType === 'aadharBack' && 'Upload Aadhar Card (Back Side)'}
+              {fileType === 'addressProof' && 'Address Proof (Vera Bill / Light Bill)'}
+              {fileType === 'rentAgreement' && 'Rent Agreement'}
+            </label>
+            <div
+              className="text-center"
+              style={{
+                border: '2px dashed rgba(211, 211, 211, 1)',
+                borderRadius: '8px',
+                padding: '20px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                cursor: 'pointer',
+              }}
+            >
+              <label
+                htmlFor={`${fileType}-upload`}
+                style={{ cursor: 'pointer', color: '#007bff' }}
+              >
+                <div className="d-flex justify-content-center align-items-center">
+                  <LuImagePlus
+                    className="text-center"
+                    style={{
+                      fontSize: '24px',
+                      marginBottom: '8px',
+                      width: '40px',
+                      height: '50px',
+                      color: 'rgba(167, 167, 167, 1)',
+                    }}
                   />
-
-                  {/* Display file preview or error */}
-                  {formData.uploadErrors[fileType] && (
-                    <small style={{ color: "red" }}>{formData.uploadErrors[fileType]}</small>
-                  )}
-                  {formData[`${fileType}Preview`] && (
-                    <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                      <img
-                        src={`formData[${fileType}Preview]`}
-                        alt={`${fileType} Preview`}
-                        style={{ width: '80px', height: '80px', borderRadius: '8px', objectFit: 'cover' }}
-                      />
-                    </div>
-                  )}
                 </div>
-              </div>
-            ))}
+                <div>
+                  Upload a file <span style={{ color: 'black' }}>or drag and drop</span>
+                </div>
+              </label>
+              <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
+              <input
+                id={`${fileType}-upload`}
+                type="file"
+                accept="image/png, image/jpeg, application/pdf"
+                style={{ display: 'none' }}
+                onChange={(e) => handleFileChange(e, fileType)}
+              />
+
+              {/* Display file preview or error */}
+              {formData.uploadErrors[fileType] && (
+                <small style={{ color: 'red' }}>{formData.uploadErrors[fileType]}</small>
+              )}
+              {formData[`${fileType}Preview`] && (
+                <div style={{ marginTop: '15px', textAlign: 'center' }}>
+                  <img
+                    src={formData[`${fileType}Preview`]}
+                    alt={`${fileType} Preview`}
+                    style={{
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '8px',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
+        ))}
+      </div>
+
 
 
 
@@ -394,7 +416,7 @@ export default function ResidentForm() {
       </div>
 
 
-      <div className="container p-4" style={{ maxWidth: '1570px', marginLeft: '310px', marginTop: '20px' }}>
+      <div className="container p-4" style={{ maxWidth: '1500px', marginLeft: '365px', marginTop: '30px' }}>
         <form>
           {/* Member Count Dropdown Toggle */}
           <div className="row mb-3">
@@ -521,7 +543,7 @@ export default function ResidentForm() {
       </div>
 
 
-      <div className="container p-4" style={{ maxWidth: '1570px', marginLeft: '310px', marginTop: '20px' }}>
+      <div className="container p-4" style={{ maxWidth: '1500px', marginLeft: '365px', marginTop: '30px' }}>
         <form>
           {/* Vehicle Count Dropdown Toggle */}
           <div className="row mb-6 align-items-center">
@@ -628,15 +650,14 @@ export default function ResidentForm() {
 
 
         </form>
-
       </div>
+
       <form onSubmit={handleSubmit}>
-        <div className="d-flex justify-content-end mt-4">
+        <div className="d-flex justify-content-end mt-4" style={{ marginRight: '40px' }}>
           <button type="button" className="btn btn-secondary me-2">Cancel</button>
-          <button type="submit" className="btn btn-primary">Create</button>
+          <button type="submit" className="btn mainColor2" >Create</button>
         </div>
       </form>
-
 
     </>
 
