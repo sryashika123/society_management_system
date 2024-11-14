@@ -24,6 +24,7 @@ const BalanceInformation = () => {
                         <Card className="shadow-sm" style={{ borderRadius: '10px' }}>
                             <Card.Body className="d-flex align-items-center">
                                 <div>
+                                    
                                     <Card.Title style={{ color: 'black', fontSize: '16px' }}>
                                         {card.title}
                                     </Card.Title>

@@ -161,3 +161,39 @@ h2 {
 .square-modal .modal-content {
   height: 100%; /* Ensure the content fills the height */
 }
+
+/* App.css or relevant CSS file */
+.main-content {
+  padding-top: 110px; 
+}
+
+
+.home-routing{
+  color: rgba(167, 167, 167, 1);
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.home-routing-span{
+  color: rgba(32, 34, 36, 1);
+  width: 12px !important;
+  display: inline-block !important;
+}
+
+.current-page-routing{
+  color: rgba(86, 120, 233, 1);
+}
+
+.navbar-span{
+  font-size: 16px;
+  font-weight: 700;
+  color: black;
+}
+.full-width-container{
+  width: 100vw !important;
+  height: 109px !important;
+  max-width: 100% !important;
+  position: relative;
+  left: 0;
+  right: 0;
+}

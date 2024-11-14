@@ -200,10 +200,10 @@ export default function ResidentForm() {
   };
 
   return (
-    <>
+    <div className='main-content'>
 
-
-      <div className="container p-4" style={{ maxWidth: '1500px', marginLeft: '365px', marginTop: '30px' }}>
+      
+      <div className="container p-4 " style={{ maxWidth: '1500px', marginLeft: '365px', marginTop: '30px' }}>
         <div className="mb-4">
           <button
             className={`btn ${formType === 'owner' ? 'mainColor2' : 'btn'} me-2`}
@@ -416,7 +416,7 @@ export default function ResidentForm() {
       </div>
 
 
-      <div className="container p-4" style={{ maxWidth: '1500px', marginLeft: '365px', marginTop: '30px' }}>
+      <div className="container p-4 " style={{ maxWidth: '1500px', marginLeft: '365px', marginTop: '30px' }}>
         <form>
           {/* Member Count Dropdown Toggle */}
           <div className="row mb-3">
@@ -651,15 +651,16 @@ export default function ResidentForm() {
 
         </form>
       </div>
-
+          <div className="  " style={{ maxWidth: '1500px', marginLeft: '365px', marginTop: '30px' }}>
       <form onSubmit={handleSubmit}>
         <div className="d-flex justify-content-end mt-4" style={{ marginRight: '40px' }}>
           <button type="button" className="btn btn-secondary me-2">Cancel</button>
           <button type="submit" className="btn mainColor2" >Create</button>
         </div>
       </form>
+      </div>
 
-    </>
+    </div>
 
   );
 }

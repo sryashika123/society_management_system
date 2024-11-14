@@ -15,6 +15,8 @@ import Announcement from '../components/DashboardMenu/Announcement'
 import Note from '../components/DashboardMenu/FinancialManagement/Notes/Note'
 import Expense from '../components/DashboardMenu/FinancialManagement/Expenses/Expense'
 import MainLayout from '../components/Layouts/MainLayout'
+import Profile from '../components/DashboardMenu/Profile'
+import EditProfile from '../components/DashboardMenu/EditProfile'
 
 
 
@@ -41,6 +43,9 @@ const Home = () => {
           <Route path='/security-protocols' element={<SecurityProtocol />} />
           <Route path='/security-guard' element={< SecurityGuard />} />
           <Route path='/announcement' element={<Announcement />} />
+          <Route path ='/profile' element={<Profile/>}/>
+          <Route path="/EditProfile" element={<EditProfile />} />
+
 
 
         </Routes>

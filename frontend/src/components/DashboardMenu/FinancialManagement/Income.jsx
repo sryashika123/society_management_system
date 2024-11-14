@@ -6,7 +6,7 @@ import MaintenanceTable from './MaintenanceTable'
 const Income = () => {
     return (
         <>
-            <div className="d-flex flex-column flex-md-row vh-100" style={{backgroundColor: "#f8f9fa"}}>
+            <div className="d-flex flex-column flex-md-row vh-100 main-content" style={{backgroundColor: "#f8f9fa"}}>
                 {/* Sidebar Column */}
                 <div className="col-12 col-md-3 d-flex flex-column" style={{ maxWidth: "300px" }}>
                     <SideBar />

@@ -1,0 +1,56 @@
+.profile-dashboard-bg {
+    height: 100vh !important;
+}
+
+.profile-bg {
+    background-image: url('../images/profile-bg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 309px !important;
+}
+
+.profile-btn {
+    background: linear-gradient(90deg, #FE512E 0%, #F09619 100%);
+    color: white !important;
+    padding: 12px 15px !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+}
+
+.profile-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.profile-image-section {
+    width: 150px;
+}
+
+.profile-image {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+   
+}
+.profile-image-wrapper{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 20px auto;
+    
+}
+.edit-icon{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #ffffff;
+    color: black;
+    border-radius: 50%;
+    padding: 8px;
+    font-size: 2.2em;
+    cursor: pointer;
+}
