@@ -37,8 +37,9 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     select_society: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'society',
+        required: true
     },
     password: {
         type: String,
@@ -56,7 +57,7 @@ const userSchema = new mongoose.Schema({
     },   
     otpExpires: { 
         type: Date 
-    }      
+    },   
 });
 
 const storage1 = multer.diskStorage({

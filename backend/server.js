@@ -42,7 +42,10 @@ app.use("/api/users/v12", require("./routes/ExpensesRoute.js"));
 app.use("/api/users/v13", require("./routes/OtherIncomeRoute.js"));
 app.use("/api/users/v14", require("./routes/FacilityRoute.js"));
 app.use("/api/users/v15", require("./routes/MaintenanceRoute.js"));
+app.use("/api/users/v16", require("./routes/PollRoute.js"));
 
+
+app.use("/api/users/v19", require("./routes/PaymentRoute.js"));
 
 
 app.listen(port, (e)=>{
