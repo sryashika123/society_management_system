@@ -26,7 +26,7 @@ module.exports.viewComplaints = async(req,res)=>{
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send("Server error");
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -41,7 +41,7 @@ module.exports.deleteComplaints = async(req,res)=>{
     }
     catch(err){
         console.log(err.message);
-        res.status(500).send("data not deleted")
+        res.status(500).json({ err: err.message });
     }   
 }
 

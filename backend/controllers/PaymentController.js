@@ -53,6 +53,6 @@ module.exports.deletePayment = async (req, res) =>{
     }
     catch(err){
         console.log(err.message);
-        res.status(500).send("data not deleted")
+        res.status(500).json({ err: err.message });
     }
 }

@@ -46,6 +46,7 @@ app.use("/api/users/v16", require("./routes/PollRoute.js"));
 app.use("/api/users/v17", require("./routes/AlertRoute.js"));
 app.use("/api/users/v18", require("./routes/VisitortrackingRoute.js"));
 app.use("/api/users/v19", require("./routes/PaymentRoute.js"));
+app.use("/api/users/v20", require("./routes/AnnouncementRoute.js"));
 
 
 app.listen(port, (e)=>{
