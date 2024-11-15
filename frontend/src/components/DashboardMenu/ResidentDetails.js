@@ -83,7 +83,7 @@ export default function ResidentManagement() {
   };
 
   return (
-    <div className="d-flex flex-column flex-md-row">
+    <div className="d-flex flex-column flex-md-row main-content">
       <div className="flex-shrink-0" style={{ width: "300px" }}>
         <Sidebar />
       </div>

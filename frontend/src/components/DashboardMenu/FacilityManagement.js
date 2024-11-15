@@ -65,7 +65,7 @@ const FacilityManagement = () => {
   };
 
   return (
-    <div className="d-flex flex-column flex-md-row vh-100">
+    <div className="d-flex flex-column flex-md-row vh-100 main-content">
       <div className="col-12 col-md-3 flex-shrink-0" style={{ maxWidth: "300px" }}>
         <SideBar />
       </div>

@@ -77,14 +77,14 @@ const Expense = () => {
     };
 
     return (
-        <div className="d-flex flex-column flex-md-row" style={{ backgroundColor: "#f8f9fa" }}>
+        <div className="d-flex flex-column flex-md-row main-content" style={{ backgroundColor: "#f8f9fa" }}>
             {/* Sidebar Column */}
             <div className="col-2 p-0">
                 <Sidebar />
             </div>
 
             {/* Main Content Column */}
-            <div className="col-10 p-4 " style={{ overflowX: 'auto', minHeight: '100vh'  }}>
+            <div className="col-10 p-4  " style={{ overflowX: 'auto', minHeight: '100vh'  }}>
                 <div className="container-fluid">
                     <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
                         <div className="d-flex align-items-center justify-content-between ">

@@ -4,6 +4,8 @@ module.exports.createVisitortracking = async (req, res) => {
     try{
         const {VisitorName, Wing, Unit, Date, Time} = req.body;
 
+
+
         const newVisitortracking = new VisitortrackingModel({
             VisitorName,
             Wing,
@@ -11,8 +13,6 @@ module.exports.createVisitortracking = async (req, res) => {
             Date,
             Time
         });
-
-
         await newVisitortracking.save();    
         res.json(newVisitortracking);
     } 
@@ -47,6 +47,3 @@ module.exports.deleteVisitortracking = async(req,res)=>{
         res.status(500).send("data not deleted")
     }
 }
-
-
-

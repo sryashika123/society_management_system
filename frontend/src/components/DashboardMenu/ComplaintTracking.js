@@ -162,7 +162,7 @@ const ComplaintTable = () => {
 
     return (
         <Container fluid style={{ marginTop: "20px" }}>
-            <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
+            <div className='bg-white ' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
                 <div className="d-flex justify-content-between align-items-center">
                     <h2>Complaints</h2>
                     <Button variant="warning" style={{ border:'none'}} className="text-white mainColor2" onClick={handleShowModal}>
@@ -480,8 +480,8 @@ const ComplaintTable = () => {
 
 const Dashboard = () => {
     return (
-        <Container fluid className="p-0" style={{ maxWidth: "100%", overflowX: "hidden" }}>
-            <Row className="m-0">
+        <Container fluid className="p-0 " style={{ maxWidth: "100%", overflowX: "hidden" }}>
+            <Row className="m-0 main-content">
                 <Col xs={2} className="p-0">
                     <SideBar />
                 </Col>
