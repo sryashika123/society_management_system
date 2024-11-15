@@ -1,4 +1,4 @@
-const Facility = require('../models/FacilityModel'); // Adjust path if needed
+const Facility = require('../models/FacilityModel'); 
 
 // Create a new facility
 exports.createFacility = async (req, res) => {
@@ -24,7 +24,7 @@ module.exports.getFacility = async(req,res) =>{
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send("Server error");
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -39,7 +39,7 @@ module.exports.deleteFacility = async(req,res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send("Server error");
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -55,6 +55,6 @@ module.exports.updateFacility = async(req,res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send("Server error");
+        res.status(500).json({ err: err.message });
     }
 }

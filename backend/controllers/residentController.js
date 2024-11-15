@@ -37,11 +37,12 @@ const sendMail = async (to, password) => {
         text: `Your new password is: ${password}\n\nPlease use this password to log in to your account.`,
     };
 
-    try {
+    try{
         console.log("Attempting to send email to:", to);
         await transporter.sendMail(mailOptions);
         console.log("Password email sent successfully to:", to);
-    } catch (error) {
+    }
+    catch(error){
         console.error("Error sending email:", error);
         console.error("Stack trace:", error.stack);
         throw new Error("Error sending email");
@@ -50,7 +51,7 @@ const sendMail = async (to, password) => {
 
 module.exports.createResident = async (req, res) => {
     try{
-        const {
+        const{
             role, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, Email, age, gender, wing, unit, Relation,
             Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus 
         } = req.body;
@@ -123,7 +124,7 @@ module.exports.deleteResident = async (req, res) => {
                 if(fs.existsSync(filePath)) {
                     fs.unlinkSync(filePath);
                 }
-                else {
+                else{
                     console.warn(`Image file does not exist at: ${filePath}`);
                 }
             }

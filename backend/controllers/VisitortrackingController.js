@@ -3,9 +3,6 @@ const VisitortrackingModel = require("../models/VisitortrackingModel.js");
 module.exports.createVisitortracking = async (req, res) => {
     try{
         const {VisitorName, Wing, Unit, Date, Time} = req.body;
-
-
-
         const newVisitortracking = new VisitortrackingModel({
             VisitorName,
             Wing,

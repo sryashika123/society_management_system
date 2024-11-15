@@ -13,7 +13,7 @@ module.exports.createImportantNum = async (req, res) => {
     } 
     catch(err){ 
         console.error(err.message);
-        res.status(500).send("Server error");
+        res.status(500).json({ err: err.message });
     }
 };
 
@@ -24,7 +24,7 @@ module.exports.getImportantNum = async(req,res) =>{
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send("Server error");
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -39,7 +39,7 @@ module.exports.deleteImportantNum = async(req,res)=>{
     }
     catch(err){
         console.log(err.message);
-        res.status(500).send("data not deleted")
+        res.status(500).json("data not deleted", err.message);
     }
 }
 
@@ -56,6 +56,6 @@ module.exports.updateImportantNum = async(req,res)=>{
     }
     catch(err){
         console.log(err.message);
-        res.status(500).send("data not updated");
+        res.status(500).json("data not updated" , err.message);
     }
 }
