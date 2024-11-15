@@ -216,7 +216,7 @@ const MaintenanceTable = () => {
                           }}
                         >
                           {data.unit}
-                        </div>
+                        </div>&nbsp;
                         {/* Unit number without any special formatting */}
                         <div>{data.number}</div>
                       </div>

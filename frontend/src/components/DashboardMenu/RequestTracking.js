@@ -162,7 +162,7 @@ const RequestTable = () => {
        <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
             <div className="d-flex justify-content-between align-items-center">
                 <h2>Requests</h2>
-                <Button variant="warning" className="text-white mainColor2" onClick={handleShowModal}>
+                <Button variant="warning" className="text-white mainColor2" onClick={handleShowModal} style={{border:'none'}}>
                     Create Request
                 </Button>
             </div>
@@ -170,17 +170,17 @@ const RequestTable = () => {
 
         {/* Modal for Create Request Form */}
 
-        <Modal show={showModal} onHide={handleCloseModal}>
-            <Modal.Header closeButton>
+        <Modal show={showModal} onHide={handleCloseModal} centered className='square-modal'>
+            <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                 <Modal.Title>Create Request</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
-                <Form>
+                <Form style={{ color: '#202224', fontWeight: '500' }}>
                     {['name', 'type', 'description', 'date', 'unit', 'number'].map((field) => (
                         <Form.Group controlId={field} key={field}>
-                            <Form.Label>{`${field.charAt(0).toUpperCase() + field.slice(1)}`}</Form.Label>
+                            <Form.Label style={{ marginTop:'10px'}}>{`${field.charAt(0).toUpperCase() + field.slice(1)}`}</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder={`Enter ${field}`}
@@ -213,14 +213,31 @@ const RequestTable = () => {
                 </Form>
             </Modal.Body>
 
-            <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button variant="secondary" onClick={handleCloseModal} style={buttonStyle}>
+            <div className="d-flex justify-content-between">
+                <button type="button" className="btn btn-outline-secondary"
+                    style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                    onClick={handleCloseModal}>
                     Cancel
-                </Button>
-                <Button className="mainColor2" onClick={handleCreateRequest} style={buttonStyle}>
-                    Create
-                </Button>
-            </Modal.Footer>
+                </button>
+                <button
+                    type="submit"
+                    className="btn"
+                    style={{
+                        background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+                        color: 'White',
+                        width: '45%',
+                        borderRadius: '10px',
+                        marginBottom: '15px',
+                        marginRight: '15px',
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                    }}
+                    data-bs-dismiss="modal"
+                    onClick={handleCreateRequest}
+                >
+                    Save
+                </button>
+            </div>
         </Modal>
 
         {/* Modal for view Request Form */}
@@ -283,18 +300,18 @@ const RequestTable = () => {
 
         {/* Modal for Editing Request Form */}
 
-        <Modal show={showEditModal} onHide={handleCloseEditModal}>
-            <Modal.Header closeButton>
+        <Modal show={showEditModal} onHide={handleCloseEditModal} centered className="square-modal">
+            <Modal.Header closeButton style={{ borderBottom: "none" }}>
                 <Modal.Title>Edit Request</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
+                <Form style={{ color: "#202224", fontWeight: "500" }}>
                     {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
                     {/* Form Fields */}
                     {["name", "type", "description", "date", "unit", "number"].map((field) => (
                         <Form.Group key={field} controlId={field}>
-                            <Form.Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Form.Label>
+                            <Form.Label style={{marginTop: "10px"}}>{field.charAt(0).toUpperCase() + field.slice(1)}</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder={`Enter ${field.charAt(0).toUpperCase() + field.slice(1)}`}
@@ -339,10 +356,31 @@ const RequestTable = () => {
                 </Form>
             </Modal.Body>
 
-            <Modal.Footer className="d-flex justify-content-between">
-                <Button variant="secondary" onClick={handleCloseEditModal}>Cancel</Button>
-                <Button onClick={handleEditRequest}>Save Changes</Button>
-            </Modal.Footer>
+            <div className="d-flex justify-content-between">
+                <button type="button" className="btn btn-outline-secondary"
+                    style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                    onClick={handleCloseEditModal}>
+                    Cancel
+                </button>
+                <button
+                    type="submit"
+                    className="btn"
+                    style={{
+                        background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+                        color: 'White',
+                        width: '45%',
+                        borderRadius: '10px',
+                        marginBottom: '15px',
+                        marginRight: '15px',
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                    }}
+                    data-bs-dismiss="modal"
+                    onClick={handleEditRequest}
+                >
+                    Save
+                </button>
+            </div>
         </Modal>
 
         {/* Requests Table */}

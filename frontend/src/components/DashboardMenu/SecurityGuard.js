@@ -170,15 +170,15 @@ const ComplaintTracking = () => {
             <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px"}}>
                 <div className="d-flex justify-content-between align-items-center">
                     <h2>Security guard Details</h2>
-                    <Button variant="warning" className="text-white mainColor2 d-flex align-items-center" onClick={setShowModal}>
+                    <Button variant="warning" className="text-white mainColor2 d-flex align-items-center" onClick={setShowModal} style={{ border:'none'}}>
                         <RiAddBoxFill className="me-2" style={{ height: "24px", width: "24px" }} />
                         Add Security
                     </Button>
                 </div>
             
 
-            <Modal show={showViewGuard} onHide={handleClose} centered>
-                <Modal.Header closeButton>
+            <Modal show={showViewGuard} onHide={handleClose} centered className='square-modal'>
+                <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                     <Modal.Title>View Security Protocols</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -191,6 +191,9 @@ const ComplaintTracking = () => {
                         <div style={{ textAlign: 'center' }}>
                             <span>Select Shift</span>
                             <span style={{
+                                gap: '10px',
+                                display: 'flex',
+                                alignItems: 'center',
                                 background: guardData.shift === 'Day' ? 'rgba(244, 244, 244, 1)' : 'rgba(79, 79, 79, 1)',
                                 color: guardData.shift === 'Day' ? 'rgba(255, 147, 0, 1)' : 'rgba(255, 255, 255, 1)',
                                 padding: '5px 15px',
@@ -210,6 +213,9 @@ const ComplaintTracking = () => {
                         <div style={{ textAlign: 'center' }}>
                             <span>Gender</span>
                             <span style={{
+                                gap: '10px',
+                                display: 'flex',
+                                alignItems: 'center',
                                 background: guardData.gender === 'Male' ? 'rgba(33, 168, 228, 0.1)' : 'rgba(254, 118, 168, 0.1)',
                                 color: guardData.gender === 'Male' ? 'rgba(86, 120, 233, 1)' : 'rgba(254, 118, 168, 1)',
                                 padding: '5px 15px',
@@ -231,17 +237,38 @@ const ComplaintTracking = () => {
                 <Modal.Body>
                     <p>Are you sure you want to delete this protocol?</p>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleDelete} style={{ background: '#FF0000', color: 'white' }}>Delete</Button>
-                </Modal.Footer>
+                <div className="d-flex justify-content-between">
+                    <button type="button" className="btn btn-outline-secondary"
+                        style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+        onClick={handleClose}>
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn"
+                        style={{
+                            background: 'rgba(231, 76, 60, 1)',
+                            color: 'White',
+                            width: '45%',
+                            borderRadius: '10px',
+                            marginBottom: '15px',
+                            marginRight: '15px',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                        }}
+                        data-bs-dismiss="modal"
+                        onClick={handleDelete}
+                    >
+                        Delete
+                    </button>
+                </div>
             </Modal>
 
-            <Modal show={showModal} onHide={handleClose} centered>
-                <Modal.Header closeButton>
+            <Modal show={showModal} onHide={handleClose} centered className='square-modal'>
+                <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                     <Modal.Title>{isEdit ? 'Edit Security' : 'Add Security'}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ color: '#202224', fontWeight: '500' }}>
                     <div style={{ display: 'flex', marginBottom: '20px' }}>
                         <label htmlFor="photo-upload">
                             <div style={{
@@ -280,7 +307,7 @@ const ComplaintTracking = () => {
                     </div>
 
                     <Form>
-                        <Form.Group controlId="formName">
+                        <Form.Group controlId="formName" style={{ marginBottom: '20px' }}>
                             <Form.Label>Full Name</Form.Label>
                             <Form.Control
                                 type="text"
@@ -289,7 +316,7 @@ const ComplaintTracking = () => {
                             />
                         </Form.Group>
 
-                        <Form.Group controlId="formPhone">
+                        <Form.Group controlId="formPhone" style={{ marginBottom: '20px' }}>
                             <Form.Label>Phone Number</Form.Label>
                             <Form.Control
                                 type="text"
@@ -299,7 +326,7 @@ const ComplaintTracking = () => {
                         </Form.Group>
 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Form.Group controlId="formGender">
+                            <Form.Group controlId="formGender" style={{ marginBottom: '20px' }}>
                                 <Form.Label>Gender</Form.Label>
                                 <Form.Select
                                     value={newGuard.gender}
@@ -311,7 +338,7 @@ const ComplaintTracking = () => {
                                 </Form.Select>
                             </Form.Group>
 
-                            <Form.Group controlId="formShift">
+                            <Form.Group controlId="formShift" style={{ marginBottom: '20px' }}>
                                 <Form.Label>Shift</Form.Label>
                                 <Form.Select
                                     value={newGuard.shift}
@@ -325,7 +352,7 @@ const ComplaintTracking = () => {
                         </div>
 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Form.Group controlId="formDate">
+                            <Form.Group controlId="formDate" style={{ marginBottom: '20px' }}>
                                 <Form.Label>Shift Date</Form.Label>
                                 <Form.Control
                                     type="date"
@@ -334,7 +361,7 @@ const ComplaintTracking = () => {
                                 />
                             </Form.Group>
 
-                            <Form.Group controlId="formTime">
+                            <Form.Group controlId="formTime" style={{ marginBottom: '20px' }}>
                                 <Form.Label>Shift Time</Form.Label>
                                 <Form.Control
                                     type="time"
@@ -344,7 +371,7 @@ const ComplaintTracking = () => {
                             </Form.Group>
                         </div>
 
-                        <Form.Group controlId="formAadhaar">
+                        <Form.Group controlId="formAadhaar" >
                             <Form.Label>Upload Aadhaar Card</Form.Label>
                             <div style={{
                                 border: '2px dashed rgba(211, 211, 211, 1)',
@@ -357,7 +384,9 @@ const ComplaintTracking = () => {
                                 cursor: 'pointer'
                             }}>
                                 <label htmlFor="aadhaar-upload">
+                                    <div className="d-flex align-items-center justify-content-center">
                                     <LuImagePlus style={{ fontSize: '24px', marginBottom: '8px', width: '40px', height: '50px', color: 'rgba(167, 167, 167, 1)' }} />
+                                    </div>
                                     <div>Upload a file <span>or drag and drop</span></div>
                                 </label>
                                 <input
@@ -380,12 +409,31 @@ const ComplaintTracking = () => {
                         </Form.Group>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                    <Button style={{ backgroundColor: '#007bff', color: 'white' }} onClick={handleSave}>
-                        {isEdit ? 'Create' : 'Create'}
-                    </Button>
-                </Modal.Footer>
+                <div className="d-flex justify-content-between">
+                    <button type="button" className="btn btn-outline-secondary"
+                        style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                        onClick={handleClose}>
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn"
+                        style={{
+                            background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+                            color: 'White',
+                            width: '45%',
+                            borderRadius: '10px',
+                            marginBottom: '15px',
+                            marginRight: '15px',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                        }}
+                        data-bs-dismiss="modal"
+                        onClick={handleSave}
+                    >
+                        Save
+                    </button>
+                </div>
             </Modal>
 
 

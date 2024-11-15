@@ -84,7 +84,7 @@ const FacilityManagement = () => {
               handleShowModal();
             }}
 
-            style={{marginRight: "40px"}}
+            style={{marginRight: "40px" , border:'none'}}
           >
             Create Facility
           </Button>
@@ -119,7 +119,7 @@ const FacilityManagement = () => {
         </div>
         </div>
 
-        <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal show={showModal} onHide={handleCloseModal} centered className="square-modal" >
           <Modal.Header closeButton>
             <Modal.Title>{isEditing ? "Edit Facility" : "Create Facility"}</Modal.Title>
           </Modal.Header>
@@ -157,14 +157,31 @@ const FacilityManagement = () => {
               </Form.Group>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={handleSaveFacility}>
-              Save
-            </Button>
-          </Modal.Footer>
+          <div className="d-flex justify-content-between">
+                <button type="button" className="btn btn-outline-secondary"
+                    style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                    onClick={handleCloseModal}>
+                    Cancel
+                </button>
+                <button
+                    type="submit"
+                    className="btn"
+                    style={{
+                        background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+                        color: 'White',
+                        width: '45%',
+                        borderRadius: '10px',
+                        marginBottom: '15px',
+                        marginRight: '15px',
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                    }}
+                    data-bs-dismiss="modal"
+                    onClick={handleSaveFacility}
+                >
+                    Save
+                </button>
+            </div>
         </Modal>
       </div>
     </div>
