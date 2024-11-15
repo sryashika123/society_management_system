@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Table, Modal, Form } from "react-bootstrap";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import SideBar from "../Layouts/Sidebar";
-import Avatar   from "../images/Avatar.png";
+import SideBar from "../../Layouts/Sidebar";
+import Avatar   from "../../images/Avatar.png";
 
 const RequestTable = () => {
   const [requests, setRequests] = useState([

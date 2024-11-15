@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import profile from '../images/profile.png';
+import profile from '../../images/profile.png';
 import { MdEditSquare } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import './Profile.css';
 
 export default function Profile() {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    
-    // Initial data for the profile
+
+    // Initial Data
     const initialData = {
         fname: "Arlene",
         lname: "McCoy",
@@ -20,18 +20,20 @@ export default function Profile() {
         city: "Baroda"
     };
 
-    // Set initial data to the form fields on mount
+    // Setting initial data in form fields
     useEffect(() => {
-        Object.keys(initialData).forEach(key => {
-            setValue(key, initialData[key]); // populate the form with initial data
-        });
+        setValue('fname', initialData.fname);
+        setValue('lname', initialData.lname);
+        setValue('email', initialData.email);
+        setValue('phone', initialData.phone);
+        setValue('society', initialData.society);
+        setValue('country', initialData.country);
+        setValue('state', initialData.state);
+        setValue('city', initialData.city);
     }, [setValue]);
 
     const onSubmit = data => {
-        console.log("Updated data:", data);
-        // Here, you can send the updated data to your server or update the state
-        // Example: Make an API call to save data
-        // updateProfileData(data);
+        console.log(data); // Updated data will be logged here
     };
 
     return (
@@ -39,15 +41,22 @@ export default function Profile() {
             <div className="d-flex justify-content-center profile-bg">
                 <div className="col-lg-6">
                     <div className="d-flex align-items-center justify-content-between">
-                        <h3 className="mb-3 mt-5 profile-title">Edit Profile</h3>
+                        <h3 className="mb-3 mt-5 profile-title">Profile</h3>
+                        <div className="d-flex justify-content-end mt-3">
+                            <Link to="/home/EditProfile" className="text-decoration-none">
+                                <button type="button" className="d-flex align-items-center btn btn-sm profile-btn border-0">
+                                    <MdEditSquare className="me-2" />Edit Profile
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)} className="form-group bg-light p-5 rounded d-flex justify-content-between mt-3 " style={{border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)"}}>
-
+                        
                         {/* Profile Image Section */}
                         <div className="profile-image-section text-center ">
                             <div className='profile-image-wrapper'>
-                                <img src={profile} alt="Profile" className="rounded-circle profile-image"/>
-                                <MdEditSquare className='edit-icon'/>
+                            <img src={profile} alt="Profile" className="rounded-circle profile-image"/>
+                            <MdEditSquare className='edit-icon'/>
                             </div>
                             <p className="mt-3" style={{fontSize:"18px", fontWeight:"500"}}>Arlene McCoy</p>
                         </div>
@@ -58,7 +67,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 pe-2">
                                     <label>First Name <span className="text-danger">*</span></label>
                                     <input
-                                        placeholder='Enter First Name'
+                                    placeholder='Enter First Name'
                                         type="text"
                                         className={`form-control ${errors.fname ? 'is-invalid' : ''}`}
                                         {...register('fname', { required: 'First Name is required' })}
@@ -69,7 +78,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 ps-2">
                                     <label>Last Name <span className="text-danger">*</span></label>
                                     <input
-                                        placeholder='Enter Last Name'
+                                    placeholder='Enter Last Name'
                                         type="text"
                                         className={`form-control ${errors.lname ? 'is-invalid' : ''}`}
                                         {...register('lname', { required: 'Last Name is required' })}
@@ -80,7 +89,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 pe-2">
                                     <label>Phone Number <span className="text-danger">*</span></label>
                                     <input
-                                        placeholder='+91'
+                                    placeholder='+91'
                                         type="text"
                                         className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                                         {...register('phone', { required: 'Phone Number is required' })}
@@ -91,7 +100,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 ps-2">
                                     <label>Email Address <span className="text-danger">*</span></label>
                                     <input
-                                        placeholder='abc@example.com'
+                                    placeholder='abc@example.com'
                                         type="email"
                                         className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                         {...register('email', { required: 'Email is required' })}
@@ -102,7 +111,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 pe-2">
                                     <label>Select Society <span className="text-danger">*</span></label>
                                     <input
-                                        placeholder='Select Society'
+                                    placeholder='Select Society'
                                         type="text"
                                         className={`form-control ${errors.society ? 'is-invalid' : ''}`}
                                         {...register('society', { required: 'Society is required' })}
@@ -113,7 +122,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 ps-2">
                                     <label>Country <span className="text-danger">*</span></label>
                                     <input
-                                        placeholder='Select Country'
+                                    placeholder='Select Country'
                                         type="text"
                                         className={`form-control ${errors.country ? 'is-invalid' : ''}`}
                                         {...register('country', { required: 'Country is required' })}
@@ -124,7 +133,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 pe-2">
                                     <label>State <span className="text-danger">*</span></label>
                                     <input
-                                        placeholder='Select State'
+                                    placeholder='Select State'
                                         type="text"
                                         className={`form-control ${errors.state ? 'is-invalid' : ''}`}
                                         {...register('state', { required: 'State is required' })}
@@ -135,20 +144,14 @@ export default function Profile() {
                                 <div className="mb-2 w-50 ps-2">
                                     <label>City <span className="text-danger">*</span></label>
                                     <input
-                                        placeholder='Select City'
+                                    placeholder='Select City'
                                         type="text"
                                         className={`form-control ${errors.city ? 'is-invalid' : ''}`}
                                         {...register('city', { required: 'City is required' })}
                                     />
                                     {errors.city && <div className="invalid-feedback">{errors.city.message}</div>}
                                 </div>
-
                             </div>
-
-                            <div className="d-flex justify-content-end mt-3">
-                                <button type="submit" className="d-flex align-items-center btn btn-sm profile-btn ">Update Profile</button>
-                            </div>
-
                         </div>
                     </form>
                 </div>

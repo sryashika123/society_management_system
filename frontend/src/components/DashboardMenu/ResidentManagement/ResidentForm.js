@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { LuImagePlus } from 'react-icons/lu';
-import { RxAvatar } from 'react-icons/rx';
 import { useNavigate } from 'react-router-dom';
 
 export default function ResidentForm() {

@@ -23,10 +23,10 @@ const Header = () => {
 
 
     return (
-        <div className="header bg-white p-3 shadow-sm " style={{ height: '110px', width: '100%' }}>
+        <div className="header bg-white p-3 shadow-sm " style={{ height: '110px', width: '100%' ,position: 'fixed' , zIndex: '999' , top: '0' }}>
             <Row className="align-items-center" style={{ height: '100%' }}>
                 {/* Search Input - Aligned to Left */}
-                <Col xs={12} md={6} lg={3} className="d-flex justify-content-start">
+                <Col xs={12} md={6} lg={2} className="d-flex justify-content-start">
                     <InputGroup className="w-100">
                         <InputGroup.Text>
                             <BsSearch />
@@ -35,9 +35,9 @@ const Header = () => {
                     </InputGroup>
                 </Col>
 
-                <Col></Col>
+          
                 {/* Notification and User Info - Aligned to Right */}
-                <Col xs={12} md={6} lg={4} className="d-flex justify-content-end align-items-center">
+                <Col xs={12} md={6} lg={8} className="d-flex justify-content-end align-items-center">
                     
                 <Nav className="d-flex align-items-center">
                                     {/* Notification Icon */}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './RegisterForm.css';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import Logo from './Logo';
+import Logo from '../Logo/Logo';
 import axios from 'axios';
 import CreateSocietyForm from './Create_society';
 export default function Register() {
@@ -65,7 +65,7 @@ export default function Register() {
                 <div className='col-lg-6 col-md-6 col-sm-12 text-center d-flex align-items-center justify-content-center flex-column'>
                     <img
                         className='register-image img-fluid mt-5 mx-5'
-                        src={require('../components/images/Ragister.png')}
+                        src={require('../images/Ragister.png')}
                         alt='Registration'
                     />
                 </div>

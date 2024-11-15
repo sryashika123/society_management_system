@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import ForgotPasswordImage from '../images/forgot.png';
-import Logo from '../Logo';
+import Logo from '../Logo/Logo';
 
 export default function ForgotPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm();

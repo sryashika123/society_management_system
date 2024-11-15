@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import OTPImage from '../images/forgot.png';
 import './Otp.css';
-import Logo from '../Logo';
+import Logo from '../Logo/Logo';
 import axios from 'axios';
 
 export default function EnterOtp() {

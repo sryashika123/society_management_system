@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { Button, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaUser, FaHome, FaTag, FaEye, FaEdit, FaPlus, FaPlusSquare } from 'react-icons/fa'; // Using react-icons as placeholders
-import Sidebar from '../Layouts/Sidebar';
-import Avtar from '../images/Avatar.png';
+import { FaUser, FaHome, FaTag, FaEye, FaEdit, FaPlusSquare } from 'react-icons/fa'; // Using react-icons as placeholders
+import Sidebar from '../../Layouts/Sidebar';
+import Avtar from '../../images/Avatar.png';
 
 
 export default function ResidentManagement() {

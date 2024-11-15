@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Table, Button, Dropdown, Badge, Modal, Image, Form, Col, Row } from 'react-bootstrap';
+import { Card, Table, Button, Dropdown, Badge, Modal, Image, Form} from 'react-bootstrap';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 
 // Reusable modal component for editing complaints

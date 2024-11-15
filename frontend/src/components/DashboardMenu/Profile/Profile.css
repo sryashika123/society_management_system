@@ -3,7 +3,7 @@
 }
 
 .profile-bg {
-    background-image: url('../images/profile-bg.png');
+    background-image: url('../../images/profile-bg.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SideBar from '../Layouts/Sidebar';
+import SideBar from '../../Layouts/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Button, Modal, Form } from 'react-bootstrap';
