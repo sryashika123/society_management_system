@@ -12,6 +12,16 @@ const ImportantNumberSchema = new mongoose.Schema({
     Work :{
         type: String,
         required: true
+    },
+    UserId : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Admin',
+        required: true
+    },
+    Society_Id :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'society',
+        required: true
     }
 });
 

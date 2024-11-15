@@ -27,7 +27,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/users", require("./routes/authRoute"));
+app.use("/api/users", require("./routes/UserRoute.js"));
 app.use("/api/users/v2", require("./routes/societyRoutes.js"))
 app.use("/api/users/v3", require("./routes/ImportantNumRoute.js"));
 app.use("/api/users/v4", require("./routes/CompalintRoute.js"));

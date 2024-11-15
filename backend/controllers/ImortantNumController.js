@@ -1,12 +1,27 @@
 const ImportantNumber = require("../models/ImportantNumModel"); 
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 module.exports.createImportantNum = async (req, res) => {
     try{
-        const { Full_name, Phone_number, Work } = req.body;
+        const { Full_name, Phone_number, Work, UserId, Society_Id} = req.body;
+
+        const User = await Admin.findById(UserId);
+		if (!User) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(Society_Id);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
+        
         const newImportantNumber = new ImportantNumber({
             Full_name,
             Phone_number,
-            Work
+            Work,
+            UserId,
+            Society_Id
         });
         await newImportantNumber.save();    
         res.json(newImportantNumber);

@@ -4,12 +4,12 @@ const router = express.Router();
 
 const ProfileController = require("../controllers/profileController");
 
-const Auth = require("../models/authModel");
+const User = require("../models/UserModel");
 
 
 router.get("/viewProfile", ProfileController.viewProfile);
 
-router.put("/updateProfile/:id", Auth.uploadedAvatar, ProfileController.updateProfile);
+router.put("/updateProfile/:id", User.uploadedAvatar, ProfileController.updateProfile);
 
 router.delete("/deleteProfile/:id", ProfileController.deleteProfile);
 
