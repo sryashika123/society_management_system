@@ -9,6 +9,8 @@ router.post("/register", usercontroller.register);
 
 router.post("/login", usercontroller.login);
 
+router.post("/logout", usercontroller.logout);
+
 router.post("/forgot-password", usercontroller.forgotpassword);
 
 router.post("/resendotp", usercontroller.resendotp);
