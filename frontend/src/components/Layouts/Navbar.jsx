@@ -1,45 +1,54 @@
 import React, { useState } from 'react';
-import { Row, Col, Form, InputGroup,  Nav, Button, Dropdown } from 'react-bootstrap';
-import { BsSearch } from 'react-icons/bs';
+import { Navbar, Nav, Dropdown, Button, Container, Row, Col } from 'react-bootstrap';
+import { FaGreaterThan } from "react-icons/fa6";
 import avtar from '../images/Avatar.png';
-import { FaBell } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
+import { FaBell } from "react-icons/fa";
+import { useLocation, Link } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
-const Header = () => {
+export default function NavbarComponent () {
     const [notifications, setNotifications] = useState([
         'New habit reminder',
         'Goal achieved!',
         'Don\'t forget to update your progress'
     ]);
     const [showNotifications, setShowNotifications] = useState(false);
+    const location = useLocation();
+
+    const getPageName = (path) => {
+        const pathParts = path.split('/');
+        return pathParts[pathParts.length - 1] || 'Home';
+    };
+
+    const toggleNotifications = () => {
+        setShowNotifications(!showNotifications);
+    };
 
     const clearNotifications = () => {
         setNotifications([]);
         setShowNotifications(false);
     };
-    const toggleNotifications = () => {
-        setShowNotifications(!showNotifications);
-    };
-
 
     return (
-        <div className="header bg-white p-3 shadow-sm " style={{ height: '110px', width: '100%' }}>
-            <Row className="align-items-center" style={{ height: '100%' }}>
-                {/* Search Input - Aligned to Left */}
-                <Col xs={12} md={6} lg={3} className="d-flex justify-content-start">
-                    <InputGroup className="w-100">
-                        <InputGroup.Text>
-                            <BsSearch />
-                        </InputGroup.Text>
-                        <Form.Control type="text" placeholder="Search Here" />
-                    </InputGroup>
+        <Container >
+            <Row>
+                {/* Sidebar - Left Column */}
+                <Col xs={2} className="p-0">
+                    <Sidebar />
                 </Col>
 
-                <Col></Col>
-                {/* Notification and User Info - Aligned to Right */}
-                <Col xs={12} md={6} lg={4} className="d-flex justify-content-end align-items-center">
-                    
-                <Nav className="d-flex align-items-center">
+                {/* Header and Content - Right Column */}
+                <Col xs={10} className="p-0">
+                    <div className='header' style={{ position: 'fixed', top: '0', right: '0', zIndex: '999', width: 'calc(100% - 16.67%)' }}>
+                        <Navbar expand="lg" className="navbar bg-white border-bottom p-4 full-width-container">
+                            <div className="w-100 d-flex justify-content-between align-items-center">
+                                {/* Breadcrumb */}
+                                <h5 className='home-routing'>
+                                    Home <span className='home-routing-span ms-2'><FaGreaterThan style={{ fontSize: '12px' }} /></span>
+                                    <span className="current-page-routing ms-2"> {getPageName(location.pathname)}</span>
+                                </h5>
+
+                                <Nav className="d-flex align-items-center">
                                     {/* Notification Icon */}
                                     <Button
                                         variant="light"
@@ -58,7 +67,7 @@ const Header = () => {
                                     {showNotifications && (
                                         <div
                                             className="notification-dropdown position-absolute bg-white border shadow-sm p-2"
-                                            style={{ right: '60px', top: '50px', width: '280px', zIndex: 1000 , marginTop: '25px' , marginRight: '25px'}}
+                                            style={{ right: '60px', top: '50px', width: '280px', zIndex: 1000, marginTop: '25px', marginRight: '25px' }}
                                         >
                                             <div className="d-flex justify-content-between align-items-center mb-2">
                                                 <h6 className="mb-0">Notifications</h6>
@@ -98,11 +107,12 @@ const Header = () => {
                                         </Link>
                                     </Dropdown>
                                 </Nav>
+                            </div>
+                        </Navbar>
+                    </div>
                 </Col>
-
             </Row>
-        </div>
+        </Container>
     );
-};
+}
 
-export default Header;

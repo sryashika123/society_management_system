@@ -164,7 +164,7 @@ h2 {
 
 /* App.css or relevant CSS file */
 .main-content {
-  padding-top: 110px; 
+  padding-top: 70px; 
 }
 
 
@@ -197,3 +197,21 @@ h2 {
   left: 0;
   right: 0;
 }
+
+.navbar-container {
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+  width: 100%;
+}
+
+.notification-icon {
+  padding: 5px;
+}
+
+.notification-dropdown {
+  border-radius: 8px;
+}
+
