@@ -12,6 +12,7 @@ import ComplaintList from './ComplaintList';
 import { Link } from 'react-router-dom';
 import BalanceInformation from './BalanceInformation';
 
+
 // Register the necessary components from Chart.js
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -153,7 +154,7 @@ const RightSection = () => {
 
 
 	return (
-		<div className="d-flex flex-column flex-md-row vh-100 ms-4 main-content">
+		<div className="d-flex flex-column flex-md-row vh-100 ms-4">
 			{/* Sidebar Section */}
 			<div className="col-12 col-md-3 flex-shrink-0" style={{ maxWidth: "300px" }}>
 				<SideBar />
@@ -162,7 +163,7 @@ const RightSection = () => {
 			{/* Right Section */}
 
 			<Col xs={12} md={10} className="right-section p-3 ">
-
+				
 
 				{/* Top Cards for Balance Information */}
 				<div>
@@ -459,10 +460,10 @@ const RightSection = () => {
 
 					{/* Upcoming Activity Form */}
 					<Col xs={12}        // Full width on extra small screens (mobile)
-							sm={12}        // Full width on small screens (tablet portrait)
-							md={6}         // Half width on medium screens (tablet landscape)
-							lg={4}         // One-third width on large screens (desktop)
-							xl={3}         // Quarter width on extra-large screens
+						sm={12}        // Full width on small screens (tablet portrait)
+						md={6}         // Half width on medium screens (tablet landscape)
+						lg={4}         // One-third width on large screens (desktop)
+						xl={3}         // Quarter width on extra-large screens
 						style={{
 							overflowY: 'scroll', // Prevent overflow on the column
 							height: '33vh', // Set the height of the column for larger screens
