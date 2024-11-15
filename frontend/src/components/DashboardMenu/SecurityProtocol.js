@@ -198,7 +198,7 @@ const SecurityProtocol = () => {
 const Dashboard = () => {
   return (
     <Container fluid className="p-0" style={{ maxWidth: "100%", overflowX: "hidden" }}>
-      <Row className="m-0">
+      <Row className="m-0 main-content">
         <Col xs={2} className="p-0">
           <SideBar />
         </Col>

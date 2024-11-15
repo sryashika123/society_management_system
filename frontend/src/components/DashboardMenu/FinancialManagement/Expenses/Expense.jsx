@@ -77,14 +77,14 @@ const Expense = () => {
     };
 
     return (
-        <div className="d-flex flex-column flex-md-row" style={{ backgroundColor: "#f8f9fa" }}>
+        <div className="d-flex flex-column flex-md-row main-content" style={{ backgroundColor: "#f8f9fa" }}>
             {/* Sidebar Column */}
             <div className="col-2 p-0">
                 <Sidebar />
             </div>
 
             {/* Main Content Column */}
-            <div className="col-10 p-4 " style={{ overflowX: 'auto', minHeight: '100vh'  }}>
+            <div className="col-10 p-4  " style={{ overflowX: 'auto', minHeight: '100vh'  }}>
                 <div className="container-fluid">
                     <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
                         <div className="d-flex align-items-center justify-content-between ">
@@ -211,10 +211,31 @@ const Expense = () => {
                     <Modal.Title>Delete Expense</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='text-muted'>Are you sure you want to delete this expense?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
-                    <Button variant="danger" onClick={handleDeleteExpense}>Delete</Button>
-                </Modal.Footer>
+                <div className="d-flex justify-content-between">
+                    <button type="button" className="btn btn-outline-secondary"
+                        style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+        onClick={() => setShowDeleteModal(false)}>
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn"
+                        style={{
+                            background: 'rgba(231, 76, 60, 1)',
+                            color: 'White',
+                            width: '45%',
+                            borderRadius: '10px',
+                            marginBottom: '15px',
+                            marginRight: '15px',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                        }}
+                        data-bs-dismiss="modal"
+                        onClick={handleDeleteExpense}
+                    >
+                        Delete
+                    </button>
+                </div>
             </Modal>
         </div>
     );

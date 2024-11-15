@@ -153,7 +153,7 @@ const RightSection = () => {
 
 
 	return (
-		<div className="d-flex flex-column flex-md-row vh-100 ms-4">
+		<div className="d-flex flex-column flex-md-row vh-100 ms-4 main-content">
 			{/* Sidebar Section */}
 			<div className="col-12 col-md-3 flex-shrink-0" style={{ maxWidth: "300px" }}>
 				<SideBar />
@@ -161,7 +161,7 @@ const RightSection = () => {
 
 			{/* Right Section */}
 
-			<Col xs={12} md={10} className="right-section p-3">
+			<Col xs={12} md={10} className="right-section p-3 ">
 
 
 				{/* Top Cards for Balance Information */}
