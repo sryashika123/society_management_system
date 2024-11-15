@@ -5,7 +5,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { FaTrashAlt } from 'react-icons/fa';
 import { MdEditSquare } from "react-icons/md";
 import './RightSection.css';
-import SideBar from '../Layouts/Sidebar';
+import SideBar from '../../Layouts/Sidebar';
 import { FaSquarePlus } from "react-icons/fa6";
 import './PendingMaintenances.css';
 import ComplaintList from './ComplaintList';
@@ -154,7 +154,7 @@ const RightSection = () => {
 
 
 	return (
-		<div className="d-flex flex-column flex-md-row vh-100 ms-4">
+		<div className="d-flex flex-column flex-md-row vh-100 ms-4" style={{ marginTop: '110px' }}>
 			{/* Sidebar Section */}
 			<div className="col-12 col-md-3 flex-shrink-0" style={{ maxWidth: "300px" }}>
 				<SideBar />
@@ -163,7 +163,7 @@ const RightSection = () => {
 			{/* Right Section */}
 
 			<Col xs={12} md={10} className="right-section p-3 ">
-				
+
 
 				{/* Top Cards for Balance Information */}
 				<div>

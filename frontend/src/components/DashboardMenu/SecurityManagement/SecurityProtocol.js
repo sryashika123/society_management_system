@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Table, Button, Modal } from "react-bootstrap";
-import SideBar from "../Layouts/Sidebar";
+import SideBar from "../../Layouts/Sidebar";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 
 const SecurityProtocol = () => {

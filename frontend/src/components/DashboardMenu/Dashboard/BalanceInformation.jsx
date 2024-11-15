@@ -3,10 +3,10 @@ import { Row, Col, Card } from 'react-bootstrap';
 
 const BalanceInformation = () => {
     const [cards] = useState([
-        { title: 'Total Balance', amount: '₹ 2,22,520', img: require('../images/dash1.png') },
-        { title: 'Total Income', amount: '₹ 55,000', img: require('../images/dash2.png') },
-        { title: 'Total Expense', amount: '₹ 20,550', img: require('../images/dash3.png') },
-        { title: 'Total Unit', amount: '₹ 20,550', img: require('../images/dash4.png') },
+        { title: 'Total Balance', amount: '₹ 2,22,520', img: require('../../images/dash1.png') },
+        { title: 'Total Income', amount: '₹ 55,000', img: require('../../images/dash2.png') },
+        { title: 'Total Expense', amount: '₹ 20,550', img: require('../../images/dash3.png') },
+        { title: 'Total Unit', amount: '₹ 20,550', img: require('../../images/dash4.png') },
     ]);
 
     return (

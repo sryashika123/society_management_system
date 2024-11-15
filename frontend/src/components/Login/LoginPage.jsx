@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginPage.css'; // Assuming you're styling the form externally
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../Logo';
+import Logo from '../Logo/Logo';
 import axios from 'axios'; // Import Axios
 
 export default function LoginPage() {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Table } from "react-bootstrap";
-import SideBar from "../Layouts/Sidebar";
-import Avatar from "../images/Avatar.png";
+import SideBar from "../../Layouts/Sidebar";
+import Avatar from "../../images/Avatar.png";
 
 const VisitorTable = () => {
     const [visitors] = useState([  

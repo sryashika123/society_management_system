@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import ForgotPasswordImage from '../images/forgot.png';
 import './ResetPassword.css';
-import Logo from '../Logo';
+import Logo from '../Logo/Logo';
 import axios from 'axios';
 
 export default function ResetPassword() {

@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/Login/LoginPage';
-import Register from './components/Register';
+import Register from './components/Register/Register';
 import ForgotPassword from './components/Login/ForgotPassword';
 import EnterOtp from './components/Login/Otp';
 import ResetPassword from './components/Login/ResetPassword';

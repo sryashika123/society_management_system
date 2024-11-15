@@ -3,8 +3,8 @@ import { Container, Row, Col, Button, Table, Modal, Form, } from "react-bootstra
 import { RiAddBoxFill } from "react-icons/ri";
 import { FaCamera, FaEdit, FaEye, FaFemale, FaMale, FaMoon, FaSun, FaTrash, } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu"
-import SideBar from "../Layouts/Sidebar";
-import Avatar from "../images/Avatar.png";
+import SideBar from "../../Layouts/Sidebar";
+import Avatar from "../../images/Avatar.png";
 import { useEffect } from "react";
 
 const ComplaintTracking = () => {
