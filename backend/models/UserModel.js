@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     password: {
-        type: String,
+        type: String,   
         required: true,
     },
     confirmPassword: {
@@ -75,5 +75,5 @@ userSchema.statics.uploadedAvatar = multer({storage: storage1}).single("ProfileI
 userSchema.statics.avatarPath = AVATAR_PATH;
 
 
-const User = mongoose.model("auth", userSchema);
+const User = mongoose.model("Admin", userSchema);
 module.exports = User;
