@@ -67,6 +67,17 @@ module.exports.login = async (req, res,err) => {
 	}
 };
 
+module.exports.logout = (req, res) => {
+	try {
+		res.clearCookie('token', { httpOnly: true, secure: true });
+		// const logout = localStorage.removeItem('token'); 
+		res.status(200).json({ msg: 'Logged out successfully' });
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server error');
+	}
+};
+
 module.exports.forgotpassword = async (req, res) => {
 	const email = req.body.email;
 	try{
