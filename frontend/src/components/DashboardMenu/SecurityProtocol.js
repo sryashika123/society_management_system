@@ -59,95 +59,112 @@ const SecurityProtocol = () => {
       <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
         <div className="d-flex justify-content-between align-items-center">
           <h2>Security Protocol</h2>
-          <Button className="btn mainColor2" onClick={() => handleShow("create")}>
+          <Button className="btn mainColor2" onClick={() => handleShow("create")} style={{ border: "none" }}>
             Create Protocols
           </Button>
-      </div>
-
-      <Modal show={showModal} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {modalType === "view"
-              ? "View Protocol"
-              : modalType === "edit"
-              ? "Edit Protocol"
-              : "Create Protocol"}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-  {modalType === "view" ? (
-    selectedProtocol && (
-      <div>
-        <p><strong>Title:</strong> <br/> {selectedProtocol.Title}</p>
-        <p><strong>Description:</strong> <br/> {selectedProtocol.Description}</p>
-        <div className="d-flex gap-5">
-        <p><strong>Date:</strong> {selectedProtocol.Date}</p>
-        <p><strong>Time:</strong> {selectedProtocol.Time}</p>
         </div>
-      </div>
-    )
-  ) : (
-    <div>
-      <label>Title</label>
-      <input
-        type="text"
-        placeholder="Enter Title"
-        name="Title"
-        value={selectedProtocol?.Title || ""}
-        onChange={handleChange}
-        className="form-control"
-        required
-      />
-      <label>Description</label>
-      <textarea
-        rows={3}
-        placeholder="Enter Description"
-        name="Description"
-        value={selectedProtocol?.Description || ""}
-        onChange={handleChange}
-        className="form-control"
-        required
-      ></textarea>
-      {modalType === "edit" && (
-        <>
-          <label>Date</label>
-          <input
-            type="text"
-            placeholder="Enter Date"
-            name="Date"
-            value={selectedProtocol?.Date || ""}
-            onChange={handleChange}
-            className="form-control"
-          />
-          <label>Time</label>
-          <input
-            type="text"
-            placeholder="Enter Time"
-            name="Time"
-            value={selectedProtocol?.Time || ""}
-            onChange={handleChange}
-            className="form-control"
-          />
-        </>
-      )}
-    </div>
-  )}
-</Modal.Body>
 
-        {modalType !== "view" && (
-          <Modal.Footer>
-            <Button onClick={handleClose} style={{ background: "#FFFFFF", color: "#202224" }}>
-              Cancel
-            </Button>
-            <Button onClick={handleSave} className="mainColor2">
-              Save
-            </Button>
-          </Modal.Footer>
-        )}
-      </Modal>
+        <Modal show={showModal} onHide={handleClose} centered className="square-modal">
+          <Modal.Header closeButton style={{ borderBottom: "none" }}>
+            <Modal.Title>
+              {modalType === "view"
+                ? "View Protocol"
+                : modalType === "edit"
+                  ? "Edit Protocol"
+                  : "Create Protocol"}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ color: "#202224", fontWeight: "500"}}>
+            {modalType === "view" ? (
+              selectedProtocol && (
+                <div>
+                  <p><strong>Title:</strong> <br /> {selectedProtocol.Title}</p>
+                  <p><strong>Description:</strong> <br /> {selectedProtocol.Description}</p>
+                  <div className="d-flex gap-5">
+                    <p><strong>Date:</strong> {selectedProtocol.Date}</p>
+                    <p><strong>Time:</strong> {selectedProtocol.Time}</p>
+                  </div>
+                </div>
+              )
+            ) : (
+              <div>
+                <label>Title</label>
+                <input
+                  type="text"
+                  placeholder="Enter Title"
+                  name="Title"
+                  value={selectedProtocol?.Title || ""}
+                  onChange={handleChange}
+                  className="form-control"
+                  required
+                />
+                <label>Description</label>
+                <textarea
+                  rows={3}
+                  placeholder="Enter Description"
+                  name="Description"
+                  value={selectedProtocol?.Description || ""}
+                  onChange={handleChange}
+                  className="form-control"
+                  required
+                ></textarea>
+                {modalType === "edit" && (
+                  <>
+                    <label>Date</label>
+                    <input
+                      type="text"
+                      placeholder="Enter Date"
+                      name="Date"
+                      value={selectedProtocol?.Date || ""}
+                      onChange={handleChange}
+                      className="form-control"
+                    />
+                    <label>Time</label>
+                    <input
+                      type="text"
+                      placeholder="Enter Time"
+                      name="Time"
+                      value={selectedProtocol?.Time || ""}
+                      onChange={handleChange}
+                      className="form-control"
+                    />
+                  </>
+                )}
+              </div>
+            )}
+          </Modal.Body>
 
-      
-        <Table hover responsive  style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" , marginTop: "20px" }}>
+          {modalType !== "view" && (
+            <div className="d-flex justify-content-between">
+              <button type="button" className="btn btn-outline-secondary"
+                style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                onClick={handleClose}>
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn"
+                style={{
+                  background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+                  color: 'White',
+                  width: '45%',
+                  borderRadius: '10px',
+                  marginBottom: '15px',
+                  marginRight: '15px',
+                  paddingTop: '10px',
+                  paddingBottom: '10px',
+                }}
+                data-bs-dismiss="modal"
+                onClick={handleSave}
+              >
+                Save
+              </button>
+            </div>
+          )}
+        </Modal>
+
+
+        <Table hover responsive style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px", marginTop: "20px" }}>
           <thead style={{ background: "#5678E9", color: "#ffffff" }}>
             <tr>
               <th style={{ backgroundColor: "rgb(185, 198, 242)" }}>Title</th>
@@ -164,21 +181,21 @@ const SecurityProtocol = () => {
                 <td style={{ width: "300px" }}>{protocol.Description}</td>
                 <td className="text-center">{protocol.Date}</td>
                 <td style={{ verticalAlign: "middle" }} className="text-center">
-                      <div
-                        style={{
-                          width: "100px",
-                          height: "34px",
-                          padding: "5px 15px",
-                          gap: "10px",
-                          borderRadius: "50px",
-                          background: "#F6F8FB",
-                          color: "#4F4F4F",
-                          display: "inline-block", // Ensures width and height are applied properly
-                        }}
-                      >
-                        {protocol.Time}
-                      </div>
-                    </td>
+                  <div
+                    style={{
+                      width: "100px",
+                      height: "34px",
+                      padding: "5px 15px",
+                      gap: "10px",
+                      borderRadius: "50px",
+                      background: "#F6F8FB",
+                      color: "#4F4F4F",
+                      display: "inline-block", // Ensures width and height are applied properly
+                    }}
+                  >
+                    {protocol.Time}
+                  </div>
+                </td>
                 <td className="text-center">
                   <div className="d-flex align-items-center justify-content-center">
                     <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShow("view", protocol)} />

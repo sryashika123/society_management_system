@@ -23,7 +23,7 @@ function EditModal({ show, handleClose, income, onSave }) {
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} centered className='square-modal' onHide={handleClose}>
                 <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                     <Modal.Title>Edit {income.title}</Modal.Title>
                 </Modal.Header>

@@ -131,7 +131,7 @@ const FacilityManagement = () => {
               setFacilityData({ title: "", date: "", description: "" });
               handleShowModal();
             }}
-            style={{ marginRight: "40px" }}
+            style={{ marginRight: "40px"  , border:'none'}}
           >
             Create Announcement
           </Button>
@@ -184,12 +184,12 @@ const FacilityManagement = () => {
           </div>
         </div>
 
-        <Modal show={showModal} onHide={handleCloseModal} centered>
-          <Modal.Header closeButton>
+        <Modal show={showModal} onHide={handleCloseModal} centered className='square-modal'>
+          <Modal.Header closeButton style={{ borderBottom:"none"}}>
             <Modal.Title>{isEditing ? "Edit Facility" : isViewing ? "View Facility" : "Create Facility"}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form>
+            <Form style={{ color: '#202224', fontWeight: '500' }}>
               <Form.Group controlId="facilityTitle">
                 <Form.Label>Facility Name</Form.Label>
                 <Form.Control
@@ -239,18 +239,31 @@ const FacilityManagement = () => {
               
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-          
-            <Button variant="secondary" onClick={handleCloseModal}>
-              {isViewing ? "Close" : "Cancel"}
-            </Button>
-            {!isViewing && (
-              <Button variant="primary" onClick={handleSaveFacility}>
-                Save
-              </Button>
-            )}
-           
-          </Modal.Footer>
+          <div className="d-flex justify-content-between">
+                    <button type="button" className="btn btn-outline-secondary"
+                        style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                        >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn"
+                        style={{
+                            background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+                            color: 'White',
+                            width: '45%',
+                            borderRadius: '10px',
+                            marginBottom: '15px',
+                            marginRight: '15px',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                        }}
+                        data-bs-dismiss="modal"
+                        onClick={handleSaveFacility}
+                    >
+                        Save
+                    </button>
+                </div>
         </Modal>
       </div>
     </div>

@@ -211,10 +211,31 @@ const Expense = () => {
                     <Modal.Title>Delete Expense</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='text-muted'>Are you sure you want to delete this expense?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
-                    <Button variant="danger" onClick={handleDeleteExpense}>Delete</Button>
-                </Modal.Footer>
+                <div className="d-flex justify-content-between">
+                    <button type="button" className="btn btn-outline-secondary"
+                        style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+        onClick={() => setShowDeleteModal(false)}>
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn"
+                        style={{
+                            background: 'rgba(231, 76, 60, 1)',
+                            color: 'White',
+                            width: '45%',
+                            borderRadius: '10px',
+                            marginBottom: '15px',
+                            marginRight: '15px',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                        }}
+                        data-bs-dismiss="modal"
+                        onClick={handleDeleteExpense}
+                    >
+                        Delete
+                    </button>
+                </div>
             </Modal>
         </div>
     );

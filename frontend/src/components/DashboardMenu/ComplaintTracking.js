@@ -106,7 +106,7 @@ const ComplaintTable = () => {
     };
 
     const titleStyle = { width: "371px", height: "40px", display: "flex", alignItems: "center", gap: "10px" };
-    const contentStyle = { width: "371px", height: "316px", display: "flex", flexDirection: "column", gap: "25px", fontFamily: "Poppins, sans-serif" };
+    const contentStyle = { width: "371px", height: "316px", display: "flex", flexDirection: "column", gap: "25px" };
     const sectionStyle = { width: "285px", height: "70px", display: "flex", gap: "15px" };
     const smallTextStyle = { fontFamily: "Poppins", fontSize: "16px", fontWeight: "400", lineHeight: "24px", color: "#A7A7A7" };
 
@@ -165,7 +165,7 @@ const ComplaintTable = () => {
             <div className='bg-white' style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", padding: "20px" }}>
                 <div className="d-flex justify-content-between align-items-center">
                     <h2>Complaints</h2>
-                    <Button variant="warning" className="text-white mainColor2" onClick={handleShowModal}>
+                    <Button variant="warning" style={{ border:'none'}} className="text-white mainColor2" onClick={handleShowModal}>
                         Create Complaint
                     </Button>
                 </div>
@@ -173,18 +173,19 @@ const ComplaintTable = () => {
 
             {/* Modal for Create Complaint Form */}
 
-            <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
+            <Modal show={showModal} onHide={handleCloseModal} centered className='square-modal'>
+                <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                     <Modal.Title>Create Complaint</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
-                    <Form>
+                    <Form style={{ color: '#202224', fontWeight: '500' }}>
                         {['name', 'type', 'description', 'unit', 'number'].map((field) => (
                             <Form.Group controlId={field} key={field}>
                                 <Form.Label>{`${field.charAt(0).toUpperCase() + field.slice(1)}`}</Form.Label>
                                 <Form.Control
+                                style={{marginBottom:'10px'}}
                                     type="text"
                                     placeholder={`Enter ${field}`}
                                     name={field}
@@ -197,7 +198,7 @@ const ComplaintTable = () => {
                         {['priority', 'status'].map((type) => (
                             <Col xs={12} key={type}>
                                 <Form.Label>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</Form.Label>
-                                <div className="d-flex justify-content-around">
+                                <div className="d-flex justify-content-around ">
                                     {['High', 'Medium', 'Low'].map((level) => (
                                         <div style={radioStyle} key={level}>
                                             <Form.Check
@@ -216,20 +217,37 @@ const ComplaintTable = () => {
                     </Form>
                 </Modal.Body>
 
-                <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Button variant="secondary" onClick={handleCloseModal} style={buttonStyle}>
+                <div className="d-flex justify-content-between">
+                    <button type="button" className="btn btn-outline-secondary"
+                        style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                        onClick={handleCloseModal}>
                         Cancel
-                    </Button>
-                    <Button className="mainColor2" onClick={handleCreateComplaint} style={buttonStyle}>
-                        Create
-                    </Button>
-                </Modal.Footer>
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn"
+                        style={{
+                            background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+                            color: 'White',
+                            width: '45%',
+                            borderRadius: '10px',
+                            marginBottom: '15px',
+                            marginRight: '15px',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                        }}
+                        data-bs-dismiss="modal"
+                        onClick={handleCreateComplaint}
+                    >
+                        Save
+                    </button>
+                </div>
             </Modal>
 
 
             {/* Modal for view Complaint Form */}
 
-            <Modal show={showViewModal} onHide={handleCloseViewModal} style={{ width: "410px", left: "755px", paddingTop: "20px", borderRadius: "15px 0px 0px 0px" }}>
+            <Modal show={showViewModal} onHide={handleCloseViewModal} className="square-modal" style={{ width: "410px", left: "755px", paddingTop: "20px", borderRadius: "15px 0px 0px 0px" , height:'100%' }}>
                 <Modal.Header closeButton>
                     <Modal.Title style={titleStyle}>View Complaint</Modal.Title>
                 </Modal.Header>
@@ -253,7 +271,7 @@ const ComplaintTable = () => {
                                 <p style={{ margin: 0 }}>{selectedComplaint.description}</p>
                             </div>
 
-                            <div className="d-flex justify-content-around">
+                            <div className="d-flex justify-content-around mt-2">
                                 <div style={{ width: "41px", height: "55px", textAlign: "center" }}>
                                     <strong style={smallTextStyle}>Wing</strong>
                                     <p style={{ border: "1px solid", borderRadius: "50%", width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center", color: "skyblue" }}>{selectedComplaint.unit}</p>
@@ -266,7 +284,7 @@ const ComplaintTable = () => {
 
                                 <div style={{ textAlign: "center" }}>
                                     <strong style={smallTextStyle}>Priority</strong>
-                                    <p style={{ borderRadius: "50px", background: badgeStyle(selectedComplaint.priority).backgroundColor, color: "white" }}>{selectedComplaint.priority}</p>
+                                    <p style={{ borderRadius: "50px", width: "80px", height: "28px", background: badgeStyle(selectedComplaint.priority).backgroundColor, color: "white" }}>{selectedComplaint.priority}</p>
                                 </div>
 
                                 <div style={{ textAlign: "center" }}>
@@ -281,18 +299,18 @@ const ComplaintTable = () => {
 
             {/* Modal for Editing Complaint Form */}
 
-            <Modal show={showEditModal} onHide={handleCloseEditModal}>
-                <Modal.Header closeButton>
+            <Modal show={showEditModal} onHide={handleCloseEditModal} centered className="square-modal">
+                <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                     <Modal.Title>Edit Complaint</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form style={{ color: '#202224', fontWeight: '500' }}>
                         {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
                         {/* Form Fields */}
                         {["name", "type", "description", "unit", "number"].map((field) => (
                             <Form.Group key={field} controlId={field}>
-                                <Form.Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Form.Label>
+                                <Form.Label style={{marginTop:'10px'}}>{field.charAt(0).toUpperCase() + field.slice(1)}</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder={`Enter ${field.charAt(0).toUpperCase() + field.slice(1)}`}
@@ -308,7 +326,7 @@ const ComplaintTable = () => {
                         <div className="d-flex justify-content-around">
                             {["High", "Medium", "Low"].map((priority) => (
                                 <Form.Check
-                                
+                                style={{marginBottom:'10px'}}
                                     key={priority}
                                     type="radio"
                                     label={priority}
@@ -325,6 +343,7 @@ const ComplaintTable = () => {
                         <div className="d-flex justify-content-around">
                             {["Open", "Pending", "Solved"].map((status) => (
                                 <Form.Check
+                                style={{marginBottom:'10px'}}
                                     key={status}
                                     type="radio"
                                     label={status}
@@ -338,10 +357,31 @@ const ComplaintTable = () => {
                     </Form>
                 </Modal.Body>
 
-                <Modal.Footer className="d-flex justify-content-between">
-                    <Button variant="secondary" onClick={handleCloseEditModal}>Cancel</Button>
-                    <Button onClick={handleEditComplaint}>Save Changes</Button>
-                </Modal.Footer>
+                <div className="d-flex justify-content-between">
+                    <button type="button" className="btn btn-outline-secondary"
+                        style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '15px' }}
+                        onClick={handleCloseEditModal}>
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn"
+                        style={{
+                            background: 'linear-gradient(90deg, #FE512E 0%, #F09619 100%)',
+                            color: 'White',
+                            width: '45%',
+                            borderRadius: '10px',
+                            marginBottom: '15px',
+                            marginRight: '15px',
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                        }}
+                        data-bs-dismiss="modal"
+                        onClick={handleEditComplaint}
+                    >
+                        Save
+                    </button>
+                </div>
             </Modal>
 
 

@@ -53,6 +53,34 @@ export default function ResidentManagement() {
     justifyContent: "flex-start",
     gap: "10px",
   };
+  const badgeStyle = (residentStatus) => {
+    const baseStyle = {
+      color: "white",
+      width: "100px",
+      height: "31px",
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: "5px",
+    };
+    if (residentStatus === "Tenant") return { ...baseStyle, color: 'rgba(236, 72, 153, 1)', backgroundColor: 'rgba(255, 241, 248, 1)' };
+    if (residentStatus === "Owner") return { ...baseStyle, color: 'rgba(79, 70, 229, 1)', backgroundColor: "rgba(241, 240, 255, 1)" };
+    return { ...baseStyle, color:'black'};
+  };
+  const UnitbadgeStyle = (unitStatus) => {
+    const baseStyle = {
+      color: "white",
+      width: "100px",
+      height: "31px",
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: "5px",
+    };
+    if (unitStatus === "Occupied") return { ...baseStyle, color: 'rgba(20, 184, 166, 1)', backgroundColor: 'rgba(236, 255, 255, 1)' };
+    if (unitStatus === "Vacate") return { ...baseStyle, color: 'rgba(147, 51, 234, 1)', backgroundColor: "rgba(255, 246, 255, 1)" };
+    return { ...baseStyle, color:'black'};
+  };
 
   return (
     <div className="d-flex flex-column flex-md-row">
@@ -207,59 +235,21 @@ export default function ResidentManagement() {
                       </span>
                     </td>
                     <td className="text-center">
-                      <span
-                        className="badge rounded-pill d-flex justify-content-center align-items-center"
-                        style={{
-                          backgroundColor: resident.unitStatus === "Occupied" ? "#ECFFFF" :
-                            resident.unitStatus === "Vacate" ? "#FFF6FF" : "#F6F8FB",
-                          color: resident.unitStatus === "Occupied" ? "#14B8A6" :
-                            resident.unitStatus === "Vacate" ? "#9333EA" : "#202224",
-                        }}
-                      >
-                        {resident.unitStatus === 'Occupied' ? (
-                          <>
-                            <FaHome />
-                            <span>Occupied</span>
-                          </>
-                        ) : resident.unitStatus === 'Vacate' ? (
-                          <>
-                            <FaTag />
-                            <span>Vacate</span>
-                          </>
-                        ) : (
-                          <>
-                            <FaHome />
-                            <span>Unoccupied</span>
-                          </>
-                        )}
+                      <span className="badge rounded-pill  " style={UnitbadgeStyle(resident.unitStatus)}>
+                        {resident.unitStatus  === "Occupied" && <FaHome className="me-2" style={{ color: 'rgba(20, 184, 166, 1)' }} />}
+                        {resident.unitStatus === "Vacate" && <FaTag className="me-2" style={{ color: 'rgba(147, 51, 234, 1)' }} />}
+                        {resident.unitStatus}
+                      </span>
+                    </td>
+                  
+                    <td className="text-center">
+                      <span className="badge rounded-pill  " style={badgeStyle(resident.residentStatus)}>
+                        {resident.residentStatus === "Tenant" && <FaUser className="me-2" style={{ color: 'rgba(236, 72, 153, 1)' }} />}
+                        {resident.residentStatus === "Owner" && <FaHome className="me-2" style={{ color: 'rgba(79, 70, 229, 1)' }} />}
+                        {resident.residentStatus}
                       </span>
                     </td>
 
-                    <td className="text-center" style={{ width: "50px" }}>
-                      <span
-                        className="badge rounded-pill d-flex justify-content-center align-items-center"
-                        style={{
-                          backgroundColor: resident.residentStatus === "Tenant" ? "#FFF1F8" :
-                            resident.residentStatus === "Owner" ? "#F1F0FF" : "#F6F8FB",
-                          color: resident.residentStatus === "Tenant" ? "#EC4899" :
-                            resident.residentStatus === "Owner" ? "#4F46E5" : "#202224",
-                        }}
-                      >
-                        {resident.residentStatus === "Tenant" ? (
-                          <>
-                            <FaUser />
-                            <span>Tenant</span>
-                          </>
-                        ) : resident.residentStatus === "Owner" ? (
-                          <>
-                            <FaTag />
-                            <span>Owner</span>
-                          </>
-                        ) : (
-                          "--"
-                        )}
-                      </span>
-                    </td>
 
                     <td className="text-center px-3">{resident.phoneNumber}</td>
                     <td className="text-center">{resident.members}</td>
