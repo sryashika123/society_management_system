@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Card, Table, Button, Dropdown, Badge, Modal, Image, Form} from 'react-bootstrap';
-import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
+import editIcon from "../../images/edit.png";
+import viewIcon from "../../images/view.png";
+import deleteIcon from "../../images/delete.png";
 
 // Reusable modal component for editing complaints
 
@@ -184,9 +186,9 @@ const ComplaintList = () => {
                                     </td>
                                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle", borderBottom: 'none' }}>
                                         <div className="d-flex align-items-center justify-content-center">
-                                            <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(complaint)} />
-                                            <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
-                                            <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(index)} />
+                                            <img src={editIcon} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(complaint)} />
+                                            <img src={viewIcon} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
+                                            <img src={deleteIcon} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(index)} />
                                         </div>
                                     </td>
                                 </tr>
@@ -197,7 +199,7 @@ const ComplaintList = () => {
             </Card>
 
             {/* View Complaint Modal */}
-            < Modal show={showViewModal} onHide={handleCloseViewModal} centered >
+            < Modal show={showViewModal} onHide={handleCloseViewModal} centered className='square-modal'>
                 <Modal.Header closeButton>
                     <Modal.Title>Complaint Details</Modal.Title>
                 </Modal.Header>
@@ -218,7 +220,7 @@ const ComplaintList = () => {
             </Modal>
 
             {/* Edit Complaint Modal */}
-            <Modal show={showModal} onHide={handleCloseModal} centered >
+            <Modal show={showModal} onHide={handleCloseModal} centered className='square-modal'>
                 <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                     <Modal.Title>Edit Complaint</Modal.Title>
                 </Modal.Header>

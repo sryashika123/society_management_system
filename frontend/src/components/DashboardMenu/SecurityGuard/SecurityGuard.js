@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Table, Modal, Form, } from "react-bootstrap";
 import { RiAddBoxFill } from "react-icons/ri";
-import { FaCamera, FaEdit, FaEye, FaFemale, FaMale, FaMoon, FaSun, FaTrash, } from "react-icons/fa";
+import { FaCamera,  FaFemale, FaMale, FaMoon, FaSun, FaTrash, } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu"
 import SideBar from "../../Layouts/Sidebar";
 import Avatar from "../../images/Avatar.png";
 import { useEffect } from "react";
+import viewIcon from "../../images/view.png";
+import editIcon from "../../images/edit.png";
+import deleteIcon from "../../images/delete.png";
 
 const ComplaintTracking = () => {
     const [guards, setGuards] = useState([
@@ -492,9 +495,9 @@ const ComplaintTracking = () => {
                                 </td>
                                 <td className='text-center' style={{ verticalAlign: "middle" }}>
                                     <div className="d-flex align-items-center justify-content-center">
-                                        <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShowEdit(guard)} />
-                                        <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShowView(guard)} />
-                                        <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(guard.id)} />
+                                        <img src={editIcon} alt="edit" className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShowEdit(guard)} />
+                                        <img src={viewIcon} alt="view" className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShowView(guard)} />
+                                        <img src={deleteIcon} alt="delete" className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(guard.id)} />
                                     </div>
                                 </td>
                             </tr>

@@ -49,6 +49,7 @@ const RightSection = () => {
 		setEditData({ name: '', phone: '', work: '' });
 		setIsAddMode(true);
 		setShowModal(true);
+
 	};
 
 	 // Handle Edit mode
@@ -57,6 +58,7 @@ const RightSection = () => {
 		setEditData(importantNumbers[index]);
 		setIsAddMode(false);
 		setShowModal(true);
+		
 	  };
 
 
@@ -75,6 +77,7 @@ const RightSection = () => {
 
 	// Handle save for both adding and editing
 	const handleSaveEdit = () => {
+		
 		if (isAddMode) {
 			setImportantNumbers([...importantNumbers, editData]); // Add new contact
 		} else {
@@ -294,14 +297,14 @@ const RightSection = () => {
 													className="me-2"
 													onClick={() => handleDelete(index)}
 												>
-													<FaTrashAlt style={{ color: 'red', fontSize: '20px' }} />
+													<img src={require('../../images/delete.png')} style={{ color: 'red', fontSize: '20px' , marginBottom: '20px'}} />
 												</Button>
 												<Button
 													style={{ backgroundColor: 'white', border: 'none' }}
 													size="sm"
 													onClick={() => handleEdit(index)}
 												>
-													<MdEditSquare style={{ color: 'green', fontSize: '24px' }} />
+													<img src={require('../../images/edit.png')} style={{ color: 'green', fontSize: '24px' ,  marginBottom: '20px' }} />
 												</Button>
 											</div>
 										</ListGroup.Item>
@@ -487,7 +490,7 @@ const RightSection = () => {
 						xl={3}         // Quarter width on extra-large screens
 						style={{
 							overflowY: 'scroll', // Prevent overflow on the column
-							height: '33vh', // Set the height of the column for larger screens
+							height: '35vh', // Set the height of the column for larger screens
 						}}
 						className="custom-scrollbar">
 						<Card className="shadow-sm" style={{ borderRadius: '10px' }}>
