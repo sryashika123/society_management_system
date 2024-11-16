@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Table, Button, Modal } from "react-bootstrap";
 import SideBar from "../../Layouts/Sidebar";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import viewIcon from "../../images/view.png";
+import editIcon from "../../images/edit.png";
+import deleteIcon from "../../images/delete.png";
 
 const SecurityProtocol = () => {
   const [protocols, setProtocols] = useState([
@@ -198,9 +200,9 @@ const SecurityProtocol = () => {
                 </td>
                 <td className="text-center">
                   <div className="d-flex align-items-center justify-content-center">
-                    <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShow("view", protocol)} />
-                    <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShow("edit", protocol)} />
-                    <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(protocol.id)} />
+                    <img src={editIcon} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShow("edit", protocol)} />
+                    <img src={viewIcon} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShow("view", protocol)} />
+                    <img src={deleteIcon} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(protocol.id)} />
                   </div>
                 </td>
               </tr>

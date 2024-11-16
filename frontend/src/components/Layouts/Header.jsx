@@ -58,7 +58,7 @@ const Header = () => {
                                     {showNotifications && (
                                         <div
                                             className="notification-dropdown position-absolute bg-white border shadow-sm p-2"
-                                            style={{ right: '60px', top: '50px', width: '280px', zIndex: 1000 , marginTop: '25px' , marginRight: '25px'}}
+                                            style={{ right: '60px', top: '50px', width: '280px', zIndex: 1000 , marginTop: '25px' , marginRight: '350px'}}
                                         >
                                             <div className="d-flex justify-content-between align-items-center mb-2">
                                                 <h6 className="mb-0">Notifications</h6>

@@ -5,6 +5,9 @@ import { FaEdit, FaEye, FaPlusSquare, FaTrash, FaFilePdf, FaFileImage } from 're
 import ExpenseModal from './ExpenseModal';
 import EditExpenseModal from './EditExpenseModal';
 import ViewExpenseModal from './ViewExpenseModal';
+import viewIcon from "../../../images/view.png";
+import editIcon from "../../../images/edit.png";
+import deleteIcon from "../../../images/delete.png";
 
 const Expense = () => {
     const [expenses, setExpenses] = useState([
@@ -154,12 +157,12 @@ const Expense = () => {
                                         </td>
                                         <td>
                                             <div className='d-flex align-items-center justify-content-center' style={{ padding: '10px' }}>
-                                                <FaEdit
+                                                <img src={editIcon} alt="Edit"
                                                     className="text-success me-2"
                                                     style={{ cursor: "pointer", marginRight: "8px" }}
                                                     onClick={() => handleEditModalShow(expense)}
                                                 />
-                                                <FaEye
+                                                <img src={viewIcon} alt="view"
                                                     className="text-primary me-2"
                                                     style={{ cursor: "pointer", backgroundColor: "rgba(246, 248, 251, 1)", borderRadius: "50%", marginRight: "8px" }}
                                                     onClick={() => {
@@ -167,7 +170,7 @@ const Expense = () => {
                                                         handleOpen();
                                                     }}
                                                 />
-                                                <FaTrash
+                                                <img src={deleteIcon} alt="Delete"
                                                     className="text-danger"
                                                     style={{ cursor: "pointer" }}
                                                     onClick={() => {
