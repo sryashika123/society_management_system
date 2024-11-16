@@ -11,6 +11,7 @@ import './PendingMaintenances.css';
 import ComplaintList from './ComplaintList';
 import { Link } from 'react-router-dom';
 import BalanceInformation from './BalanceInformation';
+import axios from 'axios';
 
 
 // Register the necessary components from Chart.js
@@ -21,12 +22,12 @@ const RightSection = () => {
 
 	// State hooks to manage dynamic data
 	const [importantNumbers, setImportantNumbers] = useState([
-		{ name: 'Hanna Donin', phone: '+91 99857 33657', work: 'Plumber' },
-		{ name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
-		{ name: 'Jane Smith', phone: '+91 91234 56789', work: 'Carpenter' },
-		{ name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
-		{ name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
-		{ name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
+		// { name: 'Hanna Donin', phone: '+91 99857 33657', work: 'Plumber' },
+		// { name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
+		// { name: 'Jane Smith', phone: '+91 91234 56789', work: 'Carpenter' },
+		// { name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
+		// { name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
+		// { name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
 	]);
 	const [editIndex, setEditIndex] = useState(null);
 	const [editData, setEditData] = useState({ name: '', phone: '', work: '' });
@@ -34,32 +35,43 @@ const RightSection = () => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false); // New state for delete confirmation modal
 	const [isAddMode, setIsAddMode] = useState(false); // Add mode flag
 	const [selectedIndex, setSelectedIndex] = useState(null); // Track index to delete
-	// Handle add
+
+	// Fetch important numbers on component mount
+	useEffect(() => {
+		axios.get('http://localhost:8000/api/users/v3/getImportantNum')
+			.then(response => setImportantNumbers(response.data))
+			.catch(error => console.error('Error fetching important numbers:', error));
+	}, []);
+
+
+	// Handle Add mode
 	const handleAdd = () => {
 		setEditData({ name: '', phone: '', work: '' });
 		setIsAddMode(true);
 		setShowModal(true);
 	};
 
-	// Handle edit initialization
-	const handleEdit = (index) => {
+	 // Handle Edit mode
+	 const handleEdit = (index) => {
 		setEditIndex(index);
 		setEditData(importantNumbers[index]);
-		setShowModal(true); // Open modal for editing
-	};
+		setIsAddMode(false);
+		setShowModal(true);
+	  };
 
-	// Handle delete
-	const handleDelete = (index) => {
+
+	 // Handle Delete
+	 const handleDelete = (index) => {
 		setSelectedIndex(index);
-		setShowDeleteModal(true); // Show delete confirmation modal
-	};
+		setShowDeleteModal(true);
+	  };
 
 
-	// Handle input change in edit form
-	const handleInputChange = (e) => {
+	 // Handle input change
+	 const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setEditData({ ...editData, [name]: value });
-	};
+	  };
 
 	// Handle save for both adding and editing
 	const handleSaveEdit = () => {
@@ -300,11 +312,15 @@ const RightSection = () => {
 							{/* Add/Edit Modal */}
 							<Modal show={showModal} onHide={handleCloseModal} centered className="square-modal">
 								<Modal.Header closeButton style={{ border: 'none' }}>
-									<Modal.Title>Add Important Number</Modal.Title>
+									<Modal.Title>
+										{isAddMode ? 'Add Important Number' : 'Edit Important Number'}
+									</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
 									<Form.Group controlId="editName">
-										<Form.Label>Full Name <span className="text-danger">*</span></Form.Label>
+										<Form.Label>
+											Full Name <span className="text-danger">*</span>
+										</Form.Label>
 										<Form.Control
 											type="text"
 											name="name"
@@ -315,7 +331,9 @@ const RightSection = () => {
 										/>
 									</Form.Group>
 									<Form.Group controlId="editPhone" className="mt-3">
-										<Form.Label>Phone <span className="text-danger">*</span></Form.Label>
+										<Form.Label>
+											Phone <span className="text-danger">*</span>
+										</Form.Label>
 										<Form.Control
 											type="text"
 											name="phone"
@@ -326,7 +344,9 @@ const RightSection = () => {
 										/>
 									</Form.Group>
 									<Form.Group controlId="editWork" className="mt-3">
-										<Form.Label>Work <span className="text-danger">*</span></Form.Label>
+										<Form.Label>
+											Work <span className="text-danger">*</span>
+										</Form.Label>
 										<Form.Control
 											type="text"
 											name="work"
@@ -361,6 +381,7 @@ const RightSection = () => {
 									</button>
 								</Modal.Footer>
 							</Modal>
+
 
 							{/* Delete Confirmation Modal */}
 							<Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>

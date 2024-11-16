@@ -16,8 +16,8 @@ export default function Register() {
         country: '',
         state: '',
         city: '',
-        society: '',
         password: '',
+        select_society: '',
         confirmPassword: ''
     });
     const handleChange = (e) => {
@@ -26,7 +26,7 @@ export default function Register() {
 
     useEffect(() => {
         const fetchSocieties = async () => {
-            const response = await axios.get('http://localhost:8000/api/users/v2/getSociytey');
+            const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/users/v2/getSociytey`);
             setAllSocites(response.data);
         };
         fetchSocieties();
@@ -41,14 +41,14 @@ export default function Register() {
             return;
         }
 
-        const payload = {
-            ...formData,
-            select_society: formData.society
-        };
+        // const payload = {
+        //     ...formData,
+        //     // select_society: formData.society
+        // };
 
-        console.log('Payload being sent:', payload);
+        console.log('Payload being sent:', formData);
 
-        axios.post('http://localhost:8000/api/users/register', payload)
+        axios.post('http://localhost:8000/api/users/register', formData)
             .then(result => {
                 console.log(result);
                 alert('Registration successful');
@@ -169,14 +169,14 @@ export default function Register() {
                                                 modal.show();
                                                 e.target.value = '';
                                             } else {
-                                                setFormData({ ...formData, society: selectedValue });
+                                                setFormData({ ...formData, select_society: selectedValue });
                                             }
                                         }}
                                         required
                                     >
                                         <option value="">Select Society</option>
                                         {allsocites?.map((society) => (
-                                            <option key={society._id} value={society.societyName}>{society.societyName}</option>
+                                            <option key={society._id} value={society._id}>{society.societyName}</option>
 
                                         ))}
                                         <option value="createNew">Create new society</option>
