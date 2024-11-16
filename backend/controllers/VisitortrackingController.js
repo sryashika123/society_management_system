@@ -1,14 +1,29 @@
 const VisitortrackingModel = require("../models/VisitortrackingModel.js");
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 module.exports.createVisitortracking = async (req, res) => {
     try{
-        const {VisitorName, Wing, Unit, Date, Time} = req.body;
+        const {VisitorName, Wing, Unit, Date, Time, adminId, societyId} = req.body;
+
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(societyId);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
+        
         const newVisitortracking = new VisitortrackingModel({
             VisitorName,
             Wing,
             Unit,
             Date,
-            Time
+            Time,
+            adminId,
+            societyId
         });
         await newVisitortracking.save();    
         res.json(newVisitortracking);

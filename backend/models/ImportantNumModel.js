@@ -13,14 +13,14 @@ const ImportantNumberSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    UserId : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Admin',
-        required: true
+    adminId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Admin', 
+        required: true 
     },
-    Society_Id :{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'society',
+    societyId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Society',
         required: true
     }
 });
