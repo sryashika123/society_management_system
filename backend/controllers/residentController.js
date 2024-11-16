@@ -3,6 +3,8 @@ const fs = require("fs");
 const nodemailer = require('nodemailer');
 const path = require('path');
 require('dotenv').config();
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 
 // Email sending setup
@@ -53,8 +55,18 @@ module.exports.createResident = async (req, res) => {
     try{
         const{
             role, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, Email, age, gender, wing, unit, Relation,
-            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus 
+            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId
         } = req.body;
+
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(societyId);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
 
         if(!role || !["owner", "tenant"].includes(role.toLowerCase())){
             return res.status(400).json({ msg: "Invalid role. Must be 'owner' or 'tenant'." });
@@ -62,7 +74,7 @@ module.exports.createResident = async (req, res) => {
 
         let residentData = { 
             role: role.toLowerCase(), Full_name, Phone_number, Email, age, gender, wing, unit, Relation, 
-            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus 
+            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId
         };
 
         if(role.toLowerCase() === "tenant"){

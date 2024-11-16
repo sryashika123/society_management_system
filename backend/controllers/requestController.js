@@ -1,15 +1,26 @@
 const Request = require("../models/requestModel");
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 module.exports.createRequest = async(req,res)=>{
     //  console.log(req.body);
-
      try {
-        const { Requester_Name, Request_name, Request_Date, wing, unit, Priority, status } = req.body;
+        const { Requester_Name, Request_name, Request_Date, wing, unit, Priority, status, adminId, societyId } = req.body;
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(societyId);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
+
         if (!Requester_Name || !Request_name) {
             return res.status(400).json({ msg: "Requester_Name and Request_name are required." });
         }
 
-        const newRequest = new Request({ Requester_Name, Request_name, Request_Date, wing, unit, Priority, status  });
+        const newRequest = new Request({ Requester_Name, Request_name, Request_Date, wing, unit, Priority, status, adminId, societyId });
         await newRequest.save();    
         res.json(newRequest);
     } 

@@ -1,12 +1,25 @@
 const Expenses = require("../models/ExpensesModel");
 const fs = require('fs');
 const path = require('path');
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 module.exports.createExpenses = async (req, res) => {
     try{
         // console.log("Request Body:", req.body);
         // console.log("Uploaded File:", req.file);
-        const { Title, description, date, amount } = req.body;
+        const { Title, description, date, amount, adminId, societyId } = req.body;
+
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(societyId);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
+
         if(!Title || !description || !date || !amount) {
             return res.status(400).json({ message: 'All fields are required' });
         }
@@ -19,7 +32,9 @@ module.exports.createExpenses = async (req, res) => {
             description,
             date,
             amount,
-            Bill_image: basePath + req.file.filename
+            Bill_image: basePath + req.file.filename,
+            adminId, 
+            societyId
         });
         await newExpense.save();
         res.status(201).json({ message: 'Expense created successfully',  data: newExpense });

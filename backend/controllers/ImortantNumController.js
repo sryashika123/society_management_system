@@ -4,14 +4,14 @@ const Admin = require("../models/UserModel");
 
 module.exports.createImportantNum = async (req, res) => {
     try{
-        const { Full_name, Phone_number, Work, UserId, Society_Id} = req.body;
+        const { Full_name, Phone_number, Work, adminId, societyId } = req.body;
 
-        const User = await Admin.findById(UserId);
-		if (!User) {
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
 		  	return res.status(404).json({ msg: "Admin not found" });
 		}
 
-        const society = await Society.findById(Society_Id);
+        const society = await Society.findById(societyId);
 		if (!society) {
 		  	return res.status(404).json({ msg: "Society not found" });
 		}
@@ -20,8 +20,8 @@ module.exports.createImportantNum = async (req, res) => {
             Full_name,
             Phone_number,
             Work,
-            UserId,
-            Society_Id
+            adminId,
+            societyId
         });
         await newImportantNumber.save();    
         res.json(newImportantNumber);

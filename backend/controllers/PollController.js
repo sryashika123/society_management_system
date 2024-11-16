@@ -1,13 +1,28 @@
 const Poll = require("../models/PollModel");
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 module.exports.createPoll = async(req,res) =>{
     try{
-        const { Polls, Question, Option_1, Option_2 } = req.body;
+        const { Polls, Question, Option_1, Option_2, adminId, societyId } = req.body;
+
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(societyId);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
+
         const newImportantNumber = new Poll({ 
             Polls, 
             Question, 
             Option_1, 
-            Option_2 
+            Option_2,
+            adminId, 
+            societyId
         });
         await newImportantNumber.save();    
         res.json(newImportantNumber);
