@@ -166,7 +166,7 @@ const RightSection = () => {
 
 
 	return (
-		<div className="d-flex flex-column flex-md-row vh-100 ms-4" style={{ marginTop: '110px' }}>
+		<div className="d-flex flex-column flex-md-row vh-100 ms-4" style={{ marginTop: '100px' }}>
 			{/* Sidebar Section */}
 			<div className="col-12 col-md-3 flex-shrink-0" style={{ maxWidth: "300px" }}>
 				<SideBar />
