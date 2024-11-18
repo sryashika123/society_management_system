@@ -19,6 +19,16 @@ const OtherIncomeSchema = new mongoose.Schema({
     Amount :{
         type: Number,
         required: true
+    },
+    adminId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Admin', 
+        required: true 
+    },
+    societyId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Society',
+        required: true
     }
 });
 

@@ -16,6 +16,16 @@ const FacilitySchema = new mongoose.Schema({
     Remind_before :{
         type: Number,
         required: true
+    },
+    adminId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Admin', 
+        required: true 
+    },
+    societyId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Society',
+        required: true
     }
 });
 

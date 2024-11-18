@@ -3,10 +3,10 @@ import { Row, Col, Card } from 'react-bootstrap';
 
 const BalanceInformation = () => {
     const [cards] = useState([
-        { title: 'Total Balance', amount: '₹ 2,22,520', img: require('../../images/dash1.png') },
-        { title: 'Total Income', amount: '₹ 55,000', img: require('../../images/dash2.png') },
-        { title: 'Total Expense', amount: '₹ 20,550', img: require('../../images/dash3.png') },
-        { title: 'Total Unit', amount: '₹ 20,550', img: require('../../images/dash4.png') },
+        { title: 'Total Balance', amount: '₹ 2,22,520', img: require('../../images/dash1.png') , rec: require('../../images/rec1.png') },
+        { title: 'Total Income', amount: '₹ 55,000', img: require('../../images/dash2.png') , rec: require('../../images/rec2.png') },
+        { title: 'Total Expense', amount: '₹ 20,550', img: require('../../images/dash3.png') , rec: require('../../images/rec3.png') },
+        { title: 'Total Unit', amount: '₹ 20,550', img: require('../../images/dash4.png') , rec: require('../../images/rec4.png') },
     ]);
 
     return (
@@ -23,6 +23,13 @@ const BalanceInformation = () => {
                     >
                         <Card className="shadow-sm" style={{ borderRadius: '10px' }}>
                             <Card.Body className="d-flex align-items-center">
+                            <div style={{position: 'absolute', left: '0'}}>
+                                    <img
+                                        src={card.rec}
+                                        alt={card.title}
+                                      
+                                    />
+                                </div>
                                 <div>
                                     
                                     <Card.Title style={{ color: 'black', fontSize: '16px' }}>

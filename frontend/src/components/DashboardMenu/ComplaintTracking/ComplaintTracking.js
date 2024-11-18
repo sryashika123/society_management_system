@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Table, Modal, Form } from "react-bootstrap";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import SideBar from "../../Layouts/Sidebar";
 import Avatar   from "../../images/Avatar.png";
+import viewIcon from "../../images/view.png";
+import editIcon from "../../images/edit.png";
+import deleteIcon from "../../images/delete.png";
 
 const ComplaintTable = () => {
     const [complaints, setComplaints] = useState([
@@ -459,14 +461,15 @@ const ComplaintTable = () => {
                                 </td>
                                 <td className="text-center">
                                     <div className="d-flex align-items-center justify-content-center">
-                                        <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
-                                        <FaEdit
+                                        <img
+                                            src={editIcon}
                                             className="text-success me-2"
                                             style={{ cursor: "pointer" }}
                                             onClick={() => handleEdit(complaint)}
                                         />
+                                        <img src={viewIcon} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
 
-                                        <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(complaint.id)} />
+                                        <img src={deleteIcon} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(complaint.id)} />
                                     </div>
                                 </td>
                             </tr>

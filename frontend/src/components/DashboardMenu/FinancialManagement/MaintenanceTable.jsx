@@ -3,6 +3,7 @@ import { Table, Modal, Nav } from 'react-bootstrap';
 import { FaCheckCircle, FaClock, FaCreditCard, FaEye, FaHome, FaMoneyBillWave, FaUser } from 'react-icons/fa';
 import OtherIncome from './OtherIncome';
 import Avatar from "../../images/Avatar.png";
+import viewIcon from "../../images/view.png";
 
 const MaintenanceTable = () => {
   const [activeTab, setActiveTab] = useState('maintenance');
@@ -258,7 +259,7 @@ const MaintenanceTable = () => {
                     </td>
                     <td className="text-center">
                       <div className="d-flex align-items-center justify-content-center">
-                        <FaEye
+                        <img src={viewIcon} alt="View"
                           className="text-success me-2"
                           style={{ cursor: "pointer", backgroundColor: 'rgba(246, 248, 251, 1)', color: 'rgba(86, 120, 233, 1)', borderRadius: '5px' }}
                           onClick={() => handleViewDetails(data)}
