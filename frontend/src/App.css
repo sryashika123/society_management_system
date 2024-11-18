@@ -164,7 +164,7 @@ h2 {
 
 /* App.css or relevant CSS file */
 .main-content {
-  padding-top: 70px; 
+  padding-top: 110px; 
 }
 
 
@@ -214,4 +214,12 @@ h2 {
 .notification-dropdown {
   border-radius: 8px;
 }
+.offcanvas,
+.offcanvas-header,
+.offcanvas-body,
+.offcanvas .list-unstyled li {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 

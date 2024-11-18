@@ -53,13 +53,43 @@ export default function Profile() {
                     <form onSubmit={handleSubmit(onSubmit)} className="form-group bg-light p-5 rounded d-flex justify-content-between mt-3 " style={{border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)"}}>
                         
                         {/* Profile Image Section */}
-                        <div className="profile-image-section text-center ">
-                            <div className='profile-image-wrapper'>
-                            <img src={profile} alt="Profile" className="rounded-circle profile-image"/>
-                            <MdEditSquare className='edit-icon'/>
-                            </div>
-                            <p className="mt-3" style={{fontSize:"18px", fontWeight:"500"}}>Arlene McCoy</p>
-                        </div>
+                       {/* Profile Image Section */}
+<div className="profile-image-section text-center">
+    <div className="profile-image-wrapper">
+        {/* Profile Image */}
+        <img
+            src={profile}
+            alt="Profile"
+            className="rounded-circle profile-image"
+        />
+
+        {/* Edit Icon */}
+        <MdEditSquare
+            className="edit-icon"
+            onClick={() => document.getElementById('profileImageUpload').click()} // Open file input on click
+        />
+        
+        {/* Hidden File Input */}
+        <input
+            id="profileImageUpload"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        document.querySelector('.profile-image').src = reader.result; // Update profile image
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }}
+        />
+    </div>
+    <p className="mt-3" style={{ fontSize: "18px", fontWeight: "500" }}>Arlene McCoy</p>
+</div>
+
 
                         {/* Form Fields Section */}
                         <div className="w-100 ms-5">
