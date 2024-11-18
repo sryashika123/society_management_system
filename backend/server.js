@@ -28,8 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", require("./routes/UserRoute.js"));
-app.use("/api/users/v2", require("./routes/societyRoutes.js"))
-app.use("/api/users/v3", require("./routes/ImportantNumRoute.js"));
+app.use("/api/users/v2", require("./routes/societyRoutes.js"));
+app.use("/api/users/v3", require("./routes/ImportantNumroute.js"));
 app.use("/api/users/v4", require("./routes/CompalintRoute.js"));
 app.use("/api/users/v5", require("./routes/profileRoute.js"));
 app.use("/api/users/v6", require("./routes/residentRoute.js"));
@@ -49,7 +49,7 @@ app.use("/api/users/v19", require("./routes/PaymentRoute.js"));
 app.use("/api/users/v20", require("./routes/AnnouncementRoute.js"));
 
 
-app.listen(port, (e)=>{
-    if(e) return false;
-    console.log("server is running in "+port);
+app.listen(port, (e) => {
+    if (e) return false;
+    console.log("server is running in " + port);
 })  

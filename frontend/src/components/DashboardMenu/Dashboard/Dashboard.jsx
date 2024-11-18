@@ -2,8 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Col, Row, Card, ListGroup, Button, Form, Modal, Image, Dropdown } from 'react-bootstrap';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { FaTrashAlt } from 'react-icons/fa';
-import { MdEditSquare } from "react-icons/md";
 import './RightSection.css';
 import SideBar from '../../Layouts/Sidebar';
 import { FaSquarePlus } from "react-icons/fa6";
@@ -21,86 +19,108 @@ const RightSection = () => {
 	const chartRef = useRef(null); // To hold the reference of the chart for cleanup
 
 	// State hooks to manage dynamic data
-	const [importantNumbers, setImportantNumbers] = useState([
-		// { name: 'Hanna Donin', phone: '+91 99857 33657', work: 'Plumber' },
-		// { name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
-		// { name: 'Jane Smith', phone: '+91 91234 56789', work: 'Carpenter' },
-		// { name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
-		// { name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
-		// { name: 'John Doe', phone: '+91 98765 43210', work: 'Electrician' },
-	]);
+	const [importantNumbers, setImportantNumbers] = useState([]);
 	const [editIndex, setEditIndex] = useState(null);
-	const [editData, setEditData] = useState({ name: '', phone: '', work: '' });
+	const [editData, setEditData] = useState({ Full_name: '', Phone_number: '', Work: '' });
 	const [showModal, setShowModal] = useState(false);
-	const [showDeleteModal, setShowDeleteModal] = useState(false); // New state for delete confirmation modal
-	const [isAddMode, setIsAddMode] = useState(false); // Add mode flag
-	const [selectedIndex, setSelectedIndex] = useState(null); // Track index to delete
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [isAddMode, setIsAddMode] = useState(false);
+	const [selectedIndex, setSelectedIndex] = useState(null);
+	const [selectedId, setSelectedId] = useState(null);
+
+
 
 	// Fetch important numbers on component mount
 	useEffect(() => {
+		// const storedAdminId = localStorage.getItem("adminId") || "";
+		// const storedSocietyId = localStorage.getItem("societyId") || "";
+		// setEditData((prevData) => ({
+		//   ...prevData,
+		//   adminId: storedAdminId,
+		//   societyId: storedSocietyId,
+		// }));
+		fetchImportantNumbers();
+	  }, []);
+
+	// Fetch important numbers
+	const fetchImportantNumbers = () => {
 		axios.get('http://localhost:8000/api/users/v3/getImportantNum')
 			.then(response => setImportantNumbers(response.data))
 			.catch(error => console.error('Error fetching important numbers:', error));
-	}, []);
-
+	};
 
 	// Handle Add mode
 	const handleAdd = () => {
-		setEditData({ name: '', phone: '', work: '' });
+		setEditData({ Full_name: '', Phone_number: '', Work: '' });
 		setIsAddMode(true);
 		setShowModal(true);
-
 	};
 
-	 // Handle Edit mode
-	 const handleEdit = (index) => {
+	// Handle Edit mode
+	const handleEdit = (index) => {
+		const contact = importantNumbers[index];
 		setEditIndex(index);
-		setEditData(importantNumbers[index]);
+		setEditData(contact);
+		setSelectedId(contact._id);
 		setIsAddMode(false);
 		setShowModal(true);
-		
-	  };
+	};
 
-
-	 // Handle Delete
-	 const handleDelete = (index) => {
+	// Handle Delete
+	const handleDelete = (index) => {
+		const contact = importantNumbers[index];
 		setSelectedIndex(index);
+		setSelectedId(contact._id);
 		setShowDeleteModal(true);
-	  };
+	};
 
-
-	 // Handle input change
-	 const handleInputChange = (e) => {
+	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setEditData({ ...editData, [name]: value });
-	  };
-
-	// Handle save for both adding and editing
-	const handleSaveEdit = () => {
-		
-		if (isAddMode) {
-			setImportantNumbers([...importantNumbers, editData]); // Add new contact
-		} else {
-			const updatedNumbers = [...importantNumbers];
-			updatedNumbers[editIndex] = editData;
-			setImportantNumbers(updatedNumbers); // Save edits
-		}
-		setShowModal(false);
-		setEditIndex(null);
 	};
+
+	const handleSaveEdit = () => {
+		const { Full_name, Phone_number, Work } = editData;
+	
+		const data = { Full_name, Phone_number, Work };
+	
+		if (isAddMode) {
+		  // Add new contact
+		  axios
+			.post("http://localhost:8000/api/users/v3/createImportantNum", data)
+			.then((response) => {
+			  setImportantNumbers([...importantNumbers, response.data]);
+			  setShowModal(false);
+			  console.log(response.data);
+			  
+			})
+			.catch((error) => console.error("Error adding contact:", error));
+		} else {
+		  // Update existing contact
+		  axios
+			.put(`http://localhost:8000/api/users/v3/updateImportantNum/${editData._id}`, data)
+			.then((response) => {
+			  const updatedNumbers = [...importantNumbers];
+			  updatedNumbers[editIndex] = response.data.updateImportantNum;
+			  setImportantNumbers(updatedNumbers);
+			  setShowModal(false);
+			})
+			.catch((error) => console.error("Error updating contact:", error));
+		}
+	  };
+	
 
 	// Confirm deletion
 	const confirmDelete = () => {
-		if (selectedIndex !== null) {
-			// Remove the contact at selectedIndex
-			setImportantNumbers(importantNumbers.filter((_, i) => i !== selectedIndex));
-
-			// Close the delete confirmation modal
-			setShowDeleteModal(false);
-
-			// Reset selectedIndex to null
-			setSelectedIndex(null);
-		}
+		axios.delete(`http://localhost:8000/api/users/v3/deleteImportantNum/${selectedId}`)
+			.then(() => {
+				setImportantNumbers(importantNumbers.filter((_, i) => i !== selectedIndex));
+				setShowDeleteModal(false);
+			})
+			.catch(error => {
+				console.error('Error deleting contact:', error);
+				alert('Failed to delete the contact.');
+			});
 	};
 
 	// Close modals
@@ -286,9 +306,9 @@ const RightSection = () => {
 											style={{ border: 'none' }}
 										>
 											<div>
-												<strong>Name:</strong> {contact.name}<br />
-												<strong>Phone:</strong> {contact.phone}<br />
-												<strong>Work:</strong> {contact.work}
+												<strong>Name:</strong> {contact.Full_name}<br />
+												<strong>Phone:</strong> {contact.Phone_number}<br />
+												<strong>Work:</strong> {contact.Work}<br />
 											</div>
 											<div>
 												<Button
@@ -297,14 +317,14 @@ const RightSection = () => {
 													className="me-2"
 													onClick={() => handleDelete(index)}
 												>
-													<img src={require('../../images/delete.png')} style={{ color: 'red', fontSize: '20px' , marginBottom: '20px'}} />
+													<img src={require('../../images/delete.png')} style={{ color: 'red', fontSize: '20px', marginBottom: '20px' }} />
 												</Button>
 												<Button
 													style={{ backgroundColor: 'white', border: 'none' }}
 													size="sm"
 													onClick={() => handleEdit(index)}
 												>
-													<img src={require('../../images/edit.png')} style={{ color: 'green', fontSize: '24px' ,  marginBottom: '20px' }} />
+													<img src={require('../../images/edit.png')} style={{ color: 'green', fontSize: '24px', marginBottom: '20px' }} />
 												</Button>
 											</div>
 										</ListGroup.Item>
@@ -326,9 +346,9 @@ const RightSection = () => {
 										</Form.Label>
 										<Form.Control
 											type="text"
-											name="name"
+											name="Full_name"
 											placeholder="Enter Full Name"
-											value={editData.name}
+											value={editData.Full_name}
 											onChange={handleInputChange}
 											required
 										/>
@@ -339,9 +359,9 @@ const RightSection = () => {
 										</Form.Label>
 										<Form.Control
 											type="text"
-											name="phone"
+											name="Phone_number"
 											placeholder="+91"
-											value={editData.phone}
+											value={editData.Phone_number}
 											onChange={handleInputChange}
 											required
 										/>
@@ -352,9 +372,9 @@ const RightSection = () => {
 										</Form.Label>
 										<Form.Control
 											type="text"
-											name="work"
+											name="Work"
 											placeholder="Enter Work"
-											value={editData.work}
+											value={editData.Work}
 											onChange={handleInputChange}
 											required
 										/>
