@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Table, Modal, Form, } from "react-bootstrap";
 import { RiAddBoxFill } from "react-icons/ri";
-import { FaCamera,  FaFemale, FaMale, FaMoon, FaSun, FaTrash, } from "react-icons/fa";
+import { FaCamera,  FaFemale, FaMale, FaMoon, FaSun } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu"
 import SideBar from "../../Layouts/Sidebar";
 import Avatar from "../../images/Avatar.png";
