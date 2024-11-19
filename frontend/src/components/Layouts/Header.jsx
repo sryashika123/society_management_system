@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Row, Col, Form, InputGroup, Nav, Button, Dropdown } from 'react-bootstrap';
+import { Form, InputGroup, Button, Dropdown, Nav } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import avtar from '../images/Avatar.png';
-import { FaBell } from 'react-icons/fa6';
+import { FaBell } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
@@ -17,35 +17,36 @@ const Header = () => {
         setNotifications([]);
         setShowNotifications(false);
     };
+
     const toggleNotifications = () => {
         setShowNotifications(!showNotifications);
     };
-
 
     return (
         <div
             className="header bg-white p-3 shadow-sm"
             style={{
-                height: '109px', // Height set to 100px
-                width: '100%',
+                height: '108px', // Height set to 109px
+                width: 'calc(100% - 320px)', // Make the header width responsive based on sidebar width
                 position: 'fixed',
-                zIndex: '999',
+                zIndex: '1000', // Ensure the header stays above sidebar
                 top: '0',
+                left: '320px', // Offset the header by the width of the sidebar
             }}
         >
-            <Row className="align-items-center" style={{ height: '100%' }}>
-                {/* Search Input */}
-                <Col xs={12} md={6} lg={2} className="d-flex justify-content-start">
-                    <InputGroup className="w-100">
+            {/* Left Section - Search Bar */}
+            <div className="d-flex justify-content-between align-items-center" style={{ height: '100%' }}>
+                <div className="flex">
+                    <InputGroup >
                         <InputGroup.Text>
                             <BsSearch />
                         </InputGroup.Text>
                         <Form.Control type="text" placeholder="Search Here" />
                     </InputGroup>
-                </Col>
+                </div>
 
-                {/* Notification and User Info */}
-                <Col xs={12} md={6} lg={8} className="d-flex justify-content-end align-items-center">
+                {/* Right Section - Notifications and User Profile */}
+                <div className="d-flex align-items-center">
                     <Nav className="d-flex align-items-center">
                         {/* Notification Button */}
                         <Button
@@ -120,10 +121,9 @@ const Header = () => {
                             </Link>
                         </Dropdown>
                     </Nav>
-                </Col>
-            </Row>
+                </div>
+            </div>
         </div>
-
     );
 };
 

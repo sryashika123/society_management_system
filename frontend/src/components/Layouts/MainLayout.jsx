@@ -13,14 +13,10 @@ const MainLayout = () => {
 
   return (
     <Row>
-      {/* Sidebar - col-2 */}
-      <Col xs={2} className="bg-light">
-        <Sidebar />
-      </Col>
 
-      {/* Main Content - col-10 */}
-      <Col xs={10}>
-        {/* Conditionally render Header for dashboard, NavbarComponent for other pages */}
+      
+      <Col xs={12}>
+        <Sidebar/>
         {isDashboard ? <Header /> : <NavbarComponent />}
         {/* Main content goes here */}
       </Col>
