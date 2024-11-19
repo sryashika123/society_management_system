@@ -104,13 +104,21 @@ export default function Sidebar() {
 
   return (
     <div
-      className="offcanvas offcanvas-start show"
-      tabIndex="-1"
-      style={{ visibility: "visible", width: "320px" }} // Removed all border or shadow
-      aria-labelledby="offcanvasExampleLabel"
-      data-bs-backdrop="false"
-    >
-      <div className="offcanvas-header justify-content-center" style={{ border: "none" }}>
+  className="offcanvas offcanvas-start show"
+  tabIndex="-1"
+  style={{
+    visibility: "visible", 
+    width: "320px", 
+    position: "fixed", // Sidebar fixed on the left side
+    top: "0",
+    left: "0", // Sidebar aligned to the left
+    height: "100vh", // Full height of the screen
+    zIndex: "999", // Keep it under the header's z-index
+  }}
+  aria-labelledby="offcanvasExampleLabel"
+  data-bs-backdrop="false"
+>
+      <div className="offcanvas-header justify-content-center" style={{ border: "none", height:"92px" }}>
         <h1 className="offcanvas-title mainColor mx-5" id="offcanvasExampleLabel">
           Dash<span className="text-dark">Stack</span>
         </h1>
