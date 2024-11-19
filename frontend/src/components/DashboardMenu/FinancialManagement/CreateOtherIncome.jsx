@@ -1,57 +1,70 @@
 import React, { useState } from 'react';
 import { Modal, Form, Col, Row, InputGroup } from 'react-bootstrap';
+import axios from 'axios';
 
-function CreateOtherIncome({ showModal, onClose , onSave  }) {
-    const [title, setTitle] = useState('');
-    const [date, setDate] = useState('');
-    const [dueDate, setDueDate] = useState('');
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
-    const handleSave = () => {
-        // Create new income object
-        const newIncome = {
-            title,
-            date,
-            dueDate,
-            description,
-            amountPerMember: amount,
-            totalMembers: 0, // Optional: You can modify this field as needed
+function CreateOtherIncome({ showModal, onClose, onSave }) {
+    const [income, setIncome] = useState({
+        title: '',
+        amountPerMember: '',
+        totalMembers: '',
+        date: '',
+        dueDate: '',
+        description: ''
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setIncome((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        // Ensure the date is formatted in 'YYYY-MM-DD' before sending to the backend
+        const formattedDate = new Date(income.date).toISOString().split('T')[0];
+
+        // Prepare data to be sent to the backend
+        const dataToSend = {
+            date: formattedDate,
+            title: income.title,
+            amountPerMember: income.amountPerMember,
+            totalMembers: income.totalMembers,
+            dueDate: income.dueDate,
+            description: income.description
+             
         };
-    
-        // Pass the new income object to the parent component
-        onSave(newIncome);
-    
-        // Reset form fields
-        setTitle('');
-        setDate('');
-        setDueDate('');
-        setDescription('');
-        setAmount('');
+
+        // Send POST request to the backend
+        axios.post('http://localhost:8000/api/users/v13/createOtherIncome', dataToSend)
+            .then(response => {
+                console.log(response.data);  // Log the response from the backend
+            })
+            .catch(error => {
+                console.error(error);  // Log any errors
+            });
     };
-    
-    const handleCancel = () => {
-        setTitle('');
-        setDate('');
-        setDueDate('');
-        setDescription('');
-        setAmount('');
-        onClose(); // Close modal after canceling
-    };
+
+
+
     return (
         <Modal show={showModal} onHide={onClose} centered>
             <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                 <Modal.Title>Create Other Income</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={(e) => e.preventDefault()}>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formTitle" className="mb-3" style={{ color: '#202224', fontWeight: '500' }}>
                         <Form.Label>Title
                             <span className='text-danger'>*</span>
                         </Form.Label>
                         <Form.Control
                             type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            name='title'
+                            value={income.title}
+                            onChange={handleChange}
                             placeholder="Enter Title"
                             required
                         />
@@ -66,8 +79,9 @@ function CreateOtherIncome({ showModal, onClose , onSave  }) {
                                 </Form.Label>
                                 <Form.Control
                                     type="date"
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)}
+                                    name="date"
+                                    value={income.date}
+                                    onChange={handleChange}
                                     required
                                 />
                             </Form.Group>
@@ -80,8 +94,9 @@ function CreateOtherIncome({ showModal, onClose , onSave  }) {
                                 </Form.Label>
                                 <Form.Control
                                     type="date"
-                                    value={dueDate}
-                                    onChange={(e) => setDueDate(e.target.value)}
+                                    name='dueDate'
+                                    value={income.dueDate}
+                                    onChange={handleChange}
                                     required
                                 />
                             </Form.Group>
@@ -95,8 +110,9 @@ function CreateOtherIncome({ showModal, onClose , onSave  }) {
                         <Form.Control
                             as="textarea"
                             rows={2}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            name='description'
+                            value={income.description}
+                            onChange={handleChange}
                             placeholder="Enter Description"
                             required
                         />
@@ -109,8 +125,9 @@ function CreateOtherIncome({ showModal, onClose , onSave  }) {
                             <InputGroup.Text className='fw-bold'>₹</InputGroup.Text>
                             <Form.Control
                                 type="number"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
+                                name='amountPerMember'
+                                value={income.amountPerMember}
+                                onChange={handleChange}
                                 placeholder="0000"
                                 required
                             />
@@ -119,7 +136,7 @@ function CreateOtherIncome({ showModal, onClose , onSave  }) {
                     <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-outline-secondary"
                             style={{ width: '45%', borderRadius: '10px', paddingTop: '10px', paddingBottom: '10px', marginBottom: '15px', marginLeft: '5px' }}
-                            onClick={handleCancel}>
+                        >
                             Cancel
                         </button>
                         <button
@@ -136,7 +153,7 @@ function CreateOtherIncome({ showModal, onClose , onSave  }) {
                                 paddingBottom: '10px',
                             }}
                             data-bs-dismiss="modal"
-                            onClick={handleSave}
+
                         >
                             Save
                         </button>
