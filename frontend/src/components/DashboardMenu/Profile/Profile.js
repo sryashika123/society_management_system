@@ -50,45 +50,45 @@ export default function Profile() {
                             </Link>
                         </div>
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)} className="form-group bg-light p-5 rounded d-flex justify-content-between mt-3 " style={{border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)"}}>
-                        
-                        {/* Profile Image Section */}
-                       {/* Profile Image Section */}
-<div className="profile-image-section text-center">
-    <div className="profile-image-wrapper">
-        {/* Profile Image */}
-        <img
-            src={profile}
-            alt="Profile"
-            className="rounded-circle profile-image"
-        />
+                    <form onSubmit={handleSubmit(onSubmit)} className="form-group bg-light p-5 rounded d-flex justify-content-between mt-3 " style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)" }}>
 
-        {/* Edit Icon */}
-        <MdEditSquare
-            className="edit-icon"
-            onClick={() => document.getElementById('profileImageUpload').click()} // Open file input on click
-        />
-        
-        {/* Hidden File Input */}
-        <input
-            id="profileImageUpload"
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={(e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        document.querySelector('.profile-image').src = reader.result; // Update profile image
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }}
-        />
-    </div>
-    <p className="mt-3" style={{ fontSize: "18px", fontWeight: "500" }}>Arlene McCoy</p>
-</div>
+                        {/* Profile Image Section */}
+                        {/* Profile Image Section */}
+                        <div className="profile-image-section text-center">
+                            <div className="profile-image-wrapper">
+                                {/* Profile Image */}
+                                <img
+                                    src={profile}
+                                    alt="Profile"
+                                    className="rounded-circle profile-image"
+                                />
+
+                                {/* Edit Icon */}
+                                <MdEditSquare
+                                    className="edit-icon"
+                                    onClick={() => document.getElementById('profileImageUpload').click()} // Open file input on click
+                                />
+
+                                {/* Hidden File Input */}
+                                <input
+                                    id="profileImageUpload"
+                                    type="file"
+                                    accept="image/*"
+                                    style={{ display: "none" }}
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = () => {
+                                                document.querySelector('.profile-image').src = reader.result; // Update profile image
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <p className="mt-3" style={{ fontSize: "18px", fontWeight: "500" }}>Arlene McCoy</p>
+                        </div>
 
 
                         {/* Form Fields Section */}
@@ -97,7 +97,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 pe-2">
                                     <label>First Name <span className="text-danger">*</span></label>
                                     <input
-                                    placeholder='Enter First Name'
+                                        placeholder='Enter First Name'
                                         type="text"
                                         className={`form-control ${errors.fname ? 'is-invalid' : ''}`}
                                         {...register('fname', { required: 'First Name is required' })}
@@ -108,7 +108,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 ps-2">
                                     <label>Last Name <span className="text-danger">*</span></label>
                                     <input
-                                    placeholder='Enter Last Name'
+                                        placeholder='Enter Last Name'
                                         type="text"
                                         className={`form-control ${errors.lname ? 'is-invalid' : ''}`}
                                         {...register('lname', { required: 'Last Name is required' })}
@@ -119,7 +119,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 pe-2">
                                     <label>Phone Number <span className="text-danger">*</span></label>
                                     <input
-                                    placeholder='+91'
+                                        placeholder='+91'
                                         type="text"
                                         className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                                         {...register('phone', { required: 'Phone Number is required' })}
@@ -130,7 +130,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 ps-2">
                                     <label>Email Address <span className="text-danger">*</span></label>
                                     <input
-                                    placeholder='abc@example.com'
+                                        placeholder='abc@example.com'
                                         type="email"
                                         className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                         {...register('email', { required: 'Email is required' })}
@@ -141,7 +141,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 pe-2">
                                     <label>Select Society <span className="text-danger">*</span></label>
                                     <input
-                                    placeholder='Select Society'
+                                        placeholder='Select Society'
                                         type="text"
                                         className={`form-control ${errors.society ? 'is-invalid' : ''}`}
                                         {...register('society', { required: 'Society is required' })}
@@ -152,7 +152,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 ps-2">
                                     <label>Country <span className="text-danger">*</span></label>
                                     <input
-                                    placeholder='Select Country'
+                                        placeholder='Select Country'
                                         type="text"
                                         className={`form-control ${errors.country ? 'is-invalid' : ''}`}
                                         {...register('country', { required: 'Country is required' })}
@@ -163,7 +163,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 pe-2">
                                     <label>State <span className="text-danger">*</span></label>
                                     <input
-                                    placeholder='Select State'
+                                        placeholder='Select State'
                                         type="text"
                                         className={`form-control ${errors.state ? 'is-invalid' : ''}`}
                                         {...register('state', { required: 'State is required' })}
@@ -174,7 +174,7 @@ export default function Profile() {
                                 <div className="mb-2 w-50 ps-2">
                                     <label>City <span className="text-danger">*</span></label>
                                     <input
-                                    placeholder='Select City'
+                                        placeholder='Select City'
                                         type="text"
                                         className={`form-control ${errors.city ? 'is-invalid' : ''}`}
                                         {...register('city', { required: 'City is required' })}

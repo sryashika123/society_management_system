@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import CreateOtherIncome from './CreateOtherIncome';
 import EditModal from './EditModal';
 import ViewIncomeModal from './ViewIncomeModal';
 import { Modal } from 'react-bootstrap';
+import axios from 'axios';
 
 const OtherIncome = ({ income }) => {
     // State to control visibility of Create modal and Edit modal
@@ -14,14 +15,38 @@ const OtherIncome = ({ income }) => {
     // State to store selected income data for editing
     const [selectedIncome, setSelectedIncome] = useState(null);
 
+     // State for storing the list of incomes
+     const [incomes, setIncomes] = useState([]);
 
+    //  const [showMenuIndex, setShowMenuIndex] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
 
+
+    // Fetch income data on component mount
+    useEffect(() => {
+        fetchIncomes();
+    }, []);
+
+    const fetchIncomes = async () => {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/users/v13/getOtherIncome`);
+            setIncomes(response.data);
+        } catch (error) {
+            console.error("Error fetching incomes:", error);
+        }
+    };
+
+
     // Function to handle saving new income
-    const handleSaveIncome = (newIncome) => {
-        setIncomes([...incomes, newIncome]); // Add new income to the list
-        setShowCreateModal(false); // Close the modal
+    const handleSaveIncome = async (newIncome) => {
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/users/v13/createOtherIncome`, newIncome);
+            setIncomes([...incomes, response.data]);
+            setShowCreateModal(false);
+        } catch (error) {
+            console.error("Error saving income:", error);
+        }
     };
 
 
@@ -47,33 +72,7 @@ const OtherIncome = ({ income }) => {
     };
 
 
-    // State for storing the list of incomes
-    const [incomes, setIncomes] = useState([
-        {
-            title: 'Ganesh Chaturthi',
-            amountPerMember: 1500,
-            totalMembers: 12,
-            date: '01/07/2024',
-            dueDate: '10/07/2024',
-            description: 'The celebration of Ganesh Chaturthi involves the installation of clay idols of Ganesa in...',
-        },
-        {
-            title: 'Navratri',
-            amountPerMember: 1500,
-            totalMembers: 12,
-            date: '01/07/2024',
-            dueDate: '10/07/2024',
-            description: 'The celebration of Navratri involves the installation of clay idols of Durga in Resident...',
-        },
-        {
-            title: 'Diwali',
-            amountPerMember: 1500,
-            totalMembers: 12,
-            date: '01/07/2024',
-            dueDate: '10/07/2024',
-            description: 'The celebration of Ganesh Chaturthi involves the installation of clay idols of Ganesa in...',
-        },
-    ]);
+   
 
     // State to track which income item's dropdown is open
     const [showMenuIndex, setShowMenuIndex] = useState(null);
