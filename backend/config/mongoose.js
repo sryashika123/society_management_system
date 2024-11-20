@@ -12,3 +12,22 @@ db.once('open', (e)=>{
 });
 
 module.exports = db;
+
+
+
+// const dotenv = require('dotenv');
+// dotenv.config();
+
+// const db = async () => {
+//     try {
+//       const conn = await mongoose.connect(process.env.MongoDB_url);
+  
+//       console.log(`MongoDB Connected: ${conn.connection.host}`);
+//     } catch (error) {
+//       console.error(`Error: ${error.message}`);
+//       process.exit(1); // Exit process with failure
+//     }
+// };
+
+
+// module.exports = db;
