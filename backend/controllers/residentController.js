@@ -118,6 +118,18 @@ module.exports.getAllResident = async (req, res) => {
     }
 };
 
+exports.getResident = async (req, res) => {
+    try {
+        const viewResident = await Resident.findById(req.params.id);
+        if (!viewResident) {
+            return res.status(404).json({ message: "Resident record not found" });
+        }
+        res.status(200).json(viewResident);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 module.exports.deleteResident = async (req, res) => {
     try{
         const { id } = req.params;
