@@ -21,7 +21,8 @@ app.use(
         origin: "http://localhost:3000",
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true // enable set cookies
-    }));
+    }
+));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -46,6 +47,7 @@ app.use("/api/users/v17", require("./routes/AlertRoute.js"));
 app.use("/api/users/v18", require("./routes/VisitortrackingRoute.js"));
 app.use("/api/users/v19", require("./routes/PaymentRoute.js"));
 app.use("/api/users/v20", require("./routes/AnnouncementRoute.js"));
+app.use("/api/users/v21", require("./routes/NotificationRoute.js"));
 
 
 app.listen(port, (e) => {
