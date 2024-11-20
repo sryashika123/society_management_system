@@ -2,7 +2,7 @@ const Payment = require('../models/PaymentModel');
 const Society = require("../models/societyModel");
 const Admin = require("../models/UserModel");
 
-exports.createPayment = async (req, res) => {
+module.exports.createPayment = async (req, res) => {
     try{
         const{ Card_Name, Card_number, Expiry_date, CVV, status, Member, adminId, societyId } = req.body;
         const admin = await Admin.findById(adminId);
