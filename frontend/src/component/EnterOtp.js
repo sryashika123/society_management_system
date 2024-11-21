@@ -5,7 +5,7 @@ import OTPImage from '../assets/forgotpassword.jpg';
 import '../style.css';
 import Logo from './Logo';
 
-export default function EnterOtp() {
+function EnterOtp() {
   const { register, handleSubmit } = useForm();
   const { state } = useLocation(); 
   const [counter, setCounter] = useState(30);
@@ -41,10 +41,11 @@ export default function EnterOtp() {
   return (
     <div className="container-fluid min-vh-100 d-flex align-items-center">
       <div className="row w-100">
-      <Logo />
         <div className="left-side col-lg-6 d-flex justify-content-center align-items-center bg-light">
           <div>
-            
+            <div className='stack mt-5'>
+              <Logo />
+            </div>
             <img
               src={OTPImage}
               alt="Reset Password Illustration"
@@ -58,7 +59,7 @@ export default function EnterOtp() {
           <div className="EnterOtp-form-container p-4 shadow-lg bg-white rounded" style={{ width: '400px' }}>
             <h2 className="text-center">Enter OTP</h2>
             <p className="text-center">
-              Please enter the 6-digit code sent to {state?.emailOrPhone}.
+              Please enter the 6-digit code sent to {state?.emailOrPhone || 'your email or phone'}.
             </p>
             <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column align-items-center">
               <div className="otp-input-group d-flex justify-content-between mb-4" style={{ width: '100%' }}>
@@ -69,7 +70,7 @@ export default function EnterOtp() {
                     maxLength="1"
                     className="form-control text-center"
                     style={{ width: '48px', height: '58px', fontSize: '24px' }}
-                    {...register(`otp[${index}]`, { required: true })}
+                    {...register(`otp[${index}]`, { required: 'OTP is required' })}
                   />
                 ))}
               </div>
@@ -97,3 +98,5 @@ export default function EnterOtp() {
     </div>
   );
 }
+
+export default EnterOtp;

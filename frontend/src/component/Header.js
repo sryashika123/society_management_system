@@ -23,7 +23,7 @@ export default function Header() {
             <Navbar expand="lg" className="navbar bg-white border-bottom" style={{height:"109px"}}>
                 <Container fluid>
                     {/* Search Bar for Large Screens */}
-                    <Navbar.Brand className="d-none d-lg-block w-20">
+                    <Navbar.Brand className="d-none d-lg-block w-20" style={{marginLeft:"20px"}}>
                         <InputGroup className="align-items-center search-bar rounded-2 px-3 py-2">
                             <FiSearch className="search-icon" />
                             <FormControl
