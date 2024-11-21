@@ -123,7 +123,6 @@ module.exports.resendotp = async (req, res) => {
 	}
 };
 
-
 module.exports.verifyotp = async (req, res) => {
 	const { email, otp } = req.body;
 	try{
