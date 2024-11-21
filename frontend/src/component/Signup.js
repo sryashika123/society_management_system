@@ -43,7 +43,9 @@ export default function Signup() {
             <div className="signup-img  d-flex flex-column align-items-left" style={{width:"950px"}}>
 
             
+                    <div className='stack mt-5'>
                     <Logo />
+                    </div>
                
 
                 {/* Center the image vertically in the remaining space */}

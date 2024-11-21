@@ -24,8 +24,8 @@ const Home = () => {
     <Sidebar/>
     
     <Routes>
-      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/" element={<Dashboard />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       
       <Route path="/residentmanagement" element={<ResidentManagement/>}/>
       <Route path="/residentForm" element={<ResidentForm/>}/>

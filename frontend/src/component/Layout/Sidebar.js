@@ -8,101 +8,155 @@ import {
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
-import { PiBuildingOfficeBold, PiMoneyWavyFill } from "react-icons/pi";
-import { AiFillDollarCircle } from "react-icons/ai";
-import { TbMessage2Cancel } from "react-icons/tb";
-import { BsShieldLockFill } from "react-icons/bs";
-import { RiShieldUserFill } from "react-icons/ri";
-
-export default function Sidebar() {
+import "../../style.css";
+import dashboardIcon from '../../Icons/image.png'; 
+import residentIcon from '../../Icons/money.png';
+import financialIcon from '../../Icons/dollar-square.png';
+import facalityIcon from '../../Icons/building.png';
+import complainrtrackingIcon from '../../Icons/sms-tracking.png'
+import securitymanagementIcon from '../../Icons/shield-security.png'
+import securityguardIcon from '../../Icons/security-user.png'
+import announcementIcon from '../../Icons/Announcement.png'
+import personaldetailsIcon from '../../Icons/personalcard.png'
+import securityIcon from '../../Icons/security.png'
+import Logo from "../Logo";
+function Sidebar() {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("");
   const [isComplaintDropdownOpen, setComplaintDropdownOpen] = useState(false);
   const [isSecurityDropdownOpen, setSecurityDropdownOpen] = useState(false);
   const [isFinancialDropdownOpen, setFinancialDropdownOpen] = useState(false);
+  const [isGeneralSecurityDropdownOpen, setGeneralSecurityDropdownOpen] = useState(false);
 
+  // Update active item on location change
   useEffect(() => {
-    const path = location.pathname.split("/")[2] || "dashboard";
-    setActiveItem(path);
+    const currentPath = location.pathname;
 
-    if (path === "create-complaint" || path === "request-tracking") {
-      setComplaintDropdownOpen(true);
-      setSecurityDropdownOpen(false);
-    } else if (path === "visitors-log" || path === "security-protocols") {
-      setSecurityDropdownOpen(true);
-      setComplaintDropdownOpen(false);
-    } else {
-      setComplaintDropdownOpen(false);
-      setSecurityDropdownOpen(false);
+    // Check if any sub-item matches the current path
+    let foundActiveItem = false;
+    menuItems.forEach((item) => {
+      if (item.subItems) {
+        item.subItems.forEach((subItem) => {
+          if (currentPath === subItem.path) {
+            setActiveItem(subItem.key);
+            if (item.key === "complaint-tracking") setComplaintDropdownOpen(true);
+            if (item.key === "security-management") setSecurityDropdownOpen(true);
+            if (item.key === "financialmanagement") setFinancialDropdownOpen(true);
+            if (item.key === "security") setGeneralSecurityDropdownOpen(true);
+            foundActiveItem = true;
+          }
+        });
+      } else if (currentPath === item.path) {
+        setActiveItem(item.key);
+        foundActiveItem = true;
+      }
+    });
+
+    // If no match found, reset active item
+    if (!foundActiveItem) {
+      setActiveItem("");
     }
   }, [location]);
 
-  const handleComplaintClick = () => {
-    setComplaintDropdownOpen(!isComplaintDropdownOpen);
-    setSecurityDropdownOpen(false);
-    setFinancialDropdownOpen(false);
-    setActiveItem("complaint-tracking");
-  };
-
-  const handleSecurityClick = () => {
-    setSecurityDropdownOpen(!isSecurityDropdownOpen);
-    setComplaintDropdownOpen(false);
-    setFinancialDropdownOpen(false);
-    setActiveItem("security-management");
-  };
-
-  const handleFinancialClick = () => {
-    setFinancialDropdownOpen(!isFinancialDropdownOpen);
-    setComplaintDropdownOpen(false);
-    setSecurityDropdownOpen(false);
-    setActiveItem("financialmanagement");
-  };
-
-  const handleMainItemClick = (key) => {
-    setActiveItem(key);
-    setComplaintDropdownOpen(false);
-    setSecurityDropdownOpen(false);
-    setFinancialDropdownOpen(false);
-  };
-
-  const handleSubItemClick = (key) => {
+  const handleDropdownClick = (key) => {
+    if (key === "complaint-tracking") {
+      setComplaintDropdownOpen(!isComplaintDropdownOpen);
+      setSecurityDropdownOpen(false);
+      setFinancialDropdownOpen(false);
+      setGeneralSecurityDropdownOpen(false);
+    } else if (key === "security-management") {
+      setSecurityDropdownOpen(!isSecurityDropdownOpen);
+      setComplaintDropdownOpen(false);
+      setFinancialDropdownOpen(false);
+      setGeneralSecurityDropdownOpen(false);
+    } else if (key === "financialmanagement") {
+      setFinancialDropdownOpen(!isFinancialDropdownOpen);
+      setComplaintDropdownOpen(false);
+      setSecurityDropdownOpen(false);
+      setGeneralSecurityDropdownOpen(false);
+    } else if (key === "security") {
+      setGeneralSecurityDropdownOpen(!isGeneralSecurityDropdownOpen);
+      setComplaintDropdownOpen(false);
+      setSecurityDropdownOpen(false);
+      setFinancialDropdownOpen(false);
+    }
     setActiveItem(key);
   };
 
   const menuItems = [
-    { key: "dashboard", label: "Dashboard", icon: <FaTh />, path: "/home/dashboard" },
-    { key: "residentmanagement", label: "Resident Management", icon: <PiMoneyWavyFill />, path: "/home/residentmanagement" },
+    {
+      key: "dashboard",
+      label: "Dashboard",
+      icon: <img src={dashboardIcon}  />,
+      path: "/home/dashboard"
+    },
+    {
+      key: "residentmanagement",
+      label: "Resident Management",
+      icon: <img src={residentIcon}  />,
+      path: "/home/residentmanagement",
+    },
     {
       key: "financialmanagement",
       label: "Financial Management",
-      icon: <AiFillDollarCircle />,
+      icon: <img src={financialIcon}  />,
       subItems: [
         { key: "income", label: "Income", path: "/home/Financial-Maintenanace" },
         { key: "expenses", label: "Expenses", path: "/home/expense" },
         { key: "note", label: "Note", path: "/home/note" },
       ],
     },
-    { key: "facility-management", label: "Facility Management", icon: <PiBuildingOfficeBold />, path: "/home/facility-management" },
+    {
+      key: "facility-management",
+      label: "Facility Management",
+      icon: <img src={facalityIcon}  />,
+      path: "/home/facility-management",
+    },
     {
       key: "complaint-tracking",
       label: "Complaint Tracking",
-      icon: <TbMessage2Cancel />,
+      icon: <img src={complainrtrackingIcon}  />,
       subItems: [
-        { key: "create-complaint", label: "Create Complaint", path: "/home/create-complaint" },
         { key: "request-tracking", label: "Request Tracking", path: "/home/request-tracking" },
+        { key: "create-complaint", label: "Create Complaint", path: "/home/create-complaint" },
       ],
     },
     {
       key: "security-management",
       label: "Security Management",
-      icon: <BsShieldLockFill />,
+      icon: <img src={securitymanagementIcon}  />,
       subItems: [
         { key: "visitors-log", label: "Visitors Log", path: "/home/visitors-log" },
         { key: "security-protocols", label: "Security Protocols", path: "/home/security-protocols" },
       ],
     },
-    { key: "security-guard", label: "Security Guard", icon: <RiShieldUserFill />, path: "/home/security-guard" },
-    { key: "announcement", label: "Announcement", icon: <FaBullhorn />, path: "/home/announcement" },
+    {
+      key: "security-guard",
+      label: "Security Guard",
+      icon: <img src={securityguardIcon}  />,
+      path: "/home/security-guard",
+    },
+    {
+      key: "announcement",
+      label: "Announcement",
+      icon: <img src={announcementIcon}  />,
+      path: "/home/announcement",
+    },
+    {
+      key: "security",
+      label: "Security",
+      icon: <img src={securityIcon}  />,
+      subItems: [
+        { key: "visitor-tracking", label: "Visitor Tracking", path: "/home/visitor-tracking" },
+        { key: "emergency-management", label: "Emergency Management", path: "/home/emergency-management" },
+      ],
+    },
+    {
+      key: "personal-details",
+      label: "Personal Details",
+      icon: <img src={personaldetailsIcon}  />,
+      path: "/home/personal-details",
+    },
   ];
 
   return (
@@ -115,8 +169,8 @@ export default function Sidebar() {
         data-bs-backdrop="false"
       >
         <div className="offcanvas-header justify-content-center">
-          <h1 className="offcanvas-title mainColor mx-5" id="offcanvasExampleLabel">
-            Dash<span className="text-dark">Stack</span>
+          <h1 className="offcanvas-title mainColor " id="offcanvasExampleLabel">
+           <Logo/>
           </h1>
         </div>
         <hr />
@@ -128,38 +182,31 @@ export default function Sidebar() {
                 <li key={item.key} className="p-3 rounded">
                   <div
                     className="d-flex align-items-center justify-content-between"
-                    style={{
-                      cursor: "pointer",
-                      color: "black",
-                    }}
-                    onClick={() => {
-                      if (item.key === "complaint-tracking") {
-                        handleComplaintClick();
-                      } else if (item.key === "security-management") {
-                        handleSecurityClick();
-                      } else if (item.key === "financialmanagement") {
-                        handleFinancialClick();
-                      }
-                    }}
+                    style={{ cursor: "pointer", color: "black" }}
+                    onClick={() => handleDropdownClick(item.key)}
                   >
                     <div className="d-flex align-items-center">
                       {item.icon}
                       <span className="ms-3">{item.label}</span>
                     </div>
-                    {item.key === "complaint-tracking" && (isComplaintDropdownOpen ? <FaChevronUp /> : <FaChevronDown />)}
-                    {item.key === "security-management" && (isSecurityDropdownOpen ? <FaChevronUp /> : <FaChevronDown />)}
-                    {item.key === "financialmanagement" && (isFinancialDropdownOpen ? <FaChevronUp /> : <FaChevronDown />)}
+                    {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
+                    (item.key === "security-management" && isSecurityDropdownOpen) ||
+                    (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
+                    (item.key === "security" && isGeneralSecurityDropdownOpen) ? (
+                      <FaChevronUp />
+                    ) : (
+                      <FaChevronDown />
+                    )}
                   </div>
                   {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
-                    (item.key === "security-management" && isSecurityDropdownOpen) ||
-                    (item.key === "financialmanagement" && isFinancialDropdownOpen) ? (
+                  (item.key === "security-management" && isSecurityDropdownOpen) ||
+                  (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
+                  (item.key === "security" && isGeneralSecurityDropdownOpen) ? (
                     <ul className="list-unstyled ms-4">
                       {item.subItems.map((subItem) => (
                         <li
                           key={subItem.key}
-                          className={`p-2 rounded ${activeItem === subItem.key ? "active" : ""
-                            }`}
-                          onClick={() => handleSubItemClick(subItem.key)}
+                          className={`p-2 rounded ${activeItem === subItem.key ? "active text-white" : ""}`}
                         >
                           <Link
                             to={subItem.path}
@@ -181,8 +228,11 @@ export default function Sidebar() {
                   <Link
                     to={item.path}
                     className="d-flex align-items-center"
-                    style={{ textDecoration: "none", color: activeItem === item.key ? "white" : "black" }}
-                    onClick={() => handleMainItemClick(item.key)}
+                    style={{
+                      textDecoration: "none",
+                      color: activeItem === item.key ? "white" : "black",
+                    }}
+                    onClick={() => setActiveItem(item.key)}
                   >
                     {item.icon}
                     <span className="ms-3">{item.label}</span>
@@ -204,3 +254,5 @@ export default function Sidebar() {
     </div>
   );
 }
+
+export default Sidebar;

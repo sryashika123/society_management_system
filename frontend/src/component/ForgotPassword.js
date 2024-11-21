@@ -6,7 +6,7 @@ import ForgotPasswordImage from '../assets/forgotpassword.jpg'; // Use the corre
 import Logo from './Logo';
 import '../style.css'
 
-export default function ForgotPassword() {
+function ForgotPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
@@ -20,16 +20,18 @@ export default function ForgotPassword() {
     <div className="container-fluid d-flex align-items-center min-vh-100">
       <div className="row w-100">
         {/* Left Section */}
-        <Logo/>
         <div className="left-side col-lg-6 col-md-6 col-sm-12 align-items-center d-flex flex-column justify-content-center">
-            <div>
-              
-          <img
-            className="ForgotPassword-image mx-5 mt-5"
-            src={ForgotPasswordImage}
-            alt="Forgot Password Illustration"
-            style={{ maxWidth: '80%' }}
-          />
+          <div >
+            <div className='stack mt-5 '>
+
+              <Logo />
+            </div>
+            <img
+              className="ForgotPassword-image mx-5 mt-5"
+              src={ForgotPasswordImage}
+              alt="Forgot Password Illustration"
+              style={{ maxWidth: '80%' }}
+            />
           </div>
         </div>
 
@@ -45,13 +47,13 @@ export default function ForgotPassword() {
                 </label>
                 <input
                   type="text"
-                  className={`form-control ${errors.emailOrPhone ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.emailOrPhone ? 'is-invalid' : ''}`}  // Corrected here
                   id="emailOrPhone"
                   placeholder="Enter Email or Phone"
                   {...register('emailOrPhone', {
                     required: 'Email or phone is required',
                     pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$|^\d{10}$/,
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$|^\d{10}$/,  // Validates email or 10-digit phone number
                       message: 'Enter a valid email or 10-digit phone number',
                     },
                   })}
@@ -81,3 +83,5 @@ export default function ForgotPassword() {
     </div>
   );
 }
+
+export default ForgotPassword;

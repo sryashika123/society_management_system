@@ -1,11 +1,10 @@
 import React from 'react'
+import dashstack from '../assets/logo.png'
 
 const Logo = () => {
     return (
         <div>
-            <h1 className='stack mt-5 '>
-                <span style={{ color: '#ee6a42' }}>Dash</span>Stack
-            </h1>
+            <img src={dashstack}/>
         </div>
     )
 }

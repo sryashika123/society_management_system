@@ -1,4 +1,3 @@
-// ResetPassword.js
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -7,7 +6,7 @@ import ResetImage from '../assets/forgotpassword.jpg'; // Use your own image pat
 import '../style.css';
 import Logo from './Logo';
 
-export default function ResetPassword() {
+function ResetPassword() {
   const navigate = useNavigate(); // Hook to handle redirection
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
@@ -29,11 +28,12 @@ export default function ResetPassword() {
     <div className="container-fluid min-vh-100 d-flex align-items-center">
       <div className="row w-100">
         {/* Left Section - Illustration */}
-        <Logo/>
-        <div className=" left-side col-lg-6 d-flex justify-content-center align-items-center bg-light">
-            <div>
-                
-          <img src={ResetImage} alt="Reset Password" className="ResetPassword-image mx-5 mt-5" style={{ maxWidth: '80%' }} />
+        <div className="left-side col-lg-6 d-flex justify-content-center align-items-center bg-light">
+          <div>
+            <div className='stack mt-5'>
+              <Logo/>
+            </div>
+            <img src={ResetImage} alt="Reset Password" className="ResetPassword-image mx-5 mt-5" style={{ maxWidth: '80%' }} />
           </div>
         </div>
 
@@ -99,3 +99,5 @@ export default function ResetPassword() {
     </div>
   );
 }
+
+export default ResetPassword;
