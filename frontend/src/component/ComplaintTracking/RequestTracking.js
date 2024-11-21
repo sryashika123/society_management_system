@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
-import { FaEdit, FaEye, FaPlus, FaTrash } from 'react-icons/fa';
-import Sidebar from '../component/Layout/Sidebar';
-import Avtar from "../assets/Avatar.png"
-import Header from './Navbar';
+import {  FaPlus } from 'react-icons/fa';
+import Sidebar from '../Layout/Sidebar';
+import Avtar from "../../assets/Avatar.png"
+import Header from '../Navbar';
+import Edit from "../../assets/edit.png"
+import View from "../../assets/view.png"
+import Delete from "../../assets/delete.png"
 
 export default function RequestTracking() {
   const [requests, setRequests] = useState([
@@ -139,7 +142,7 @@ export default function RequestTracking() {
       <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff",padding:"5px", marginTop: "20px" }}>
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-2 mb-4">
         <h4 className="mb-0" style={{marginLeft:"20px"}}>Request Tracking</h4>
-        <Button className="btn mainColor2 d-flex align-items-center justify-content-center" style={{marginRight:"20px"}} onClick={handleShowCreateModal}>
+        <Button className="btn mainColor2 d-flex align-items-center justify-content-center" style={{marginRight:"20px" , border:'none'}} onClick={handleShowCreateModal}>
         <FaPlus
     style={{
       fontSize: "18px",
@@ -233,9 +236,9 @@ export default function RequestTracking() {
                 </td>
                 <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle" }}>
                   <div className="d-flex align-items-center justify-content-center">
-                    <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(request)} />
-                    <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(request)} />
-                    <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(request.id)} />
+                    <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(request)} />
+                    <img src={View} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(request)} />
+                    <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(request.id)} />
                   </div>
                 </td>
               </tr>

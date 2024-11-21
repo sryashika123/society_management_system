@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {Table } from 'react-bootstrap';
 
-import Sidebar from '../component/Layout/Sidebar';
-import Avtar from "../assets/Avatar.png"
-import Header from './Navbar';
+import Sidebar from '../Layout/Sidebar';
+import Avtar from "../../assets/Avatar.png"
+import Header from '../Navbar';
 
 export default function DetailTracking() {
   const [details, setDetails] = useState([

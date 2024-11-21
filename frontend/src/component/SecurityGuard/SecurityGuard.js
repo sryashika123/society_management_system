@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table, Modal, Form } from 'react-bootstrap';
-import { FaCamera, FaClock, FaEdit, FaEye, FaFemale, FaImage, FaMale, FaMoon, FaPlus, FaSun, FaTrash, FaUpload } from 'react-icons/fa';
-import Sidebar from '../component/Layout/Sidebar';
-import Avtar from "../assets/Avatar.png";
+import { FaCamera,  FaFemale, FaImage, FaMale, FaMoon, FaPlus, FaSun, FaTrash, FaUpload } from 'react-icons/fa';
+import Sidebar from '../Layout/Sidebar';
+import Avtar from "../../assets/Avatar.png";
 import { LuImagePlus } from 'react-icons/lu';
-import Header from './Navbar';
+import Header from '../Navbar';
+import View from "../../assets/view.png"
+import Delete from "../../assets/delete.png"
+import Edit from "../../assets/edit.png"
 
 export default function SecurityGaurd() {
   const [guards, setGuards] = useState([
@@ -77,7 +80,7 @@ export default function SecurityGaurd() {
     setShowViewGuard(false);
     setShowDeleteGuard(false); // Close the delete confirmation modal when handleClose is called
 
-    setDeleteGuardId(null); 
+    setDeleteGuardId(null);
     setIsEdit(false);
     setNewGuard({
       name: '',
@@ -168,29 +171,30 @@ export default function SecurityGaurd() {
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1 dashboard-bg"  style={{ width:"1620px"}}>
-        <Header/>
+      <div className="flex-grow-1 dashboard-bg" style={{ width: "1620px" }}>
+        <Header />
         <div className="container-fluid  p-4" style={{ marginTop: "10px" }}>
-          
+
 
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px" }}>
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
-            <h4 className="mb-0">Security Guard Details</h4>
-            <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={() => setShowModal(true)}>
-              <FaPlus
-                style={{
-                  fontSize: "18px",
-                  borderRadius: "5px",
-                  background: "rgba(255, 255, 255, 1)",
-                  color: "#FE512E",
-                  marginRight: "8px",
-                }}
-              />
-              Add Security
-            </Button>
-          </div>
-            <Table striped responsive style={{ width: "1520px",marginLeft:"8px"}}>
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+              <h4 className="mb-0">Security Guard Details</h4>
+              <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={() => setShowModal(true)}
+                style={{ border: 'none' }}>
+                <FaPlus
+                  style={{
+                    fontSize: "18px",
+                    borderRadius: "5px",
+                    background: "rgba(255, 255, 255, 1)",
+                    color: "#FE512E",
+                    marginRight: "8px",
+                  }}
+                />
+                Add Security
+              </Button>
+            </div>
+            <Table striped responsive style={{ width: "1520px", marginLeft: "8px" }}>
               <thead>
                 <tr>
                   <th
@@ -333,9 +337,9 @@ export default function SecurityGaurd() {
                     </td>
                     <td className='text-center' style={{ verticalAlign: "middle" }}>
                       <div className="d-flex align-items-center justify-content-center">
-                        <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShowEdit(guard)} />
-                        <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShowView(guard)} />
-                        <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(guard.id)} />
+                        <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShowEdit(guard)} />
+                        <img src={View} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShowView(guard)} />
+                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(guard.id)} />
                       </div>
                     </td>
                   </tr>
@@ -517,133 +521,133 @@ export default function SecurityGaurd() {
 
             {/* Add Security Modal */}
             <Modal show={showModal} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{isEdit ? 'Edit Security' : 'Add Security'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {/* Add Photo Section */}
-          <div className="text-start" style={{ display: 'flex', marginBottom: '20px' }}>
-            <label htmlFor="photo-upload" style={{ cursor: 'pointer', textAlign: 'center' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "50%",
-                    background: "rgba(211, 211, 211, 1)",
-                    overflow: "hidden",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    border: "2px solid #ddd",
-                    marginRight: "10px",
-                  }}
-                >
-                  {newGuard.photo?.preview ? (
-                    <img
-                      src={newGuard.photo.preview}
-                      alt="Uploaded"
+              <Modal.Header closeButton>
+                <Modal.Title>{isEdit ? 'Edit Security' : 'Add Security'}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {/* Add Photo Section */}
+                <div className="text-start" style={{ display: 'flex', marginBottom: '20px' }}>
+                  <label htmlFor="photo-upload" style={{ cursor: 'pointer', textAlign: 'center' }}>
+                    <div
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        borderRadius: "50%",
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        textAlign: 'center',
                       }}
-                    />
-                  ) : (
-                    <FaCamera style={{ color: "rgba(255, 255, 255, 1)", fontSize: "16px" }} />
-                  )}
+                    >
+                      <div
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "50%",
+                          background: "rgba(211, 211, 211, 1)",
+                          overflow: "hidden",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          border: "2px solid #ddd",
+                          marginRight: "10px",
+                        }}
+                      >
+                        {newGuard.photo?.preview ? (
+                          <img
+                            src={newGuard.photo.preview}
+                            alt="Uploaded"
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                              borderRadius: "50%",
+                            }}
+                          />
+                        ) : (
+                          <FaCamera style={{ color: "rgba(255, 255, 255, 1)", fontSize: "16px" }} />
+                        )}
+                      </div>
+                      <div style={{ color: "#007bff" }}>Add Photo</div>
+                    </div>
+                  </label>
+                  <input
+                    id="photo-upload"
+                    type="file"
+                    onChange={(e) => handleFileChange(e, 'photo')}
+                    accept="image/png, image/jpeg"
+                    style={{ display: 'none' }}
+                  />
                 </div>
-                <div style={{ color: "#007bff" }}>Add Photo</div>
-              </div>
-            </label>
-            <input
-              id="photo-upload"
-              type="file"
-              onChange={(e) => handleFileChange(e, 'photo')}
-              accept="image/png, image/jpeg"
-              style={{ display: 'none' }}
-            />
-          </div>
 
-          {/* Form Fields */}
-          <Form>
-            <Form.Group controlId="formName" className="mb-3">
-              <Form.Label>Full Name<span className="text-danger">*</span></Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Full Name"
-                value={newGuard.name}
-                onChange={(e) => setNewGuard({ ...newGuard, name: e.target.value })}
-              />
-            </Form.Group>
+                {/* Form Fields */}
+                <Form>
+                  <Form.Group controlId="formName" className="mb-3">
+                    <Form.Label>Full Name<span className="text-danger">*</span></Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Full Name"
+                      value={newGuard.name}
+                      onChange={(e) => setNewGuard({ ...newGuard, name: e.target.value })}
+                    />
+                  </Form.Group>
 
-            <Form.Group controlId="formPhone" className="mb-3">
-              <Form.Label>Phone Number<span className="text-danger">*</span></Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="+91"
-                value={newGuard.phone}
-                onChange={(e) => setNewGuard({ ...newGuard, phone: e.target.value })}
-              />
-            </Form.Group>
+                  <Form.Group controlId="formPhone" className="mb-3">
+                    <Form.Label>Phone Number<span className="text-danger">*</span></Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="+91"
+                      value={newGuard.phone}
+                      onChange={(e) => setNewGuard({ ...newGuard, phone: e.target.value })}
+                    />
+                  </Form.Group>
 
-            <div className="d-flex justify-content-between mb-3">
-              <Form.Group controlId="formGender" style={{ width: "210px" }}>
-                <Form.Label>Gender<span className="text-danger">*</span></Form.Label>
-                <Form.Select
-                  value={newGuard.gender}
-                  onChange={(e) => setNewGuard({ ...newGuard, gender: e.target.value })}
-                >
-                  <option>Select Gender</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                </Form.Select>
-              </Form.Group>
+                  <div className="d-flex justify-content-between mb-3">
+                    <Form.Group controlId="formGender" style={{ width: "210px" }}>
+                      <Form.Label>Gender<span className="text-danger">*</span></Form.Label>
+                      <Form.Select
+                        value={newGuard.gender}
+                        onChange={(e) => setNewGuard({ ...newGuard, gender: e.target.value })}
+                      >
+                        <option>Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </Form.Select>
+                    </Form.Group>
 
-              <Form.Group controlId="formShift" style={{ width: "210px" }}>
-                <Form.Label>Shift<span className="text-danger">*</span></Form.Label>
-                <Form.Select
-                  value={newGuard.shift}
-                  onChange={(e) => setNewGuard({ ...newGuard, shift: e.target.value })}
-                >
-                  <option>Select Shift</option>
-                  <option>Day</option>
-                  <option>Night</option>
-                </Form.Select>
-              </Form.Group>
-            </div>
+                    <Form.Group controlId="formShift" style={{ width: "210px" }}>
+                      <Form.Label>Shift<span className="text-danger">*</span></Form.Label>
+                      <Form.Select
+                        value={newGuard.shift}
+                        onChange={(e) => setNewGuard({ ...newGuard, shift: e.target.value })}
+                      >
+                        <option>Select Shift</option>
+                        <option>Day</option>
+                        <option>Night</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </div>
 
-            <div className="d-flex mb-3" style={{ justifyContent: 'space-between' }}>
-              <Form.Group controlId="formDate" style={{ width: "210px" }}>
-                <Form.Label>Shift Date<span className="text-danger">*</span></Form.Label>
-                <Form.Control
-                  type="date"
-                  value={newGuard.date}
-                  onChange={(e) => setNewGuard({ ...newGuard, date: e.target.value })}
-                />
-              </Form.Group>
+                  <div className="d-flex mb-3" style={{ justifyContent: 'space-between' }}>
+                    <Form.Group controlId="formDate" style={{ width: "210px" }}>
+                      <Form.Label>Shift Date<span className="text-danger">*</span></Form.Label>
+                      <Form.Control
+                        type="date"
+                        value={newGuard.date}
+                        onChange={(e) => setNewGuard({ ...newGuard, date: e.target.value })}
+                      />
+                    </Form.Group>
 
-              <Form.Group controlId="formTime" style={{ width: "210px" }}>
-                <Form.Label>Shift Time<span className="text-danger">*</span></Form.Label>
-                <Form.Control
-                  type="time"
-                  value={newGuard.time}
-                  onChange={(e) => formatTime(e.target.value)}
-                />
-              </Form.Group>
-            </div>
+                    <Form.Group controlId="formTime" style={{ width: "210px" }}>
+                      <Form.Label>Shift Time<span className="text-danger">*</span></Form.Label>
+                      <Form.Control
+                        type="time"
+                        value={newGuard.time}
+                        onChange={(e) => formatTime(e.target.value)}
+                      />
+                    </Form.Group>
+                  </div>
 
-             {/* Aadhaar Card Upload Section */}
-             <Form.Group controlId="formAadhaar" className=" mt-4">
+                  {/* Aadhaar Card Upload Section */}
+                  <Form.Group controlId="formAadhaar" className=" mt-4">
                     <Form.Label>Upload Aadhaar Card<span className="text-danger">*</span></Form.Label>
                     <div className='text-center'
                       style={{
@@ -700,20 +704,20 @@ export default function SecurityGaurd() {
                     </div>
                   </Form.Group>
 
-          </Form>
-        </Modal.Body>
-        <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button style={{
-            width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
+                </Form>
+              </Modal.Body>
+              <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={handleClose}>
+                  Cancel
+                </Button>
+                <Button style={{
+                  width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
 
-          }} className='mainColor2' onClick={handleSave}>
-            {isEdit ? 'Create' : 'Create'}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+                }} className='mainColor2' onClick={handleSave}>
+                  {isEdit ? 'Create' : 'Create'}
+                </Button>
+              </Modal.Footer>
+            </Modal>
 
           </div>
         </div>

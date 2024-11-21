@@ -82,11 +82,11 @@ export default function Sidebar() {
         { key: "note", label: "Note", path: "/home/note" },
       ],
     },
-    { key: "facility-management", label: "Facility Management", icon:<PiBuildingOfficeBold />, path: "/home/facility-management" },
+    { key: "facility-management", label: "Facility Management", icon: <PiBuildingOfficeBold />, path: "/home/facility-management" },
     {
       key: "complaint-tracking",
       label: "Complaint Tracking",
-      icon: <TbMessage2Cancel/>,
+      icon: <TbMessage2Cancel />,
       subItems: [
         { key: "create-complaint", label: "Create Complaint", path: "/home/create-complaint" },
         { key: "request-tracking", label: "Request Tracking", path: "/home/request-tracking" },
@@ -151,13 +151,14 @@ export default function Sidebar() {
                     {item.key === "financialmanagement" && (isFinancialDropdownOpen ? <FaChevronUp /> : <FaChevronDown />)}
                   </div>
                   {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
-                  (item.key === "security-management" && isSecurityDropdownOpen) ||
-                  (item.key === "financialmanagement" && isFinancialDropdownOpen) ? (
+                    (item.key === "security-management" && isSecurityDropdownOpen) ||
+                    (item.key === "financialmanagement" && isFinancialDropdownOpen) ? (
                     <ul className="list-unstyled ms-4">
                       {item.subItems.map((subItem) => (
                         <li
                           key={subItem.key}
-                          className={`p-2 rounded ${activeItem === subItem.key ? "mainColor2 text-white" : ""}`}
+                          className={`p-2 rounded ${activeItem === subItem.key ? "active" : ""
+                            }`}
                           onClick={() => handleSubItemClick(subItem.key)}
                         >
                           <Link
@@ -165,7 +166,7 @@ export default function Sidebar() {
                             className="d-flex align-items-center"
                             style={{
                               textDecoration: "none",
-                              color: activeItem === subItem.key ? "white" : "black",
+                              color: activeItem === subItem.key ? "black" : "black",
                             }}
                           >
                             <span>{subItem.label}</span>

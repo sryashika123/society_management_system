@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Button, Modal, Form } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import Sidebar from "./Layout/Sidebar";
+import Sidebar from "../Layout/Sidebar";
 import { FaPlus } from "react-icons/fa";
-import Header from "./Navbar";
+import Header from "../Navbar";
 
 const FacilityCard = ({ title, date, description, onEdit }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -66,7 +66,7 @@ const FacilityManagement = () => {
     { title: "Wi-Fi and Connectivity", date: "01/07/2024", description: "Description here." },
     { title: "Parking Facilities", date: "01/07/2024", description: "Description here." },
     { title: "Community Center", date: "01/07/2024", description: "Description here." },
-    
+
   ]);
 
   const [showModal, setShowModal] = useState(false);
@@ -125,47 +125,48 @@ const FacilityManagement = () => {
 
   return (
     <div className="d-flex flex-column flex-md-row">
-    <div className="flex-shrink-0" >
-      <Sidebar />
-    </div>
+      <div className="flex-shrink-0" >
+        <Sidebar />
+      </div>
 
-      
-      <div className="  dashboard-bg " style={{marginLeft:"270px", width:"1642px"}}>
-        <Header/>
-        <div className="container-fluid bg-white rounded shadow-sm p-5" style={{ marginTop: "20px",width:"1550px"}}>
-           <div className="d-flex" style={{justifyContent:"space-between"}}>
-          <h3>Facility Management</h3>
-          
-          
-          <Button className="text-white mainColor2" onClick={() => {
-            setIsEditing(false);
-            handleShowModal();
-          }}> <FaPlus
-          style={{
-            fontSize: "18px",
-            borderRadius: "5px",
-            background: "rgba(255, 255, 255, 1)",
-            color: "#FE512E",
-            marginRight: "8px",
-          }}
-        />
-            Create Facility
-          </Button>
-         </div>
-        
 
-        {/* Facility Cards */}
-        <div className="row mt-3">
-          {facilities.map((facility, index) => (
-            <FacilityCard
-              key={index}
-              title={facility.title}
-              date={facility.date}
-              description={facility.description}
-              onEdit={() => handleEdit(index)}
-            />
-          ))}
-        </div>
+      <div className="  dashboard-bg " style={{ marginLeft: "270px", width: "1642px" }}>
+        <Header />
+        <div className="container-fluid bg-white rounded shadow-sm p-5" style={{ marginTop: "20px", width: "1550px" }}>
+          <div className="d-flex" style={{ justifyContent: "space-between" }}>
+            <h3>Facility Management</h3>
+
+
+            <Button className="text-white mainColor2" onClick={() => {
+              setIsEditing(false);
+              handleShowModal();
+            }}
+              style={{ border: 'none' }}> <FaPlus
+                style={{
+                  fontSize: "18px",
+                  borderRadius: "5px",
+                  background: "rgba(255, 255, 255, 1)",
+                  color: "#FE512E",
+                  marginRight: "8px",
+                }}
+              />
+              Create Facility
+            </Button>
+          </div>
+
+
+          {/* Facility Cards */}
+          <div className="row mt-3">
+            {facilities.map((facility, index) => (
+              <FacilityCard
+                key={index}
+                title={facility.title}
+                date={facility.date}
+                description={facility.description}
+                onEdit={() => handleEdit(index)}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Modal for Creating or Editing Facility */}

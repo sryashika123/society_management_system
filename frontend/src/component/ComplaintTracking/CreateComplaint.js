@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
-import { FaEdit, FaEye, FaPlus, FaTrash } from 'react-icons/fa';
-import Sidebar from '../component/Layout/Sidebar';
-import Avtar from "../assets/Avatar.png"
-import Header from './Navbar';
+import { FaPlus} from 'react-icons/fa';
+import Sidebar from '../Layout/Sidebar';
+import Avtar from "../../assets/Avatar.png"
+import Header from '../Navbar';
+import Edit from "../../assets/edit.png"
+import View from "../../assets/view.png"
+import Delete from "../../assets/delete.png"
 
 export default function ComplaintTracking() {
   const [complaints, setComplaints] = useState([
@@ -41,17 +44,17 @@ export default function ComplaintTracking() {
       setErrorMessage("All fields are required.");
       return;
     }
-    
+
     setComplaints((prevComplaints) =>
       prevComplaints.map((c) =>
         c.id === selectedComplaint.id ? selectedComplaint : c
       )
     );
-  
+
     setShowModal(false);
     setErrorMessage("");
   };
-  
+
 
   const handleView = (complaint) => {
     setSelectedComplaint(complaint);
@@ -94,7 +97,7 @@ export default function ComplaintTracking() {
     }
 
     // Validate and set priority based on status
-    
+
     setErrorMessage(""); // Clear previous error message if any
 
     const newId = complaints.length + 1;  // Auto-generate a new ID
@@ -107,7 +110,7 @@ export default function ComplaintTracking() {
 
   // Trigger this effect whenever priority changes
 
-  
+
 
   const imageColumnStyle = {
     display: "flex",
@@ -135,34 +138,35 @@ export default function ComplaintTracking() {
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1 dashboard-bg " style={{ width:"1620px"}}>
-        <Header/>
+      <div className="flex-grow-1 dashboard-bg " style={{ width: "1620px" }}>
+        <Header />
         <div className="container-fluid  p-4" style={{ marginTop: "10px" }}>
-         
+
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px" }}>
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
-            <h4 className="mb-0">Complaint Tracking</h4>
-            <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={handleShowCreateModal}><FaPlus
-    style={{
-      fontSize: "18px",
-      borderRadius: "5px",
-      background: "rgba(255, 255, 255, 1)",
-      color: "#FE512E",
-      marginRight: "8px",
-    }}
-  />Create Complaint</Button>
-          </div>
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+              <h4 className="mb-0">Complaint Tracking</h4>
+              <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={handleShowCreateModal}
+                style={{ border: 'none' }}><FaPlus
+                  style={{
+                    fontSize: "18px",
+                    borderRadius: "5px",
+                    background: "rgba(255, 255, 255, 1)",
+                    color: "#FE512E",
+                    marginRight: "8px",
+                  }}
+                />Create Complaint</Button>
+            </div>
             <Table striped hover responsive className="mt-3" style={{ width: "1530px" }}>
               <thead className="bg-light">
                 <tr className="rmHead">
-                  <th className="text-start" style={{ padding: "10px",background:"rgb(185, 198, 242)" }}>Complainer Name</th>
-                  <th className="text-start" style={{ padding: "10px",background:"rgb(185, 198, 242)" }}>Complaint Name</th>
-                  <th className="text-center" style={{ padding: "10px",background:"rgb(185, 198, 242)" }}>Description</th>
-                  <th className="text-center" style={{ padding: "10px",background:"rgb(185, 198, 242)" }}>Unit Number</th>
-                  <th className="text-center" style={{ padding: "10px",background:"rgb(185, 198, 242)" }}>Priority</th>
-                  <th className="text-center" style={{ padding: "10px",background:"rgb(185, 198, 242)" }}>Status</th>
-                  <th className="text-center" style={{ padding: "10px",background:"rgb(185, 198, 242)" }}>Actions</th>
+                  <th className="text-start" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Complainer Name</th>
+                  <th className="text-start" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Complaint Name</th>
+                  <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Description</th>
+                  <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Unit Number</th>
+                  <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Priority</th>
+                  <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Status</th>
+                  <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -236,9 +240,9 @@ export default function ComplaintTracking() {
                     </td>
                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle" }}>
                       <div className="d-flex align-items-center justify-content-center">
-                        <FaEdit className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(complaint)} />
-                        <FaEye className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
-                        <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(complaint.id)} />
+                        <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(complaint)} />
+                        <img src={View} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
+                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(complaint.id)} />
                       </div>
                     </td>
                   </tr>
@@ -285,25 +289,25 @@ export default function ComplaintTracking() {
               <Form >
                 <div className='d-flex justify-content-between'>
 
-               
-                <Form.Group className='mt-2'>
-                  <Form.Label>Unit<span className="text-danger">*</span></Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={newComplaint.unit}
-                    onChange={(e) => setNewComplaint({ ...newComplaint, unit: e.target.value })}
-                  />
-                </Form.Group>
 
-                <Form.Group className='mt-2'>
-                  <Form.Label>Number<span className="text-danger">*</span></Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={newComplaint.number}
-                    onChange={(e) => setNewComplaint({ ...newComplaint, number: e.target.value })}
-                  />
-                </Form.Group>
-                </div> 
+                  <Form.Group className='mt-2'>
+                    <Form.Label>Unit<span className="text-danger">*</span></Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={newComplaint.unit}
+                      onChange={(e) => setNewComplaint({ ...newComplaint, unit: e.target.value })}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className='mt-2'>
+                    <Form.Label>Number<span className="text-danger">*</span></Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={newComplaint.number}
+                      onChange={(e) => setNewComplaint({ ...newComplaint, number: e.target.value })}
+                    />
+                  </Form.Group>
+                </div>
               </Form>
             </Form.Group>
             <Form.Group className='mt-2'>
@@ -481,7 +485,7 @@ export default function ComplaintTracking() {
               }}>
                 <strong style={{
                   color: "#A7A7A7",
-                  fontWeight:"200"
+                  fontWeight: "200"
                 }}>Request Name</strong> <br />
                 <span>{selectedComplaint.type}</span>
               </div>
@@ -494,7 +498,7 @@ export default function ComplaintTracking() {
               }}>
                 <strong style={{
                   color: "#A7A7A7",
-                  fontWeight:"200"
+                  fontWeight: "200"
                 }}>Description</strong>
                 <p style={{ margin: 0 }}>{selectedComplaint.description}</p>
               </div>
@@ -660,145 +664,145 @@ export default function ComplaintTracking() {
       {/* edit model */}
 
       <Modal show={showModal} onHide={handleCloseModal}>
-  <Modal.Header closeButton>
-    <Modal.Title>Edit Complaint</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {errorMessage && (
-      <div className="alert alert-danger">{errorMessage}</div>
-    )}
-    <Form>
-      <Form.Group className='mt-2'>
-        <Form.Label>Complainer Name<span className="text-danger">*</span></Form.Label>
-        <Form.Control
-          type="text"
-          value={selectedComplaint?.name || ""}
-          onChange={(e) =>
-            setSelectedComplaint((prev) => ({
-              ...prev,
-              name: e.target.value,
-            }))
-          }
-        />
-      </Form.Group>
-      <Form.Group className='mt-3'>
-        <Form.Label>Complaint Type<span className="text-danger">*</span></Form.Label>
-        <Form.Control
-          type="text"
-          value={selectedComplaint?.type || ""}
-          onChange={(e) =>
-            setSelectedComplaint((prev) => ({
-              ...prev,
-              type: e.target.value,
-            }))
-          }
-        />
-      </Form.Group>
-      <Form.Group className='mt-3'>
-        <Form.Label>Description<span className="text-danger">*</span></Form.Label>
-        <Form.Control
-          type="text"
-          value={selectedComplaint?.description || ""}
-          onChange={(e) =>
-            setSelectedComplaint((prev) => ({
-              ...prev,
-              description: e.target.value,
-            }))
-          }
-        />
-      </Form.Group >
-      <div className='d-flex justify-content-between'>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Complaint</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {errorMessage && (
+            <div className="alert alert-danger">{errorMessage}</div>
+          )}
+          <Form>
+            <Form.Group className='mt-2'>
+              <Form.Label>Complainer Name<span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="text"
+                value={selectedComplaint?.name || ""}
+                onChange={(e) =>
+                  setSelectedComplaint((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group className='mt-3'>
+              <Form.Label>Complaint Type<span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="text"
+                value={selectedComplaint?.type || ""}
+                onChange={(e) =>
+                  setSelectedComplaint((prev) => ({
+                    ...prev,
+                    type: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group>
+            <Form.Group className='mt-3'>
+              <Form.Label>Description<span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="text"
+                value={selectedComplaint?.description || ""}
+                onChange={(e) =>
+                  setSelectedComplaint((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+              />
+            </Form.Group >
+            <div className='d-flex justify-content-between'>
 
-     
-      <Form.Group className='mt-3'>
-  <Form.Label>Unit<span className="text-danger">*</span></Form.Label>
-  <Form.Control
-    type="text"
-    value={selectedComplaint?.unit || ""}
-    onChange={(e) =>
-      setSelectedComplaint((prev) => ({
-        ...prev,
-        unit: e.target.value,
-      }))
-    }
-  />
-</Form.Group>
 
-<Form.Group className='mt-3'>
-  <Form.Label>Number<span className="text-danger">*</span></Form.Label>
-  <Form.Control
-    type="text"
-    value={selectedComplaint?.number || ""}
-    onChange={(e) =>
-      setSelectedComplaint((prev) => ({
-        ...prev,
-        number: e.target.value,
-      }))
-    }
-  />
-</Form.Group>
-</div>
-      <Form.Group className='mt-3'>
-        <Form.Label>Priority<span className="text-danger">*</span></Form.Label>
-        <div className="d-flex justify-content-around  " >
+              <Form.Group className='mt-3'>
+                <Form.Label>Unit<span className="text-danger">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedComplaint?.unit || ""}
+                  onChange={(e) =>
+                    setSelectedComplaint((prev) => ({
+                      ...prev,
+                      unit: e.target.value,
+                    }))
+                  }
+                />
+              </Form.Group>
 
-          {["High", "Medium", "Low"].map((priority) => (
-            <Form.Check
-            style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingRight: "30px", borderRadius: "5px",paddingTop:"8px",paddingBottom: "8px" }}
-              type="radio"
-              label={priority}
-              name="priority"
-              value={priority}
-              checked={selectedComplaint?.priority === priority}
-              onChange={(e) =>
-                setSelectedComplaint((prev) => ({
-                  ...prev,
-                  priority: e.target.value,
-                }))
-              }
-              key={priority}
-            />
-           
-          ))}
-          
-        </div>
-      </Form.Group>
-      <Form.Group className='mt-3'>
-        <Form.Label>Status<span className="text-danger">*</span></Form.Label>
-        <div className="d-flex justify-content-around">
-          {["Open", "Pending", "Solve"].map((status) => (
-            <Form.Check
-             style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingRight: "30px",paddingTop:"8px",paddingBottom: "8px", borderRadius: "5px" }}
-              type="radio"
-              label={status}
-              name="status"
-              value={status}
-              checked={selectedComplaint?.status === status}
-              onChange={(e) =>
-                setSelectedComplaint((prev) => ({
-                  ...prev,
-                  status: e.target.value,
-                }))
-              }
-              key={status}
-            />
-          ))}
-        </div>
-      </Form.Group>
-    </Form>
-  </Modal.Body>
-  <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-    <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={handleCloseModal}>
-      Cancel
-    </Button>
-    <Button style={{
+              <Form.Group className='mt-3'>
+                <Form.Label>Number<span className="text-danger">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedComplaint?.number || ""}
+                  onChange={(e) =>
+                    setSelectedComplaint((prev) => ({
+                      ...prev,
+                      number: e.target.value,
+                    }))
+                  }
+                />
+              </Form.Group>
+            </div>
+            <Form.Group className='mt-3'>
+              <Form.Label>Priority<span className="text-danger">*</span></Form.Label>
+              <div className="d-flex justify-content-around  " >
+
+                {["High", "Medium", "Low"].map((priority) => (
+                  <Form.Check
+                    style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingRight: "30px", borderRadius: "5px", paddingTop: "8px", paddingBottom: "8px" }}
+                    type="radio"
+                    label={priority}
+                    name="priority"
+                    value={priority}
+                    checked={selectedComplaint?.priority === priority}
+                    onChange={(e) =>
+                      setSelectedComplaint((prev) => ({
+                        ...prev,
+                        priority: e.target.value,
+                      }))
+                    }
+                    key={priority}
+                  />
+
+                ))}
+
+              </div>
+            </Form.Group>
+            <Form.Group className='mt-3'>
+              <Form.Label>Status<span className="text-danger">*</span></Form.Label>
+              <div className="d-flex justify-content-around">
+                {["Open", "Pending", "Solve"].map((status) => (
+                  <Form.Check
+                    style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingRight: "30px", paddingTop: "8px", paddingBottom: "8px", borderRadius: "5px" }}
+                    type="radio"
+                    label={status}
+                    name="status"
+                    value={status}
+                    checked={selectedComplaint?.status === status}
+                    onChange={(e) =>
+                      setSelectedComplaint((prev) => ({
+                        ...prev,
+                        status: e.target.value,
+                      }))
+                    }
+                    key={status}
+                  />
+                ))}
+              </div>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button style={{
             width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
 
           }} className='mainColor2' onClick={handleSave}>
-      Save 
-    </Button>
-  </Modal.Footer>
-</Modal>
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

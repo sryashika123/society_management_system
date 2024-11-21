@@ -687,3 +687,8 @@ input:focus {
   font-size: 18px;
   font-weight: 400 !important;
 }
+.active {
+  color: #202224;
+  font-weight: bold;
+
+}

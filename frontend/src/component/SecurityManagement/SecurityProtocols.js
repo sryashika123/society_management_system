@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
 import { FaEdit, FaEye, FaPlus, FaTrash } from 'react-icons/fa';
-import Sidebar from '../component/Layout/Sidebar';
-import Avtar from "../assets/Avatar.png";
-import Header from './Navbar';
+import Sidebar from '../Layout/Sidebar';
+// import Avtar from "../assets/Avatar.png";
+import Header from '../Navbar';
+import Edit from "../../assets/edit.png"
+import View from "../../assets/view.png"
+import Delete from "../../assets/delete.png"
 
 export default function SecurityProtocols() {
   const [protocols, setProtocols] = useState([
@@ -48,7 +51,7 @@ export default function SecurityProtocols() {
     setProtocolData({ title: "", description: "", date: "", time: "" });
     setDeleteProtocolId(null); // Clear the ID of the protocol to delete
   };
-  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,7 +83,7 @@ export default function SecurityProtocols() {
     setDeleteProtocolId(null); // Clear the ID of the protocol to delete
     setShowDeleteModal(false); // Close the delete confirmation modal
   };
-  
+
 
   return (
     <div className="d-flex flex-column flex-md-row">
@@ -88,10 +91,10 @@ export default function SecurityProtocols() {
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1 dashboard-bg" style={{ width:"1620px"}}>
-        <Header/>
+      <div className="flex-grow-1 dashboard-bg" style={{ width: "1620px" }}>
+        <Header />
         <div className="container-fluid  p-4" style={{ marginTop: "10px" }}>
-          
+
 
           {/* Modal for creating or editing a protocol */}
           <Modal show={showModal} onHide={handleClose} centered>
@@ -148,16 +151,16 @@ export default function SecurityProtocols() {
               </Form>
             </Modal.Body>
             <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-    <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={handleClose}>
-      Cancel
-    </Button>
-    <Button style={{
-            width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
+              <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button style={{
+                width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
 
-          }} className='mainColor2' onClick={handleSave}>
-      Save 
-    </Button>
-  </Modal.Footer>
+              }} className='mainColor2' onClick={handleSave}>
+                Save
+              </Button>
+            </Modal.Footer>
           </Modal>
 
 
@@ -169,15 +172,16 @@ export default function SecurityProtocols() {
               <p>Are you sure you want to delete this protocol?</p>
             </Modal.Body>
             <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button variant="secondary" onClick={handleClose} style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
-            Cancel
-          </Button>
-          <Button  onClick={handleDelete} style={{
-            width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",background: "rgba(231, 76, 60, 1)"}}>
-            Delete
-          </Button>
+              <Button variant="secondary" onClick={handleClose} style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
+                Cancel
+              </Button>
+              <Button onClick={handleDelete} style={{
+                width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224", background: "rgba(231, 76, 60, 1)"
+              }}>
+                Delete
+              </Button>
 
-        </Modal.Footer>
+            </Modal.Footer>
           </Modal>
           {/* View-only modal for displaying protocol details */}
           <Modal show={showViewModal} onHide={handleClose} centered>
@@ -185,75 +189,76 @@ export default function SecurityProtocols() {
               <Modal.Title>View Security Protocols</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p>Title<br/>
-              <strong style={{
-  fontSize: "16px",
-  fontWeight: "600",
-  lineHeight: "24px",
-  textAlign: "left",
-  textUnderlinePosition: "from-font",
-  textDecorationSkipInk: "none",
-  color: "black",
-}}>
-  {protocolData.title}
-</strong>
+              <p>Title<br />
+                <strong style={{
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  lineHeight: "24px",
+                  textAlign: "left",
+                  textUnderlinePosition: "from-font",
+                  textDecorationSkipInk: "none",
+                  color: "black",
+                }}>
+                  {protocolData.title}
+                </strong>
 
-               </p>
-              <p> Description<br/>
-              <strong style={{
-  fontSize: "16px",
-  fontWeight: "600",
-  lineHeight: "24px",
-  textAlign: "left",
-  textUnderlinePosition: "from-font",
-  textDecorationSkipInk: "none",
-  color: "black",
-}}>{protocolData.description}</strong>
               </p>
-              <div className="d-flex" style={{gap:"70px"}}>
-      <div>
-        <p>Date</p>
-        <strong style={{
+              <p> Description<br />
+                <strong style={{
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  lineHeight: "24px",
+                  textAlign: "left",
+                  textUnderlinePosition: "from-font",
+                  textDecorationSkipInk: "none",
+                  color: "black",
+                }}>{protocolData.description}</strong>
+              </p>
+              <div className="d-flex" style={{ gap: "70px" }}>
+                <div>
+                  <p>Date</p>
+                  <strong style={{
 
-  fontSize: "16px",
-  fontWeight: "600",
-  lineHeight: "24px",
-  textAlign: "left",
-  textUnderlinePosition: "from-font",
-  textDecorationSkipInk: "none",
-  color: "black",
-}}>{protocolData.date}</strong>
-      </div>
-      <div>
-        <p>Time</p>
-        <strong style={{
-  fontSize: "16px",
-  fontWeight: "600",
-  lineHeight: "24px",
-  textAlign: "left",
-  textUnderlinePosition: "from-font",
-  textDecorationSkipInk: "none",
-  color: "black",
-}}>{protocolData.time}</strong>
-      </div>
-    </div>
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    lineHeight: "24px",
+                    textAlign: "left",
+                    textUnderlinePosition: "from-font",
+                    textDecorationSkipInk: "none",
+                    color: "black",
+                  }}>{protocolData.date}</strong>
+                </div>
+                <div>
+                  <p>Time</p>
+                  <strong style={{
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    lineHeight: "24px",
+                    textAlign: "left",
+                    textUnderlinePosition: "from-font",
+                    textDecorationSkipInk: "none",
+                    color: "black",
+                  }}>{protocolData.time}</strong>
+                </div>
+              </div>
             </Modal.Body>
-           
+
           </Modal>
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px" }}>
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
-            <h4 className="mb-0">Security Protocols</h4>
-            <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={handleShowCreate}><FaPlus
-    style={{
-      fontSize: "18px",
-      borderRadius: "5px",
-      background: "rgba(255, 255, 255, 1)",
-      color: "#FE512E",
-      marginRight: "8px",
-    }}
-  />Create Protocols</Button>
-          </div>
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+              <h4 className="mb-0">Security Protocols</h4>
+              <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={handleShowCreate}
+                style={{ border: 'none' }}><FaPlus
+                  style={{
+                    fontSize: "18px",
+                    borderRadius: "5px",
+                    background: "rgba(255, 255, 255, 1)",
+                    color: "#FE512E",
+                    marginRight: "8px",
+                  }}
+                />Create Protocols</Button>
+            </div>
             <Table hover responsive style={{ width: "1520px" }}>
               <thead style={{ background: "#5678E9", color: "#ffffff" }}>
                 <tr className="text-start">
@@ -294,17 +299,17 @@ export default function SecurityProtocols() {
                     </td>
                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle" }}>
                       <div className="d-flex align-items-center justify-content-center">
-                        <FaEdit
+                        <img src={Edit}
                           className="text-success me-2"
                           style={{ cursor: "pointer" }}
                           onClick={() => handleShowEdit(protocol)}
                         />
-                        <FaEye
+                        <img src={View}
                           className="text-primary me-2"
                           style={{ cursor: "pointer" }}
                           onClick={() => handleShowView(protocol)}
                         />
-                        <FaTrash className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(protocol.id)} />
+                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(protocol.id)} />
                       </div>
                     </td>
                   </tr>
