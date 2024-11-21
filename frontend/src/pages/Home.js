@@ -1,21 +1,21 @@
 import React from "react";
 import { Route, Routes} from "react-router-dom";
-import ResidentManagement from "../component/Residentmanagement";
+import ResidentManagement from "../component/ResidentManagement/Residentmanagement";
 import Sidebar from "../component/Layout/Sidebar"; 
-import ResidentForm from "../component/ResidentForm";
-import FacilityManagement from "../component/FacilityManagement";
-import CreateComplaint from "../component/CreateComplaint";
-import RequestTracking from "../component/RequestTracking";
-import VisitorsLogs from "../component/VisitorsLogs";
-import SecurityProtocols from "../component/SecurityProtocols";
-import SecurityGuard from "../component/SecurityGuard";
+import ResidentForm from "../component/ResidentManagement/ResidentForm";
+import FacilityManagement from "../component/FacilityManagement/FacilityManagement";
+import CreateComplaint from "../component/ComplaintTracking/CreateComplaint";
+import RequestTracking from "../component/ComplaintTracking/RequestTracking";
+import VisitorsLogs from "../component/SecurityManagement/VisitorsLogs";
+import SecurityProtocols from "../component/SecurityManagement/SecurityProtocols";
+import SecurityGuard from "../component/SecurityGuard/SecurityGuard";
 import Dashboard from "../component/Dashboard/Dashboard";
-import FinancialManagementIncome from "../component/FinancialManagementIncome";
-import FinancialManagementExp from "../component/FinancialManagementExp";
-import FinancialManagementNote from "../component/FinancialManagementNote";
+import FinancialManagementIncome from "../component/FinancialManagement/FinancialManagementIncome";
+import FinancialManagementExp from "../component/FinancialManagement/FinancialManagementExp";
+import FinancialManagementNote from "../component/FinancialManagement/FinancialManagementNote";
 import Profile from "../component/Profile";
 import EditProfile from "../component/EditProfile";
-import FinancialManagementOtherIncome from "../component/FinancialManagementOtherIncome";
+import FinancialManagementOtherIncome from "../component/FinancialManagement/FinancialManagementOtherIncome";
 import Announcement from "../component/Announcement";
 
 

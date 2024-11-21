@@ -4,21 +4,21 @@ const Admin = require("../models/UserModel");
 
 module.exports.createNote = async(req,res) =>{
     try{
-        const { title, description, date, adminId, societyId } = req.body;
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
+        const { title, description, date } = req.body;
+        // const admin = await Admin.findById(adminId);
+		// if (!admin) {
+		//   	return res.status(404).json({ msg: "Admin not found" });
+		// }
 
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
+        // const society = await Society.findById(societyId);
+		// if (!society) {
+		//   	return res.status(404).json({ msg: "Society not found" });
+		// }
 
         if(!title || !description || !date){
             return res.status(400).json({ msg: "fields are required." });
         }
-        const newNote = new Note({ title, description, date, adminId, societyId });
+        const newNote = new Note({ title, description, date});
         await newNote.save();    
         res.json(newNote);
     } 

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import Navbar from './Navbar'
+import Navbar from '../Navbar'
 import { CiImageOn } from "react-icons/ci";
-import { IoEyeSharp } from "react-icons/io5";
 import { BiSolidFilePdf } from "react-icons/bi";
-import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useForm } from 'react-hook-form';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { MdEditSquare } from "react-icons/md";
 import { FaPlusSquare } from "react-icons/fa";
+import Edit from '../../assets/edit.png';
+import View from '../../assets/view.png';
+import Delete from '../../assets/delete.png';
 
 export default function FinancialManagementExp() {
 
@@ -132,10 +132,10 @@ export default function FinancialManagementExp() {
                         <tr style={{ height: '55px' }}>
                           <th scope="col">Title</th>
                           <th scope="col">Description</th>
-                          <th scope="col" className='text-center'>Date</th>
+                          <th scope="col" className='text-start'>Date</th>
                           <th scope="col">Amount</th>
                           <th scope="col">Bill Format</th>
-                          <th scope="col" className='text-center'>Action</th>
+                          <th scope="col" className='text-start'>Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -162,15 +162,15 @@ export default function FinancialManagementExp() {
                                 <td className='d-flex' style={{ height: '55px' }}>
 
                                   <button className='border-0 bg-light' onClick={() => handleEdit(index)}>
-                                    <MdEditSquare className="edit-btn" />
+                                    <img src={Edit} className="edit-btn" />
                                   </button>
 
                                   <button className='border-0 bg-light' onClick={() => handleShowViewModal(index)}>
-                                    <IoEyeSharp className='view-btn' />
+                                    <img src={View} className='view-btn' />
                                   </button>
 
                                   <button className='border-0 bg-light' onClick={() => handleShowDeleteModal(index)}>
-                                    <RiDeleteBin5Fill className="delete-btn" />
+                                    <img src={Delete} className="delete-btn" />
                                   </button>
 
                                 </td>

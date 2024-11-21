@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import Navbar from './Navbar';
+import React, { useEffect, useState } from 'react';
+import Navbar from '../Navbar';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 export default function FinancialManagementNote() {
   const [note, setNote] = useState([
@@ -15,6 +16,22 @@ export default function FinancialManagementNote() {
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
+ // Fetch notes from the backend
+   // Fetch notes from backend
+   const fetchNotes = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/users/v11/ViewNote");
+      setNote(response.data);
+    } catch (error) {
+      console.error("Error fetching notes:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
+ 
+
   // Open and close modal
   const handleClose = () => {
     setShow(false);
@@ -24,18 +41,29 @@ export default function FinancialManagementNote() {
   const handleShow = () => setShow(true);
 
   // Handle form submission
-  const onSubmit = (data) => {
-    if (editIndex !== null) {
-      // Update existing note
-      const updatedNotes = [...note];
-      updatedNotes[editIndex] = { ...updatedNotes[editIndex], ...data };
-      setNote(updatedNotes);
-    } else {
-      // Add new note
-      setNote([...note, { id: note.length + 1, ...data }]);
+  
+  const onSubmit = async (data) => {
+    console.log("Submitted data:", data); // Check if all fields are included in the request
+  
+    try {
+      if (editIndex !== null) {
+        // Edit note request
+        await axios.put(
+          `http://localhost:8000/api/users/v11/updateNote/${note[editIndex].id}`,
+          data
+        );
+      } else {
+        // Create new note request
+        await axios.post("http://localhost:8000/api/users/v11/createNote", data);
+      }
+      fetchNotes(); // Fetch updated list after saving
+      handleClose(); // Close modal
+    } catch (error) {
+      console.error("Error saving note:", error.response?.data || error.message);
+      alert(error.response?.data?.msg || "An error occurred while saving the note.");
     }
-    handleClose();
   };
+  
 
   // Handle editing a specific note
   const handleEdit = (index) => {
@@ -54,7 +82,7 @@ export default function FinancialManagementNote() {
   };
 
   return (
-    <div className='dashboard-bg' style={{marginLeft:"270px", width:"1640px"}}>
+    <div className='dashboard-bg' style={{ marginLeft: "270px", width: "1640px" }}>
       <Navbar />
       <div className='container-fluid'>
         <div className='row p-5'>
@@ -70,7 +98,7 @@ export default function FinancialManagementNote() {
               {note.map((val, index) => (
                 <div className="col-lg-3 mb-3" key={val.id}>
                   <div className="card">
-                    <div className="card-header  text-light d-flex align-items-center justify-content-between" style={{ height: "54px", fontSize: "16px", fontWeight: "500" , background:" rgba(86, 120, 233, 1)"}}>
+                    <div className="card-header  text-light d-flex align-items-center justify-content-between" style={{ height: "54px", fontSize: "16px", fontWeight: "500", background: " rgba(86, 120, 233, 1)" }}>
                       {val.title}
                       <div className='position-relative'>
                         <button
