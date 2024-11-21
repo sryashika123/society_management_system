@@ -3,7 +3,7 @@ const Society = require("../models/societyModel");
 const Admin = require("../models/UserModel");
 
 // Create a new facility
-exports.createFacility = async (req, res) => {
+module.exports.createFacility = async (req, res) => {
     console.log(req.body);
     try {
         const { Name, description, Service_date, Remind_before, adminId, societyId } = req.body;

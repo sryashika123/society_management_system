@@ -18,7 +18,7 @@ module.exports = db;
 // const dotenv = require('dotenv');
 // dotenv.config();
 
-// const db = async () => {
+// const connectDB = async () => {
 //     try {
 //       const conn = await mongoose.connect(process.env.MongoDB_url);
   
@@ -30,4 +30,4 @@ module.exports = db;
 // };
 
 
-// module.exports = db;
+// module.exports = connectDB;
