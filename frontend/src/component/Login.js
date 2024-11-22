@@ -31,8 +31,8 @@ function Login() {
 			<div className="row w-100">
 				<div className="left-side col-lg-6 col-md-6 col-sm-12 justify-content-center align-items-center d-flex flex-column">
 					<div className='stack mt-5 '>
-
 						<Logo />
+
 					</div>
 					<div>
 						<img
@@ -104,7 +104,7 @@ function Login() {
 
 							<p className="text-center mt-3">
 								Don't have an account?{' '}
-								<Link to="/signup" className="text-decoration-none" style={{ color: '#ee6a42' }}>
+								<Link to="/register" className="text-decoration-none" style={{ color: '#ee6a42' }}>
 									Register
 								</Link>
 							</p>
