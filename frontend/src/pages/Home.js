@@ -19,6 +19,7 @@ import FinancialManagementOtherIncome from "../component/FinancialManagement/Fin
 import Announcement from "../component/Announcement";
 import VisitorsTracking from "../component/Security/VisitorsTracking";
 import EmergencyManagement from "../component/Security/EmergencyManagement";
+import EventParticipation from "../component/Resident/EventParticipation";
 
 
 const Home = () => {
@@ -46,6 +47,7 @@ const Home = () => {
                 <Route path="/announcement" element={<Announcement/>} />
                 <Route path='/visitor-tracking' element={<VisitorsTracking/>}/>
           <Route path='/emergency-management' element={<EmergencyManagement/>}/>
+          <Route path='/EventParticipation' element={<EventParticipation/>}/>
 
     </Routes>
   </div>;

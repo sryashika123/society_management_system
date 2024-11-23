@@ -6,19 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import EnterOtp from './component/EnterOtp';
 import ResetPassword from './component/ResetPassword';
 import Home from './pages/Home';
-import Register from './component/Register/Register.js';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
-
-
+import Signup from './component/Signup.js'
 function App() {
   return (
     <div className="d-flex">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path='/Register' element={<Register />} />
+          <Route element={<Signup />} path='/signup' />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/enter-otp" element={<EnterOtp />} />
           <Route path="/reset-password" element={<ResetPassword />} />

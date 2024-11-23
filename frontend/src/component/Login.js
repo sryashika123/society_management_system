@@ -104,7 +104,7 @@ function Login() {
 
 							<p className="text-center mt-3">
 								Don't have an account?{' '}
-								<Link to="/register" className="text-decoration-none" style={{ color: '#ee6a42' }}>
+								<Link to="/signup" className="text-decoration-none" style={{ color: '#ee6a42' }}>
 									Register
 								</Link>
 							</p>
