@@ -31,8 +31,8 @@ function Login() {
 			<div className="row w-100">
 				<div className="left-side col-lg-6 col-md-6 col-sm-12 justify-content-center align-items-center d-flex flex-column">
 					<div className='stack mt-5 '>
-
 						<Logo />
+
 					</div>
 					<div>
 						<img

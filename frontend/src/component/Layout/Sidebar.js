@@ -19,6 +19,7 @@ import securityguardIcon from '../../Icons/security-user.png'
 import announcementIcon from '../../Icons/Announcement.png'
 import personaldetailsIcon from '../../Icons/personalcard.png'
 import securityIcon from '../../Icons/security.png'
+import eventparticipantsIcon from '../../Icons/Events-Participation.png'
 import Logo from "../Logo";
 function Sidebar() {
   const location = useLocation();
@@ -156,6 +157,12 @@ function Sidebar() {
       label: "Personal Details",
       icon: <img src={personaldetailsIcon}  />,
       path: "/home/personal-details",
+    },
+    {
+      key: "events-participation",
+      label: "Events Participation",
+      icon: <img src={eventparticipantsIcon}  />,
+      path: "/home/EventParticipation",
     },
   ];
 

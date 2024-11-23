@@ -584,16 +584,3 @@ body {
   background-color: darkgray;
   /* Darken the thumb when hovered */
 }
-
-.offcanvas {
-  transition: transform 0.3s ease-in-out;
-}
-
-.offcanvas.show {
-  transform: translateX(0);
-}
-
-.offcanvas:not(.show) {
-  transform: translateX(-100%);
-  visibility: hidden;
-}
