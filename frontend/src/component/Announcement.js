@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from './Navbar';
+import Navbar from '../../src/component/Layout/Navbar';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -103,10 +103,10 @@ export default function Announcement() {
     const [showSetMaintenanceModal, setShowSetMaintenanceModal] = useState(false);
 
     return (
-        <div className='dashboard-bg' style={{marginLeft:"270px"}}>
+        <div className='dashboard-bg' style={{width:"1920px" }}>
             <Navbar />
-            <div>
-                <div className='container-fluid'>
+            <div style={{ width: "1620px", marginLeft: "300px" }}>
+                <div className='container-fluid' >
                     <div className='row p-5'>
                         <div className='p-0'>
                             <div className='bg-light'>

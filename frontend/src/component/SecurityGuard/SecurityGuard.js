@@ -4,7 +4,7 @@ import { FaCamera,  FaFemale, FaImage, FaMale, FaMoon, FaPlus, FaSun, FaTrash, F
 import Sidebar from '../Layout/Sidebar';
 import Avtar from "../../assets/Avatar.png";
 import { LuImagePlus } from 'react-icons/lu';
-import Header from '../Navbar';
+import Header from '../Layout/Navbar';
 import View from "../../assets/view.png"
 import Delete from "../../assets/delete.png"
 import Edit from "../../assets/edit.png"
@@ -167,13 +167,13 @@ export default function SecurityGaurd() {
   };
   return (
     <div className="d-flex flex-column flex-md-row">
-      <div className="flex-shrink-0" style={{ width: "280px" }}>
+      <div className="flex-shrink-0" >
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1 dashboard-bg" style={{ width: "1620px" }}>
+      <div className="flex-grow-1 dashboard-bg" style={{ width:"1920px"}}>
         <Header />
-        <div className="container-fluid  p-4" style={{ marginTop: "10px" }}>
+        <div className="container-fluid  p-4" style={{ marginTop: "10px", width: "1620px" , marginLeft:"300px"  }}>
 
 
 

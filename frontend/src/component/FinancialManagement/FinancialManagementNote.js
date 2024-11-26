@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../Navbar';
+import Navbar from '../Layout/Navbar';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -86,9 +86,9 @@ export default function FinancialManagementNote() {
   };
 
   return (
-    <div className='dashboard-bg' style={{ marginLeft: "270px", width: "1640px" }}>
+    <div className='dashboard-bg' style={{  width: "1920px" }}>
       <Navbar />
-      <div className='container-fluid'>
+      <div className='container-fluid' style={{marginLeft:"300px", width:"1620px"}}>
         <div className='row p-5'>
           <div className='p-0 bg-light'>
             <div className='d-flex justify-content-between align-items-center py-3 px-2'>

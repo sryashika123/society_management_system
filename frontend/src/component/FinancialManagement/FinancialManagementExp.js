@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Navbar from '../Navbar'
+import Navbar from '../Layout/Navbar'
 import { CiImageOn } from "react-icons/ci";
 import { BiSolidFilePdf } from "react-icons/bi";
 import { useForm } from 'react-hook-form';
@@ -8,6 +8,7 @@ import { FaPlusSquare } from "react-icons/fa";
 import Edit from '../../assets/edit.png';
 import View from '../../assets/view.png';
 import Delete from '../../assets/delete.png';
+
 
 export default function FinancialManagementExp() {
 
@@ -107,9 +108,9 @@ export default function FinancialManagementExp() {
 
 
   return (
-    <div className='dashboard-bg' style={{marginLeft:"270px", width:"1640px"}}>
+    <div className='dashboard-bg' style={{ width:"1920px"}}>
       <Navbar />
-      <div>
+      <div style={{marginLeft:"300px"}}>
         <div className='container-fluid income' >
 
           <div className='row p-5'>

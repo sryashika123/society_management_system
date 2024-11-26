@@ -3,7 +3,7 @@ import {Table } from 'react-bootstrap';
 
 import Sidebar from '../Layout/Sidebar';
 import Avtar from "../../assets/Avatar.png"
-import Header from '../Navbar';
+import Header from '../Layout/Navbar';
 
 export default function DetailTracking() {
   const [details, setDetails] = useState([
@@ -14,13 +14,13 @@ export default function DetailTracking() {
 
   return (
     <div className="d-flex flex-column flex-md-row">
-      <div className="flex-shrink-0" style={{ width: "280px" }}>
+      <div className="flex-shrink-0">
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1 dashboard-bg"  style={{ width:"1620px"}}>
+      <div className="flex-grow-1 dashboard-bg"  style={{ width:"1920px" }}>
         <Header/>
-        <div className="container-fluid  p-4" style={{ marginTop: "10px" }}>
+        <div className="container-fluid  p-4" style={{ marginTop: "10px" ,width:"1620px",marginLeft:"300px"}}>
           
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px" }}>

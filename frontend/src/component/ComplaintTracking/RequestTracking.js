@@ -3,7 +3,7 @@ import { Button, Modal, Form, Table } from 'react-bootstrap';
 import {  FaPlus } from 'react-icons/fa';
 import Sidebar from '../Layout/Sidebar';
 import Avtar from "../../assets/Avatar.png"
-import Header from '../Navbar';
+import Header from '../Layout/Navbar';
 import Edit from "../../assets/edit.png"
 import View from "../../assets/view.png"
 import Delete from "../../assets/delete.png"
@@ -130,13 +130,13 @@ export default function RequestTracking() {
 
   return (
     <div className="d-flex flex-column flex-md-row">
-  <div className="flex-shrink-0" style={{ width: "280px" }}>
+  <div className="flex-shrink-0" >
     <Sidebar />
   </div>
 
-  <div className="flex-grow-1 dashboard-bg" style={{ width:"1620px"}}>
+  <div className="flex-grow-1 dashboard-bg" style={{ width:"1920px"}}>
     <Header/>
-    <div className="container-fluid  p-4" style={{ marginTop: "10px" }}>
+    <div className="container-fluid  p-4" style={{ marginTop: "10px", marginLeft:"300px",width:"1620px" }}>
      
 
       <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff",padding:"5px", marginTop: "20px" }}>
@@ -156,14 +156,14 @@ export default function RequestTracking() {
         <Table striped hover responsive style={{ width: "1520px",marginLeft:"20px" }}>
           <thead className="bg-light">
             <tr className="rmHead ">
-              <th className="text-start" style={{ padding: "5px",fontSize:"14px",paddingLeft:"20px",background:"rgb(185, 198, 242)"}}>Requester Name</th>
-              <th className="text-start" style={{ padding: "8px",fontSize:"14px",background:"rgb(185, 198, 242)" }}>Request Name</th>
-              <th className="text-start" style={{ padding: "8px",fontSize:"14px",background:"rgb(185, 198, 242)" }}>Description</th>
-              <th className="text-center" style={{ padding: "8px",fontSize:"14px",background:"rgb(185, 198, 242)" }}>Request Date</th>
-              <th className="text-center" style={{ padding: "8px",fontSize:"14px",background:"rgb(185, 198, 242)" }}>Unit Number</th>
-              <th className="text-center" style={{ padding: "5px",fontSize:"14px",background:"rgb(185, 198, 242)" }}>Priority</th>
-              <th className="text-center" style={{ padding: "5px",fontSize:"14px",background:"rgb(185, 198, 242)" }}>Status</th>
-              <th className="text-center" style={{ padding: "15px",fontSize:"14px",background:"rgb(185, 198, 242)" }}>Actions</th>
+              <th className="text-start" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Requester Name</th>
+              <th className="text-start" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Request Name</th>
+              <th className="text-start" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Description</th>
+              <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Request Date</th>
+              <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Unit Number</th>
+              <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Priority</th>
+              <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Status</th>
+              <th className="text-center" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Actions</th>
             </tr>
           </thead>
           <tbody>

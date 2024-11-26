@@ -4,7 +4,7 @@ import { Card, Button, Modal, Form } from "react-bootstrap";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Sidebar from "../Layout/Sidebar";
 import { FaPlus } from "react-icons/fa";
-import Header from "../Navbar";
+import Header from "../Layout/Navbar";
 
 const FacilityCard = ({ title, date, description, onEdit }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -130,9 +130,9 @@ const FacilityManagement = () => {
       </div>
 
 
-      <div className="  dashboard-bg " style={{ marginLeft: "270px", width: "1642px" }}>
+      <div className="  dashboard-bg " style={{  width: "1920px" }}>
         <Header />
-        <div className="container-fluid bg-white rounded shadow-sm p-5" style={{ marginTop: "20px", width: "1550px" }}>
+        <div className="container-fluid bg-white rounded shadow-sm p-5" style={{ marginTop: "20px", width: "1550px", marginLeft:"330px" }}>
           <div className="d-flex" style={{ justifyContent: "space-between" }}>
             <h3>Facility Management</h3>
 

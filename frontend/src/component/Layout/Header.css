@@ -1,0 +1,54 @@
+
+.notification-dropdown {
+    border-radius: 6px;
+    max-height: 250px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+  }
+  
+  .notification-dropdown ul {
+    padding-left: 0;
+  }
+  
+  .notification-dropdown li {
+    padding: 6px 0;
+  }
+  
+  .notification-dropdown li:not(:last-child) {
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .notification-dropdown button {
+    font-size: 0.85rem;
+    text-decoration: underline;
+  }
+  
+  .notification-dropdown h6 {
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  
+  .badge {
+    font-size: 0.7rem;
+  }
+  
+  .search-bar,
+  .search-bar input {
+    background: rgba(246, 248, 251, 1) !important;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  
+  input:focus {
+    border: 0;
+    box-shadow: none;
+  }
+  
+  .search-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .notification-icon {
+    border: 1px solid rgba(211, 211, 211, 1)
+  }

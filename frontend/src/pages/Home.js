@@ -13,7 +13,7 @@ import Dashboard from "../component/Dashboard/Dashboard";
 import FinancialManagementIncome from "../component/FinancialManagement/FinancialManagementIncome";
 import FinancialManagementExp from "../component/FinancialManagement/FinancialManagementExp";
 import FinancialManagementNote from "../component/FinancialManagement/FinancialManagementNote";
-import Profile from "../component/Profile";
+import Profile from "../component/Profile/Profile";
 import EditProfile from "../component/EditProfile";
 import FinancialManagementOtherIncome from "../component/FinancialManagement/FinancialManagementOtherIncome";
 import Announcement from "../component/Announcement";

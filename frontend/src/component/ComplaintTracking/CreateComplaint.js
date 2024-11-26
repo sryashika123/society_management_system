@@ -3,7 +3,7 @@ import { Button, Modal, Form, Table } from 'react-bootstrap';
 import { FaPlus} from 'react-icons/fa';
 import Sidebar from '../Layout/Sidebar';
 import Avtar from "../../assets/Avatar.png"
-import Header from '../Navbar';
+import Header from '../Layout/Navbar';
 import Edit from "../../assets/edit.png"
 import View from "../../assets/view.png"
 import Delete from "../../assets/delete.png"
@@ -134,18 +134,18 @@ export default function ComplaintTracking() {
 
   return (
     <div className="d-flex flex-column flex-md-row">
-      <div className="flex-shrink-0" style={{ width: "280px" }}>
+      <div className="flex-shrink-0">
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1 dashboard-bg " style={{ width: "1620px" }}>
+      <div className="flex-grow-1 dashboard-bg " style={{ width: "1920px" }}>
         <Header />
-        <div className="container-fluid  p-4" style={{ marginTop: "10px" }}>
+        <div className="container-fluid  p-4" style={{ marginTop: "10px" ,width:"1620px" ,marginLeft:"300px"}}>
 
 
-          <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px" }}>
-            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
-              <h4 className="mb-0">Complaint Tracking</h4>
+          <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff",padding:"5px", marginTop: "20px" }}>
+            <div  className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-2 mb-4">
+              <h4 className="mb-0" style={{marginLeft:"20px"}}>Complaint Tracking</h4>
               <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={handleShowCreateModal}
                 style={{ border: 'none' }}><FaPlus
                   style={{
@@ -157,7 +157,7 @@ export default function ComplaintTracking() {
                   }}
                 />Create Complaint</Button>
             </div>
-            <Table striped hover responsive className="mt-3" style={{ width: "1530px" }}>
+            <Table striped hover responsive style={{ width: "1520px",marginLeft:"20px" }}>
               <thead className="bg-light">
                 <tr className="rmHead">
                   <th className="text-start" style={{ padding: "10px", background: "rgb(185, 198, 242)" }}>Complainer Name</th>

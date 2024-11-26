@@ -219,77 +219,7 @@ input[type=checkbox]:focus {
 }
 
 /* signup form style end */
-
-
-
-
-
-/* header start */
-
-.notification-dropdown {
-  border-radius: 6px;
-  max-height: 250px;
-  overflow-y: auto;
-  font-size: 0.9rem;
-}
-
-.notification-dropdown ul {
-  padding-left: 0;
-}
-
-.notification-dropdown li {
-  padding: 6px 0;
-}
-
-.notification-dropdown li:not(:last-child) {
-  border-bottom: 1px solid #e9ecef;
-}
-
-.notification-dropdown button {
-  font-size: 0.85rem;
-  text-decoration: underline;
-}
-
-.notification-dropdown h6 {
-  font-weight: bold;
-  font-size: 0.95rem;
-}
-
-.badge {
-  font-size: 0.7rem;
-}
-
-.search-bar,
-.search-bar input {
-  background: rgba(246, 248, 251, 1) !important;
-  font-size: 16px;
-  font-weight: 400;
-}
-
-input:focus {
-  border: 0;
-  box-shadow: none;
-}
-
-.search-icon {
-  width: 24px;
-  height: 24px;
-}
-
-.notification-icon {
-  border: 1px solid rgba(211, 211, 211, 1)
-}
-
-
-/* header end */
-
-
-
 /* sidebar start */
-
-
-
-
 
 /* table complaint */
 
@@ -431,28 +361,6 @@ input:focus {
 
 /* navbar start */
 
-.home-routing {
-  color: rgba(167, 167, 167, 1);
-  font-weight: 400;
-  font-size: 18px;
-}
-
-.home-routing-span {
-  color: rgba(32, 34, 36, 1);
-  width: 12px !important;
-  display: inline-block !important;
-}
-
-.current-page-routing {
-  color: rgba(86, 120, 233, 1);
-}
-
-.navbar-span {
-  font-size: 16px;
-  font-weight: 700;
-  color: black;
-}
-
 /* financial management start */
 
 .financial-amt-card-shadow {
@@ -524,6 +432,8 @@ input:focus {
   border-radius: 50%;
 }
 
+/* income start */
+
 .financial-income-title {
   font-size: 20px;
   font-weight: 600;
@@ -555,6 +465,7 @@ input:focus {
   border-bottom: 2px solid orange !important;
 }
 
+/* income end */
 
 .active-btn {
   /* background-color: #007bff !important; */
@@ -568,8 +479,6 @@ input:focus {
 .jpg-btn {
   color: #007bff;
 }
-
-
 
 .card-des {
   font-size: 14px !important;
@@ -604,15 +513,6 @@ input:focus {
   background-repeat: no-repeat;
   background-size: cover;
   height: 309px !important;
-}
-
-.profile-btn {
-  background: linear-gradient(90deg, #FE512E 0%, #F09619 100%);
-  color: white !important;
-  padding: 12px 15px !important;
-  font-size: 18px !important;
-  font-weight: 600 !important;
-  border-radius: 10px !important;
 }
 
 .profile-title {
@@ -669,8 +569,6 @@ input:focus {
 .dropdown-item.text-danger {
   color: red;
 }
-
-
 /* Ensure that all elements stay within the viewport width */
 .card-row {
   max-width: 100%;

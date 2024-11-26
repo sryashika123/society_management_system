@@ -3,7 +3,7 @@ import { FaCamera } from 'react-icons/fa';
 import { LuImagePlus } from 'react-icons/lu';
 import { RxAvatar } from 'react-icons/rx';
 import { useNavigate } from 'react-router-dom';
-import Header from '../Navbar';
+import Header from '../Layout/Navbar';
 
 export default function ResidentForm() {
   const navigate = useNavigate();

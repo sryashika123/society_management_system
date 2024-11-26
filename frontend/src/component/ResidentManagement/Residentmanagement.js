@@ -6,7 +6,7 @@ import { FaUser, FaHome, FaTag,  FaPlus } from 'react-icons/fa'; // Using react-
 import Sidebar from '../Layout/Sidebar';
 import '../../style.css';
 import Avtar from '../../assets/Avatar.png';
-import Header from '../Navbar';
+import Header from '../Layout/Navbar';
 import Edit from '../../assets/edit.png';
 import View from '../../assets/view.png';
 
@@ -64,9 +64,9 @@ export default function ResidentManagement() {
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1  dashboard-bg container-fluid" style={{ marginLeft: "270px", width: "1642px" }}>
+      <div className="flex-grow-1  dashboard-bg container-fluid" style={{ width: "1920px" }}>
         <Header />
-        <div className="container-fluid  " style={{ marginTop: "20px" }}>
+        <div className="container-fluid  "  style={{ marginLeft: "300px", width: "1590px",marginTop:"20px" }}>
 
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px", marginLeft: "10px" }}>
