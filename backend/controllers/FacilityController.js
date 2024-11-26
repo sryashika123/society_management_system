@@ -1,27 +1,15 @@
-const Facility = require('../models/FacilityModel'); 
-const Society = require("../models/societyModel");
-const Admin = require("../models/UserModel");
+const Facility = require('../models/FacilityModel'); // Adjust path if needed
 
 // Create a new facility
-module.exports.createFacility = async (req, res) => {
+exports.createFacility = async (req, res) => {
     console.log(req.body);
     try {
-        const { Name, description, Service_date, Remind_before, adminId, societyId } = req.body;
-
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
-
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
+        const { Name, description, Service_date, Remind_before } = req.body;
         
         if (!Name || !description || !Service_date || !Remind_before) {
             return res.status(400).json({ message: 'All fields are required' });
         }
-        const newFacility = new Facility({ Name, description, Service_date, Remind_before, adminId, societyId });
+        const newFacility = new Facility({ Name, description, Service_date, Remind_before });
         await newFacility.save();
         res.status(201).json(newFacility);
     } catch (error) {
@@ -36,7 +24,7 @@ module.exports.getFacility = async(req,res) =>{
     }
     catch(err){
         console.error(err.message);
-        res.status(500).json({ err: err.message });
+        res.status(500).send("Server error");
     }
 }
 
@@ -51,7 +39,7 @@ module.exports.deleteFacility = async(req,res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).json({ err: err.message });
+        res.status(500).send("Server error");
     }
 }
 
@@ -67,6 +55,6 @@ module.exports.updateFacility = async(req,res) => {
     }
     catch(err){
         console.error(err.message);
-        res.status(500).json({ err: err.message });
+        res.status(500).send("Server error");
     }
 }

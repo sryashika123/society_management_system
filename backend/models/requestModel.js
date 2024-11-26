@@ -31,16 +31,6 @@ const requestSchema = new mongoose.Schema({
             enum: ["Pending", "Open", "Solve"],
             default: "Pending"
         },
-        adminId: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Admin', 
-            required: true 
-        },
-        societyId: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Society',
-            required: true
-        }
     },
     { timestamps: true }
 );

@@ -4,9 +4,7 @@ const port = 8000;
 
 const path = require('path');
 
-const http = require('http');
-
-const socketIo = require('socket.io');
+const app = express();
 
 const db = require("./config/mongoose");
 
@@ -14,33 +12,24 @@ const dotenv = require('dotenv');
 
 const cors = require('cors');
 
-const multer = require('multer');
-
-const Message = require('./models/MessageModel.js');
-
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
-
 dotenv.config();
-// connectDB();
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 app.use(
     cors({
         origin: "http://localhost:3000",
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true // enable set cookies
-    }
-));
+    }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/users", require("./routes/UserRoute.js"));
-app.use("/api/users/v2", require("./routes/societyRoutes.js"));
-app.use("/api/users/v3", require("./routes/ImportantNumroute.js"));
+app.use("/api/users", require("./routes/authRoute"));
+app.use("/api/users/v2", require("./routes/societyRoutes.js"))
+app.use("/api/users/v3", require("./routes/ImportantNumRoute.js"));
 app.use("/api/users/v4", require("./routes/CompalintRoute.js"));
 app.use("/api/users/v5", require("./routes/profileRoute.js"));
 app.use("/api/users/v6", require("./routes/residentRoute.js"));

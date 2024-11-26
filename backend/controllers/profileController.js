@@ -1,4 +1,4 @@
-const Profile = require("../models/UserModel");
+const Profile = require("../models/authModel");
 const fs = require("fs");
 const path = require("path");
 

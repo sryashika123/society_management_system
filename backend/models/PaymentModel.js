@@ -26,16 +26,6 @@ const PaymentSchema = new mongoose.Schema({
             default: 'Pending',
             required: true
         },
-        adminId: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Admin', 
-            required: true 
-        },
-        societyId: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Society',
-            required: true
-        }
     },
     { timestamps: true }
 );
