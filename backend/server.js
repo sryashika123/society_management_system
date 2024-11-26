@@ -46,9 +46,70 @@ app.use("/api/users/v16", require("./routes/PollRoute.js"));
 app.use("/api/users/v17", require("./routes/AlertRoute.js"));
 app.use("/api/users/v18", require("./routes/VisitortrackingRoute.js"));
 app.use("/api/users/v19", require("./routes/PaymentRoute.js"));
+app.use("/api/users/v20", require("./routes/AnnouncementRoute.js"));
+app.use("/api/users/v21", require("./routes/NotificationRoute.js"));
+app.use("/api/users/v22", require("./routes/MessageRoutes.js"));
 
 
-app.listen(port, (e)=>{
-    if(e) return false;
-    console.log("server is running in "+port);
+const storage = multer.diskStorage({
+    destination: '/uploads/Chat-Image',
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+});
+const upload = multer({ storage });
+
+
+app.post('/api/upload', upload.single('media'), (req, res) => {
+    if (req.file) {
+      res.json({ mediaUrl: `/uploads/${req.file.filename}` });
+    } else {
+      res.status(400).json({ error: 'No file uploaded' });
+    }
+});
+
+
+io.on('connection', (socket) => {
+    console.log('User connected:', socket.id);
+  
+    // Join event
+    socket.on('join', async ({ userId, receiverId }) => {
+        socket.userId = userId;
+  
+        // Fetch chat history between userId and receiverId
+        const messages = await Message.find({
+            $or: [
+            { senderId: userId, receiverId },
+            { senderId: receiverId, receiverId: userId },
+            ],
+        }).sort({ createdAt: 1 });
+  
+        // Send chat history to the user
+        socket.emit('chat history', messages);
+    });
+  
+    // Handle private messages
+    socket.on('private message', async (msg) => {
+        // Save message to the database
+        const savedMessage = await Message.create({
+            senderId: msg.senderId,
+            receiverId: msg.receiverId,
+            message: msg.message,
+            media: msg.media,
+        });
+  
+        // Emit the message to both sender and receiver
+        io.to(socket.id).emit('private message', savedMessage); // To sender
+        socket.broadcast.emit('private message', savedMessage); // To receiver
+    });
+  
+    // Disconnect event
+    socket.on('disconnect', () => {
+        console.log(`User ${socket.userId || 'unknown'} disconnected`);
+    });
+});
+
+server.listen(port, (e) => {
+    if (e) return false;
+    console.log("server is running in " + port);
 })  
