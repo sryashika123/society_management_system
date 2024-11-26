@@ -1,11 +1,23 @@
 const OtherIncome = require('../models/OtherIncomeModel');
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 module.exports.createOtherIncome = async (req, res) => {
-    const { Title, Date, Due_Date, Description, Amount } = req.body;
     try{
-        if(!Title || !Date || !Due_Date || !Description || !Amount){
-            return res.status(400).json({ message: 'All fields are required' });
-        }
+        const { Title, Date, Due_Date, Description, Amount } = req.body;
+        // const admin = await Admin.findById(adminId);
+		// if (!admin) {
+		//   	return res.status(404).json({ msg: "Admin not found" });
+		// }
+
+        // const society = await Society.findById(societyId);
+		// if (!society) {
+		//   	return res.status(404).json({ msg: "Society not found" });
+		// }
+
+        // if(!Title || !Date || !Due_Date || !Description || !Amount){
+        //     return res.status(400).json({ message: 'All fields are required' });
+        // }
 
         const incomeDate = new globalThis.Date(Date);
         const dueDate = new globalThis.Date(Due_Date);
@@ -29,7 +41,9 @@ module.exports.createOtherIncome = async (req, res) => {
             Date: incomeDate,
             Due_Date: dueDate,
             Description,
-            Amount
+            Amount,
+            // adminId, 
+            // societyId
         });
         await newIncome.save();
         res.status(201).json({ message: 'Other income created successfully!', newIncome });

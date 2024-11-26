@@ -1,8 +1,20 @@
 const Payment = require('../models/PaymentModel');
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
-exports.createPayment = async (req, res) => {
+module.exports.createPayment = async (req, res) => {
     try{
-        const{ Card_Name, Card_number, Expiry_date, CVV, status, Member } = req.body;
+        const{ Card_Name, Card_number, Expiry_date, CVV, status, Member, adminId, societyId } = req.body;
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(societyId);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
+
         if(!Card_Name || !Expiry_date || !Member || !Expiry_date){
             return res.status(400).json({ message: "Card name is required." });
         }
@@ -21,7 +33,9 @@ exports.createPayment = async (req, res) => {
             Expiry_date,
             CVV,
             status,
-            Member
+            Member,
+            adminId, 
+            societyId
         });
         await payment.save();
         res.status(201).json(payment);
@@ -53,6 +67,6 @@ module.exports.deletePayment = async (req, res) =>{
     }
     catch(err){
         console.log(err.message);
-        res.status(500).send("data not deleted")
+        res.status(500).json({ err: err.message });
     }
 }

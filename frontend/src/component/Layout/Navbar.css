@@ -1,0 +1,22 @@
+
+.home-routing {
+    color: rgba(167, 167, 167, 1);
+    font-weight: 400;
+    font-size: 18px;
+  }
+  
+  .home-routing-span {
+    color: rgba(32, 34, 36, 1);
+    width: 12px !important;
+    display: inline-block !important;
+  }
+  
+  .current-page-routing {
+    color: rgba(86, 120, 233, 1);
+  }
+  
+  .navbar-span {
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+  }
