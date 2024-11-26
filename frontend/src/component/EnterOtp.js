@@ -4,40 +4,80 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import OTPImage from '../assets/forgotpassword.jpg';
 import '../style.css';
 import Logo from './Logo';
+import axios from 'axios';
 
 function EnterOtp() {
-  const { register, handleSubmit } = useForm();
-  const { state } = useLocation(); 
+  const [otp, setOtp] = useState(Array(6).fill(''));
+  const [error, setError] = useState('');
+  
+  const { handleSubmit } = useForm();
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const [counter, setCounter] = useState(30);
   const [resendAvailable, setResendAvailable] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     if (counter > 0) {
-      const timer = setInterval(() => setCounter((prev) => prev - 1), 1000);
+      const timer = setInterval(() => {
+        setCounter((prevCounter) => prevCounter - 1);
+      }, 1000);
       return () => clearInterval(timer);
     } else {
       setResendAvailable(true);
     }
   }, [counter]);
 
-  const onSubmit = (data) => {
-    console.log('OTP Submitted:', data);
-    const otpValid = true; // Simulated OTP validation logic
+  const handleOtpChange = (value, index) => {
+    if (!/^\d$/.test(value) && value !== '') return; // Only allow digits
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
 
-    if (otpValid) {
-      navigate('/reset-password'); // Navigate to Reset Password page
-    } else {
-      alert('Invalid OTP. Please try again.');
+    // Move focus to the next input field if the current one is filled
+    if (value && index < 5) {
+      document.getElementById(`otpInput-${index + 1}`).focus();
     }
   };
 
-  const resendOtp = () => {
-    console.log('Resending OTP...');
+  const handleVerifyOtp = async () => {
+    const otpCode = otp.join('');
+    try {
+      const response = await axios.post('http://localhost:8000/api/users/verify-otp', {
+        email: state.email,
+        otp: otpCode,
+      });
+      if (response.data) {
+        navigate('/reset-password');
+      } else {
+        setError(response.data.message || 'Invalid OTP. Please try again.');
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again later.');
+    }
+  };
+  
+
+  const resendOtp = async (email) => {
+    console.log("Email being sent to backend:", email); // Log the email
     setCounter(30);
     setResendAvailable(false);
-  };
 
+    try {
+      const response = await axios.post('http://localhost:8000/api/users/resendotp', { email: state.email });
+      if (response.status === 200) {
+      if (response.data) {
+        alert('OTP resent successfully.');
+      } else {
+        alert('Failed to resend OTP. Please try again later.');
+      }
+    }
+    } catch (error) {
+  
+      console.error('Error resending OTP:', error);
+      alert('Error resending OTP. Please try again later.');
+
+    }
+  };
   return (
     <div className="container-fluid min-vh-100 d-flex align-items-center">
       <div className="row w-100">
@@ -61,16 +101,18 @@ function EnterOtp() {
             <p className="text-center">
               Please enter the 6-digit code sent to {state?.emailOrPhone || 'your email or phone'}.
             </p>
-            <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column align-items-center">
+            <form onSubmit={handleSubmit(handleVerifyOtp)} className="d-flex flex-column align-items-center">
               <div className="otp-input-group d-flex justify-content-between mb-4" style={{ width: '100%' }}>
-                {[...Array(6)].map((_, index) => (
+              {otp.map((value, index) => (
                   <input
                     key={index}
+                    id={`otpInput-${index}`}
                     type="text"
                     maxLength="1"
                     className="form-control text-center"
+                    value={value}
+                    onChange={(e) => handleOtpChange(e.target.value, index)}
                     style={{ width: '48px', height: '58px', fontSize: '24px' }}
-                    {...register(`otp[${index}]`, { required: 'OTP is required' })}
                   />
                 ))}
               </div>

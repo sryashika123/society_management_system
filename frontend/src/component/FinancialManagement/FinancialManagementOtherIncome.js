@@ -95,15 +95,15 @@ export default function FinancialManagementOtherIncome() {
         <div className='dashboard-bg' style={{ width: "1920px" }} >
             <Navbar />
             <div>
-                <div className='income' style={{marginLeft:"300px", width:"1600px"}}>
+                <div className='income' style={{ marginLeft: "300px", width: "1600px" }}>
 
                     <div className='row p-5'>
                         <div className='p-0'>
                             <div className="table-responsive rounded pb-3">
 
-                                <Link to="/home/Financial-Maintenanace" className='btn btn-sm  maintainance-income-btn  maintainance-income-btn-withoutbg'>Maintenance</Link>
+                                <Link to="/home/Financial-Maintenanace" className='btn btn-sm  maintainance-income-btn  maintainance-income-btn-withoutbg' style={{ border: "none" }}>Maintenance</Link>
 
-                                <Link to="/home/Other-Income" className='btn btn-sm  maintainance-income-btn maintainance-income-btn-bg '>Other Income</Link>
+                                <Link to="/home/Other-Income" className='btn btn-sm  maintainance-income-btn maintainance-income-btn-bg ' style={{ border: "none" }}>Other Income</Link>
 
 
                                 <div className='bg-light'>
