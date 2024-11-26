@@ -1,26 +1,14 @@
 const VisitorLog = require("../models/visitorLogModel");
-const Society = require("../models/societyModel");
-const Admin = require("../models/UserModel");
+
 
 module.exports.createVisitorLog = async(req,res)=>{
     try{
-        const { Name, Phone_number, date, Wing, Unit_number, time, adminId, societyId } = req.body;
-
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
-
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
-
+        const { Name, Phone_number, date, Wing, Unit_number, time } = req.body;
         if(!Name || !Phone_number || !date || !Wing || !Unit_number || !time) {
             return res.status(400).json({ msg: "fields are required." });
         }
 
-        const newVisitorLog = new VisitorLog({ Name, Phone_number, date: new Date(date), Wing, Unit_number, time, adminId, societyId });
+        const newVisitorLog = new VisitorLog({ Name, Phone_number, date: new Date(date), Wing, Unit_number, time });
         await newVisitorLog.save();
         res.status(201).json({ msg: "VisitorLog created successfully", protocol: newVisitorLog });
     } 

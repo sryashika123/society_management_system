@@ -1,23 +1,28 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './component/Login';
-import ForgotPassword from './component/ForgotPassword'; // Create this component
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import EnterOtp from './component/EnterOtp';
-import ResetPassword from './component/ResetPassword';
-import Home from './pages/Home';
-import Signup from './component/Signup.js'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LoginPage from './components/Login/LoginPage';
+import Register from './components/Register';
+import ForgotPassword from './components/Login/ForgotPassword';
+import EnterOtp from './components/Login/Otp';
+import ResetPassword from './components/Login/ResetPassword';
+import Home from './Pages/Home';
+
+
+
 function App() {
   return (
-    <div className="d-flex">
+    <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route element={<Signup />} path='/signup' />
+          <Route path="/" element={<LoginPage />} />
+          {/* <Route path="/login" element={<LoginPage />} />  */}
+          <Route path='/Register' element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/enter-otp" element={<EnterOtp />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/home/*" element={<Home />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path='/home/*' element={<Home />} />
+
         </Routes>
       </BrowserRouter>
     </div>
