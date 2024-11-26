@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './EventParticipation.css'
 import { Link } from 'react-router-dom'
-import Header from '../Navbar'
+import Header from '../Layout/Navbar'
 import Sidebar from '../Layout/Sidebar';
 import  Avatar  from '../../assets/Avatar.png'
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Navbar from './Navbar';
+import Navbar from '../../src/component/Layout/Navbar';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import profile from '../assets/profile.png';

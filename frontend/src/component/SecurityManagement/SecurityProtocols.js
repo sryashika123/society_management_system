@@ -3,7 +3,7 @@ import { Button, Modal, Form, Table } from 'react-bootstrap';
 import { FaEdit, FaEye, FaPlus, FaTrash } from 'react-icons/fa';
 import Sidebar from '../Layout/Sidebar';
 // import Avtar from "../assets/Avatar.png";
-import Header from '../Navbar';
+import Header from '../Layout/Navbar';
 import Edit from "../../assets/edit.png"
 import View from "../../assets/view.png"
 import Delete from "../../assets/delete.png"
@@ -87,13 +87,13 @@ export default function SecurityProtocols() {
 
   return (
     <div className="d-flex flex-column flex-md-row">
-      <div className="flex-shrink-0" style={{ width: "280px" }}>
+      <div className="flex-shrink-0" >
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1 dashboard-bg" style={{ width: "1620px" }}>
+      <div className="flex-grow-1 dashboard-bg" style={{ width:"1920px"  }}>
         <Header />
-        <div className="container-fluid  p-4" style={{ marginTop: "10px" }}>
+        <div className="container-fluid  p-4" style={{ marginTop: "10px", width: "1620px", marginLeft:"300px" }}>
 
 
           {/* Modal for creating or editing a protocol */}
@@ -245,8 +245,17 @@ export default function SecurityProtocols() {
 
           </Modal>
 
-          <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px" }}>
-            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+          <div className="table-responsive"
+            style={{
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
+              overflow: "hidden",
+              backgroundColor: "#fff",
+              padding: "20px",
+              marginTop: "20px",
+            }}>
+            <div className="d-flex justify-content-between align-items-center mb-3">
               <h4 className="mb-0">Security Protocols</h4>
               <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={handleShowCreate}
                 style={{ border: 'none' }}><FaPlus

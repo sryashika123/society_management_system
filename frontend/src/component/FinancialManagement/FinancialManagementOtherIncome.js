@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Navbar from '../Navbar'
+import Navbar from '../Layout/Navbar'
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -92,10 +92,10 @@ export default function FinancialManagementOtherIncome() {
     };
 
     return (
-        <div className='dashboard-bg' style={{marginLeft:"270px", width:"1630px"}} >
+        <div className='dashboard-bg' style={{ width: "1920px" }} >
             <Navbar />
             <div>
-                <div className='income' >
+                <div className='income' style={{marginLeft:"300px", width:"1600px"}}>
 
                     <div className='row p-5'>
                         <div className='p-0'>
@@ -237,7 +237,7 @@ export default function FinancialManagementOtherIncome() {
                                                                     >
                                                                         View
                                                                     </button>
-                                                                    
+
                                                                     <button
                                                                         className="dropdown-item"
                                                                         onClick={() => handleShowDeleteModal(index)}
@@ -247,9 +247,9 @@ export default function FinancialManagementOtherIncome() {
 
                                                                     {/* delete modal */}
                                                                     <Modal className='custom-modal' show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
-                                                                        
-                                                                            <Modal.Title className='Modal-Title px-3 pt-3'>Delete Number?</Modal.Title>
-                                                                        
+
+                                                                        <Modal.Title className='Modal-Title px-3 pt-3'>Delete Number?</Modal.Title>
+
                                                                         <Modal.Body>
                                                                             <p className='Form-p mb-0'>Are you sure you want to delete this number?</p>
                                                                         </Modal.Body>

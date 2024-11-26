@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../Layout/Sidebar";
-import Header from "../Navbar";
+import Header from "../Layout/Navbar";
 import { Button, Table, Form, Modal } from "react-bootstrap";
 import Avtar from "../../assets/Avatar.png";
 import { FaPlus } from "react-icons/fa";
@@ -71,14 +71,14 @@ function VisitorsTracking() {
 
   return (
     <div className="d-flex flex-column flex-md-row dashboard-bg">
-      <div className="flex-shrink-0" style={{ width: "280px" }}>
+      <div className="flex-shrink-0">
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1" style={{ width: "1640px" }}>
+      <div className="flex-grow-1" style={{ width:"1920px" }}>
         <Header />
 
-        <div className="container-fluid p-4" style={{ marginTop: "10px" }}>
+        <div className="container-fluid p-4" style={{ marginTop: "10px", width: "1620px" , marginLeft:"300px" }}>
           <div
             className="table-responsive"
             style={{

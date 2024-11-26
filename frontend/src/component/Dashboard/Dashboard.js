@@ -9,7 +9,7 @@ import ComplaintList from '../Dashboard/Complaintlist';
 import { Link } from 'react-router-dom';
 import BalanceInformation from '../Dashboard/BalanceInfromation';
 import axios from 'axios';
-import Header from '../Header';
+import Header from '../Layout/Header';
 
 
 // Register the necessary components from Chart.js
@@ -198,7 +198,7 @@ const RightSection = () => {
 			{/* Right Section */}
       
 
-			<Col xs={12} md={12} className="right-section p-3 " style={{ marginLeft: "290px",width:"1600px" , marginTop:'110px'}} >
+			<Col xs={12} md={12} className="right-section p-3 " style={{ marginLeft: "300px",width:"1600px" , marginTop:'110px'}} >
       
 
 				{/* Top Cards for Balance Information */}
