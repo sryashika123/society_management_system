@@ -1,37 +1,102 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import '../index.css';
 import signupimg2 from '../assets/signup-img2.png';
 import signupimg from '../assets/signup-img.png';
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { IoEyeSharp } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
+import axios from 'axios';
 
 export default function Signup() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { register: registerNewSociety, handleSubmit: handleNewSubmit, formState: { errors: newSocietyErrors } } = useForm();
-
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [showForm, setShowForm] = useState(false);
+    const [societies, setSocieties] = useState([]);
+    const navigate = useNavigate(); // Initialize useNavigate
 
-    const createnewSociety = () => {
-        setShowForm(true);
-    };
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        country: '',
+        state: '',
+        city: '',
+        society: '',
+        password: '',
+        confirmPassword: ''
+    });
 
-    const onSubmit = data => {
-        console.log(data);
-    };
 
-    const handleNewSocietySubmit = newdata => {
-        console.log(newdata);
-    };
+
+    // Fetch Societies on Load
+    useEffect(() => {
+        const fetchSocieties = async () => {
+            try {
+                const response = await axios.get("http://localhost:8000/api/users/v2/getSociytey");
+                setSocieties(response.data);
+            } catch (error) {
+                console.error("Error fetching societies:", error.message);
+            }
+        };
+        fetchSocieties();
+    }, []);
 
     const togglePasswordVisibility = () => setShowPassword(!showPassword);
     const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
     const toggleTermsAccepted = () => setTermsAccepted(!termsAccepted);
+
+
+
+    const onSubmit = async (data) => {
+        console.log("Form Data:", data);
+
+        const { society, ...rest } = data;  // Destructure to remove 'society' and keep the rest
+        const payload = {
+            ...rest,               // Spread the remaining fields
+            select_society: society, // Add 'select_society' field
+        };
+
+        try {
+            const response = await axios.post("http://localhost:8000/api/users/register", payload);
+            alert("User registered successfully!");
+            // console.log(response.data);
+            console.log("Registration Response:", response); // Log response to verify success
+            navigate("/"); // Redirect to login page
+        } catch (error) {
+            alert("Registration failed: " + (error.response?.data.message || error.message));
+            console.error(error);
+        }
+    };
+
+    const handleNewSocietySubmit = async (newData) => {
+        try {
+            const response = await axios.post("http://localhost:8000/api/users/v2/createSociety", newData);
+
+            alert("Society created successfully!");
+
+            // Update the society list and pre-select the new society
+            setSocieties((prevSocieties) => {
+                const updatedSocieties = [...prevSocieties, response.data?.society];
+                setFormData((prev) => ({ ...prev, society: response.data?.society?.societyName })); // Set the newly created society as selected
+                return updatedSocieties;
+            });
+
+            setShowForm(false); // Close the form modal
+        } catch (error) {
+            console.error("Failed to create society:", error.response?.data || error.message);
+            alert("Failed to create society: " + (error.response?.data.message || error.message));
+        }
+    };
+
+
+
+
 
     const handleCancel = () => {
         setShowForm(false);
@@ -40,13 +105,13 @@ export default function Signup() {
     return (
         <div className="d-flex flex-column flex-md-row min-vh-100 position-relative">
             {/* Left Side: Image */}
-            <div className="signup-img  d-flex flex-column align-items-left" style={{width:"950px"}}>
+            <div className="signup-img  d-flex flex-column align-items-left" style={{ width: "950px" }}>
 
-            
-                    <div className='stack mt-5'>
+
+                <div className='stack mt-5'>
                     <Logo />
-                    </div>
-               
+                </div>
+
 
                 {/* Center the image vertically in the remaining space */}
                 <div className='d-flex align-items-center justify-content-center flex-grow-1'>
@@ -56,11 +121,10 @@ export default function Signup() {
                         style={{ opacity: showForm ? 0.6 : 1 }}
                     />
                 </div>
-
             </div>
 
             {/* Right Side: Form */}
-            <div className="signup-form  d-flex align-items-center justify-content-center py-5" style={{ opacity: showForm ? 0.6 : 1 ,width:"950px"}}>
+            <div className="signup-form  d-flex align-items-center justify-content-center py-5" style={{ opacity: showForm ? 0.6 : 1, width: "950px" }}>
                 <div className="form bg-white p-4 rounded shadow">
                     <h2 className="h4 font-weight-bold mb-4 text-left">Registration</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -115,7 +179,7 @@ export default function Signup() {
                                         type='number'
                                         className="form-control"
                                         placeholder='Enter Phone Number'
-                                        {...register('phoneNumber', { required: 'Phone Number is required' })}
+                                        {...register('phone', { required: 'Phone Number is required' })}
                                     />
                                     {errors.phoneNumber && <p className="text-danger">{errors.phoneNumber.message}</p>}
                                 </div>
@@ -183,24 +247,23 @@ export default function Signup() {
                             <label>Select Society <span className="text-danger">*</span></label>
                             <select
                                 className="form-control form-select"
-                                id='select'
                                 {...register('society', { required: 'Society selection is required' })}
                                 onChange={(e) => {
-                                    if (e.target.value === "") {
-                                        createnewSociety();
+                                    if (e.target.value === "create_society") {
+                                        setShowForm(true); // Show popup
+                                    } else {
+                                        setFormData((prev) => ({ ...prev, society: e.target.value }));
+                                        setShowForm(false);
                                     }
                                 }}
                             >
-                                <option className='option' value="Shantigram residency">Shantigram residency</option>
-                                <option value="Russett House Park">Russett House Park</option>
-                                <option value="Saurya residency">Saurya residency</option>
-                                <option value="Shamruddh Avenyu">Shamruddh Avenyu</option>
-                                <option value="Utsav society">Utsav society</option>
-                                <option value="Murlidhar">Murlidhar</option>
-                                <option value="Shree Sharanam">Shree Sharanam</option>
-                                <option value="vasantnagar township">vasantnagar township</option>
-                                <option value="" className='create-society-btn'>Create Society</option>
+                                <option value="">Select Society</option>
+                                {societies.map((society) => (
+                                    <option key={society._id} value={society._id}>{society.societyName}</option>
+                                ))}
+                                <option value="create_society">Create Society</option>
                             </select>
+
                             {errors.society && <p className="text-danger">{errors.society.message}</p>}
                         </div>
 
@@ -266,8 +329,8 @@ export default function Signup() {
                 </div>
             </div>
             {/* Conditional Form Rendering */}
-            <div className='position-absolute top-50 start-50 translate-middle'>
-                {showForm && ( 
+            <div className='position-absolute top-50 start-50 translate-middle z-index-'>
+                {showForm && (
                     <div className="new-society-form bg-white shadow p-4">
                         <h3 className="h5 mb-4">Create New Society</h3>
 
@@ -280,9 +343,9 @@ export default function Signup() {
                                     type="text"
                                     className="form-control "
                                     placeholder="Enter Society Name"
-                                    {...registerNewSociety('name', { required: 'Name is required' })}
+                                    {...registerNewSociety('societyName', { required: 'Name is required' })}
                                 />
-                                {newSocietyErrors.name && <p className="text-danger small">{newSocietyErrors.name.message}</p>}
+                                {newSocietyErrors.societyName && <p className="text-danger small">{newSocietyErrors.societyName.message}</p>}
                             </div>
 
                             {/* Society Address */}
@@ -341,9 +404,9 @@ export default function Signup() {
                                         type="text"
                                         className="form-control"
                                         placeholder='Enter Zip Code'
-                                        {...registerNewSociety('zipcode', { required: 'Zip Code is required' })}
+                                        {...registerNewSociety('Zip_code', { required: 'Zip Code is required' })}
                                     />
-                                    {newSocietyErrors.zipcode && <p className="text-danger small">{newSocietyErrors.zipcode.message}</p>}
+                                    {newSocietyErrors.Zip_code && <p className="text-danger small">{newSocietyErrors.Zip_code.message}</p>}
                                 </div>
                             </div>
 

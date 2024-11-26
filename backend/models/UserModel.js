@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
     select_society: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'society',
-        required: true
+        // required: true
     },
     password: {
         type: String,   
