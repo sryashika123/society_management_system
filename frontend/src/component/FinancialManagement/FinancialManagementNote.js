@@ -7,8 +7,8 @@ import axios from 'axios';
 
 export default function FinancialManagementNote() {
   const [note, setNote] = useState([
-    { id: 1, title: 'Rent or Mortgage', des: 'A visual representation of your spending categories.', date: '2024-11-09', amt: '1200' },
-    { id: 2, title: 'Housing Costs', des: 'A visual representation of your spending categories.', date: '2024-11-10', amt: '800' },
+    { id: 1, title: 'Rent or Mortgage', description: 'A visual representation of your spending categories.', date: '2024-11-09', amt: '1200' },
+    { id: 2, title: 'Housing Costs', description: 'A visual representation of your spending categories.', date: '2024-11-10', amt: '800' },
   ]);
 
   const [show, setShow] = useState(false);
@@ -16,9 +16,9 @@ export default function FinancialManagementNote() {
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
- // Fetch notes from the backend
-   // Fetch notes from backend
-   const fetchNotes = async () => {
+  // Fetch notes from the backend
+  // Fetch notes from backend
+  const fetchNotes = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/users/v11/ViewNote");
       setNote(response.data);
@@ -30,7 +30,7 @@ export default function FinancialManagementNote() {
   useEffect(() => {
     fetchNotes();
   }, []);
- 
+
 
   // Open and close modal
   const handleClose = () => {
@@ -41,17 +41,19 @@ export default function FinancialManagementNote() {
   const handleShow = () => setShow(true);
 
   // Handle form submission
-  
+
   const onSubmit = async (data) => {
     console.log("Submitted data:", data); // Check if all fields are included in the request
-  
+
     try {
       if (editIndex !== null) {
-        // Edit note request
-        await axios.put(
-          `http://localhost:8000/api/users/v11/updateNote/${note[editIndex].id}`,
-          data
+        const noteId = note[editIndex].id;
+        const updatedData = { ...data, id: noteId };
+        const response = await axios.put(
+          `http://localhost:8000/api/users/v11/updateNote/${noteId}`,
+          updatedData
         );
+        console.log("Update response:", response);  // Log the response from the backend
       } else {
         // Create new note request
         await axios.post("http://localhost:8000/api/users/v11/createNote", data);
@@ -63,18 +65,20 @@ export default function FinancialManagementNote() {
       alert(error.response?.data?.msg || "An error occurred while saving the note.");
     }
   };
-  
+
 
   // Handle editing a specific note
   const handleEdit = (index) => {
     setEditIndex(index);
     const noteToEdit = note[index];
+    console.log("Editing note:", noteToEdit);  // Log the note you're trying to edit
     setValue('title', noteToEdit.title);
-    setValue('des', noteToEdit.des);
+    setValue('description', noteToEdit.description);  // Ensure consistency in field names
     setValue('date', noteToEdit.date);
     setValue('amt', noteToEdit.amt);
     handleShow();
   };
+  
 
   // Toggle dropdown menu for each card
   const handleDropdownToggle = (index) => {
@@ -122,7 +126,7 @@ export default function FinancialManagementNote() {
                     </div>
                     <div className="card-body">
                       <h6 className="card-des-title">Description</h6>
-                      <p className="card-text card-des">{val.des}</p>
+                      <p className="card-text card-des">{val.description}</p>
                     </div>
                   </div>
                 </div>
@@ -157,10 +161,10 @@ export default function FinancialManagementNote() {
               <Form.Control
                 type="text"
                 placeholder="Enter Description"
-                {...register('des', { required: "Description is required" })}
-                isInvalid={errors.des}
+                {...register('description', { required: "Description is required" })}
+                isInvalid={errors.description}
               />
-              <Form.Control.Feedback type="invalid">{errors.des?.message}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{errors.description?.message}</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formDate">
