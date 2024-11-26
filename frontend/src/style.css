@@ -584,3 +584,75 @@ body {
   background-color: darkgray;
   /* Darken the thumb when hovered */
 }
+
+.radio-group input[type="radio"] {
+
+  appearance: none; /* Remove default styles */
+
+  
+
+  padding: 7px 7px;
+
+  border: 2px solid #f09619; /* Orange border */
+
+  border-radius: 50%; /* Make it round */
+
+ 
+
+  display: inline-block;
+
+  vertical-align: middle;
+
+  position: relative;
+
+}
+
+.radio-group input[type="radio"]:checked{
+
+  background-color: rgb(255, 255, 255);
+
+}
+
+.radio-group input[type="radio"]:checked::before {
+
+  content: "";
+
+  width: 10px;
+
+  height: 10px;
+
+  background: linear-gradient(90deg, #FE512E 0%, #F09619 100%);
+
+  /* Inner orange dot when checked */
+
+  border-radius: 50%;
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+}
+
+
+.maintainance-income-btn {
+   
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.maintainance-income-btn-active {
+  
+  background: linear-gradient(90deg, #FE512E 0%, #F09619 100%);
+
+  
+}
+
+.maintainance-income-btn-withoutbg {
+  color:  #FE512E;
+  background-color: transparent;
+  
+}

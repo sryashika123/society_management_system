@@ -19,6 +19,7 @@ import Logo from "../Logo";
 import HideBgCopy from "../../assets/Hide Bg Copy.png";
   import BlackImage from '../../assets/Rectangle 1888.png'
 import FrameIcon from '../../Icons/Frame.png'
+import EventParticipation from "../../Icons/Events-Participation.png";
 
 function Sidebar() {
   const location = useLocation();
@@ -174,6 +175,12 @@ function Sidebar() {
       label: "Security protocols",
       icon: <img src={FrameIcon} />,
       path: "/home/Resident-Protocols",
+    },
+    {
+      key: "Event-Participation",
+      label: "Event Participation",
+      icon: <img src={EventParticipation} />,
+      path: "/home/EventParticipation",
     },
   ];
 

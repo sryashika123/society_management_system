@@ -65,7 +65,7 @@ const EmergencyManagement = () => {
                 required
               />
             </div>
-            <button type="submit" style={styles.button}>
+            <button type="submit" style={styles.button} >
               Send
             </button>
           </form>
@@ -78,7 +78,7 @@ const EmergencyManagement = () => {
 const styles = {
   formContainer: {
     position: "relative",
-    top:"200px",
+    top:"309px",
     backgroundColor: "#fff",
     borderRadius: "10px",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",

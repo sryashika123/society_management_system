@@ -1,20 +1,41 @@
-.participatebtn{
-    padding: 15px 10px; 
- font-size:"14px"; font-weight:500;
- border-top-left-radius: 10px !important;
- border-top-right-radius: 10px !important;
-  }
+.participatebtn {
+  padding: 15px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+.participatebtn:hover {
+  background: linear-gradient(90deg, #fe512e 0%, #f09619 100%) !important;
+  color: white !important;
+}
+
   .participatebtnspan{
     font-size: 16px;
   }
-  .eventtable{
+
+  .active-participate-btn {
+    background: linear-gradient(90deg, #fe512e 0%, #f09619 100%);
+    color: white !important;
+  }
+
+  .eventtable{  
     border:1px solid #ddd;
     border-radius:8px;
     box-shadow:0px 0px 15px rgba(0, 0, 0, 0.1);
     overflow:hidden;
     background-color: #fff;
     padding:20px;
+    /* margin-top: 20px; */
    
+  }
+  .head {
+    background-color: rgb(185, 198, 242);
+  }
+  .profileimg {
+    width: 40px;
+    height: 40px;
   }
   .eventtable {
     overflow-x: auto; /* Enables horizontal scrolling */
@@ -28,6 +49,11 @@
   .eventtable .col-2,
   .eventtable .col-3 {
     flex: 2 2 auto;
+  }
+
+  .delete:hover {
+    background-color: rgba(231, 76, 60, 1) !important;
+    color: white !important;
   }
   
   

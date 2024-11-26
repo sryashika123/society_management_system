@@ -97,7 +97,7 @@ export default function FinancialManagementOtherIncome() {
             <div>
                 <div className='income' style={{marginLeft:"300px", width:"1600px"}}>
 
-                    <div className='row p-5'>
+                    <div className='row p-5' style={{marginTop:"109px"}}>
                         <div className='p-0'>
                             <div className="table-responsive rounded pb-3">
 

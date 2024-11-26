@@ -108,12 +108,12 @@ export default function FinancialManagementExp() {
 
 
   return (
-    <div className='dashboard-bg' style={{ width:"1920px"}}>
+    <div className='dashboard-bg' style={{ width:"1920px", }}>
       <Navbar />
-      <div style={{marginLeft:"300px"}}>
-        <div className='container-fluid income' >
+      <div style={{marginLeft:"300px", }}>
+        <div className='container-fluid income'>
 
-          <div className='row p-5'>
+          <div className='row p-5'  style={{marginTop:"109px"}}>
             <div className='p-0'>
               <div className="table-responsive rounded pb-3">
 

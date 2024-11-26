@@ -66,8 +66,8 @@ export default function FinancialManagementIncome() {
     </div>
     <div className='card-row dashboard-bg'  style={{ width:"1920px"}}>
       <Navbar />
-      <div  style={{marginLeft:"290px"}}>
-        <div className='container-fluid mt-2' style={{marginLeft:"30px"}}>
+      <div  style={{marginLeft:"290px",marginTop:"125px"}}>
+        <div className='container-fluid mt-2' style={{marginLeft:"30px" }}>
 
           <div className='row justify-content-between align-items-center mb-3 pt-2 bg-light '  style={{marginRight:"60px",borderRadius:"8px"}}>
           <div className="col-lg-8 col-md-12 d-flex flex-wrap" >

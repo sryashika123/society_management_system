@@ -34,8 +34,8 @@ export default function Header() {
 
     return (
         <>
-            <div className='header' >
-                <Navbar expand="sm" className="navbar bg-white  border-bottom p-4" style={{height:"109px"}}>
+            <div className='header ' style={{position:"fixed" , top:"0px", zIndex:"999"}}>
+                <Navbar expand="sm" className="navbar bg-white  border-bottom p-4" style={{height:"109px",width:"1920px"}}>
                     <Container fluid style={{marginLeft:"280px"}}>
                         {/* Breadcrumb */}
                         <h5 className='home-routing'>
