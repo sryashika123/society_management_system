@@ -78,7 +78,7 @@ function VisitorsTracking() {
       <div className="flex-grow-1" style={{ width:"1920px" }}>
         <Header />
 
-        <div className="container-fluid p-4" style={{ marginTop: "10px", width: "1620px" , marginLeft:"300px" }}>
+        <div className="container-fluid p-4" style={{ marginTop: "109px", width: "1620px" , marginLeft:"300px" }}>
           <div
             className="table-responsive"
             style={{
@@ -318,8 +318,9 @@ function VisitorsTracking() {
               height: "51px",
               border: "1px",
               color: "#FFFFFF",
-              background: "#FE512E",
+              
             }}
+            className="save"
             onClick={handleSaveDetails}
           >
             Save

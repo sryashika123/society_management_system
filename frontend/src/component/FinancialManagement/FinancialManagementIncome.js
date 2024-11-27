@@ -61,26 +61,24 @@ export default function FinancialManagementIncome() {
 
   return (
     <div className="d-flex flex-column flex-md-row">
-      <div className="flex-shrink-0" >
-        <Sidebar />
-      </div>
-      <div className='card-row dashboard-bg' style={{ width: "1920px" }}>
-        <Navbar />
-        <div style={{ marginLeft: "290px" }}>
-          <div className='container-fluid mt-2' style={{ marginLeft: "30px" }}>
+    <div className="flex-shrink-0" >
+      <Sidebar />
+    </div>
+    <div className='card-row dashboard-bg'  style={{ width:"1920px"}}>
+      <Navbar />
+      <div  style={{marginLeft:"290px",marginTop:"125px"}}>
+        <div className='container-fluid mt-2' style={{marginLeft:"30px" }}>
 
-            <div className='row justify-content-between align-items-center mb-3 pt-2 bg-light ' style={{ marginRight: "60px", borderRadius: "8px" }}>
-              <div className="col-lg-8 col-md-12 d-flex flex-wrap" >
-                {/* Maintenance Amount Card */}
-                <div className="col-lg-4 col-md-6 col-sm-12 py-2 px-1 ms-2" >
-                  <div className="card border-0 financial-amt-card-shadow" >
-                    <div className="card-body d-flex align-items-center">
-                      <img src={incomeRactangle} width={8} className="me-2" alt="Icon" />
-                      <div>
-                        <h6 className="card-subtitle mb-1">Maintenance Amount</h6>
-                        <p className="mb-0">₹ 0</p>
-                      </div>
-                    </div>
+          <div className='row justify-content-between align-items-center mb-3 pt-2 bg-light '  style={{marginRight:"60px",borderRadius:"8px"}}>
+          <div className="col-lg-8 col-md-12 d-flex flex-wrap" >
+            {/* Maintenance Amount Card */}
+            <div className="col-lg-4 col-md-6 col-sm-12 py-2 px-1 ms-2" >
+              <div className="card border-0 financial-amt-card-shadow" >
+                <div className="card-body d-flex align-items-center">
+                  <img src={incomeRactangle} width={8} className="me-2" alt="Icon" />
+                  <div>
+                    <h6 className="card-subtitle mb-1">Maintenance Amount</h6>
+                    <p className="mb-0">₹ 0</p>
                   </div>
                 </div>
 

@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom"; // Added `useLocation`
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./EventParticipation.css";
 import Header from "../Layout/Navbar";
 import Sidebar from "../Layout/Sidebar";
 import Avatar from "../../assets/Avatar.png";
 
-const EventParticipation = () => {
-  const location = useLocation(); // Get the current location
+const ActivityParticipate = () => {
+  const location = useLocation(); // Get the current path
 
-  // Event data
-  const [events, setEvents] = useState([
+  const activity = [
     {
       id: 1,
       participatorName: "Evelyn Harper",
@@ -58,7 +57,7 @@ const EventParticipation = () => {
       date: "2022/01/01",
       eventName: "Holi Festival",
     },
-  ]);
+  ];
 
   // Helper function to check active path
   const isActive = (path) => location.pathname === path;
@@ -77,9 +76,8 @@ const EventParticipation = () => {
                   <button
                     className={`participatebtn hovermaincolor border-bottom btn ${
                       isActive("/home/EventParticipation")
-                        ? 'maintainance-income-btn-active' : 'maintainance-income-btn-withoutbg'
-
-                        
+                        ? "active-participate-btn"
+                        : "bg-white text-dark"
                     }`}
                   >
                     <span className="participatebtnspan">Events Participate</span>
@@ -102,7 +100,7 @@ const EventParticipation = () => {
               <div className="container-fluid row">
                 <div className="eventtable" style={{ overflowX: "auto" }}>
                   <div>
-                    <h4 className="mt-3">Event Participation</h4>
+                    <h4 className="mt-3">Activity Participation</h4>
                   </div>
                   {/* Header Row */}
                   <div
@@ -111,13 +109,13 @@ const EventParticipation = () => {
                   >
                     <div className="col-2 fw-bold text-start">Participator Name</div>
                     <div className="col-2 fw-bold text-center">Description</div>
-                    <div className="col-3 fw-bold text-center">Event Time</div>
-                    <div className="col-1 fw-bold text-center">Event Date</div>
-                    <div className="col-3 fw-bold text-center">Event Name</div>
+                    <div className="col-3 fw-bold text-center">Activity Time</div>
+                    <div className="col-1 fw-bold text-center">Activity Date</div>
+                    <div className="col-3 fw-bold text-center">Activity Name</div>
                   </div>
 
                   {/* Rows */}
-                  {events.map((event, index) => (
+                  {activity.map((activity, index) => (
                     <div
                       className="row data border-bottom p-2 d-flex align-items-center"
                       key={index}
@@ -128,18 +126,18 @@ const EventParticipation = () => {
                           alt="avatar"
                           className="rounded-circle profileimg me-2"
                         />
-                        <span>{event.participatorName}</span>
+                        <span>{activity.participatorName}</span>
                       </div>
                       <div className="col-2 text-center">
-                        <p>{event.description}</p>
+                        <p>{activity.description}</p>
                       </div>
                       <div className="col-3 text-center">
-                        <p>{event.time}</p>
+                        <p>{activity.time}</p>
                       </div>
                       <div className="col-1 text-center">
-                        <p>{event.date}</p>
+                        <p>{activity.date}</p>
                       </div>
-                      <div className="col-3 text-center">{event.eventName}</div>
+                      <div className="col-3 text-center">{activity.eventName}</div>
                     </div>
                   ))}
                 </div>
@@ -152,4 +150,4 @@ const EventParticipation = () => {
   );
 };
 
-export default EventParticipation;
+export default ActivityParticipate;

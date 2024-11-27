@@ -173,7 +173,7 @@ export default function SecurityGaurd() {
 
       <div className="flex-grow-1 dashboard-bg" style={{ width:"1920px"}}>
         <Header />
-        <div className="container-fluid  p-4" style={{ marginTop: "10px", width: "1620px" , marginLeft:"300px"  }}>
+        <div className="container-fluid  p-4" style={{ marginTop: "109px", width: "1620px" , marginLeft:"300px"  }}>
 
 
 
@@ -713,7 +713,7 @@ export default function SecurityGaurd() {
                 <Button style={{
                   width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
 
-                }} className='mainColor2' onClick={handleSave}>
+                }} className='save' onClick={handleSave}>
                   {isEdit ? 'Create' : 'Create'}
                 </Button>
               </Modal.Footer>

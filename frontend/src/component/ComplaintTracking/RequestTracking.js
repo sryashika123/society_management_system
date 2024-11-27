@@ -136,7 +136,7 @@ export default function RequestTracking() {
 
   <div className="flex-grow-1 dashboard-bg" style={{ width:"1920px"}}>
     <Header/>
-    <div className="container-fluid  p-4" style={{ marginTop: "10px", marginLeft:"300px",width:"1620px" }}>
+    <div className="container-fluid  p-4" style={{ marginTop: "109px", marginLeft:"300px",width:"1620px" }}>
      
 
       <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff",padding:"5px", marginTop: "20px" }}>
@@ -318,6 +318,7 @@ export default function RequestTracking() {
           <div style={{ width: "113px", height: "41px", border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px", paddingTop: "10px", paddingRight: "15px", paddingBottom: "10px", paddingLeft: "15px" }}>
             <Form.Check
               type="radio"
+              className='radio-group'
               label="High"
               name="priority"
               value="High"
@@ -329,6 +330,7 @@ export default function RequestTracking() {
             <Form.Check
               type="radio"
               label="Medium"
+              className='radio-group'
               name="priority"
               value="Medium"
               checked={newRequest.priority === "Medium"}
@@ -339,6 +341,7 @@ export default function RequestTracking() {
             <Form.Check
               type="radio"
               label="Low"
+              className='radio-group'
               name="priority"
               value="Low"
               checked={newRequest.priority === "Low"}
@@ -355,6 +358,7 @@ export default function RequestTracking() {
             <Form.Check
               type="radio"
               label="Open"
+              className='radio-group'
               name="status"
               value="Open"
               checked={newRequest.status === "Open"}
@@ -365,6 +369,7 @@ export default function RequestTracking() {
             <Form.Check
               type="radio"
               label="Pending"
+              className='radio-group'
               name="status"
               value="Pending"
               checked={newRequest.status === "Pending"}
@@ -375,6 +380,7 @@ export default function RequestTracking() {
             <Form.Check
               type="radio"
               label="Solved"
+              className='radio-group'
               name="status"
               value="Solved"
               checked={newRequest.status === "Solved"}
@@ -389,7 +395,7 @@ export default function RequestTracking() {
     <Button variant="secondary" onClick={handleCloseCreateModal} style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224" }}>
       Cancel
     </Button>
-    <Button className="mainColor2" onClick={handleCreateRequest} style={{
+    <Button className="save" onClick={handleCreateRequest} style={{
       width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224"
     }}>
       Create

@@ -107,7 +107,7 @@ export default function Announcement() {
             <Navbar />
             <div style={{ width: "1620px", marginLeft: "300px" }}>
                 <div className='container-fluid' >
-                    <div className='row p-5'>
+                    <div className='row p-5'  style={{marginTop:"109px"}}>
                         <div className='p-0'>
                             <div className='bg-light'>
                                 <div className='d-flex justify-content-between align-items-center  py-3 px-2'>

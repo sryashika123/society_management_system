@@ -64,9 +64,9 @@ export default function ResidentManagement() {
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1  dashboard-bg container-fluid" style={{ width: "1920px" }}>
+      <div className="flex-grow-1  dashboard-bg container-fluid  " style={{ width: "1920px" }}>
         <Header />
-        <div className="container-fluid  "  style={{ marginLeft: "300px", width: "1590px",marginTop:"20px" }}>
+        <div className="container-fluid stickyheader"  style={{ marginLeft: "300px", width: "1590px",marginTop:"109px" }}>
 
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px", marginLeft: "10px" }}>
@@ -258,6 +258,7 @@ export default function ResidentManagement() {
                   <div className="d-flex mb-3" style={{ gap: "70px" }}>
                     <Form.Check
                       style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingTop: "8px", paddingBottom: "8px", paddingRight: "30px", borderRadius: "5px" }}
+                      className='radio-group '
                       type="radio"
                       label="Occupied"
                       name="residenceStatus"
@@ -268,6 +269,7 @@ export default function ResidentManagement() {
                     <Form.Check
                       style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingTop: "8px", paddingBottom: "8px", paddingRight: "30px", borderRadius: "5px" }}
                       type="radio"
+                      className='radio-group'
                       label="Vacate"
                       name="residenceStatus"
                       value="Vacate"
@@ -280,7 +282,7 @@ export default function ResidentManagement() {
                     label={`By submitting, you agree to select ${selectedStatus}.`}
                     checked={agreeChecked}
                     onChange={(e) => setAgreeChecked(e.target.checked)}
-                    className="mb-3"
+                    className="mb-3 radio-group"
                   />
                 </Form>
               </div>

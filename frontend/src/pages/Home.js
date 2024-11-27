@@ -1,7 +1,7 @@
 import React from "react";
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ResidentManagement from "../component/ResidentManagement/Residentmanagement";
-import Sidebar from "../component/Layout/Sidebar"; 
+import Sidebar from "../component/Layout/Sidebar";
 import ResidentForm from "../component/ResidentManagement/ResidentForm";
 import FacilityManagement from "../component/FacilityManagement/FacilityManagement";
 import CreateComplaint from "../component/ComplaintTracking/CreateComplaint";
@@ -20,34 +20,43 @@ import Announcement from "../component/Announcement";
 import VisitorsTracking from "../component/Security/VisitorsTracking";
 import EmergencyManagement from "../component/Security/EmergencyManagement";
 import EventParticipation from "../component/Resident/EventParticipation";
+import ActivityParticipate from "../component/Resident/ActivityParticipate";
+import PersonalDetail from "../component/Resident/PersonalDetails";
+import TenantPersonalDetails from "../component/Resident/TenentPersonalDetails";
+import SecurityProtocolsResident from "../component/Resident/SecurityProtocolsResident";
 
 
 const Home = () => {
   return <div>
-    <Sidebar/>
-    
+    <Sidebar />
+
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      
-      <Route path="/residentmanagement" element={<ResidentManagement/>}/>
-      <Route path="/residentForm" element={<ResidentForm/>}/>
-      <Route path="/facility-management" element={<FacilityManagement/>}/>
-      <Route path="/create-complaint" element={<CreateComplaint/>}/>
-      <Route path="/request-tracking" element={<RequestTracking/>}/>
-      <Route path="/visitors-log" element={<VisitorsLogs/>}/>
-      <Route path="/security-protocols" element={<SecurityProtocols/>}/>
-      <Route path="/security-guard" element={<SecurityGuard/>}/>
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/EditProfile" element={<EditProfile />} />
-                <Route path="/Financial-Maintenanace" element={<FinancialManagementIncome />} />
-                <Route path="/Other-Income" element={<FinancialManagementOtherIncome />} />
-                <Route path="/Expense" element={<FinancialManagementExp />} />
-                <Route path="/Note" element={<FinancialManagementNote />} />
-                <Route path="/announcement" element={<Announcement/>} />
-                <Route path='/visitor-tracking' element={<VisitorsTracking/>}/>
-          <Route path='/emergency-management' element={<EmergencyManagement/>}/>
-          <Route path='/EventParticipation' element={<EventParticipation/>}/>
+
+      <Route path="/residentmanagement" element={<ResidentManagement />} />
+      <Route path="/residentForm" element={<ResidentForm />} />
+      <Route path="/facility-management" element={<FacilityManagement />} />
+      <Route path="/create-complaint" element={<CreateComplaint />} />
+      <Route path="/request-tracking" element={<RequestTracking />} />
+      <Route path="/visitors-log" element={<VisitorsLogs />} />
+      <Route path="/security-protocols" element={<SecurityProtocols />} />
+      <Route path="/security-guard" element={<SecurityGuard />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/EditProfile" element={<EditProfile />} />
+      <Route path="/Financial-Maintenanace" element={<FinancialManagementIncome />} />
+      <Route path="/Other-Income" element={<FinancialManagementOtherIncome />} />
+      <Route path="/Expense" element={<FinancialManagementExp />} />
+      <Route path="/Note" element={<FinancialManagementNote />} />
+      <Route path="/announcement" element={<Announcement />} />
+      <Route path='/visitor-tracking' element={<VisitorsTracking />} />
+      <Route path='/emergency-management' element={<EmergencyManagement />} />
+      <Route path='/EventParticipation' element={<EventParticipation />} />
+      <Route path='/activityparticipate' element={<ActivityParticipate />} />
+      <Route path='/personal-details' element={<PersonalDetail />} />
+      <Route path='/personal-details-tenant' element={<TenantPersonalDetails />} />
+      <Route path='/Resident-Protocols' element={<SecurityProtocolsResident />} />
+
 
     </Routes>
   </div>;

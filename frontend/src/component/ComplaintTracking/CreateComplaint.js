@@ -140,7 +140,7 @@ export default function ComplaintTracking() {
 
       <div className="flex-grow-1 dashboard-bg " style={{ width: "1920px" }}>
         <Header />
-        <div className="container-fluid  p-4" style={{ marginTop: "10px" ,width:"1620px" ,marginLeft:"300px"}}>
+        <div className="container-fluid  p-4" style={{ marginTop: "109px" ,width:"1620px" ,marginLeft:"300px"}}>
 
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff",padding:"5px", marginTop: "20px" }}>
@@ -318,6 +318,7 @@ export default function ComplaintTracking() {
                   <Form.Check
                     type="radio"
                     label="High"
+                    className='radio-group'
                     name="priority"
                     value="High"
                     checked={newComplaint.priority === "High"}
@@ -329,6 +330,7 @@ export default function ComplaintTracking() {
                   <Form.Check
                     type="radio"
                     label="Medium"
+                    className='radio-group'
                     name="priority"
                     value="Medium"
                     checked={newComplaint.priority === "Medium"}
@@ -339,6 +341,7 @@ export default function ComplaintTracking() {
                   <Form.Check
                     type="radio"
                     label="Low"
+                    className='radio-group'
                     name="priority"
                     value="Low"
                     checked={newComplaint.priority === "Low"}
@@ -356,6 +359,7 @@ export default function ComplaintTracking() {
                   <Form.Check
                     type="radio"
                     label="Open"
+                    className='radio-group'
                     name="status"
                     value="Open"
                     checked={newComplaint.status === "Open"}
@@ -368,6 +372,7 @@ export default function ComplaintTracking() {
                   <Form.Check
                     type="radio"
                     label="Pending"
+                    className='radio-group'
                     name="status"
                     value="Pending"
                     checked={newComplaint.status === "Pending"}
@@ -380,6 +385,7 @@ export default function ComplaintTracking() {
                     type="radio"
                     label="Solve"
                     name="status"
+                    className='radio-group'
                     value="Solve"
                     checked={newComplaint.status === "Solve"}
                     onChange={(e) => setNewComplaint({ ...newComplaint, status: e.target.value })}
@@ -391,10 +397,10 @@ export default function ComplaintTracking() {
           </Form>
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button variant="secondary" onClick={handleCloseCreateModal} style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
+          <Button className='cancel' onClick={handleCloseCreateModal} style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
             Cancel
           </Button>
-          <Button className='mainColor2' onClick={handleCreateComplaint} style={{
+          <Button className='save' onClick={handleCreateComplaint} style={{
             width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
 
           }}>
