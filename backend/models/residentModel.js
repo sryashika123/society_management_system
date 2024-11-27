@@ -1,4 +1,4 @@
-const monggose = require("mongoose");
+const mongoose = require("mongoose");
 
 const multer = require("multer");
 
@@ -7,7 +7,7 @@ const path = require("path");
 const FILE_PATH = "/uploads/resident_image";
 
 
-const residentSchema = new monggose.Schema({
+const residentSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['owner', 'tenant'], // Define the possible roles    
@@ -88,12 +88,21 @@ const residentSchema = new monggose.Schema({
         type: String,
         required: true
     },
-    
     residentStatus: {
         type: String,
         enum: ['Occupied', 'Vacate'],
         default: 'Occupied' 
     },
+    adminId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Admin', 
+        required: true 
+    },
+    societyId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Society',
+        required: true
+    }
 });
 const storage1 = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -104,7 +113,6 @@ const storage1 = multer.diskStorage({
     }
 });
 
-// Specify fields for multiple file uploads
 residentSchema.statics.uploadFiles = multer({ storage: storage1 }).fields([
     { name: "Profile_Photo", maxCount: 1 },
     { name: "Aadhar_card_frontSide", maxCount: 1 },
@@ -115,6 +123,5 @@ residentSchema.statics.uploadFiles = multer({ storage: storage1 }).fields([
 
 residentSchema.statics.filePath = FILE_PATH;
 
-
-const Resident = monggose.model("Resident", residentSchema);
+const Resident = mongoose.model("Resident", residentSchema);
 module.exports = Resident;

@@ -32,17 +32,16 @@ const MaintenanceSchema = mongoose.Schema({
             enum : ['Cash', 'Online'],
             required: true
         },
-        adminId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Admin',
-            required: true
+        adminId: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Admin', 
+            required: true 
         },
-        societyId: {
-            type: mongoose.Schema.Types.ObjectId,
+        societyId: { 
+            type: mongoose.Schema.Types.ObjectId, 
             ref: 'Society',
             required: true
-        },
-        
+        }        
     },
     { timestamps: true }
 );

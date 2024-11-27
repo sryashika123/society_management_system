@@ -1,5 +1,4 @@
-const Society = require("../models/societyModel"); // Adjust the path as necessary
-
+const Society = require("../models/societyModel"); 
 
 module.exports.createSociety = async (req, res) => {
     try {

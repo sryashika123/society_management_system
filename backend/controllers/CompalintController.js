@@ -1,15 +1,27 @@
 const Complaint = require("../models/compalintModel");
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 module.exports.createComplaints = async (req, res) => {
     // console.log(req.body);
-    
     try {
-        const { Complaint_name, Complainer_name, description, wing, unit, Priority, status } = req.body;
+        const { Complaint_name, Complainer_name, description, wing, unit, Priority, status, adminId, societyId } = req.body;
+
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(societyId);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
+
         if (!Complaint_name || !Complainer_name) {
             return res.status(400).json({ msg: "Complaint_name and Complainer_name are required." });
         }
 
-        const newComplaint = new Complaint({ Complaint_name, Complainer_name, description, wing, unit, Priority, status  });
+        const newComplaint = new Complaint({ Complaint_name, Complainer_name, description, wing, unit, Priority, status,  adminId, societyId });
         await newComplaint.save();    
         res.json(newComplaint);
     } 
@@ -26,7 +38,7 @@ module.exports.viewComplaints = async(req,res)=>{
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send("Server error");
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -41,7 +53,7 @@ module.exports.deleteComplaints = async(req,res)=>{
     }
     catch(err){
         console.log(err.message);
-        res.status(500).send("data not deleted")
+        res.status(500).json({ err: err.message });
     }   
 }
 
