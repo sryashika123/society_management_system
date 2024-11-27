@@ -21,6 +21,16 @@ const VisitorTrackingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    adminId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Admin', 
+        required: true 
+    },
+    societyId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Society',
+        required: true
+    }
 },
 {timestamps: true});
 

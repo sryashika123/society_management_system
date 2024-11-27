@@ -1,0 +1,40 @@
+.container-fluid {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+.right-sec {
+    background-image: url('./../assets/signup-bg.png');
+    background-size: cover;
+    height: 100vh;
+}
+.min-vh-100 {
+    min-height: 100vh;
+}
+.registration-form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+.register-image {
+    max-width: 100%;
+    height: auto;
+}
+.register-btn {
+    background: linear-gradient(90deg, #FE512E 0%, #F09619 100%);
+    color: #FFFFFF;
+    font-weight: bold;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .register-image {
+        margin-top: 0;
+    }
+    .registration-form-container {
+        padding: 10px;
+    }
+}

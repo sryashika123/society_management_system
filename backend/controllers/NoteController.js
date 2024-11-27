@@ -1,12 +1,24 @@
 const Note = require("../models/NoteModel");
+const Society = require("../models/societyModel");
+const Admin = require("../models/UserModel");
 
 module.exports.createNote = async(req,res) =>{
     try{
         const { title, description, date } = req.body;
+        const admin = await Admin.findById(adminId);
+		if (!admin) {
+		  	return res.status(404).json({ msg: "Admin not found" });
+		}
+
+        const society = await Society.findById(societyId);
+		if (!society) {
+		  	return res.status(404).json({ msg: "Society not found" });
+		}
+
         if(!title || !description || !date){
             return res.status(400).json({ msg: "fields are required." });
         }
-        const newNote = new Note({ title, description, date });
+        const newNote = new Note({ title, description, date});
         await newNote.save();    
         res.json(newNote);
     } 
@@ -23,7 +35,7 @@ module.exports.ViewNote = async(req,res)=>{
     }
     catch(err){
         console.error(err.message);
-        res.status(500).send("Server error");
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -38,7 +50,7 @@ module.exports.deleteNote = async(req,res)=> {
     }
     catch(err){
         console.log(err.message);
-        res.status(500).send("data not deleted")
+        res.status(500).json({ err: err.message });
     }
 }
 
@@ -55,6 +67,6 @@ module.exports.updateNote = async(req,res)=> {
     }
     catch(err){
         console.log(err.message);
-        res.status(500).send("data not updated");
+        res.status(500).json({ err: err.message });;
     }
 }
