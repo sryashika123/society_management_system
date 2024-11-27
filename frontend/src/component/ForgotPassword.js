@@ -1,19 +1,34 @@
 // ForgotPassword.js
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import ForgotPasswordImage from '../assets/forgotpassword.jpg'; // Use the correct path for your image
 import Logo from './Logo';
 import '../style.css'
+import axios from 'axios';
 
 function ForgotPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState('');
 
-  const onSubmit = (data) => {
-    console.log('Forgot Password Submitted:', data);
-    // Navigate to EnterOtp page with emailOrPhone as state
-    navigate('/enter-otp', { state: { emailOrPhone: data.emailOrPhone } });
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/users/forgot-password', {
+        email: data.email,
+      });
+
+      if (response.data) {
+        navigate('/enter-otp', { state: { email: data.email } });
+      } else {
+        setServerError(response.data.message || 'Failed to send OTP. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error requesting OTP:', error);
+      const errorMessage = error.response?.data?.message || 'Server error occurred. Please contact support.';
+      setServerError(errorMessage);
+    }
   };
 
   return (
@@ -50,7 +65,7 @@ function ForgotPassword() {
                   className={`form-control ${errors.emailOrPhone ? 'is-invalid' : ''}`}  // Corrected here
                   id="emailOrPhone"
                   placeholder="Enter Email or Phone"
-                  {...register('emailOrPhone', {
+                  {...register('email', {
                     required: 'Email or phone is required',
                     pattern: {
                       value: /^[^\s@]+@[^\s@]+\.[^\s@]+$|^\d{10}$/,  // Validates email or 10-digit phone number

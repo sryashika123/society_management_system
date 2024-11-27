@@ -43,12 +43,13 @@ export default function FinancialManagementNote() {
   // Handle form submission
 
   const onSubmit = async (data) => {
-    console.log("Submitted data:", data); // Check if all fields are included in the request
-
+    console.log("Submitted data:", data); // Log the data to verify all fields are passed correctly
+    
     try {
       if (editIndex !== null) {
-        const noteId = note[editIndex].id;
-        const updatedData = { ...data, id: noteId };
+        const noteId = note[editIndex]._id;
+        const updatedData = { title: data.title, description: data.description, date: data.date, amt: data.amt };
+  
         const response = await axios.put(
           `http://localhost:8000/api/users/v11/updateNote/${noteId}`,
           updatedData
@@ -56,7 +57,8 @@ export default function FinancialManagementNote() {
         console.log("Update response:", response);  // Log the response from the backend
       } else {
         // Create new note request
-        await axios.post("http://localhost:8000/api/users/v11/createNote", data);
+        const response = await axios.post("http://localhost:8000/api/users/v11/createNote", data);
+        console.log("Create response:", response);  // Log the response for creation
       }
       fetchNotes(); // Fetch updated list after saving
       handleClose(); // Close modal
@@ -65,6 +67,7 @@ export default function FinancialManagementNote() {
       alert(error.response?.data?.msg || "An error occurred while saving the note.");
     }
   };
+  
 
 
   // Handle editing a specific note
@@ -73,11 +76,12 @@ export default function FinancialManagementNote() {
     const noteToEdit = note[index];
     console.log("Editing note:", noteToEdit);  // Log the note you're trying to edit
     setValue('title', noteToEdit.title);
-    setValue('description', noteToEdit.description);  // Ensure consistency in field names
+    setValue('description', noteToEdit.description);
     setValue('date', noteToEdit.date);
     setValue('amt', noteToEdit.amt);
-    handleShow();
+    handleShow(); // Open modal for editing
   };
+  
   
 
   // Toggle dropdown menu for each card

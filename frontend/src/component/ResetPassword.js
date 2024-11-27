@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import ResetImage from '../assets/forgotpassword.jpg'; // Use your own image path
 import '../style.css';
 import Logo from './Logo';
+import axios from 'axios';
 
 function ResetPassword() {
   const navigate = useNavigate(); // Hook to handle redirection
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { state } = useLocation();
 
-  const onSubmit = (data) => {
-    console.log('Form Data:', data);
-    // Simulate password reset logic, replace this with real API call
-    setTimeout(() => {
-      alert('Password reset successful!');
-      navigate('/'); // Redirect to login page
-    }, 1000);
+
+  const email = state?.email; // Access the email from state
+  const onSubmit = async (data) => {
+    const { password } = data;
+
+    console.log('Payload:', { email, password  });
+    try {
+      const response = await axios.post('http://localhost:8000/api/users/reset-password', {
+       email,
+        password
+      });
+  
+      if (response.data) {
+        alert("password reset successfully"); // Display success message
+        navigate('/'); // Redirect to login
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || 'An error occurred. Please try again.');
+    }
   };
+  
 
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword((prev) => !prev);
@@ -50,7 +65,7 @@ function ResetPassword() {
                     type={showPassword ? 'text' : 'password'}
                     className={`form-control ${errors.newPassword ? 'is-invalid' : ''}`}
                     placeholder="Enter New Password"
-                    {...register('newPassword', { required: 'New Password is required' })}
+                    {...register('password', { required: 'New Password is required' })}
                   />
                   <button
                     type="button"
@@ -74,7 +89,7 @@ function ResetPassword() {
                     {...register('confirmPassword', {
                       required: 'Confirm Password is required',
                       validate: (value) =>
-                        value === watch('newPassword') || 'Passwords do not match',
+                        value === watch('password') || 'Passwords do not match',
                     })}
                   />
                   <button
