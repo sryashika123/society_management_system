@@ -24,22 +24,22 @@ const requestSchema = new mongoose.Schema({
         Priority: {
             type: String,
             enum: ["Low", "Medium" ,"High"],
-            default: "medium"
+            // default: "medium"
         },
         status:{
             type: String,
             enum: ["Pending", "Open", "Solve"],
-            default: "Pending"
+            // default: "Pending"
         },
         adminId: { 
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Admin', 
-            required: true 
+            // required: true 
         },
         societyId: { 
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Society',
-            required: true
+            // required: true
         }
     },
     { timestamps: true }
