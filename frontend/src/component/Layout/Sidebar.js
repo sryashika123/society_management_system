@@ -350,7 +350,7 @@ function Sidebar() {
         </div>
 
         <div className="p-3">
-          <Link to="/login" className="d-flex align-items-center text-danger" style={{ textDecoration: "none" }}>
+          <Link to="/" className="d-flex align-items-center text-danger" style={{ textDecoration: "none" }}>
             <FaSignOutAlt className="me-3" />
             <span>Logout</span>
           </Link>

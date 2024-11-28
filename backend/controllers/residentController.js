@@ -95,7 +95,7 @@ module.exports.createResident = async (req, res) => {
         }
         const newResident = new Resident(residentData);
         await newResident.save();
-        console.log(`${role} created successfully:`, newResident);
+        // console.log(`${role} created successfully:`, newResident);
 
         const randomPassword = generateRandomPassword();
         await sendMail(Email, randomPassword);

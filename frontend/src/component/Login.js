@@ -5,34 +5,38 @@ import { Link, useNavigate } from 'react-router-dom';
 import loginImage from '../assets/login.png';
 import '../style.css';
 import Logo from './Logo';
+import axios from 'axios';
 
 function Login() {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const navigate = useNavigate();
 
-	const onSubmit = (data) => {
-		const storedUser = JSON.parse(localStorage.getItem('user'));
-
-		// Check if email and password match with registration data
-		if (storedUser && storedUser.email === data.email && storedUser.password === data.password) {
+	const onSubmit = async (data) => {
+		try {
+			// Send POST request to the backend API
+			const response = await axios.post('http://localhost:8000/api/users/login', {
+				email: data.email,
+				password: data.password,
+			});
+			console.log('Login successful:', response.data);
 			alert('Login successful!');
-			navigate('/home'); // Redirect to homepage
-		} else {
-			alert('Invalid email or password. Please try again.');
+			navigate('/home');
+
+		} catch (error) {
+			console.error('Error during login:', error);
+			alert(error.response?.data?.message || 'An error occurred. Please try again later.'); // Handle backend error message
 		}
 	};
+	
 
-	// const {errors,handleError,clerError} = useForm({
-
-	// })
 
 	return (
 		<div className="container-fluid d-flex align-items-center min-vh-100">
 			<div className="row w-100">
 				<div className="left-side col-lg-6 col-md-6 col-sm-12 justify-content-center align-items-center d-flex flex-column">
 					<div className='stack mt-5 '>
-						<Logo />
 
+						<Logo />
 					</div>
 					<div>
 						<img
@@ -57,7 +61,7 @@ function Login() {
 									className={`form-control ${errors.email ? 'is-invalid' : ''}`} // Corrected here
 									id="Email"
 									placeholder="Enter Email or Phone"
-									{...register('Email', { required: 'Email or phone is required' })}
+									{...register('email', { required: 'Email or phone is required' })}
 								/>
 
 								{errors.email && <div className="invalid-feedback">{errors.Email.message}</div>}
