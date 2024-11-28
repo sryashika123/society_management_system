@@ -8,6 +8,7 @@ import { FaPlusSquare } from "react-icons/fa";
 import Edit from '../../assets/edit.png';
 import View from '../../assets/view.png';
 import Delete from '../../assets/delete.png';
+import { LuImagePlus } from 'react-icons/lu';
 import axios from 'axios';
 
 export default function FinancialManagementExp() {
@@ -118,6 +119,31 @@ export default function FinancialManagementExp() {
       amount: expenseToEdit.amount,
       Bill_image: expenseToEdit.Bill_image ? [expenseToEdit.Bill_image] : [], // Ensure it's an array
     });
+  };
+
+  const handleFileChange = (e, field) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setExp((prevState) => ({
+        ...prevState,
+        [field]: {
+          file,
+          preview: file.type.startsWith('image/') ? reader.result : null,
+        },
+      }));
+    };
+
+    if (file.type.startsWith('image/')) {
+      reader.readAsDataURL(file);
+    } else {
+      setExp((prevState) => ({
+        ...prevState,
+        [field]: { file, preview: null },
+      }));
+    }
   };
 
   const formatDate = (date) => {
@@ -265,6 +291,65 @@ export default function FinancialManagementExp() {
                           {errors.amount?.message}
                         </Form.Control.Feedback>
                       </Form.Group>
+
+
+                      {/* Aadhaar Card Upload Section */}
+                  <Form.Group controlId="formAadhaar" className=" mt-4">
+                    <Form.Label>Upload Bill<span className="text-danger">*</span></Form.Label>
+                    <div className='text-center'
+                      style={{
+                        border: "2px dashed rgba(211, 211, 211, 1)",
+                        borderRadius: "8px",
+                        padding: "20px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                        cursor: "pointer"
+                      }}
+                    >
+                      <label htmlFor="aadhaar-upload" style={{ cursor: 'pointer', color: '#007bff' }}>
+                        <LuImagePlus className='text-center'
+                          style={{
+                            fontSize: '24px',      // Size of the icon
+                            marginBottom: '8px',   // Bottom margin
+                            width: '40px',         // Icon width
+                            height: '50px',        // Icon height
+                            top: '4px',            // Top offset
+                            left: '8px',           // Left offset
+                            color: " rgba(167, 167, 167, 1)",// Ensure position is relative to the container
+                            gap: '0px',
+                            // No gap between elementsr
+                          }}
+                        />
+
+                        <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
+                      </label>
+                      <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
+                      <input
+                        id="aadhaar-upload"
+                        type="file"
+                        onChange={(e) => handleFileChange(e, 'aadhaar')}
+                        accept="image/png, image/jpeg, application/pdf"
+                        style={{ display: 'none' }}
+                      />
+
+                      {/* Display file preview or name */}
+                      {exp.aadhaar && (
+                        <div style={{ marginTop: '15px', textAlign: 'center' }}>
+                          {exp.aadhaar.preview && exp.aadhaar.file.type.startsWith('image/') ? (
+                            <img
+                              src={exp.aadhaar.preview}
+                              alt="Aadhaar Preview"
+                              style={{ width: '80px', height: '80px', borderRadius: '8px', objectFit: 'cover' }}
+                            />
+                          ) : (
+                            <div>{exp.aadhaar.file.name}</div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </Form.Group>
 
                       <Form.Group className="mb-3" controlId="formBillImage">
                         <Form.Label className='Form-Label'>Bill Image<span className="text-danger"> *</span></Form.Label>

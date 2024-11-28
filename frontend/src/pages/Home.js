@@ -24,6 +24,11 @@ import ActivityParticipate from "../component/Resident/ActivityParticipate";
 import PersonalDetail from "../component/Resident/PersonalDetails";
 import TenantPersonalDetails from "../component/Resident/TenentPersonalDetails";
 import SecurityProtocolsResident from "../component/Resident/SecurityProtocolsResident";
+import ServiceComplaint from "../component/Resident/ServiceComplaint";
+import RequestSubmission from "../component/Resident/RequestSubmission";
+import MaintainanceInvoice from "../component/Resident/MaintainanceInvoice";
+import OtherIncomeInvoices from "../component/Resident/OtherIncome";
+import ViewInvoice from "../component/Resident/ViewInvoice";
 
 
 const Home = () => {
@@ -56,7 +61,11 @@ const Home = () => {
       <Route path='/personal-details' element={<PersonalDetail />} />
       <Route path='/personal-details-tenant' element={<TenantPersonalDetails />} />
       <Route path='/Resident-Protocols' element={<SecurityProtocolsResident />} />
-
+      <Route path='/service-and-complaint' element={<ServiceComplaint />} />
+      <Route path='/request-and-submission' element={<RequestSubmission />} />
+      <Route path='/maintenance-invoices' element={<MaintainanceInvoice />} />
+      <Route path='/other-income-nvoice' element={<OtherIncomeInvoices />} />
+      <Route path='/view-invoice' element={<ViewInvoice />} />
 
     </Routes>
   </div>;
