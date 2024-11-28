@@ -30,6 +30,7 @@ function Sidebar() {
   const [isGeneralSecurityDropdownOpen, setGeneralSecurityDropdownOpen] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false); // Mobile sidebar toggle state
   const [isMobile, setIsMobile] = useState(window.innerWidth < 576); // Mobile screen check
+  const [isPaymentPortalDropdownOpen, setPaymentPortalDropdownOpen] = useState(false);
 
   // Update active item on location change
   useEffect(() => {
@@ -44,6 +45,7 @@ function Sidebar() {
             if (item.key === "security-management") setSecurityDropdownOpen(true);
             if (item.key === "financialmanagement") setFinancialDropdownOpen(true);
             if (item.key === "security") setGeneralSecurityDropdownOpen(true);
+            if (item.key === "payment-portal") setPaymentPortalDropdownOpen(true);
             foundActiveItem = true;
           }
         });
@@ -80,6 +82,13 @@ function Sidebar() {
       setSecurityDropdownOpen(false);
       setFinancialDropdownOpen(false);
     }
+    else if (key === "payment-portal") {
+      setFinancialDropdownOpen(false);
+      setComplaintDropdownOpen(false);
+      setSecurityDropdownOpen(false);
+      setGeneralSecurityDropdownOpen(false);
+      setPaymentPortalDropdownOpen(!isPaymentPortalDropdownOpen);
+    } 
     setActiveItem(key);
   };
 
@@ -182,6 +191,22 @@ function Sidebar() {
       icon: <img src={EventParticipation} />,
       path: "/home/EventParticipation",
     },
+    {
+      key: "service-and-complaint",
+      label: "Service And Complaint",
+      icon: <img src={personaldetailsIcon} />,
+      path: "/home/service-and-complaint",
+    },
+    {
+      key: "payment-portal",
+      label: "Payment Portal",
+      icon: <img src={securityIcon} />,
+      subItems: [
+        { key: "maintenance-invoices", label: "Maintenance Invoices", path: "/home/maintenance-invoices" },
+        { key: "other-income-nvoice", label: "Other Income Invoice", path: "/home/other-income-nvoice" },
+      ],
+    },
+    
   ];
 
   return (
@@ -248,7 +273,8 @@ function Sidebar() {
           {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
           (item.key === "security-management" && isSecurityDropdownOpen) ||
           (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
-          (item.key === "security" && isGeneralSecurityDropdownOpen) ? (
+          (item.key === "security" && isGeneralSecurityDropdownOpen) ||
+          (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ? (
             <FaChevronUp />
           ) : (
             <FaChevronDown />
@@ -257,7 +283,8 @@ function Sidebar() {
         {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
         (item.key === "security-management" && isSecurityDropdownOpen) ||
         (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
-        (item.key === "security" && isGeneralSecurityDropdownOpen) ? (
+        (item.key === "security" && isGeneralSecurityDropdownOpen) ||
+        (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ? (
           <ul className="list-unstyled ms-4">
             {item.subItems.map((subItem) => (
               <li key={subItem.key} className="p-2 rounded position-relative">

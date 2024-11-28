@@ -222,8 +222,9 @@ input[type=checkbox]:focus {
 /* sidebar start */
 
 /* table complaint */
-
-
+.complaint-btn{
+  width: 183px !important;
+}
 
 .Complaint-table {
   height: 378px;
