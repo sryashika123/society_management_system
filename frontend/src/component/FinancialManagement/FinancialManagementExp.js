@@ -84,13 +84,10 @@ export default function FinancialManagementExp() {
     formData.append("date", data.date);
     formData.append("amount", data.amount);
 
-    // Check if a file was selected
-    if (data.Bill_image && data.Bill_image.length > 0) {
-      formData.append("Bill_image", data.Bill_image[0]);
-    } else {
-      alert("Please upload a bill image.");
-      return; // Prevent form submission if no file is selected
-    }
+      // Ensure Bill_image is added correctly (it's a file input)
+  if (data.Bill_image[0]) {
+    formData.append("Bill_image", data.Bill_image[0]);
+  }
 
     try {
       if (editIndex !== null) {
@@ -123,6 +120,15 @@ export default function FinancialManagementExp() {
     });
   };
 
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0'); // Ensures two digits for day
+    const month = String(d.getMonth() + 1).padStart(2, '0'); // getMonth() is 0-based
+    const year = d.getFullYear();
+    
+    return `${day}-${month}-${year}`;
+  };
+  
   return (
     <div className='dashboard-bg' style={{ width:"1920px", }}>
       <Navbar />
@@ -158,12 +164,13 @@ export default function FinancialManagementExp() {
                       <tbody>
                         {
                           exp.map((val, index) => {
+                            
                             return (
                               <tr key={index} className='bg-light'>
 
                                 <td style={{ height: '55px' }} className='financial-Pnumber'> {val.Title}</td>
                                 <td style={{ height: '55px' }} className='financial-Pnumber'>{val.description}</td>
-                                <td style={{ height: '55px' }} className='financial-Pnumber'>{val.date}</td>
+                                <td style={{ height: '55px' }} className='financial-Pnumber'>{formatDate(val.date)}</td>
                                 <td style={{ height: '55px' }} className='financial-Pnumber exp-amt-color'>{val.amount}</td>
 
                                 <td style={{ height: '55px' }} className='financial-Pnumber'>
@@ -303,7 +310,7 @@ export default function FinancialManagementExp() {
                       <div>
                         <p><strong>Title:</strong> {viewComplaint.Title}</p>
                         <p><strong>Description:</strong> {viewComplaint.description}</p>
-                        <p><strong>Date:</strong> {viewComplaint.date}</p>
+                        <p><strong>Date:</strong>{formatDate(viewComplaint.date)}</p>
                         <p><strong>Amount:</strong> {viewComplaint.amount}</p>
                         <p><strong>Bill Image:</strong> {viewComplaint.Bill_image}</p>
                       </div>
