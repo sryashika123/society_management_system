@@ -58,6 +58,10 @@ const userSchema = new mongoose.Schema({
     otpExpires: { 
         type: Date 
     },   
+    role: {
+        type: String,
+        enum: ['admin', 'user'], // Define the possible roles    
+    },
 });
 
 const storage1 = multer.diskStorage({

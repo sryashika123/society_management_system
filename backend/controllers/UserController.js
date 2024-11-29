@@ -8,7 +8,7 @@ const Society = require("../models/societyModel");
 // Register
 module.exports.register = async (req, res) => {
 	try{
-		const { firstName, lastName, email, phone, country, state, city, select_society, password, confirmPassword } = req.body;
+		const { firstName, lastName, email, phone, country, state, city, select_society, password, confirmPassword , role} = req.body;
 		let user = await User.findOne({ email });
 		
 
@@ -26,7 +26,7 @@ module.exports.register = async (req, res) => {
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(password, salt);
 
-		user = new User({ firstName, lastName, email, phone, country, state, city, select_society, password: hashedPassword, confirmPassword: hashedPassword });
+		user = new User({ firstName, lastName, email, phone, country, state, city, select_society, password: hashedPassword, confirmPassword: hashedPassword , role});
 		await user.save();
 		res.status(201).json({ msg: 'User registered successfully' });
 	} 
@@ -54,7 +54,7 @@ module.exports.login = async (req, res,err) => {
 
 		const payload = {
 			user: { user: user },
-			user: { id: user.id,email: user.email, password: user.password },
+			user: { id: user.id, email: user.email, password: user.password , role: user.role},
 		};
 		
 		const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -157,3 +157,12 @@ module.exports.resetpassword = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+module.exports.getProtectedData = (req, res) => {
+	try {
+		res.status(200).json({ msg: 'Access granted to protected data', user: req.user });
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server error');
+	}
+}
