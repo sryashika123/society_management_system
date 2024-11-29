@@ -5,23 +5,23 @@ const Admin = require("../models/UserModel");
 module.exports.createComplaints = async (req, res) => {
     // console.log(req.body);
     try {
-        const { Complaint_name, Complainer_name, description, wing, unit, Priority, status, adminId, societyId } = req.body;
+        const { Complaint_name, Complainer_name, description, wing, unit, Priority, status } = req.body;
 
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
+        // const admin = await Admin.findById(adminId);
+		// if (!admin) {
+		//   	return res.status(404).json({ msg: "Admin not found" });
+		// }
 
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
+        // const society = await Society.findById(societyId);
+		// if (!society) {
+		//   	return res.status(404).json({ msg: "Society not found" });
+		// }
 
         if (!Complaint_name || !Complainer_name) {
             return res.status(400).json({ msg: "Complaint_name and Complainer_name are required." });
         }
 
-        const newComplaint = new Complaint({ Complaint_name, Complainer_name, description, wing, unit, Priority, status,  adminId, societyId });
+        const newComplaint = new Complaint({ Complaint_name, Complainer_name, description, wing, unit, Priority, status });
         await newComplaint.save();    
         res.json(newComplaint);
     } 

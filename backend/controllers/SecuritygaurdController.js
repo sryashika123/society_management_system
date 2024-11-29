@@ -12,17 +12,17 @@ module.exports.createSecuritygaurd = async (req, res) => {
             delete req.body['Shift_time ']; // Remove the incorrect key
         }
 
-        const { Full_name, Phone_number, gender, shift, Shift_Date, Shift_time, adminId, societyId } = req.body;
+        const { Full_name, Phone_number, gender, shift, Shift_Date, Shift_time } = req.body;
 
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
+        // const admin = await Admin.findById(adminId);
+		// if (!admin) {
+		//   	return res.status(404).json({ msg: "Admin not found" });
+		// }
 
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
+        // const society = await Society.findById(societyId);
+		// if (!society) {
+		//   	return res.status(404).json({ msg: "Society not found" });
+		// }
 
         if(!Shift_time){
             return res.status(400).json({ message: 'Shift_time is required' });
@@ -41,8 +41,8 @@ module.exports.createSecuritygaurd = async (req, res) => {
             Shift_time,
             Security_Gard_Image: basePath + req.files.Security_Gard_Image[0].filename,
             Aadhar_card: basePath + req.files.Aadhar_card[0].filename,
-            adminId, 
-            societyId
+            // adminId, 
+            // societyId
         });
 
         await newSecurityGaurd.save();

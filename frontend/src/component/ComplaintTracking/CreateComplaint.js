@@ -7,61 +7,168 @@ import Header from '../Layout/Navbar';
 import Edit from "../../assets/edit.png"
 import View from "../../assets/view.png"
 import Delete from "../../assets/delete.png"
+import axios from 'axios';
 
 export default function ComplaintTracking() {
-  const [complaints, setComplaints] = useState([
-    { id: 1, name: "Evelyn Harper", type: "Unethical Behavior", description: "Providing false information or  ", unit: "A", number: "1001", priority: "Medium", status: "Pending" },
-    { id: 2, name: "Esther Howard", type: "Preventive Measures", description: "Regular waste collection services  ", unit: "B", number: "1002", priority: "High", status: "Solve" },
-  ]);
-
-  const [selectedComplaint, setSelectedComplaint] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [showViewModal, setShowViewModal] = useState(false);
-
-  // New state for the "Create Complaint" feature
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [complaints, setComplaints] = useState([]);
   const [newComplaint, setNewComplaint] = useState({
-    name: "",
-    type: "",
-    description: "",
-    unit: "",
-    number: "",
-    priority: "Medium",
-    status: "Open",
+    Complaint_name: '',
+    Complainer_name: '',
+    description: '',
+    wing: '',
+    unit: '',
+    Priority: 'Medium',
+    status: 'Open'
   });
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showViewModal, setShowViewModal] = useState(false); // State for view modal
+  const [errorMessage, setErrorMessage] = useState('');
 
+  useEffect(() => {
+    const fetchComplaints = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/users/v4/viewComplaints');
+        setComplaints(response.data); // Assuming response.data contains the complaints
+      } catch (error) {
+        setErrorMessage('Failed to load complaints.');
+        console.error(error); // Log the error for debugging purposes
+      }
+    };
+  
+    fetchComplaints();
+  }, []);
+  
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const handleEdit = (complaint) => {
-    setSelectedComplaint(complaint);
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => setShowModal(false);
-
-  const handleSave = () => {
-    if (!selectedComplaint.name || !selectedComplaint.type || !selectedComplaint.description || !selectedComplaint.unit || !selectedComplaint.number) {
-      setErrorMessage("All fields are required.");
+  const handleCreateComplaint = async () => {
+    // Check for empty fields
+    if (!newComplaint.Complaint_name || !newComplaint.Complainer_name || !newComplaint.description || !newComplaint.wing || !newComplaint.unit) {
+      setErrorMessage('All fields are required.');
       return;
     }
-
-    setComplaints((prevComplaints) =>
-      prevComplaints.map((c) =>
-        c.id === selectedComplaint.id ? selectedComplaint : c
-      )
-    );
-
-    setShowModal(false);
-    setErrorMessage("");
+  
+    try {
+      // Log the newComplaint object to ensure it's correct
+      console.log(newComplaint);
+  
+      const response = await axios.post('http://localhost:8000/api/users/v4/createComplaints', newComplaint);
+      
+      // Log the response to check if it's correct
+      console.log(response.data);
+  
+      // Add the new complaint to the list
+      setComplaints([...complaints, response.data]);
+  
+      // Clear the newComplaint form
+      setNewComplaint({ Complaint_name: '', Complainer_name: '', description: '', wing: '', unit: '', Priority: 'Medium', status: 'Open' });
+  
+      // Close the modal and reset the error message
+      setShowCreateModal(false);
+      setErrorMessage('');
+    } catch (error) {
+      // Log the error for debugging
+      console.error(error);
+  
+      // Set the error message
+      setErrorMessage('Failed to create complaint.');
+    }
   };
+  
 
-
-  const handleView = (complaint) => {
+  const handleEditComplaint = (complaint) => {
     setSelectedComplaint(complaint);
-    setShowViewModal(true);
+    setShowEditModal(true);
   };
 
-  const handleCloseViewModal = () => setShowViewModal(false);
+
+  const handleViewComplaint = (complaint) => {
+    setSelectedComplaint(complaint);
+    setShowViewModal(true); // Show the view modal
+  };
+
+
+  const handleSave = async () => {
+    if (!selectedComplaint.Complaint_name || !selectedComplaint.Complainer_name || !selectedComplaint.description || !selectedComplaint.wing || !selectedComplaint.unit) {
+      setErrorMessage('All fields are required.');
+      return;
+    }
+  
+    try {
+      // Log the selectedComplaint to ensure it's correctly populated
+      console.log(selectedComplaint);
+  
+      // Send the PUT request to update the complaint
+      const response = await axios.put(`http://localhost:8000/api/users/v4/updateComplaints/${selectedComplaint._id}`, selectedComplaint);
+  
+      // Log the response data for debugging
+      console.log(response.data);
+  
+      // Optionally, re-fetch the complaints list to ensure it's up to date
+      const fetchComplaints = async () => {
+        try {
+          const result = await axios.get('http://localhost:8000/api/users/v4/viewComplaints');
+          setComplaints(result.data);  // Re-fetch complaints
+        } catch (error) {
+          setErrorMessage('Failed to load complaints.');
+        }
+      };
+  
+      // Re-fetch complaints after the update
+      fetchComplaints();
+  
+      // Close the modal and reset error message
+      setShowEditModal(false);
+      setErrorMessage('');
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Failed to update complaint.');
+    }
+  };
+  
+
+  const [deleteComplaintId, setDeleteComplaintId] = useState(null);
+  const [showDeleteComplaint, setShowDeleteComplaint] = useState(false);
+
+
+  const handleCloseDeleteModal = () => {
+    setDeleteComplaintId(null);
+    setShowDeleteComplaint(false);
+  };
+  const handleShowDelete = (ComplaintId) => {
+    setDeleteComplaintId(ComplaintId);
+    setShowDeleteComplaint(true);
+  };
+
+  const handleDelete = async () => {
+    // Optimistically update the UI by removing the request from the state first
+    setComplaints((prevComplaints) => prevComplaints.filter((complaints) => complaints._id !== deleteComplaintId));
+
+    try {
+      // Make the API call to delete the request from the backend
+      const response = await axios.delete(`http://localhost:8000/api/users/v4/deleteComplaints/${deleteComplaintId}`);
+      console.log('Delete response:', response);
+
+      // If deletion was unsuccessful, revert the optimistic update
+      if (response.status !== 200) {
+        // Optionally, you can add the request back to the state here
+      }
+
+      // Close the modal and clear the request ID
+      setDeleteComplaintId(null);
+    setShowDeleteComplaint(false);
+    } catch (error) {
+      console.error('Error deleting request:', error.response || error.message);
+
+      // Revert the optimistic update if the delete operation fails
+      setComplaints((prevComplaints) => [
+        ...prevComplaints,
+        prevComplaints.find((complaints) => complaints.id === deleteComplaintId)
+      ]);
+
+      // Optionally, show an error message to the user
+    }
+  };
 
   const getPriorityByStatus = (status) => {
     if (status === "Pending") return "Medium";
@@ -70,10 +177,10 @@ export default function ComplaintTracking() {
     return "Medium";
   };
 
-  const badgeStyle = (priority) => {
-    if (priority === "High") return { backgroundColor: "#E74C3C", color: "white" };
-    if (priority === "Medium") return { backgroundColor: "#5678E9", color: "white" };
-    if (priority === "Low") return { backgroundColor: "#39973D", color: "white" };
+  const badgeStyle = (Priority) => {
+    if (Priority === "High") return { backgroundColor: "#E74C3C", color: "white" };
+    if (Priority === "Medium") return { backgroundColor: "#5678E9", color: "white" };
+    if (Priority === "Low") return { backgroundColor: "#39973D", color: "white" };
     return { backgroundColor: "#28a745", color: "white" };
   };
 
@@ -83,34 +190,6 @@ export default function ComplaintTracking() {
     if (status === "Solve") return { backgroundColor: "#39973D1A", color: "#39973D" };
     return { backgroundColor: "#f8f9fa", color: "black" };
   };
-
-  const handleShowCreateModal = () => setShowCreateModal(true);
-  const handleCloseCreateModal = () => setShowCreateModal(false);
-
-
-
-  const handleCreateComplaint = () => {
-    // Basic form validation
-    if (!newComplaint.name || !newComplaint.type || !newComplaint.description || !newComplaint.unit || !newComplaint.number) {
-      setErrorMessage("All fields are required.");
-      return;
-    }
-
-    // Validate and set priority based on status
-
-    setErrorMessage(""); // Clear previous error message if any
-
-    const newId = complaints.length + 1;  // Auto-generate a new ID
-    const complaintToAdd = { ...newComplaint, id: newId };
-    setComplaints([...complaints, complaintToAdd]);
-
-    setNewComplaint({ name: "", type: "", description: "", unit: "", number: "", priority: "Medium", status: "Open" });
-    setShowCreateModal(false);
-  };
-
-  // Trigger this effect whenever priority changes
-
-
 
   const imageColumnStyle = {
     display: "flex",
@@ -127,9 +206,7 @@ export default function ComplaintTracking() {
     maxWidth: "350px",
   };
 
-  const handleDelete = (id) => {
-    setComplaints((prevComplaints) => prevComplaints.filter((complaint) => complaint.id !== id));
-  };
+ 
 
 
   return (
@@ -146,7 +223,7 @@ export default function ComplaintTracking() {
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff",padding:"5px", marginTop: "20px" }}>
             <div  className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-2 mb-4">
               <h4 className="mb-0" style={{marginLeft:"20px"}}>Complaint Tracking</h4>
-              <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={handleShowCreateModal}
+              <Button className="btn mainColor2 d-flex align-items-center justify-content-center"onClick={() => setShowCreateModal(true)}
                 style={{ border: 'none' }}><FaPlus
                   style={{
                     fontSize: "18px",
@@ -194,13 +271,13 @@ export default function ComplaintTracking() {
                             textAlign: "left", // Align text to the left
                           }}
                         >
-                          {complaint.name}
+                          {complaint.Complaint_name}
                         </span>
                       </div>
                     </td>
 
                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle" }} className="text-start">
-                      {complaint.type}
+                      {complaint.Complainer_name}
                     </td>
                     <td style={{
                       ...tableColumnStyle,               // Presuming tableColumnStyle is a predefined style object
@@ -222,15 +299,15 @@ export default function ComplaintTracking() {
 
                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle" }}>
                       <span style={{ border: "1px solid ", borderRadius: "50%", width: "28px", height: "28px", display: "inline-flex", justifyContent: "center", alignItems: "center", color: "skyblue" }}>
-                        {complaint.unit}
+                        {complaint.wing}
                       </span>
                       <span style={{ fontFamily: "Poppins, sans-serif", fontWeight: "500", fontSize: "16px", lineHeight: "24px", marginLeft: "8px" }}>
-                        {complaint.number}
+                        {complaint.unit}
                       </span>
                     </td>
                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle" }}>
-                      <span className="badge" style={{ ...badgeStyle(complaint.priority), width: "100px", height: "31px", padding: "5px 12px", gap: "8px", borderRadius: "50px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
-                        {complaint.priority}
+                      <span className="badge" style={{ ...badgeStyle(complaint.Priority), width: "100px", height: "31px", padding: "5px 12px", gap: "8px", borderRadius: "50px", display: "inline-flex", justifyContent: "center", alignItems: "center" }}>
+                        {complaint.Priority}
                       </span>
                     </td>
                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle" }}>
@@ -240,9 +317,9 @@ export default function ComplaintTracking() {
                     </td>
                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle" }}>
                       <div className="d-flex align-items-center justify-content-center">
-                        <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(complaint)} />
-                        <img src={View} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
-                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(complaint.id)} />
+                        <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEditComplaint(complaint)}/>
+                        <img src={View} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleViewComplaint(complaint)} />
+                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(complaint._id)} />
                       </div>
                     </td>
                   </tr>
@@ -254,7 +331,7 @@ export default function ComplaintTracking() {
       </div>
 
       {/* Create Complaint Modal */}
-      <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
+      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Create Complaint</Modal.Title>
         </Modal.Header>
@@ -267,16 +344,16 @@ export default function ComplaintTracking() {
               <Form.Label>Complainer Name<span className="text-danger">*</span></Form.Label>
               <Form.Control
                 type="text"
-                value={newComplaint.name}
-                onChange={(e) => setNewComplaint({ ...newComplaint, name: e.target.value })}
+                value={newComplaint.Complaint_name}
+                onChange={(e) => setNewComplaint({ ...newComplaint, Complaint_name: e.target.value })}
               />
             </Form.Group>
             <Form.Group className='mt-2'>
               <Form.Label>Complaint Type<span className="text-danger">*</span></Form.Label>
               <Form.Control
                 type="text"
-                value={newComplaint.type}
-                onChange={(e) => setNewComplaint({ ...newComplaint, type: e.target.value })}
+                value={newComplaint.Complainer_name}
+                onChange={(e) => setNewComplaint({ ...newComplaint, Complainer_name: e.target.value })}
               />
             </Form.Group>
             <Form.Group className='mt-2'>
@@ -291,20 +368,20 @@ export default function ComplaintTracking() {
 
 
                   <Form.Group className='mt-2'>
+                    <Form.Label>Wing<span className="text-danger">*</span></Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={newComplaint.wing}
+                      onChange={(e) => setNewComplaint({ ...newComplaint, wing: e.target.value })}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className='mt-2'>
                     <Form.Label>Unit<span className="text-danger">*</span></Form.Label>
                     <Form.Control
                       type="text"
                       value={newComplaint.unit}
                       onChange={(e) => setNewComplaint({ ...newComplaint, unit: e.target.value })}
-                    />
-                  </Form.Group>
-
-                  <Form.Group className='mt-2'>
-                    <Form.Label>Number<span className="text-danger">*</span></Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={newComplaint.number}
-                      onChange={(e) => setNewComplaint({ ...newComplaint, number: e.target.value })}
                     />
                   </Form.Group>
                 </div>
@@ -319,10 +396,10 @@ export default function ComplaintTracking() {
                     type="radio"
                     label="High"
                     className='radio-group'
-                    name="priority"
+                    name="Priority"
                     value="High"
-                    checked={newComplaint.priority === "High"}
-                    onChange={(e) => setNewComplaint({ ...newComplaint, priority: e.target.value })}
+                    checked={newComplaint.Priority === "High"}
+                    onChange={(e) => setNewComplaint({ ...newComplaint, Priority: e.target.value })}
                   />
                 </div>
                 <div style={{ width: "113px", height: "41px", border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px", paddingTop: "10px", paddingRight: "15px", paddingBottom: "10px", paddingLeft: "15px" }}>
@@ -331,10 +408,10 @@ export default function ComplaintTracking() {
                     type="radio"
                     label="Medium"
                     className='radio-group'
-                    name="priority"
+                    name="Priority"
                     value="Medium"
-                    checked={newComplaint.priority === "Medium"}
-                    onChange={(e) => setNewComplaint({ ...newComplaint, priority: e.target.value })}
+                    checked={newComplaint.Priority === "Medium"}
+                    onChange={(e) => setNewComplaint({ ...newComplaint, Priority: e.target.value })}
                   />
                 </div>
                 <div style={{ width: "113px", height: "41px", border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "5px", paddingTop: "10px", paddingRight: "15px", paddingBottom: "10px", paddingLeft: "15px" }}>
@@ -342,10 +419,10 @@ export default function ComplaintTracking() {
                     type="radio"
                     label="Low"
                     className='radio-group'
-                    name="priority"
+                    name="Priority"
                     value="Low"
-                    checked={newComplaint.priority === "Low"}
-                    onChange={(e) => setNewComplaint({ ...newComplaint, priority: e.target.value })}
+                    checked={newComplaint.Priority === "Low"}
+                    onChange={(e) => setNewComplaint({ ...newComplaint, Priority: e.target.value })}
                   />
                 </div>
               </div>
@@ -397,7 +474,7 @@ export default function ComplaintTracking() {
           </Form>
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button className='cancel' onClick={handleCloseCreateModal} style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
+          <Button className='cancel' onClick={() => setShowCreateModal(false)} style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
             Cancel
           </Button>
           <Button className='save' onClick={handleCreateComplaint} style={{
@@ -413,7 +490,7 @@ export default function ComplaintTracking() {
 
       <Modal
         show={showViewModal}
-        onHide={handleCloseViewModal}
+        onHide={() => setShowViewModal(false)}
         style={{
           width: "410px",
           left: "755px",
@@ -474,7 +551,7 @@ export default function ComplaintTracking() {
                     marginTop: "10px"
                   }}
                 >
-                  <h5 style={{ margin: 0 }}>{selectedComplaint.name}</h5>
+                  <h5 style={{ margin: 0 }}>{selectedComplaint.Complaint_name}</h5>
                   <span style={{
                     color: "#A7A7A7",
                   }}>Aug 5, 2024</span>
@@ -493,7 +570,7 @@ export default function ComplaintTracking() {
                   color: "#A7A7A7",
                   fontWeight: "200"
                 }}>Request Name</strong> <br />
-                <span>{selectedComplaint.type}</span>
+                <span>{selectedComplaint.Complainer_name}</span>
               </div>
               <div style={{
 
@@ -544,7 +621,7 @@ export default function ComplaintTracking() {
                   </strong>
 
                   <p style={{ border: "1px solid ", borderRadius: "50%", width: "28px", height: "28px", display: "inline-flex", justifyContent: "center", alignItems: "center", color: "skyblue" }}>
-                    {selectedComplaint.unit}
+                    {selectedComplaint.wing}
                   </p>
 
                 </div>
@@ -585,7 +662,7 @@ export default function ComplaintTracking() {
                       margin: "0"  // Set margin to 0 (instead of gap) as gap works only in flex/grid containers
                     }}
                   >
-                    {selectedComplaint.number}
+                    {selectedComplaint.unit}
                   </p>
 
                 </div>
@@ -617,11 +694,11 @@ export default function ComplaintTracking() {
                     style={{
                       textAlign: "center",
                       borderRadius: "50px",
-                      background: badgeStyle(selectedComplaint.priority).backgroundColor,
+                      background: badgeStyle(selectedComplaint.Priority).backgroundColor,
                       color: "white"
                     }}
                   >
-                    {selectedComplaint.priority}
+                    {selectedComplaint.Priority}
                   </p>
 
 
@@ -669,7 +746,7 @@ export default function ComplaintTracking() {
 
       {/* edit model */}
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Complaint</Modal.Title>
         </Modal.Header>
@@ -682,11 +759,11 @@ export default function ComplaintTracking() {
               <Form.Label>Complainer Name<span className="text-danger">*</span></Form.Label>
               <Form.Control
                 type="text"
-                value={selectedComplaint?.name || ""}
+                value={selectedComplaint?.Complaint_name || ""}
                 onChange={(e) =>
                   setSelectedComplaint((prev) => ({
                     ...prev,
-                    name: e.target.value,
+                    Complaint_name: e.target.value,
                   }))
                 }
               />
@@ -695,11 +772,11 @@ export default function ComplaintTracking() {
               <Form.Label>Complaint Type<span className="text-danger">*</span></Form.Label>
               <Form.Control
                 type="text"
-                value={selectedComplaint?.type || ""}
+                value={selectedComplaint?.Complainer_name || ""}
                 onChange={(e) =>
                   setSelectedComplaint((prev) => ({
                     ...prev,
-                    type: e.target.value,
+                    Complainer_name: e.target.value,
                   }))
                 }
               />
@@ -721,6 +798,20 @@ export default function ComplaintTracking() {
 
 
               <Form.Group className='mt-3'>
+                <Form.Label>Wing<span className="text-danger">*</span></Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedComplaint?.wing || ""}
+                  onChange={(e) =>
+                    setSelectedComplaint((prev) => ({
+                      ...prev,
+                      wing: e.target.value,
+                    }))
+                  }
+                />
+              </Form.Group>
+
+              <Form.Group className='mt-3'>
                 <Form.Label>Unit<span className="text-danger">*</span></Form.Label>
                 <Form.Control
                   type="text"
@@ -733,40 +824,26 @@ export default function ComplaintTracking() {
                   }
                 />
               </Form.Group>
-
-              <Form.Group className='mt-3'>
-                <Form.Label>Number<span className="text-danger">*</span></Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedComplaint?.number || ""}
-                  onChange={(e) =>
-                    setSelectedComplaint((prev) => ({
-                      ...prev,
-                      number: e.target.value,
-                    }))
-                  }
-                />
-              </Form.Group>
             </div>
             <Form.Group className='mt-3'>
               <Form.Label>Priority<span className="text-danger">*</span></Form.Label>
               <div className="d-flex justify-content-around  " >
 
-                {["High", "Medium", "Low"].map((priority) => (
+                {["High", "Medium", "Low"].map((Priority) => (
                   <Form.Check
                     style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingRight: "30px", borderRadius: "5px", paddingTop: "8px", paddingBottom: "8px" }}
                     type="radio"
-                    label={priority}
-                    name="priority"
-                    value={priority}
-                    checked={selectedComplaint?.priority === priority}
+                    label={Priority}
+                    name="Priority"
+                    value={Priority}
+                    checked={selectedComplaint?.Priority === Priority}
                     onChange={(e) =>
                       setSelectedComplaint((prev) => ({
                         ...prev,
-                        priority: e.target.value,
+                        Priority: e.target.value,
                       }))
                     }
-                    key={priority}
+                    key={Priority}
                   />
 
                 ))}
@@ -798,7 +875,7 @@ export default function ComplaintTracking() {
           </Form>
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={handleCloseModal}>
+          <Button style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} variant="secondary" onClick={() => setShowEditModal(false)}>
             Cancel
           </Button>
           <Button style={{
@@ -807,6 +884,27 @@ export default function ComplaintTracking() {
           }} className='mainColor2' onClick={handleSave}>
             Save
           </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+      <Modal show={showDeleteComplaint} onHide={handleCloseDeleteModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Request?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to delete this protocol?</p>
+        </Modal.Body>
+        <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button variant="secondary" style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} style={{
+            width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224", background: "rgba(231, 76, 60, 1)"
+          }}>
+            Delete
+          </Button>
+
         </Modal.Footer>
       </Modal>
     </div>

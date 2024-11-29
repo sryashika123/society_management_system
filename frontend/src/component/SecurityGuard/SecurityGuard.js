@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table, Modal, Form } from 'react-bootstrap';
-import { FaCamera,  FaFemale, FaImage, FaMale, FaMoon, FaPlus, FaSun, FaTrash, FaUpload } from 'react-icons/fa';
+import { FaCamera, FaFemale, FaImage, FaMale, FaMoon, FaPlus, FaSun, FaTrash, FaUpload } from 'react-icons/fa';
 import Sidebar from '../Layout/Sidebar';
 import Avtar from "../../assets/Avatar.png";
 import { LuImagePlus } from 'react-icons/lu';
@@ -8,179 +8,237 @@ import Header from '../Layout/Navbar';
 import View from "../../assets/view.png"
 import Delete from "../../assets/delete.png"
 import Edit from "../../assets/edit.png"
+import axios from 'axios';
 
 export default function SecurityGaurd() {
-  const [guards, setGuards] = useState([
-    { id: 1, name: 'Brooklyn Simmons ', phone: '94564 96321', shift: 'Day', date: '2024-11-28', time: '2:45 PM', gender: 'Male' },
-    { id: 2, name: 'Brooklyn Simmons', phone: '94564 96321', shift: 'Day', date: '2024-11-28', time: '2:45 PM', gender: 'Female' },
-    { id: 3, name: 'Brooklyn Simmons', phone: '94564 96321', shift: 'Night', date: '2024-11-28', time: '2:45 PM', gender: 'Male' },
-    { id: 4, name: 'Brooklyn Simmons', phone: '94564 96321', shift: 'Day', date: '2024-11-28', time: '2:45 PM', gender: 'Female' },
-    { id: 5, name: 'Brooklyn Simmons', phone: '94564 96321', shift: 'Night', date: '2024-11-28', time: '2:45 PM', gender: 'Male' },
-  ]);
-
-  // Function to add a new guard (for demo)
-
-
-  // Function to handle button click and show how useEffect might be used
-  useEffect(() => {
-    console.log('Guard list updated', guards);
-  }, [guards]);
-
+  const [guards, setGuards] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showDeleteGuard, setShowDeleteGuard] = useState(false);
-  const [deleteGuardId, setDeleteGuardId] = useState(null);
-  const [showViewGuard, setShowViewGuard] = useState(false);
+  const [showViewGuard, setShowViewGuard] = useState(false); // For view modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [guardData, setGuardData] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
-  const [editGuardId, setEditGuardId] = useState(null);
-  const [guardData, setGuardData] = useState({ title: "", description: "", date: "", time: "" });
   const [newGuard, setNewGuard] = useState({
-    name: '',
-    phone: '',
-    shift: 'Day',
-    date: '',
-    time: '',
+    Full_name: '',
+    Phone_number: '',
     gender: '',
-    photo: null,
-    aadhaar: null,
+    shift: 'Day',
+    Shift_Date: '',
+    Shift_time: '',
+    Security_Gard_Image: null,
+    Aadhar_card: null,
   });
 
+  const [editGuardId, setEditGuardId] = useState(null);
+  // const [viewGuardData, setViewGuardData] = useState(null);
+  const [guardToDelete, setGuardToDelete] = useState(null);
+
+  // Fetch guards list from API
+  useEffect(() => {
+    fetchGuardData()
+      .then(data => setGuardData(data))
+      .catch(error => console.log("Error fetching data:", error));
+  }, []);
+
+  const fetchGuardData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/users/v10/getSecuritygaurd');
+      setGuards(response.data);
+    } catch (error) {
+      console.error('Error fetching guards:', error);
+    }
+  };
+  // Show modal for creating or editing guard
   const handleShowCreate = () => {
     setIsEdit(false);
-    setEditGuardId(null);
     setNewGuard({
-      name: '',
-      phone: '',
-      shift: 'Day',
-      date: '',
-      time: '',
+      Full_name: '',
+      Phone_number: '',
       gender: '',
-      photo: null,
-      aadhaar: null,
+      shift: 'Day',
+      Shift_Date: '',
+      Shift_time: '',
+      Security_Gard_Image: null,
+      Aadhar_card: null,
     });
     setShowModal(true);
   };
+
   const handleShowEdit = (guard) => {
     setIsEdit(true);
-    setEditGuardId(guard.id);
-    setNewGuard(guard); // Load selected guard data for editing
+    setEditGuardId(guard._id);
+    setNewGuard(guard); // Pre-fill the form with the selected guard's data
     setShowModal(true);
   };
-  const handleShowDelete = (guardId) => {
-    setDeleteGuardId(guardId);
-    setShowDeleteGuard(true);
+
+  // Show the view modal for guard details
+  const handleShowView = (guard) => {
+    setGuardData(guard); // Set the selected guard's data
+    setShowViewGuard(true); // Open the modal
   };
 
-  const handleShowView = (guard) => {
-    setGuardData(guard);
-    setShowViewGuard(true);
+  // Show the delete confirmation modal
+  const handleShowDelete = (guard) => {
+    setGuardToDelete(guard);    // Store the guard to be deleted
+    setShowDeleteModal(true);   // Show the delete modal
   };
+
+
+
 
   const handleClose = () => {
     setShowModal(false);
     setShowViewGuard(false);
-    setShowDeleteGuard(false); // Close the delete confirmation modal when handleClose is called
-
-    setDeleteGuardId(null);
-    setIsEdit(false);
+    setGuardData(null);
+    setShowDeleteConfirm(false); // Close the delete confirmation modal
     setNewGuard({
-      name: '',
-      phone: '',
-      shift: 'Day',
-      date: '',
-      time: '',
+      Full_name: '',
+      Phone_number: '',
       gender: '',
-      photo: null,
-      aadhaar: null,
+      shift: 'Day',
+      Shift_Date: '',
+      Shift_time: '',
+      Security_Gard_Image: null,
+      Aadhar_card: null,
     });
-    setEditGuardId(null);
-  };
-  const handleDelete = () => {
-    setGuards((prevGuards) =>
-      prevGuards.filter((guard) => guard.id !== deleteGuardId)
-    );
-    setDeleteGuardId(null); // Clear the ID of the protocol to delete
-    setShowDeleteGuard(false); // Close the delete confirmation modal
   };
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setGuardData((prev) => ({ ...prev, [name]: value }));
+    setNewGuard((prev) => ({ ...prev, [name]: value }));
   };
-
-  const handleSave = () => {
-    if (isEdit && editGuardId) {
-      setGuards((prevGuards) =>
-        prevGuards.map((guard) =>
-          guard.id === editGuardId ? { ...guard, ...newGuard } : guard
-        )
-      );
-    } else {
-      const newId = guards.length + 1;
-      const newEntry = { id: newId, ...newGuard };
-      setGuards((prevGuards) => [...prevGuards, newEntry]);
-    }
-    handleClose();
-  };
-  const formatTime = (time) => {
-    const [hours, minutes] = time.split(':');
-    const date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour24: true });
-    setNewGuard({ ...newGuard, time: formattedTime.toUpperCase() });
-  };
-
-
-  const handleAddGuard = () => {
-    if (newGuard.name && newGuard.phone && newGuard.shift && newGuard.date && newGuard.time && newGuard.gender) {
-      setGuards([...guards, newGuard]); // Add the new guard to the guards array
-      setShowModal(false); // Close the modal
-    } else {
-      alert("Please fill all the fields before adding the guard.");
-    }
-  };
-
-
-  const handleFileChange = (e, field) => {
+  // Handle file changes (for image uploads)
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setNewGuard((prevState) => ({
-        ...prevState,
-        [field]: {
-          file,
-          preview: file.type.startsWith('image/') ? reader.result : null,
+    if (file) {
+      // Create a preview for images
+      const preview = file.type.startsWith("image/") ? URL.createObjectURL(file) : null;
+      setNewGuard((prev) => ({
+        ...prev,
+        Aadhar_card: {
+          file: file,
+          preview: preview,
         },
       }));
-    };
+    }
+  };
 
-    if (file.type.startsWith('image/')) {
-      reader.readAsDataURL(file);
-    } else {
-      setNewGuard((prevState) => ({
-        ...prevState,
-        [field]: { file, preview: null },
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0]; // Get the uploaded file
+
+    if (file) {
+      // Generate a preview for image files
+      const preview = file.type.startsWith("image/") ? URL.createObjectURL(file) : null;
+      setNewGuard((prev) => ({
+        ...prev,
+        Security_Gard_Image: {
+          file: file,
+          preview: preview, // Store the preview URL
+        },
       }));
     }
   };
+
+  const handleEdit = (guardId) => {
+    const selectedGuard = guards.find((guard) => guard.id === guardId);
+    if (selectedGuard) {
+      setIsEdit(true);
+      setEditGuardId(guardId);
+      setNewGuard({ ...selectedGuard }); // Set the selected guard data to state
+      setShowModal(true); // Show the modal
+    } else {
+      console.error('Guard not found');
+    }
+  };
+
+
+  // Handle saving new guard or editing an existing one
+  const handleSave = async (e) => {
+    const formData = new FormData();
+    formData.append('Full_name', newGuard.Full_name);
+    formData.append('Phone_number', newGuard.Phone_number);
+    formData.append('gender', newGuard.gender);
+    formData.append('shift', newGuard.shift);
+    formData.append('Shift_Date', newGuard.Shift_Date);
+    formData.append('Shift_time', newGuard.Shift_time);
+
+    // Append the Aadhar Card and Security Guard Image files
+    if (newGuard.Aadhar_card) {
+      formData.append('Aadhar_card', newGuard.Aadhar_card.file); // Ensure it's the file object
+    }
+
+    if (newGuard.Security_Gard_Image) {
+      formData.append('Security_Gard_Image', newGuard.Security_Gard_Image.file); // Ensure it's the file object
+    }
+
+    e.preventDefault();
+
+    try {
+      console.log('FormData being submitted:', formData);
+
+      if (isEdit && editGuardId) {
+        // Edit existing guard
+        await axios.put(`http://localhost:8000/api/users/v10/updateSecuritygaurd/${editGuardId}`, formData);
+      } else {
+        // Add new guard
+        await axios.post('http://localhost:8000/api/users/v10/createSecuritygaurd', formData);
+      }
+
+      setShowModal(false);
+
+      // Refresh the guards list after saving
+      const response = await axios.get('http://localhost:8000/api/users/v10/getSecuritygaurd');
+      setGuards(response.data);
+    } catch (error) {
+      console.error('Error saving guard:', error.response || error);
+      alert('Error saving guard: ' + (error.response?.data?.message || error.message));
+    }
+  };
+
+
+  const handleDeleteConfirmation = async () => {
+    try {
+      await axios.delete(`http://localhost:8000/api/users/v10/deleteSecuritygaurd/${guardToDelete}`);
+      setShowDeleteModal(false);
+      const response = await axios.get("http://localhost:8000/api/users/v10/getSecuritygaurd");
+      setGuards(response.data);
+    } catch (error) {
+      console.error("Error deleting guard:", error);
+    }
+  };
+
+  // Handle Delete
+  const handleDelete = (guardId) => {
+    setGuardToDelete(guardId);
+    setShowDeleteModal(true); // Show the delete confirmation modal
+  };
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const year = date.getFullYear();
+  
+    return `${day}/${month}/${year}`;
+  }
+
   return (
     <div className="d-flex flex-column flex-md-row">
       <div className="flex-shrink-0" >
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1 dashboard-bg" style={{ width:"1920px"}}>
+      <div className="flex-grow-1 dashboard-bg" style={{ width: "1920px" }}>
         <Header />
-        <div className="container-fluid  p-4" style={{ marginTop: "109px", width: "1620px" , marginLeft:"300px"  }}>
+        <div className="container-fluid  p-4" style={{ marginTop: "109px", width: "1620px", marginLeft: "300px" }}>
 
 
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px" }}>
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
               <h4 className="mb-0">Security Guard Details</h4>
-              <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={() => setShowModal(true)}
+              <Button className="btn mainColor2 d-flex align-items-center justify-content-center" onClick={handleShowCreate}
                 style={{ border: 'none' }}>
                 <FaPlus
                   style={{
@@ -240,11 +298,11 @@ export default function SecurityGaurd() {
                             textAlign: "left",
                           }}
                         >
-                          {guard.name}
+                          {guard?.Full_name || 'No name available'}
                         </span>
                       </div>
                     </td>
-                    <td className='text-center' style={{ fontFamily: "Poppins", verticalAlign: "middle" }}>{guard.phone}</td>
+                    <td className='text-center' style={{ fontFamily: "Poppins", verticalAlign: "middle" }}>{guard.Phone_number}</td>
                     <td className='text-center' style={{ verticalAlign: "middle" }}>
                       {guard.shift === 'Day' ? (
                         <span
@@ -291,7 +349,9 @@ export default function SecurityGaurd() {
                         </span>
                       )}
                     </td>
-                    <td className='text-center' style={{ fontFamily: "Poppins", verticalAlign: "middle" }}>{guard.date}</td>
+                    <td className="text-center" style={{ fontFamily: "Poppins", verticalAlign: "middle" }}>
+                      {guard.Shift_Date ? formatDate(guard.Shift_Date) : 'Shift Date not available'}
+                    </td>
                     <td style={{ verticalAlign: "middle" }} className="text-center">
                       <div className="d-flex align-items-center justify-content-center gap-2">
                         <div
@@ -307,7 +367,7 @@ export default function SecurityGaurd() {
                             display: "inline-block",
                           }}
                         >
-                          {guard.time}
+                          {guard?.Shift_time || 'No time available'}
                         </div>
                       </div>
                     </td>
@@ -337,9 +397,9 @@ export default function SecurityGaurd() {
                     </td>
                     <td className='text-center' style={{ verticalAlign: "middle" }}>
                       <div className="d-flex align-items-center justify-content-center">
-                        <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShowEdit(guard)} />
+                        <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(guard._id)} />
                         <img src={View} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShowView(guard)} />
-                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(guard.id)} />
+                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(guard._id)} />
                       </div>
                     </td>
                   </tr>
@@ -355,151 +415,166 @@ export default function SecurityGaurd() {
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
-                }}>View Security Protocols</Modal.Title>
+                }}>
+                  View Security Protocols
+                </Modal.Title>
               </Modal.Header>
+
               <Modal.Body>
-                <div style={{
-                  width: "285px",
-                  height: "70px",
-                  display: "flex",
-                  textAlign: "start",
-                  gap: "15px",
-                  fontFamily: "Poppins, sans-serif",
-                }}>
-
-                  <img
-                    src={Avtar}
-                    alt="avatar"
-                    style={{
-                      width: "70px",
+                {guardData ? (  // Ensure guardData exists
+                  <>
+                    <div style={{
+                      width: "285px",
                       height: "70px",
-                      borderRadius: "50%", // Ensures a perfect circle
-                      border: "3px solid #F4F4F4",
-                    }}
-                  />
-
-                  <p style={{ margin: 0 }}>{guardData.name}<br />{guardData.date}</p>
-                </div>
-
-
-                <div style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center", // Centers vertically
-                  width: "100%", // Adjusts width for space distribution
-                  fontFamily: "Poppins, sans-serif",
-                  marginTop: "20px"
-                }}>
-
-                  <div style={{
-                    textAlign: "center",
-                    display: "flex",
-                    flexDirection: "column", // Stacks items vertically
-                    gap: "0px", // Removes any gap between elements
-                    alignItems: "center",
-                  }}>
-
-                    <span>Select Shift</span>
-
-                    {guardData.shift === 'Day' ? (
-                      <span
+                      display: "flex",
+                      textAlign: "start",
+                      gap: "15px",
+                      fontFamily: "Poppins, sans-serif",
+                    }}>
+                      <img
+                        src={guardData.Avatar || Avtar}  // Use guard's avatar if available, else default
+                        alt="avatar"
                         style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          width: "113px",
-                          height: "31px",
-                          fontFamily: "Poppins",
-                          borderRadius: "50px",
-                          background: "rgba(244, 244, 244, 1)",
-                          color: "rgba(255, 147, 0, 1)", // Text and icon color
-                          fontSize: "16px", // Optional for font size
-                          fontWeight: "500", // Optional for font weight
+                          width: "70px",
+                          height: "70px",
+                          borderRadius: "50%", // Ensures a perfect circle
+                          border: "3px solid #F4F4F4",
                         }}
-                        role="img"
-                        aria-label="Day"
-                      >
-                        <FaSun style={{ marginRight: "5px" }} />
-                        Day
-                      </span>
-                    ) : (
-                      <span
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontFamily: "Poppins",
-                          width: "113px",
-                          height: "31px",
-                          borderRadius: "50px",
-                          background: "rgba(79, 79, 79, 1)",  // Dark background
-                          color: "rgba(255, 255, 255, 1)",    // White text and icon color
-                          fontSize: "16px",                   // Optional font size
-                          fontWeight: "500",                  // Optional font weight
-                        }}
-                        role="img"
-                        aria-label="Night"
-                      >
-                        <FaMoon style={{ marginRight: "5px" }} />
-                        Night
-                      </span>
-                    )}
-                  </div>
+                      />
 
-                  <div className=" align-items-center justify-content-center">
-                    <p className="mb-0 text-center">Shift Time</p>
-                    <div className='text-center'
-                      style={{
-                        width: "100px",
-                        height: "34px",
-                        padding: "5px 15px",
-                        fontWeight: "500",
-                        borderRadius: "50px",
-                        background: "#F6F8FB",
-                        color: "#4F4F4F",
-                        display: "inline-block",
-                      }}
-                    >
-                      {guardData.time}
+                      <p style={{ margin: 0 }}>
+                        {guardData.Full_name || 'Name not available'}<br />
+                        {guardData.Shift_Date || 'Shift Date not available'}
+                      </p>
                     </div>
-                  </div>
 
+                    <div style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center", // Centers vertically
+                      width: "100%", // Adjusts width for space distribution
+                      fontFamily: "Poppins, sans-serif",
+                      marginTop: "20px"
+                    }}>
 
-                  <div style={{ textAlign: "center" }}>
-                    <span style={{ display: "block", marginBottom: "0" }}>Gender</span>
-                    <span
-                      style={{
-                        display: "inline-flex",
+                      {/* Shift */}
+                      <div style={{
+                        textAlign: "center",
+                        display: "flex",
+                        flexDirection: "column", // Stacks items vertically
+                        gap: "0px", // Removes any gap between elements
                         alignItems: "center",
-                        justifyContent: "center",
-                        width: "113px",
-                        height: "31px",
-                        padding: "5px 12px",
-                        gap: "5px",
-                        borderRadius: "50px",
-                        fontFamily: "Poppins",
-                        background:
-                          guardData.gender === "Male" ? "rgba(33, 168, 228, 0.1)" : "rgba(254, 118, 168, 0.1)",
-                        color:
-                          guardData.gender === "Male" ? "rgba(86, 120, 233, 1)" : "rgba(254, 118, 168, 1)",
-                        fontSize: "16px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      {guardData.gender === "Male" ? <FaMale /> : <FaFemale />}
-                      {guardData.gender}
-                    </span>
-                  </div>
+                      }}>
+                        <span>Select Shift</span>
+                        {guardData.shift === 'Day' ? (
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              width: "113px",
+                              height: "31px",
+                              fontFamily: "Poppins",
+                              borderRadius: "50px",
+                              background: "rgba(244, 244, 244, 1)",
+                              color: "rgba(255, 147, 0, 1)",
+                              fontSize: "16px",
+                              fontWeight: "500",
+                            }}
+                            role="img"
+                            aria-label="Day"
+                          >
+                            <FaSun style={{ marginRight: "5px" }} />
+                            Day
+                          </span>
+                        ) : (
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontFamily: "Poppins",
+                              width: "113px",
+                              height: "31px",
+                              borderRadius: "50px",
+                              background: "rgba(79, 79, 79, 1)",  // Dark background
+                              color: "rgba(255, 255, 255, 1)",    // White text and icon color
+                              fontSize: "16px",                   // Optional font size
+                              fontWeight: "500",                  // Optional font weight
+                            }}
+                            role="img"
+                            aria-label="Night"
+                          >
+                            <FaMoon style={{ marginRight: "5px" }} />
+                            Night
+                          </span>
+                        )}
+                      </div>
 
+                      {/* Shift Time */}
+                      <div className="align-items-center justify-content-center">
+                        <p className="mb-0 text-center">Shift Time</p>
+                        <div className="text-center"
+                          style={{
+                            width: "100px",
+                            height: "34px",
+                            padding: "5px 15px",
+                            fontWeight: "500",
+                            borderRadius: "50px",
+                            background: "#F6F8FB",
+                            color: "#4F4F4F",
+                            display: "inline-block",
+                          }}
+                        >
+                          {guardData.Shift_time || 'Time not available'}
+                        </div>
+                      </div>
 
-                </div>
+                      {/* Gender */}
+                      <div style={{ textAlign: "center" }}>
+                        <span style={{ display: "block", marginBottom: "0" }}>Gender</span>
+                        <span
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "113px",
+                            height: "31px",
+                            padding: "5px 12px",
+                            gap: "5px",
+                            borderRadius: "50px",
+                            fontFamily: "Poppins",
+                            background:
+                              guardData.gender === "Male" ? "rgba(33, 168, 228, 0.1)" : "rgba(254, 118, 168, 0.1)",
+                            color:
+                              guardData.gender === "Male" ? "rgba(86, 120, 233, 1)" : "rgba(254, 118, 168, 1)",
+                            fontSize: "16px",
+                            fontWeight: "500",
+                          }}
+                        >
+                          {guardData.gender === "Male" ? <FaMale /> : <FaFemale />}
+                          {guardData.gender}
+                        </span>
+                      </div>
 
+                      {/* Security Guard Image */}
+                      <div>
+                        {guardData.Security_Gard_Image && (
+                          <img src={guardData.Security_Gard_Image} alt="Guard" style={{ width: '100px' }} />
+                        )}
+                      </div>
+
+                    </div>
+                  </>
+                ) : (
+                  <div>Loading guard data...</div>  // Fallback content in case guardData is null or undefined
+                )}
               </Modal.Body>
-
             </Modal>
 
 
-            <Modal show={showDeleteGuard} onHide={handleClose} centered>
+
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
               <Modal.Header closeButton>
                 <Modal.Title>Delete Protocol?</Modal.Title>
               </Modal.Header>
@@ -510,7 +585,7 @@ export default function SecurityGaurd() {
                 <Button variant="secondary" onClick={handleClose} style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
                   Cancel
                 </Button>
-                <Button onClick={handleDelete} style={{
+                <Button onClick={handleDeleteConfirmation} style={{
                   width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224", background: "rgba(231, 76, 60, 1)"
                 }}>
                   Delete
@@ -551,9 +626,9 @@ export default function SecurityGaurd() {
                           marginRight: "10px",
                         }}
                       >
-                        {newGuard.photo?.preview ? (
+                        {newGuard.Security_Gard_Image?.preview ? (
                           <img
-                            src={newGuard.photo.preview}
+                            src={newGuard.Security_Gard_Image.preview}
                             alt="Uploaded"
                             style={{
                               width: "100%",
@@ -572,7 +647,7 @@ export default function SecurityGaurd() {
                   <input
                     id="photo-upload"
                     type="file"
-                    onChange={(e) => handleFileChange(e, 'photo')}
+                    onChange={handlePhotoUpload} // Call the handler on file change
                     accept="image/png, image/jpeg"
                     style={{ display: 'none' }}
                   />
@@ -585,8 +660,8 @@ export default function SecurityGaurd() {
                     <Form.Control
                       type="text"
                       placeholder="Enter Full Name"
-                      value={newGuard.name}
-                      onChange={(e) => setNewGuard({ ...newGuard, name: e.target.value })}
+                      value={newGuard.Full_name}
+                      onChange={(e) => setNewGuard({ ...newGuard, Full_name: e.target.value })}
                     />
                   </Form.Group>
 
@@ -595,8 +670,8 @@ export default function SecurityGaurd() {
                     <Form.Control
                       type="text"
                       placeholder="+91"
-                      value={newGuard.phone}
-                      onChange={(e) => setNewGuard({ ...newGuard, phone: e.target.value })}
+                      value={newGuard.Phone_number}
+                      onChange={(e) => setNewGuard({ ...newGuard, Phone_number: e.target.value })}
                     />
                   </Form.Group>
 
@@ -631,25 +706,35 @@ export default function SecurityGaurd() {
                       <Form.Label>Shift Date<span className="text-danger">*</span></Form.Label>
                       <Form.Control
                         type="date"
-                        value={newGuard.date}
-                        onChange={(e) => setNewGuard({ ...newGuard, date: e.target.value })}
+                        value={newGuard.Shift_Date}
+                        onChange={(e) => setNewGuard({ ...newGuard, Shift_Date: e.target.value })}
                       />
                     </Form.Group>
 
                     <Form.Group controlId="formTime" style={{ width: "210px" }}>
-                      <Form.Label>Shift Time<span className="text-danger">*</span></Form.Label>
+                      <Form.Label>
+                        Shift Time<span className="text-danger">*</span>
+                      </Form.Label>
                       <Form.Control
                         type="time"
-                        value={newGuard.time}
-                        onChange={(e) => formatTime(e.target.value)}
+                        value={newGuard.Shift_time}
+                        onChange={(e) => {
+                          
+                          setNewGuard((prev) => ({ ...prev, Shift_time: e.target.value })); // Update state
+                        }}
                       />
                     </Form.Group>
+
+
                   </div>
 
                   {/* Aadhaar Card Upload Section */}
-                  <Form.Group controlId="formAadhaar" className=" mt-4">
-                    <Form.Label>Upload Aadhaar Card<span className="text-danger">*</span></Form.Label>
-                    <div className='text-center'
+                  <Form.Group controlId="formAadhaar" className="mt-4">
+                    <Form.Label>
+                      Upload Aadhaar Card<span className="text-danger">*</span>
+                    </Form.Label>
+                    <div
+                      className="text-center"
                       style={{
                         border: "2px dashed rgba(211, 211, 211, 1)",
                         borderRadius: "8px",
@@ -658,46 +743,54 @@ export default function SecurityGaurd() {
                         justifyContent: "center",
                         alignItems: "center",
                         flexDirection: "column",
-                        cursor: "pointer"
+                        cursor: "pointer",
                       }}
                     >
-                      <label htmlFor="aadhaar-upload" style={{ cursor: 'pointer', color: '#007bff' }}>
-                        <LuImagePlus className='text-center'
+                      <label
+                        htmlFor="aadhaar-upload"
+                        style={{ cursor: "pointer", color: "#007bff" }}
+                      >
+                        <LuImagePlus
+                          className="text-center"
                           style={{
-                            fontSize: '24px',      // Size of the icon
-                            marginBottom: '8px',   // Bottom margin
-                            width: '40px',         // Icon width
-                            height: '50px',        // Icon height
-                            top: '4px',            // Top offset
-                            left: '8px',           // Left offset
-                            color: " rgba(167, 167, 167, 1)",// Ensure position is relative to the container
-                            gap: '0px',
-                            // No gap between elementsr
+                            fontSize: "24px",
+                            marginBottom: "8px",
+                            width: "40px",
+                            height: "50px",
+                            top: "4px",
+                            left: "8px",
+                            color: " rgba(167, 167, 167, 1)",
+                            gap: "0px",
                           }}
                         />
-
-                        <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
+                        <div>
+                          Upload a file <span style={{ color: "black" }}>or drag and drop</span>
+                        </div>
                       </label>
                       <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
                       <input
                         id="aadhaar-upload"
                         type="file"
-                        onChange={(e) => handleFileChange(e, 'aadhaar')}
+                        onChange={handleFileChange}
                         accept="image/png, image/jpeg, application/pdf"
-                        style={{ display: 'none' }}
+                        style={{ display: "none" }}
                       />
-
                       {/* Display file preview or name */}
-                      {newGuard.aadhaar && (
-                        <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                          {newGuard.aadhaar.preview && newGuard.aadhaar.file.type.startsWith('image/') ? (
+                      {newGuard.Aadhar_card && (
+                        <div style={{ marginTop: "15px", textAlign: "center" }}>
+                          {newGuard.Aadhar_card.preview ? (
                             <img
-                              src={newGuard.aadhaar.preview}
+                              src={newGuard.Aadhar_card.preview}
                               alt="Aadhaar Preview"
-                              style={{ width: '80px', height: '80px', borderRadius: '8px', objectFit: 'cover' }}
+                              style={{
+                                width: "80px",
+                                height: "80px",
+                                borderRadius: "8px",
+                                objectFit: "cover",
+                              }}
                             />
                           ) : (
-                            <div>{newGuard.aadhaar.file.name}</div>
+                            <div>{newGuard.Aadhar_card.file.name}</div>
                           )}
                         </div>
                       )}
@@ -714,7 +807,7 @@ export default function SecurityGaurd() {
                   width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "#202224",
 
                 }} className='save' onClick={handleSave}>
-                  {isEdit ? 'Create' : 'Create'}
+                  {isEdit ? 'Update' : 'Create'}
                 </Button>
               </Modal.Footer>
             </Modal>
