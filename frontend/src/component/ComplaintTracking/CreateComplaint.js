@@ -331,7 +331,7 @@ export default function ComplaintTracking() {
       </div>
 
       {/* Create Complaint Modal */}
-      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
+      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)} className='square-modal' centered>
         <Modal.Header closeButton>
           <Modal.Title>Create Complaint</Modal.Title>
         </Modal.Header>
@@ -497,6 +497,7 @@ export default function ComplaintTracking() {
           padding: "20px 0px 0px 0px",
           borderRadius: "15px 0px 0px 0px",
         }}
+        className='square-modal' centered
       >
         <Modal.Header closeButton>
           <Modal.Title
@@ -746,7 +747,7 @@ export default function ComplaintTracking() {
 
       {/* edit model */}
 
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} className='square-modal'>
         <Modal.Header closeButton>
           <Modal.Title>Edit Complaint</Modal.Title>
         </Modal.Header>
@@ -888,7 +889,7 @@ export default function ComplaintTracking() {
       </Modal>
 
 
-      <Modal show={showDeleteComplaint} onHide={handleCloseDeleteModal} centered>
+      <Modal show={showDeleteComplaint} onHide={handleCloseDeleteModal} centered className='square-modal'>
         <Modal.Header closeButton>
           <Modal.Title>Delete Request?</Modal.Title>
         </Modal.Header>

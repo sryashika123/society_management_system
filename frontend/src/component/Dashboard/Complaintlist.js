@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Table, Button, Dropdown, Badge, Modal, Image, Form} from 'react-bootstrap';
+import { Card, Table, Button, Dropdown, Badge, Modal, Image, Form } from 'react-bootstrap';
 import editIcon from "../../assets/edit.png";
 import viewIcon from "../../assets/view.png";
 import deleteIcon from "../../assets/delete.png";
@@ -83,11 +83,27 @@ const ComplaintList = () => {
         setErrorMessage("");  // Clear any error messages
     };
 
-
-    const handleDelete = (index) => {
-        setComplaints(complaints.filter((_, i) => i !== index));
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteIndex, setDeleteIndex] = useState(null);
+  
+    // Functions for delete modal
+    const handleShowDeleteModal = (index) => {
+      setDeleteIndex(index);
+      setShowDeleteModal(true);
     };
-
+  
+    const handleCloseDeleteModal = () => {
+      setShowDeleteModal(false);
+      setDeleteIndex(null);
+    };
+  
+    const confirmDelete = () => {
+      if (deleteIndex !== null) {
+        const updatedComplaint = complaints.filter((_, i) => i !== deleteIndex);
+        setComplaints(updatedComplaint);
+      }
+      handleCloseDeleteModal();
+    };
 
     return (
         <>
@@ -188,7 +204,7 @@ const ComplaintList = () => {
                                         <div className="d-flex align-items-center justify-content-center">
                                             <img src={editIcon} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(complaint)} />
                                             <img src={viewIcon} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleView(complaint)} />
-                                            <img src={deleteIcon} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(index)} />
+                                            <img src={deleteIcon} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDeleteModal(index)} />
                                         </div>
                                     </td>
                                 </tr>
@@ -373,6 +389,19 @@ const ComplaintList = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+            <Modal className='custom-modal' show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+                  <Modal.Header>
+                    <Modal.Title className='Modal-Title'>Delete Number?</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p className='Form-p mb-0'>Are you sure you want to delete this?</p>
+                  </Modal.Body>
+                  <Modal.Footer className='d-flex justify-content-between'>
+                    <Button variant="secondary" className='btn cancle  mt-2' onClick={handleCloseDeleteModal}>Cancel</Button>
+                    <Button variant="danger" className='btn delete' onClick={confirmDelete}>Delete</Button>
+                  </Modal.Footer>
+                </Modal>
         </>
     );
 };

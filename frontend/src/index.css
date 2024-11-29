@@ -540,6 +540,18 @@ input[type=checkbox]:focus {
 
 /* other income dropdown start */
 
+/* modal css */
+
+.square-modal .modal-dialog {
+  width: 400px; /* Adjust width */
+  height: auto; /* Adjust height */
+  max-width: none; /* Prevent default max-width */
+}
+
+.square-modal .modal-content {
+  height: 100%; /* Ensure the content fills the height */
+}
+
 .dropdown-menu {
   width: 120px !important;
   background-color: #fff;
