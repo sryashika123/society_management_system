@@ -6,17 +6,21 @@ const residentController = require("../controllers/residentController");
 
 const Resident = require("../models/residentModel");
 
-router.post("/createResident", Resident.uploadFiles, residentController.createResident);
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
-router.get("/getAllResident", residentController.getAllResident);
 
-router.get("/getResident/:id", residentController.getResident);
 
-router.delete("/deleteResident/:id", residentController.deleteResident);
+router.post("/createResident",authenticateUser , authorizeRoles('admin'), Resident.uploadFiles, residentController.createResident);
 
-router.put("/updateResident/:id", Resident.uploadFiles, residentController.updateResident)
+router.get("/getAllResident",authenticateUser , authorizeRoles('admin'), residentController.getAllResident);
 
-router.post("/vacateflat/:id", residentController.vacateflat);
+router.get("/getResident/:id",authenticateUser , authorizeRoles('admin'), residentController.getResident);
+
+router.delete("/deleteResident/:id",authenticateUser , authorizeRoles('admin'), residentController.deleteResident);
+
+router.put("/updateResident/:id",authenticateUser , authorizeRoles('admin'), Resident.uploadFiles, residentController.updateResident)
+
+router.post("/vacateflat/:id",authenticateUser , authorizeRoles('admin'), residentController.vacateflat);
 
 
 module.exports = router;
