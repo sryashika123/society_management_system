@@ -141,15 +141,10 @@ export default function SecurityGaurd() {
   };
 
   const handleEdit = (guardId) => {
-    const selectedGuard = guards.find((guard) => guard.id === guardId);
-    if (selectedGuard) {
-      setIsEdit(true);
-      setEditGuardId(guardId);
-      setNewGuard({ ...selectedGuard }); // Set the selected guard data to state
-      setShowModal(true); // Show the modal
-    } else {
-      console.error('Guard not found');
-    }
+    setIsEdit(true);  // Indicate that this is an edit action
+    const selectedGuard = guards.find(guard => guard._id === guardId);  // Fetch the guard data
+    setNewGuard(selectedGuard);  // Set the form data to the selected guard's data
+    setShowModal(true);  // Open the modal
   };
 
 
@@ -596,7 +591,7 @@ export default function SecurityGaurd() {
 
             {/* Add Security Modal */}
             <Modal show={showModal} onHide={handleClose} centered className='square-modal'>
-              <Modal.Header closeButton>
+              <Modal.Header >
                 <Modal.Title>{isEdit ? 'Edit Security' : 'Add Security'}</Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -790,7 +785,7 @@ export default function SecurityGaurd() {
                               }}
                             />
                           ) : (
-                            <div>{newGuard.Aadhar_card.file.name}</div>
+                             <div>{newGuard.Aadhar_card?.file?.name || 'No file selected'}</div>
                           )}
                         </div>
                       )}
