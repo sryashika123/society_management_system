@@ -1,153 +1,93 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import "./EventParticipation.css";
-import Header from "../Layout/Navbar";
-import Sidebar from "../Layout/Sidebar";
-import Avatar from "../../assets/Avatar.png";
+import React, {useState} from 'react'
+import Sidebar from '../Layout/Sidebar'
+import Navbar from '../Layout/Navbar'
+import Avatar from '../../assets/Avatar.png' 
+import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
 
-const ActivityParticipate = () => {
-  const location = useLocation(); // Get the current path
+const ActivityParticipation = () => {
 
-  const activity = [
-    {
-      id: 1,
-      participatorName: "Evelyn Harper",
-      description: "Event and recreational activities.",
-      time: "10:00 AM",
-      date: "2022/01/01",
-      eventName: "Holi Festival",
-    },
-    {
-      id: 2,
-      participatorName: "Esther Howard",
-      description: "Securing critical government systems.",
-      time: "1:45 AM",
-      date: "2022/01/01",
-      eventName: "Holi Festival",
-    },
-    {
-      id: 3,
-      participatorName: "Evelyn Harper",
-      description: "Event and recreational activities.",
-      time: "10:00 AM",
-      date: "2022/01/01",
-      eventName: "Holi Festival",
-    },
-    {
-      id: 4,
-      participatorName: "Esther Howard",
-      description: "Securing critical government systems.",
-      time: "1:45 AM",
-      date: "2022/01/01",
-      eventName: "Holi Festival",
-    },
-    {
-      id: 5,
-      participatorName: "Evelyn Harper",
-      description: "Event and recreational activities.",
-      time: "10:00 AM",
-      date: "2022/01/01",
-      eventName: "Holi Festival",
-    },
-    {
-      id: 6,
-      participatorName: "Esther Howard",
-      description: "Securing critical government systems.",
-      time: "1:45 AM",
-      date: "2022/01/01",
-      eventName: "Holi Festival",
-    },
-  ];
 
-  // Helper function to check active path
-  const isActive = (path) => location.pathname === path;
+    const [complaint, setComplaint] = useState([
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+        { img: Avatar, complainer: 'Evelyn Harper', des: 'Event and recreational activities.',time: '2:45 PM', date: '01/02/2024', eventName: 'Holi Festival'},
+      ])
 
-  return (
-    <div className="dashboard-bg" style={{ width: "1920px" }}>
-      <Header />
-      <div className="d-flex">
-        <Sidebar />
-        <div className="container-fluid ms-4" style={{ width: "1920px" }}>
-          <div className="row" style={{ marginTop: "109px", marginLeft: "300px" }}>
-            <div>
-              {/* Button Section */}
-              <div className="d-flex mt-3">
-                <Link to="/home/EventParticipation">
-                  <button
-                    className={`participatebtn hovermaincolor border-bottom btn ${
-                      isActive("/home/EventParticipation")
-                        ? "active-participate-btn"
-                        : "bg-white text-dark"
-                    }`}
-                  >
-                    <span className="participatebtnspan">Events Participate</span>
-                  </button>
-                </Link>
-                <Link to="/home/activityparticipate">
-                  <button
-                    className={`participatebtn hovermaincolor border-bottom btn ${
-                      isActive("/home/activityparticipate")
-                        ? "active-participate-btn"
-                        : "bg-white text-dark"
-                    }`}
-                  >
-                    <span className="participatebtnspan">Activity Participate</span>
-                  </button>
-                </Link>
-              </div>
-
-              {/* Table Section */}
-              <div className="container-fluid row">
-                <div className="eventtable" style={{ overflowX: "auto" }}>
-                  <div>
-                    <h4 className="mt-3">Activity Participation</h4>
-                  </div>
-                  {/* Header Row */}
-                  <div
-                    className="row p-3 head d-flex flex-row text-center text-dark"
-                    style={{ background: "rgb(185, 198, 242)" }}
-                  >
-                    <div className="col-2 fw-bold text-start">Participator Name</div>
-                    <div className="col-2 fw-bold text-center">Description</div>
-                    <div className="col-3 fw-bold text-center">Activity Time</div>
-                    <div className="col-1 fw-bold text-center">Activity Date</div>
-                    <div className="col-3 fw-bold text-center">Activity Name</div>
-                  </div>
-
-                  {/* Rows */}
-                  {activity.map((activity, index) => (
-                    <div
-                      className="row data border-bottom p-2 d-flex align-items-center"
-                      key={index}
-                    >
-                      <div className="col-2">
-                        <img
-                          src={Avatar}
-                          alt="avatar"
-                          className="rounded-circle profileimg me-2"
-                        />
-                        <span>{activity.participatorName}</span>
-                      </div>
-                      <div className="col-2 text-center">
-                        <p>{activity.description}</p>
-                      </div>
-                      <div className="col-3 text-center">
-                        <p>{activity.time}</p>
-                      </div>
-                      <div className="col-1 text-center">
-                        <p>{activity.date}</p>
-                      </div>
-                      <div className="col-3 text-center">{activity.eventName}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+    return (
+        <div className='dashboard-bg'  style={{width:"1900px"}} >
+            <Sidebar />
+            <div >
+            <Navbar />
             </div>
+
+            <div style={{ marginLeft: '300px', marginTop:"109px", width:"1600px"}}>
+        <div className='container-fluid '>
+
+          <div className='row p-4' >
+              <div className="table-responsive rounded pb-3">
+
+                <Link to="/home/events-and-participation" className='btn btn-sm maintainance-income-btn maintainance-income-btn-withoutbg complaint-btn'>Events Participate</Link>
+
+                <Link to="/home/activity-and-participation" className='btn btn-sm maintainance-income-btn maintainance-income-btn-bg complaint-btn'>Activity Participate</Link>
+
+                <div className="table-responsive rounded" style={{
+                    maxHeight: '730px', // Adjust height as needed
+                    overflowY: complaint.length > 10 ? 'scroll' : 'hidden',
+                  }}>
+
+                  <div className='bg-light'>
+                    <h3 className=' mb-0 py-3 ps-3 financial-income-title'>Events Participation</h3>
+                    <div className='px-3'  style={{ overflowX: 'auto' }}>
+
+                      <table className="table">
+                        <thead className='table-primary'>
+                          <tr style={{ height: '55px' }}>
+                            <th scope="col"> Participator Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Activity Time</th>
+                            <th scope="col">Activity Date</th>
+                            <th scope="col">Activity Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            complaint.map((val, index) => {
+                              return (
+                                <tr key={index} className='bg-light'>
+                                  <td><img src={val.img} className='me-2' height={40} />{val.complainer}</td>
+                                  <td>{val.des}</td>
+                                  <td><Button className='event-time-btn border-0 text-dark mt-0'>{val.time}</Button></td>
+
+                                  <td>{val.date}</td>
+
+                                  <td>{val.eventName}</td>
+                                </tr>
+                              )
+                            })
+                          }
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+        </div>
+    )
+}
 
-export default ActivityParticipate;
+export default ActivityParticipation

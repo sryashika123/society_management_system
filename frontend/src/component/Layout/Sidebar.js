@@ -31,6 +31,7 @@ function Sidebar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false); // Mobile sidebar toggle state
   const [isMobile, setIsMobile] = useState(window.innerWidth < 576); // Mobile screen check
   const [isPaymentPortalDropdownOpen, setPaymentPortalDropdownOpen] = useState(false);
+  const [isCommunityDropdownOpen, setCommunityDropdownOpen] = useState(false);
 
   // Update active item on location change
   useEffect(() => {
@@ -46,6 +47,8 @@ function Sidebar() {
             if (item.key === "financialmanagement") setFinancialDropdownOpen(true);
             if (item.key === "security") setGeneralSecurityDropdownOpen(true);
             if (item.key === "payment-portal") setPaymentPortalDropdownOpen(true);
+            if (item.key === "Community") setCommunityDropdownOpen(true);
+
             foundActiveItem = true;
           }
         });
@@ -89,6 +92,15 @@ function Sidebar() {
       setGeneralSecurityDropdownOpen(false);
       setPaymentPortalDropdownOpen(!isPaymentPortalDropdownOpen);
     } 
+    else if (key === "Community") {
+      setFinancialDropdownOpen(false);
+      setComplaintDropdownOpen(false);
+      setSecurityDropdownOpen(false);
+      setGeneralSecurityDropdownOpen(false);
+      setPaymentPortalDropdownOpen(false);
+      setCommunityDropdownOpen(!isCommunityDropdownOpen);
+
+    }
     setActiveItem(key);
   };
 
@@ -189,7 +201,7 @@ function Sidebar() {
       key: "Event-Participation",
       label: "Event Participation",
       icon: <img src={EventParticipation} />,
-      path: "/home/EventParticipation",
+      path: "/home/events-and-participation",
     },
     {
       key: "service-and-complaint",
@@ -206,11 +218,22 @@ function Sidebar() {
         { key: "other-income-nvoice", label: "Other Income Invoice", path: "/home/other-income-nvoice" },
       ],
     },
+    {
+      key: "Community",
+      label: "Community",
+      icon: <img src={financialIcon} />,
+      subItems: [
+        { key: "Access", label: "Access Forums", path: "/home/Access" },
+        { key: "Polls", label: "Polls", path: "/home/Polls" },
+        { key: "Community-Discussion", label: "Communities Discussion", path: "/home/Community-Discussion" },
+      ],
+    },
+
     
   ];
 
   return (
-    <div>
+    <div >
       <button
         className="btn btn-primary d-sm-none d-md-none d-lg-none"
         onClick={() => setSidebarOpen(!isSidebarOpen)}
@@ -234,8 +257,10 @@ function Sidebar() {
           zIndex: 1049,
           transition: "transform 0.3s ease",
           transform: isSidebarOpen || !isMobile ? "translateX(0)" : "translateX(-100%)", 
+          
         }}
         aria-labelledby="offcanvasExampleLabel"
+        
       >
         <div className="offcanvas-header justify-content-center">
           <h1 className="offcanvas-title mainColor" id="offcanvasExampleLabel">
@@ -274,7 +299,8 @@ function Sidebar() {
           (item.key === "security-management" && isSecurityDropdownOpen) ||
           (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
           (item.key === "security" && isGeneralSecurityDropdownOpen) ||
-          (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ? (
+          (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ||
+          (item.key === "Community" && isCommunityDropdownOpen) ? (
             <FaChevronUp />
           ) : (
             <FaChevronDown />
@@ -284,7 +310,8 @@ function Sidebar() {
         (item.key === "security-management" && isSecurityDropdownOpen) ||
         (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
         (item.key === "security" && isGeneralSecurityDropdownOpen) ||
-        (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ? (
+        (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ||
+        (item.key === "Community" && isCommunityDropdownOpen) ? (
           <ul className="list-unstyled ms-4">
             {item.subItems.map((subItem) => (
               <li key={subItem.key} className="p-2 rounded position-relative">
