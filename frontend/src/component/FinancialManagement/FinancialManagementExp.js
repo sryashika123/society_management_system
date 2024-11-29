@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Layout/Navbar'
 import { CiImageOn } from "react-icons/ci";
 import { BiSolidFilePdf } from "react-icons/bi";
@@ -8,38 +8,13 @@ import { FaPlusSquare } from "react-icons/fa";
 import Edit from '../../assets/edit.png';
 import View from '../../assets/view.png';
 import Delete from '../../assets/delete.png';
-import { LuImagePlus } from 'react-icons/lu';
-import axios from 'axios';
+
 
 export default function FinancialManagementExp() {
 
   const [showViewModal, setShowViewModal] = useState(false);
   const [viewComplaint, setViewComplaint] = useState(null);
-  const [exp, setExp] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleteIndex, setDeleteIndex] = useState(null);
-  const [show, setShow] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
-  useEffect(() => {
-    fetchExpenses(); // Fetch expenses on component load
-  }, []);
-
-  // Fetch expenses from the backend
-  const fetchExpenses = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8000/api/users/v12/ViewExpenses`);
-      console.log(response.data); // Log the response to confirm its structure
-      setExp(response.data.expenses || []); // Replace 'expenses' with the correct key, if applicable
-    } catch (error) {
-      console.error("Error fetching expenses", error);
-    }
-  };
-
-
-  // Show view modal
   const handleShowViewModal = (index) => {
     setViewComplaint(exp[index]);
     setShowViewModal(true);
@@ -47,7 +22,22 @@ export default function FinancialManagementExp() {
 
   const handleCloseViewModal = () => setShowViewModal(false);
 
-  // Show delete modal
+
+  const [exp, setExp] = useState([
+    { title: 'Rent or Mortgage', des: 'A visual representation of your spending categories...', date: '10/02/2024', amt: '₹ 1000', format: 'JPG' },
+    { title: 'Housing Costs', des: 'Rack the fluctuations in your spending over we time...', date: '11/02/2024', amt: '₹ 1000', format: 'PDF' },
+    { title: 'Property Taxes', des: 'Easily compare your planned budget against we your...', date: '12/02/2024', amt: '₹ 1000', format: 'PDF' },
+    { title: 'Transportation', des: ' Identify your largest expenditures, you a enabling you...', date: '13/02/2024', amt: '₹ 1000', format: 'PDF' },
+    { title: 'Financial Breakdown', des: 'Tailor the dashboard to your unique financial we goals...', date: '14/02/2024', amt: '₹ 1000', format: 'PDF' },
+    { title: 'Expense Tracker', des: 'preferences by categorizing and organizing your expe...', date: '15/02/2024', amt: '₹ 1000', format: 'PDF' },
+    { title: 'Personal Expenses', des: 'future and adjust your budget will become accordingly...', date: '16/02/2024', amt: '₹ 1000', format: 'PDF' },
+  ])
+
+  // New state for delete confirmation modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
+
+  // Functions for delete modal
   const handleShowDeleteModal = (index) => {
     setDeleteIndex(index);
     setShowDeleteModal(true);
@@ -58,100 +48,64 @@ export default function FinancialManagementExp() {
     setDeleteIndex(null);
   };
 
-  // Confirm delete expense
-  const confirmDelete = async () => {
+  const confirmDelete = () => {
     if (deleteIndex !== null) {
-      try {
-        await axios.delete(`http://localhost:8000/api/users/v12/deleteExpenses/${exp[deleteIndex]._id}`);
-        setExp(exp.filter((_, i) => i !== deleteIndex)); // Remove from state
-        handleCloseDeleteModal();
-      } catch (error) {
-        console.error("Error deleting expense", error);
-      }
+      const updatedComplaint = exp.filter((_, i) => i !== deleteIndex);
+      setExp(updatedComplaint);
     }
+    handleCloseDeleteModal();
   };
 
-  // Show add/edit modal
+  const [show, setShow] = useState(false);
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+  const [editIndex, setEditIndex] = useState(null);
+
   const handleShow = () => setShow(true);
+
   const handleClose = () => {
     setShow(false);
     reset();
     setEditIndex(null);
   };
 
-  // Submit form for adding or updating expense
-  const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append("Title", data.Title);
-    formData.append("description", data.description);
-    formData.append("date", data.date);
-    formData.append("amount", data.amount);
+  const onSubmit = (data) => {
+    const updatedComplaint = {
+      title: data.title,
+      des: data.des,
+      date: data.date,
+      amt: data.amt,
+      format: data.format,
+    };
 
-    // Safely check if Bill_image is defined and contains a file
-    if (data.Bill_image && data.Bill_image.length > 0) {
-      formData.append("Bill_image", data.Bill_image[0]); // Add only if a file is present
+    if (editIndex !== null) {
+      const updatedComplaintsList = exp.map((exp, index) =>
+        index === editIndex ? updatedComplaint : exp
+      );
+      setExp(updatedComplaintsList);
+    } else {
+      setExp([...exp, updatedComplaint]);
     }
-    try {
-      if (editIndex !== null) {
-        await axios.put(`http://localhost:8000/api/users/v12/updateExpenses/${exp[editIndex]._id}`, formData);
-      } else {
-        await axios.post(`http://localhost:8000/api/users/v12/createExpenses`, formData);
-      }
-      fetchExpenses(); // Refresh expenses
-      handleClose();   // Close modal
-    } catch (error) {
-      console.error("Error saving expense", error);
-    }
+
+    handleClose();
   };
 
-
-  // Handle edit expense
   const handleEdit = (index) => {
-    const expenseToEdit = exp[index];
+    const complaintToEdit = exp[index];
     setEditIndex(index);
     setShow(true);
+
     reset({
-      Title: expenseToEdit.Title,
-      description: expenseToEdit.description,
-      date: expenseToEdit.date,
-      amount: expenseToEdit.amount,
-      Bill_image: expenseToEdit.Bill_image ? [expenseToEdit.Bill_image] : [], // Ensure it's an array
+      title: complaintToEdit.title,
+      des: complaintToEdit.des,
+      date: complaintToEdit.date,
+      amt: complaintToEdit.amt,
+      format: complaintToEdit.format,
     });
   };
 
-  const handleFileChange = (e, field) => {
-    const file = e.target.files[0];
-    if (!file) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setExp((prevState) => ({
-        ...prevState,
-        [field]: {
-          file,
-          preview: file.type.startsWith('image/') ? reader.result : null,
-        },
-      }));
-    };
-
-    if (file.type.startsWith('image/')) {
-      reader.readAsDataURL(file);
-    } else {
-      setExp((prevState) => ({
-        ...prevState,
-        [field]: { file, preview: null },
-      }));
-    }
-  };
-
-  const formatDate = (date) => {
-    const d = new Date(date);
-    const day = String(d.getDate()).padStart(2, '0'); // Ensures two digits for day
-    const month = String(d.getMonth() + 1).padStart(2, '0'); // getMonth() is 0-based
-    const year = d.getFullYear();
-
-    return `${day}-${month}-${year}`;
-  };
 
   return (
     <div className='dashboard-bg' style={{ width: "1920px", }}>
@@ -182,45 +136,42 @@ export default function FinancialManagementExp() {
                           <th scope="col" className='text-start'>Date</th>
                           <th scope="col">Amount</th>
                           <th scope="col">Bill Format</th>
-                          <th scope="col" className='text-start'>Action</th>
+                          <th scope="col" className='text-center'>Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {Array.isArray(exp) && exp.length > 0 ? (
-                          exp.map((val, index) => (
-                            <tr key={index} className="bg-light">
-                              <td>{val.Title}</td>
-                              <td>{val.description}</td>
-                              <td>{formatDate(val.date)}</td>
-                              <td>{val.amount}</td>
-                              <td>
-                                {val.Bill_image === "JPG" ? (
-                                  <CiImageOn className="me-1 jpg-btn" style={{ fontSize: "20px" }} />
-                                ) : (
-                                  <BiSolidFilePdf className="me-1 pdf-btn" style={{ fontSize: "20px" }} />
-                                )}
-                                {val.Bill_image}
-                              </td>
-                              <td className="d-flex">
-                                <button className="border-0 bg-light" onClick={() => handleEdit(index)}>
-                                  <img src={Edit} className="edit-btn" />
-                                </button>
-                                <button className="border-0 bg-light" onClick={() => handleShowViewModal(index)}>
-                                  <img src={View} className="view-btn" />
-                                </button>
-                                <button className="border-0 bg-light" onClick={() => handleShowDeleteModal(index)}>
-                                  <img src={Delete} className="delete-btn" />
-                                </button>
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan="6" className="text-center">No Expenses Found</td>
-                          </tr>
-                        )}
-                      </tbody>
+                        {
+                          exp.map((val, index) => {
+                            return (
+                              <tr key={index} className='bg-light'>
 
+                                <td style={{ height: '55px' }} className='financial-Pnumber'> {val.title}</td>
+
+
+                                <td style={{ height: '55px' }} className='financial-Pnumber'>{val.des}</td>
+
+                                <td style={{ height: '55px' }} className='financial-Pnumber'>{val.date}</td>
+
+
+                                <td style={{ height: '55px' }} className='financial-Pnumber exp-amt-color'>{val.amt}</td>
+
+                                <td style={{ height: '55px' }} className='financial-Pnumber'>
+                                  {val.format === 'JPG' ? <CiImageOn className='me-1 jpg-btn' style={{ fontSize: '20px' }} /> : <BiSolidFilePdf className='me-1 pdf-btn' style={{ fontSize: '20px' }} />}
+                                  {val.format}
+                                </td>
+
+                                <td className='text-center' style={{ verticalAlign: "middle" }}>
+                                  <div className="d-flex align-items-center justify-content-center">
+                                    <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(index)} />
+                                    <img src={View} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShowViewModal(index)} />
+                                    <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDeleteModal(index)} />
+                                  </div>
+                                </td>
+                              </tr>
+                            )
+                          })
+                        }
+                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -240,8 +191,8 @@ export default function FinancialManagementExp() {
                           className='Form-Control'
                           type="text"
                           placeholder="Enter Title"
-                          {...register('Title', { required: "Title is required" })}
-                          isInvalid={errors.Title}
+                          {...register('title', { required: "Title is required" })}
+                          isInvalid={errors.title}
                         />
                         <Form.Control.Feedback type="invalid">
                           {errors.title?.message}
@@ -254,11 +205,11 @@ export default function FinancialManagementExp() {
                           className='Form-Control'
                           type="text"
                           placeholder="Enter Description"
-                          {...register('description', { required: "Description is required" })}
-                          isInvalid={errors.description}
+                          {...register('des', { required: "Description is required" })}
+                          isInvalid={errors.des}
                         />
                         <Form.Control.Feedback type="invalid">
-                          {errors.description?.message}
+                          {errors.des?.message}
                         </Form.Control.Feedback>
                       </Form.Group>
 
@@ -279,131 +230,102 @@ export default function FinancialManagementExp() {
                         <Form.Label className='Form-Label'>Amount<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                           className='Form-Control'
-                          type="number"
+                          type="text"
                           placeholder="Enter Amount"
-                          {...register('amount', { required: "Amount is required" })}
-                          isInvalid={errors.amount}
+                          {...register('amt', { required: "Amount is required" })}
+                          isInvalid={errors.amt}
                         />
                         <Form.Control.Feedback type="invalid">
-                          {errors.amount?.message}
+                          {errors.amt?.message}
                         </Form.Control.Feedback>
                       </Form.Group>
 
-
-                      {/* Aadhaar Card Upload Section */}
-                      <Form.Group controlId="formAadhaar" className=" mt-4">
-                        <Form.Label>Upload Bill<span className="text-danger">*</span></Form.Label>
-                        <div className='text-center'
-                          style={{
-                            border: "2px dashed rgba(211, 211, 211, 1)",
-                            borderRadius: "8px",
-                            padding: "20px",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "column",
-                            cursor: "pointer"
-                          }}
-                        >
-                          <label htmlFor="aadhaar-upload" style={{ cursor: 'pointer', color: '#007bff' }}>
-                            <LuImagePlus className='text-center'
-                              style={{
-                                fontSize: '24px',      // Size of the icon
-                                marginBottom: '8px',   // Bottom margin
-                                width: '40px',         // Icon width
-                                height: '50px',        // Icon height
-                                top: '4px',            // Top offset
-                                left: '8px',           // Left offset
-                                color: " rgba(167, 167, 167, 1)",// Ensure position is relative to the container
-                                gap: '0px',
-                                // No gap between elementsr
-                              }}
-                            />
-
-                            <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
-                          </label>
-                          <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
-                          <input
-                            id="aadhaar-upload"
-                            type="file"
-                            onChange={(e) => handleFileChange(e, 'aadhaar')}
-                            accept="image/png, image/jpeg, application/pdf"
-                            style={{ display: 'none' }}
-                          />
-
-                          {/* Display file preview or name */}
-                          {exp.aadhaar && (
-                            <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                              {exp.aadhaar.preview && exp.aadhaar.file.type.startsWith('image/') ? (
-                                <img
-                                  src={exp.aadhaar.preview}
-                                  alt="Aadhaar Preview"
-                                  style={{ width: '80px', height: '80px', borderRadius: '8px', objectFit: 'cover' }}
-                                />
-                              ) : (
-                                <div>{exp.aadhaar.file.name}</div>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </Form.Group>
-
-                      {/* <Form.Group className="mb-3" controlId="formBillImage">
-                        <Form.Label className='Form-Label'>Bill Image<span className="text-danger"> *</span></Form.Label>
+                      <Form.Group className="mb-3" controlId="formFormat">
+                        <Form.Label className='Form-Label'>Upload Bill</Form.Label>
                         <Form.Control
                           className='Form-Control'
                           type="file"
-                          accept="image/*,.pdf"
-                          {...register('Bill_image', { required: "Bill image is required" })}
-                          isInvalid={errors.Bill_image}
+                          {...register('format')}
                         />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.Bill_image?.message}
-                        </Form.Control.Feedback>
-                      </Form.Group> */}
+                      </Form.Group>
 
-                      <div className="d-flex justify-content-end mt-3">
-                        <Button variant="secondary" onClick={handleClose} className="me-3">Close</Button>
-                        <Button variant="primary" type="submit">{editIndex !== null ? 'Update Expense' : 'Add Expense'}</Button>
+                      <div className="d-flex justify-content-between">
+                        <Button variant="secondary" onClick={handleClose} className="btn mt-2 cancle">
+                          Cancel
+                        </Button>
+                        <Button variant="primary" type="submit" className='btn mt-2 save'>
+                          {editIndex !== null ? 'Update' : 'Add'}
+                        </Button>
                       </div>
                     </Form>
                   </Modal.Body>
                 </Modal>
 
-                {/* Delete Modal */}
-                <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
-                  <Modal.Header>
-                    <Modal.Title>Confirm Deletion</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>Are you sure you want to delete this expense?</Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseDeleteModal}>Cancel</Button>
-                    <Button variant="danger" onClick={confirmDelete}>Delete</Button>
-                  </Modal.Footer>
-                </Modal>
-
                 {/* View Modal */}
                 <Modal show={showViewModal} onHide={handleCloseViewModal} centered>
-                  <Modal.Header>
-                    <Modal.Title>View Expense Details</Modal.Title>
+                  <Modal.Header closeButton>
+                    <Modal.Title>View Complain</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     {viewComplaint && (
                       <div>
-                        <p><strong>Title:</strong> {viewComplaint.Title}</p>
-                        <p><strong>Description:</strong> {viewComplaint.description}</p>
-                        <p><strong>Date:</strong>{formatDate(viewComplaint.date)}</p>
-                        <p><strong>Amount:</strong> {viewComplaint.amount}</p>
-                        <p><strong>Bill Image:</strong> {viewComplaint.Bill_image}</p>
+
+
+                        <p className='view-strong text-dark'><strong className='view-strong'>Title</strong> <br />{viewComplaint.title}</p>
+
+
+                        <p className='view-strong text-dark'><strong className='view-strong'>Description</strong> <br />{viewComplaint.des}</p>
+
+                        <div className='d-flex'>
+                          <p className='view-strong text-dark'><strong className='view-strong'>Date</strong> <br />{viewComplaint.date}</p>
+
+                          <p className='view-strong text-dark ms-5'><strong className='view-strong'>Amount</strong> <br />{viewComplaint.amt}</p>
+                        </div>
+
+                        <p className='view-strong text-dark'><strong className='view-strong'>Bill</strong> <br /></p>
+
+                        {/* Display the file */}
+                        {viewComplaint.file && (
+                          <div>
+                            {viewComplaint.format === 'JPG' || viewComplaint.format === 'PNG' ? (
+                              <img
+                                src={URL.createObjectURL(viewComplaint.file)}
+                                alt="Uploaded Bill"
+                                style={{ maxWidth: '100%', height: 'auto' }}
+                              />
+                            ) : viewComplaint.format === 'PDF' ? (
+                              <embed
+                                src={URL.createObjectURL(viewComplaint.file)}
+                                type="application/pdf"
+                                width="100%"
+                                height="400px"
+                              />
+                            ) : (
+                              <p>No file to display</p>
+                            )}
+                          </div>
+                        )}
                       </div>
                     )}
                   </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseViewModal}>Close</Button>
+                </Modal>
+
+                {/* delete modal */}
+                <Modal className='custom-modal' show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+                  <Modal.Header>
+                    <Modal.Title className='Modal-Title'>Delete Number?</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p className='Form-p mb-0'>Are you sure you want to delete this?</p>
+                  </Modal.Body>
+                  <Modal.Footer className='d-flex justify-content-between'>
+                    <Button variant="secondary" className='btn cancle  mt-2' onClick={handleCloseDeleteModal}>Cancel</Button>
+                    <Button variant="danger" className='btn delete' onClick={confirmDelete}>Delete</Button>
                   </Modal.Footer>
                 </Modal>
               </div>
             </div>
+
           </div>
         </div>
       </div>

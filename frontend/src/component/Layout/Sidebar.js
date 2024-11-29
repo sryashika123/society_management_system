@@ -233,7 +233,7 @@ function Sidebar() {
   ];
 
   return (
-    <div >
+    <div style={{fontSize:"14px"}}>
       <button
         className="btn btn-primary d-sm-none d-md-none d-lg-none"
         onClick={() => setSidebarOpen(!isSidebarOpen)}

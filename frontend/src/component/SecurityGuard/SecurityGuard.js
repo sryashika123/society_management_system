@@ -407,7 +407,7 @@ export default function SecurityGaurd() {
               </tbody>
             </Table>
 
-            <Modal show={showViewGuard} onHide={handleClose} centered>
+            <Modal show={showViewGuard} onHide={handleClose} centered className='square-modal'>
               <Modal.Header closeButton>
                 <Modal.Title style={{
                   width: "371px",
@@ -574,7 +574,7 @@ export default function SecurityGaurd() {
 
 
 
-            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered className='square-modal'>
               <Modal.Header closeButton>
                 <Modal.Title>Delete Protocol?</Modal.Title>
               </Modal.Header>
@@ -595,7 +595,7 @@ export default function SecurityGaurd() {
             </Modal>
 
             {/* Add Security Modal */}
-            <Modal show={showModal} onHide={handleClose} centered>
+            <Modal show={showModal} onHide={handleClose} centered className='square-modal'>
               <Modal.Header closeButton>
                 <Modal.Title>{isEdit ? 'Edit Security' : 'Add Security'}</Modal.Title>
               </Modal.Header>

@@ -115,7 +115,7 @@ useEffect(() => {
 
 
           {/* Modal for creating or editing a protocol */}
-          <Modal show={showModal} onHide={handleClose} centered>
+          <Modal show={showModal} onHide={handleClose} centered className='square-modal'>
             <Modal.Header closeButton>
               <Modal.Title>{isEdit ? "Edit Security Protocol" : "Create Security Protocol"}</Modal.Title>
             </Modal.Header>
@@ -182,7 +182,7 @@ useEffect(() => {
           </Modal>
 
 
-          <Modal show={showDeleteModal} onHide={handleClose} centered>
+          <Modal show={showDeleteModal} onHide={handleClose} centered className='square-modal'>
             <Modal.Header closeButton>
               <Modal.Title>Delete Protocol?</Modal.Title>
             </Modal.Header>
@@ -202,7 +202,7 @@ useEffect(() => {
             </Modal.Footer>
           </Modal>
           {/* View-only modal for displaying protocol details */}
-          <Modal show={showViewModal} onHide={handleClose} centered>
+          <Modal show={showViewModal} onHide={handleClose} centered className='square-modal'>
             <Modal.Header closeButton>
               <Modal.Title>View Security Protocols</Modal.Title>
             </Modal.Header>
