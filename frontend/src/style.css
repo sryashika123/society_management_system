@@ -584,6 +584,13 @@ body {
   background-color: darkgray;
   /* Darken the thumb when hovered */
 }
+.event-time-btn{
+  background: rgba(246, 248, 251, 1) !important;
+  width: 92px;
+  height: 34px;
+  border-radius: 80px;
+  text-align: center;
+}
 
 .radio-group input[type="radio"] {
 

@@ -449,7 +449,7 @@ input[type=checkbox]:focus {
   font-size: 14px !important;
   font-weight: 600 !important;
   padding: 18px 8px !important;
-  width: 135px !important;
+  width: 185px !important;
   border-top-left-radius: 10px !important;
   border-top-right-radius: 10px !important;
 }

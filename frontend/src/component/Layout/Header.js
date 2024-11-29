@@ -20,7 +20,7 @@ export default function Header() {
     };
 
     return (
-        <div className="header" style={{ marginLeft: "280px",width:"1610px" , position:"fixed" , top:"0px" , zIndex:"999"}}>
+        <div className="header" style={{ marginLeft: "285px",width:"1610px" , position:"fixed" , top:"0px" , zIndex:"999"}}>
             <Navbar expand="lg" className="navbar bg-white border-bottom" style={{height:"109px"}}>
                 <Container fluid>
                     {/* Search Bar for Large Screens */}

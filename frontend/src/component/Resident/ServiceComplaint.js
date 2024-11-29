@@ -95,15 +95,16 @@ const ServiceComplaint = () => {
                     <div className='row p-4'>
                      
                             <div className="table-responsive rounded pb-3">
+                                
 
-                                <Link to="/home/service-and-complaint" className='btn btn-sm text-decoration-none border-0 maintainance-income-btn maintainance-income-btn-bg complaint-btn ms-1'>Complaint Submission</Link>
+                                <Link to="/home/service-and-complaint" className='btn btn-sm text-decoration-none border-0 maintainance-income-btn maintainance-income-btn-bg complaint-btn ms-3'>Complaint Submission</Link>
 
-                                <Link to="/home/request-and-submission" className='btn btn-sm maintainance-income-btn maintainance-income-btn-withoutbg complaint-btn'>Request Submission</Link>
+                                <Link to="/home/request-and-submission" className='btn btn-sm maintainance-income-btn maintainance-income-btn-withoutbg complaint-btn '>Request Submission</Link>
 
                                 <div className='container-fluid mx-0'>
                                     <div className='row p-3 py-0 overflow-hidden'>
                                         <div className='p-0 bg-light'>
-                                            <div className='d-flex justify-content-between align-items-center pb-3 px-3'>
+                                            <div className='d-flex justify-content-between align-items-center pb-3 px-3 pt-3'>
                                                 <h3 className='mb-0 financial-income-title'>Complaint</h3>
                                                 <button className='set-maintainance-btn d-flex align-items-center p-2' onClick={handleShow}>
                                                     Create Complaint

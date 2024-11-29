@@ -31,11 +31,13 @@ export default function FinancialManagementExp() {
   const fetchExpenses = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/users/v12/ViewExpenses`);
-      setExp(response.data);
+      console.log(response.data); // Log the response to confirm its structure
+      setExp(response.data.expenses || []); // Replace 'expenses' with the correct key, if applicable
     } catch (error) {
       console.error("Error fetching expenses", error);
     }
   };
+
 
   // Show view modal
   const handleShowViewModal = (index) => {
@@ -85,27 +87,23 @@ export default function FinancialManagementExp() {
     formData.append("date", data.date);
     formData.append("amount", data.amount);
 
-      // Ensure Bill_image is added correctly (it's a file input)
-  if (data.Bill_image[0]) {
-    formData.append("Bill_image", data.Bill_image[0]);
-  }
-
+    // Safely check if Bill_image is defined and contains a file
+    if (data.Bill_image && data.Bill_image.length > 0) {
+      formData.append("Bill_image", data.Bill_image[0]); // Add only if a file is present
+    }
     try {
       if (editIndex !== null) {
-        // If editing an expense
         await axios.put(`http://localhost:8000/api/users/v12/updateExpenses/${exp[editIndex]._id}`, formData);
-        fetchExpenses(); // Refresh the expense list
-        handleClose(); // Close the modal
       } else {
-        // If adding a new expense
         await axios.post(`http://localhost:8000/api/users/v12/createExpenses`, formData);
-        fetchExpenses(); // Refresh the expense list
-        handleClose(); // Close the modal
       }
+      fetchExpenses(); // Refresh expenses
+      handleClose();   // Close modal
     } catch (error) {
       console.error("Error saving expense", error);
     }
   };
+
 
   // Handle edit expense
   const handleEdit = (index) => {
@@ -151,17 +149,17 @@ export default function FinancialManagementExp() {
     const day = String(d.getDate()).padStart(2, '0'); // Ensures two digits for day
     const month = String(d.getMonth() + 1).padStart(2, '0'); // getMonth() is 0-based
     const year = d.getFullYear();
-    
+
     return `${day}-${month}-${year}`;
   };
-  
+
   return (
-    <div className='dashboard-bg' style={{ width:"1920px", }}>
+    <div className='dashboard-bg' style={{ width: "1920px", }}>
       <Navbar />
-      <div style={{marginLeft:"300px", }}>
+      <div style={{ marginLeft: "300px", }}>
         <div className='container-fluid income'>
 
-          <div className='row p-5'  style={{marginTop:"109px"}}>
+          <div className='row p-5' style={{ marginTop: "109px" }}>
             <div className='p-0'>
               <div className="table-responsive rounded pb-3">
 
@@ -188,42 +186,41 @@ export default function FinancialManagementExp() {
                         </tr>
                       </thead>
                       <tbody>
-                        {
-                          exp.map((val, index) => {
-                            
-                            return (
-                              <tr key={index} className='bg-light'>
-
-                                <td style={{ height: '55px' }} className='financial-Pnumber'> {val.Title}</td>
-                                <td style={{ height: '55px' }} className='financial-Pnumber'>{val.description}</td>
-                                <td style={{ height: '55px' }} className='financial-Pnumber'>{formatDate(val.date)}</td>
-                                <td style={{ height: '55px' }} className='financial-Pnumber exp-amt-color'>{val.amount}</td>
-
-                                <td style={{ height: '55px' }} className='financial-Pnumber'>
-                                  {val.Bill_image === 'JPG' ? <CiImageOn className='me-1 jpg-btn' style={{ fontSize: '20px' }} /> : <BiSolidFilePdf className='me-1 pdf-btn' style={{ fontSize: '20px' }} />}
-                                  {val.Bill_image}
-                                </td>
-
-                                <td className='d-flex' style={{ height: '55px' }}>
-
-                                  <button className='border-0 bg-light' onClick={() => handleEdit(index)}>
-                                    <img src={Edit} className="edit-btn" />
-                                  </button>
-
-                                  <button className='border-0 bg-light' onClick={() => handleShowViewModal(index)}>
-                                    <img src={View} className='view-btn' />
-                                  </button>
-
-                                  <button className='border-0 bg-light' onClick={() => handleShowDeleteModal(index)}>
-                                    <img src={Delete} className="delete-btn" />
-                                  </button>
-
-                                </td>
-                              </tr>
-                            )
-                          })
-                        }
+                        {Array.isArray(exp) && exp.length > 0 ? (
+                          exp.map((val, index) => (
+                            <tr key={index} className="bg-light">
+                              <td>{val.Title}</td>
+                              <td>{val.description}</td>
+                              <td>{formatDate(val.date)}</td>
+                              <td>{val.amount}</td>
+                              <td>
+                                {val.Bill_image === "JPG" ? (
+                                  <CiImageOn className="me-1 jpg-btn" style={{ fontSize: "20px" }} />
+                                ) : (
+                                  <BiSolidFilePdf className="me-1 pdf-btn" style={{ fontSize: "20px" }} />
+                                )}
+                                {val.Bill_image}
+                              </td>
+                              <td className="d-flex">
+                                <button className="border-0 bg-light" onClick={() => handleEdit(index)}>
+                                  <img src={Edit} className="edit-btn" />
+                                </button>
+                                <button className="border-0 bg-light" onClick={() => handleShowViewModal(index)}>
+                                  <img src={View} className="view-btn" />
+                                </button>
+                                <button className="border-0 bg-light" onClick={() => handleShowDeleteModal(index)}>
+                                  <img src={Delete} className="delete-btn" />
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan="6" className="text-center">No Expenses Found</td>
+                          </tr>
+                        )}
                       </tbody>
+
                     </table>
                   </div>
                 </div>
@@ -294,64 +291,64 @@ export default function FinancialManagementExp() {
 
 
                       {/* Aadhaar Card Upload Section */}
-                  <Form.Group controlId="formAadhaar" className=" mt-4">
-                    <Form.Label>Upload Bill<span className="text-danger">*</span></Form.Label>
-                    <div className='text-center'
-                      style={{
-                        border: "2px dashed rgba(211, 211, 211, 1)",
-                        borderRadius: "8px",
-                        padding: "20px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column",
-                        cursor: "pointer"
-                      }}
-                    >
-                      <label htmlFor="aadhaar-upload" style={{ cursor: 'pointer', color: '#007bff' }}>
-                        <LuImagePlus className='text-center'
+                      <Form.Group controlId="formAadhaar" className=" mt-4">
+                        <Form.Label>Upload Bill<span className="text-danger">*</span></Form.Label>
+                        <div className='text-center'
                           style={{
-                            fontSize: '24px',      // Size of the icon
-                            marginBottom: '8px',   // Bottom margin
-                            width: '40px',         // Icon width
-                            height: '50px',        // Icon height
-                            top: '4px',            // Top offset
-                            left: '8px',           // Left offset
-                            color: " rgba(167, 167, 167, 1)",// Ensure position is relative to the container
-                            gap: '0px',
-                            // No gap between elementsr
+                            border: "2px dashed rgba(211, 211, 211, 1)",
+                            borderRadius: "8px",
+                            padding: "20px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column",
+                            cursor: "pointer"
                           }}
-                        />
-
-                        <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
-                      </label>
-                      <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
-                      <input
-                        id="aadhaar-upload"
-                        type="file"
-                        onChange={(e) => handleFileChange(e, 'aadhaar')}
-                        accept="image/png, image/jpeg, application/pdf"
-                        style={{ display: 'none' }}
-                      />
-
-                      {/* Display file preview or name */}
-                      {exp.aadhaar && (
-                        <div style={{ marginTop: '15px', textAlign: 'center' }}>
-                          {exp.aadhaar.preview && exp.aadhaar.file.type.startsWith('image/') ? (
-                            <img
-                              src={exp.aadhaar.preview}
-                              alt="Aadhaar Preview"
-                              style={{ width: '80px', height: '80px', borderRadius: '8px', objectFit: 'cover' }}
+                        >
+                          <label htmlFor="aadhaar-upload" style={{ cursor: 'pointer', color: '#007bff' }}>
+                            <LuImagePlus className='text-center'
+                              style={{
+                                fontSize: '24px',      // Size of the icon
+                                marginBottom: '8px',   // Bottom margin
+                                width: '40px',         // Icon width
+                                height: '50px',        // Icon height
+                                top: '4px',            // Top offset
+                                left: '8px',           // Left offset
+                                color: " rgba(167, 167, 167, 1)",// Ensure position is relative to the container
+                                gap: '0px',
+                                // No gap between elementsr
+                              }}
                             />
-                          ) : (
-                            <div>{exp.aadhaar.file.name}</div>
+
+                            <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
+                          </label>
+                          <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
+                          <input
+                            id="aadhaar-upload"
+                            type="file"
+                            onChange={(e) => handleFileChange(e, 'aadhaar')}
+                            accept="image/png, image/jpeg, application/pdf"
+                            style={{ display: 'none' }}
+                          />
+
+                          {/* Display file preview or name */}
+                          {exp.aadhaar && (
+                            <div style={{ marginTop: '15px', textAlign: 'center' }}>
+                              {exp.aadhaar.preview && exp.aadhaar.file.type.startsWith('image/') ? (
+                                <img
+                                  src={exp.aadhaar.preview}
+                                  alt="Aadhaar Preview"
+                                  style={{ width: '80px', height: '80px', borderRadius: '8px', objectFit: 'cover' }}
+                                />
+                              ) : (
+                                <div>{exp.aadhaar.file.name}</div>
+                              )}
+                            </div>
                           )}
                         </div>
-                      )}
-                    </div>
-                  </Form.Group>
+                      </Form.Group>
 
-                      <Form.Group className="mb-3" controlId="formBillImage">
+                      {/* <Form.Group className="mb-3" controlId="formBillImage">
                         <Form.Label className='Form-Label'>Bill Image<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
                           className='Form-Control'
@@ -363,9 +360,9 @@ export default function FinancialManagementExp() {
                         <Form.Control.Feedback type="invalid">
                           {errors.Bill_image?.message}
                         </Form.Control.Feedback>
-                      </Form.Group>
+                      </Form.Group> */}
 
-                      <div className="d-flex justify-content-end">
+                      <div className="d-flex justify-content-end mt-3">
                         <Button variant="secondary" onClick={handleClose} className="me-3">Close</Button>
                         <Button variant="primary" type="submit">{editIndex !== null ? 'Update Expense' : 'Add Expense'}</Button>
                       </div>

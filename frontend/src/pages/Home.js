@@ -29,6 +29,7 @@ import RequestSubmission from "../component/Resident/RequestSubmission";
 import MaintainanceInvoice from "../component/Resident/MaintainanceInvoice";
 import OtherIncomeInvoices from "../component/Resident/OtherIncome";
 import ViewInvoice from "../component/Resident/ViewInvoice";
+import ChatLayout from "../component/Resident/Access";
 
 
 const Home = () => {
@@ -56,8 +57,8 @@ const Home = () => {
       <Route path="/announcement" element={<Announcement />} />
       <Route path='/visitor-tracking' element={<VisitorsTracking />} />
       <Route path='/emergency-management' element={<EmergencyManagement />} />
-      <Route path='/EventParticipation' element={<EventParticipation />} />
-      <Route path='/activityparticipate' element={<ActivityParticipate />} />
+      <Route path='/events-and-participation' element={<EventParticipation />} />
+      <Route path='/activity-and-participation' element={<ActivityParticipate />} />
       <Route path='/personal-details' element={<PersonalDetail />} />
       <Route path='/personal-details-tenant' element={<TenantPersonalDetails />} />
       <Route path='/Resident-Protocols' element={<SecurityProtocolsResident />} />
@@ -66,6 +67,7 @@ const Home = () => {
       <Route path='/maintenance-invoices' element={<MaintainanceInvoice />} />
       <Route path='/other-income-nvoice' element={<OtherIncomeInvoices />} />
       <Route path='/view-invoice' element={<ViewInvoice />} />
+      <Route path='/Access' element={<ChatLayout/>}/>
 
     </Routes>
   </div>;

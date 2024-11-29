@@ -594,7 +594,7 @@ export default function ResidentForm() {
               </div>
               <div className="col-md-6 text-end">
                 <div style={{ display: 'inline-block', position: 'relative' }}>
-                  <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333', marginRight: '10px' }}>Select Vehicle</label>
+                  <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333', marginRight: '10px' }} >Select Vehicle</label>
                   <div
                     style={{
                       display: 'inline-flex',
