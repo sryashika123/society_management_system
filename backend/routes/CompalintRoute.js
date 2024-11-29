@@ -4,14 +4,17 @@ const router = express.Router();
 
 const compalintController = require("../controllers/CompalintController");
 
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
-router.post("/createComplaints", compalintController.createComplaints);
 
-router.get("/viewComplaints", compalintController.viewComplaints);
 
-router.delete("/deleteComplaints/:id", compalintController.deleteComplaints);
+router.post("/createComplaints", authenticateUser , authorizeRoles('admin'), compalintController.createComplaints);
 
-router.put("/updateComplaints/:id", compalintController.updateComplaints);
+router.get("/viewComplaints", authenticateUser , authorizeRoles('admin'), compalintController.viewComplaints);
+
+router.delete("/deleteComplaints/:id", authenticateUser , authorizeRoles('admin'), compalintController.deleteComplaints);
+
+router.put("/updateComplaints/:id", authenticateUser , authorizeRoles('admin'), compalintController.updateComplaints);
 
 
 module.exports = router;  
