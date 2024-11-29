@@ -333,7 +333,6 @@ export default function FinancialManagementExp() {
                 </Modal>
               </div>
             </div>
-
           </div>
         </div>
       </div>
