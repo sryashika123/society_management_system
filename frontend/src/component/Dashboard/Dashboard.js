@@ -334,7 +334,7 @@ const RightSection = () => {
 							</Card>
 
 							{/* Add/Edit Modal */}
-							<Modal show={showModal} onHide={handleCloseModal} centered className="square-modal">
+							<Modal show={showModal} onHide={handleCloseModal} centered className="square-modal ">
 								<Modal.Header closeButton style={{ border: 'none' }}>
 									<Modal.Title>
 										{isAddMode ? 'Add Important Number' : 'Edit Important Number'}
@@ -381,7 +381,7 @@ const RightSection = () => {
 										/>
 									</Form.Group>
 								</Modal.Body>
-								<Modal.Footer>
+								<Modal.Footer className='d-flex justify-content-between w-100'>
 									<button
 										type="button"
 										className="btn btn-outline-secondary"
@@ -408,12 +408,12 @@ const RightSection = () => {
 
 
 							{/* Delete Confirmation Modal */}
-							<Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+							<Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered className="square-modal ">
 								<Modal.Header closeButton style={{ border: 'none' }}>
 									<Modal.Title>Delete Number?</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>Are you sure you want to delete this contact?</Modal.Body>
-								<Modal.Footer className='d-flex justify-content-between' style={{ borderTop: 'none' }}>
+								<Modal.Footer className='d-flex justify-content-between px-3 pb-3 ' style={{ borderTop: 'none' }}>
 									<button
 										type="button"
 										className="btn btn-outline-secondary"

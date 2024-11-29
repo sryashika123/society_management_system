@@ -171,7 +171,7 @@ const FacilityManagement = () => {
           </div>
         </div>
 
-        <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal show={showModal} onHide={handleCloseModal} centered className="square-modal">
           <Modal.Header closeButton>
             <Modal.Title>{isEditing ? "Edit Facility" : "Create Facility"}</Modal.Title>
           </Modal.Header>
@@ -230,14 +230,12 @@ const FacilityManagement = () => {
               </Form.Group>
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Cancel
-            </Button>
-            <Button className="mainColor2" onClick={handleSave}>
-              Save
-            </Button>
-          </Modal.Footer>
+     
+            <div className="px-3 pb-3 d-flex justify-content-between">
+              <button type="button" className="btn btn-sm cancle" onClick={handleCloseModal}>Cancel</button>
+              <button type="submit" className="btn btn-sm save" onClick={handleSave}>Save</button>
+            </div>
+          
         </Modal>
       </div>
     </div>

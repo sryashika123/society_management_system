@@ -55,6 +55,7 @@ export default function RequestTracking() {
   };
 
   const handleCloseModal = () => setShowModal(false);
+  
 
   const handleSave = () => {
     if (!selectedRequest.Requester_Name || !selectedRequest.Request_name || !selectedRequest.Request_Date || !selectedRequest.unit || !selectedRequest.wing) {
@@ -321,7 +322,7 @@ export default function RequestTracking() {
 
 
       {/* Create Complaint Modal */}
-      <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
+      <Modal show={showCreateModal} onHide={handleCloseCreateModal} className='square-modal' centered>
         <Modal.Header closeButton>
           <Modal.Title>Create Request</Modal.Title>
         </Modal.Header>
@@ -489,6 +490,8 @@ export default function RequestTracking() {
           padding: "20px 0px 0px 0px",
           borderRadius: "15px 0px 0px 0px",
         }}
+        centered
+        className='square-modal'
       >
         <Modal.Header closeButton>
           <Modal.Title
@@ -506,7 +509,6 @@ export default function RequestTracking() {
         <Modal.Body
           style={{
             width: "371px",
-            height: "400px",
             display: "flex",
             flexDirection: "column",
             gap: "25px",
@@ -707,7 +709,8 @@ export default function RequestTracking() {
 
       {/* edit model */}
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} onHide={handleCloseModal}  
+       centered  className='square-modal'  > 
         <Modal.Header closeButton>
           <Modal.Title>Edit Request</Modal.Title>
         </Modal.Header>
@@ -841,7 +844,7 @@ export default function RequestTracking() {
         </Modal.Footer>
       </Modal>
 
-      <Modal show={showDeleteRequest} onHide={handleCloseDeleteModal} centered>
+      <Modal show={showDeleteRequest} onHide={handleCloseDeleteModal} centered className='square-modal'>
         <Modal.Header closeButton>
           <Modal.Title>Delete Request?</Modal.Title>
         </Modal.Header>
@@ -849,7 +852,7 @@ export default function RequestTracking() {
           <p>Are you sure you want to delete this protocol?</p>
         </Modal.Body>
         <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button variant="secondary" style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }}>
+          <Button variant="secondary" style={{ width: "175px", height: "51px", border: "1px solid #202224", padding: "10px 55px 10px 55px", background: "#FFFFFF", color: "#202224", }} onClick={handleCloseModal}>
             Cancel
           </Button>
           <Button onClick={handleDelete} style={{

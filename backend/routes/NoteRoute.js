@@ -4,15 +4,17 @@ const router = express.Router();
 
 const NoteController = require("../controllers/NoteController");
 
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
 
-router.post("/createNote", NoteController.createNote);
 
-router.get("/ViewNote", NoteController.ViewNote);
+router.post("/createNote" , authenticateUser , authorizeRoles('admin'), NoteController.createNote);
 
-router.delete("/deleteNote/:id", NoteController.deleteNote);
+router.get("/ViewNote", authenticateUser , authorizeRoles('admin') ,  NoteController.ViewNote);
 
-router.put("/updateNote/:id", NoteController.updateNote);
+router.delete("/deleteNote/:id",  authenticateUser , authorizeRoles('admin') , NoteController.deleteNote);
+
+router.put("/updateNote/:id" ,authenticateUser , authorizeRoles('admin') , NoteController.updateNote);
 
 
 
