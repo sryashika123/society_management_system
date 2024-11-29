@@ -4,23 +4,23 @@ const Admin = require("../models/UserModel");
 
 module.exports.create_security_protocol = async (req, res) => {
     try{
-        const { title, description, date, time, adminId, societyId} = req.body;
+        const { title, description, date, time} = req.body;
 
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
+        // const admin = await Admin.findById(adminId);
+		// if (!admin) {
+		//   	return res.status(404).json({ msg: "Admin not found" });
+		// }
 
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
+        // const society = await Society.findById(societyId);
+		// if (!society) {
+		//   	return res.status(404).json({ msg: "Society not found" });
+		// }
 
         if (!title || !description) {
             return res.status(400).json({ msg: "All fields are required." });
         }
         
-        const newProtocol = new Security_protocol({ title, description, date: new Date(date),  time , adminId, societyId });
+        const newProtocol = new Security_protocol({ title, description, date: new Date(date),  time  });
         await newProtocol.save();
         res.status(201).json({ msg: "Security protocol created successfully", protocol: newProtocol });
     } 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
 import { FaEdit, FaEye, FaPlus, FaTrash } from 'react-icons/fa';
 import Sidebar from '../Layout/Sidebar';
@@ -7,13 +7,10 @@ import Header from '../Layout/Navbar';
 import Edit from "../../assets/edit.png"
 import View from "../../assets/view.png"
 import Delete from "../../assets/delete.png"
+import axios from 'axios';
 
 export default function SecurityProtocols() {
-  const [protocols, setProtocols] = useState([
-    { id: 1, title: "Physical Security", description: "Providing false information or Providing", date: "2022-05-20", time: "3:45 PM" },
-    { id: 2, title: "Cybersecurity", description: "Providing false information or", date: "2022-06-28", time: "3:45 PM" },
-  ]);
-
+  const [protocols, setProtocols] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -21,6 +18,18 @@ export default function SecurityProtocols() {
   const [editProtocolId, setEditProtocolId] = useState(null);
   const [deleteProtocolId, setDeleteProtocolId] = useState(null);
   const [protocolData, setProtocolData] = useState({ title: "", description: "", date: "", time: "" });
+
+ // Fetch protocols
+ const fetchProtocols = () => {
+  axios
+    .get("http://localhost:8000/api/users/v8/get_security_protocol")
+    .then((response) => setProtocols(response.data))
+    .catch((error) => console.error("Error fetching protocols:", error));
+};
+
+useEffect(() => {
+  fetchProtocols();
+}, []);
 
   const handleShowCreate = () => {
     setIsEdit(false);
@@ -30,7 +39,7 @@ export default function SecurityProtocols() {
 
   const handleShowEdit = (protocol) => {
     setIsEdit(true);
-    setEditProtocolId(protocol.id);
+    setEditProtocolId(protocol._id);
     setProtocolData(protocol);
     setShowModal(true);
   };
@@ -44,6 +53,7 @@ export default function SecurityProtocols() {
     setDeleteProtocolId(protocolId);
     setShowDeleteModal(true);
   };
+
   const handleClose = () => {
     setShowModal(false);
     setShowViewModal(false);
@@ -52,7 +62,6 @@ export default function SecurityProtocols() {
     setDeleteProtocolId(null); // Clear the ID of the protocol to delete
   };
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProtocolData((prev) => ({ ...prev, [name]: value }));
@@ -60,30 +69,39 @@ export default function SecurityProtocols() {
 
   const handleSave = () => {
     if (isEdit) {
-      // Update protocol
-      setProtocols((prevProtocols) =>
-        prevProtocols.map((protocol) =>
-          protocol.id === editProtocolId ? { ...protocol, ...protocolData } : protocol
-        )
-      );
+      console.log("Edit Protocol ID:", editProtocolId);
+      axios
+        .put(`http://localhost:8000/api/users/v8/update_security_protocol/${editProtocolId}`, protocolData)
+        .then(() => {
+          console.log("Protocol updated successfully");
+          fetchProtocols();
+          handleClose();
+        })
+        .catch((error) => console.error("Error updating protocol:", error));
     } else {
-      // Add new protocol
-      const newId = protocols.length + 1;
-      const newEntry = { id: newId, ...protocolData };
-      setProtocols((prevProtocols) => [...prevProtocols, newEntry]);
+      axios
+        .post("http://localhost:8000/api/users/v8/create_security_protocol", protocolData)
+        .then(() => {
+          console.log("Protocol created successfully");
+          fetchProtocols();
+          handleClose();
+        })
+        .catch((error) => console.error("Error creating protocol:", error));
     }
-
-    handleClose();
   };
+  
+  
 
   const handleDelete = () => {
-    setProtocols((prevProtocols) =>
-      prevProtocols.filter((protocol) => protocol.id !== deleteProtocolId)
-    );
-    setDeleteProtocolId(null); // Clear the ID of the protocol to delete
-    setShowDeleteModal(false); // Close the delete confirmation modal
+    axios.delete(`http://localhost:8000/api/users/v8/delete_security_protocol/${deleteProtocolId}`)
+      .then((response) => {
+        setProtocols((prevProtocols) =>
+          prevProtocols.filter((protocol) => protocol._id !== deleteProtocolId)
+        );
+        handleClose();
+      })
+      .catch((error) => console.error("There was an error deleting the protocol!", error));
   };
-
 
   return (
     <div className="d-flex flex-column flex-md-row">
@@ -226,7 +244,7 @@ export default function SecurityProtocols() {
                     textUnderlinePosition: "from-font",
                     textDecorationSkipInk: "none",
                     color: "black",
-                  }}>{protocolData.date}</strong>
+                  }}> {new Date(protocolData.date).toLocaleDateString('en-GB')}</strong>
                 </div>
                 <div>
                   <p>Time</p>
@@ -287,7 +305,7 @@ export default function SecurityProtocols() {
                       </div>
                     </td>
                     <td style={{ verticalAlign: "middle", width: "300px" }}>{protocol.description}</td>
-                    <td style={{ verticalAlign: "middle" }} className="text-center">{protocol.date}</td>
+                    <td style={{ verticalAlign: "middle" }} className="text-center"> {new Date(protocol.date).toLocaleDateString('en-GB')}</td>
                     <td style={{ verticalAlign: "middle" }} className="text-center">
                       <div className="d-flex align-items-center justify-content-center gap-2">
                         <div
@@ -318,7 +336,7 @@ export default function SecurityProtocols() {
                           style={{ cursor: "pointer" }}
                           onClick={() => handleShowView(protocol)}
                         />
-                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(protocol.id)} />
+                        <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleShowDelete(protocol._id)} />
                       </div>
                     </td>
                   </tr>
