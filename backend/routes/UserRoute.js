@@ -7,7 +7,7 @@ const usercontroller =require("../controllers/UserController");
 
 router.post("/register", usercontroller.register);
 
-router.post("/login", usercontroller.login);
+router.post("/login" , usercontroller.login);
 
 router.post("/logout", usercontroller.logout);
 
@@ -19,6 +19,7 @@ router.post("/verify-otp", usercontroller.verifyotp);
 
 router.post("/reset-password", usercontroller.resetpassword);
 
+// router.get("/protected",authmiddleware,usercontroller.getProtectedData);
 
 
 module.exports = router;

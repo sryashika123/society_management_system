@@ -1,47 +1,56 @@
+const Razorpay = require('razorpay');
 const Payment = require('../models/PaymentModel');
-const Society = require("../models/societyModel");
-const Admin = require("../models/UserModel");
+const dotenv = require('dotenv');
+dotenv.config();
+
+const razorpayInstance = new Razorpay({
+    key_id: process.env.RAZORPAY_ID_KEY,
+    key_secret: process.env.RAZORPAY_SECRET_KEY,
+});
 
 module.exports.createPayment = async (req, res) => {
-    try{
-        const{ Card_Name, Card_number, Expiry_date, CVV, status, Member, adminId, societyId } = req.body;
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
+    try {
+        const { Card_Name, Card_number, Expiry_date, CVV, Member, amount, adminId, societyId } = req.body;
 
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
+        // Validate Admin and Society existence
+        // const admin = await Admin.findById(adminId);
+        // if (!admin) return res.status(404).json({ msg: "Admin not found" });
 
-        if(!Card_Name || !Expiry_date || !Member || !Expiry_date){
-            return res.status(400).json({ message: "Card name is required." });
+        // const society = await Society.findById(societyId);
+        // if (!society) return res.status(404).json({ msg: "Society not found" });
+
+        if (!Card_Name || !Card_number || !Expiry_date || !CVV || !Member || !amount) {
+            return res.status(400).json({ message: "All fields are required." });
         }
-        if(!Card_number || Card_number.toString().length > 16){
-            return res.status(400).json({ message: "Card number is required and must be 16 digits or fewer." });
-        }
-        if(!CVV || CVV.toString().length !== 3){
-            return res.status(400).json({ message: "CVV is required and must be exactly 3 digits." });
-        }
-        if(Member && typeof Member !== 'number'){
-            return res.status(400).json({ message: "Member must be a number." });
-        }
-        const payment = new Payment({
+
+        // Create Razorpay Order
+        const orderOptions = {
+            amount: amount * 100, // Convert to paise
+            currency: 'INR',
+            receipt: `receipt_${Date.now()}`
+        };
+        const order = await razorpayInstance.orders.create(orderOptions);
+
+        // Save to MongoDB
+        const newPayment = new Payment({
+            order_id: order.id,
+            amount: amount,
+            currency: order.currency,
+            receipt: order.receipt,
+            Member,
             Card_Name,
             Card_number,
             Expiry_date,
             CVV,
-            status,
-            Member,
-            adminId, 
-            societyId
+            adminId,
+            societyId,
         });
-        await payment.save();
-        res.status(201).json(payment);
+        await newPayment.save();
+        res.status(201).json({ success: true, message: "Payment created successfully", order_id: order.id, newPayment });
     }
     catch(error){
-        res.status(400).json({ message: error.message });
+        console.error('Error creating payment:', error.message);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 };
 
@@ -55,7 +64,6 @@ module.exports.getPayment = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 module.exports.deletePayment = async (req, res) =>{
     try{
         const { id } = req.params;

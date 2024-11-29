@@ -10,6 +10,8 @@ const socketIo = require('socket.io');
 
 const db = require("./config/mongoose");
 
+const cookieParser = require('cookie-parser');
+
 const dotenv = require('dotenv');
 
 const cors = require('cors');
@@ -19,6 +21,7 @@ const multer = require('multer');
 const Message = require('./models/MessageModel.js');
 
 const app = express();
+
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -35,6 +38,8 @@ app.use(
     }
 ));
 
+
+app.use(cookieParser()); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
