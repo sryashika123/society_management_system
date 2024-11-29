@@ -5,6 +5,7 @@ import profile from '../../assets/profile.png';
 import { MdEditSquare } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import './Profile.css'
+import Sidebar from '../Layout/Sidebar';
 
 export default function Profile() {
 
@@ -30,16 +31,20 @@ export default function Profile() {
     };
 
     return (
-        <div className="profile-dashboard-bg dashboard-bg" style={{marginLeft:"270px", width:"1640px"}}>
+        <div className="profile-dashboard-bg dashboard-bg" >
+            <div className="flex-shrink-0" >
+                <Sidebar />
+            </div>
+            <div className="flex-grow-1 dashboard-bg" style={{ width: "1920px" }}>
             <Navbar />
-            <div className=" ">
+            <div className=" " style={{ marginTop: "109px", width: "1620px", marginLeft: "300px" }}>
                 <div className="d-flex justify-content-center profile-bg">
                     <div className="col-lg-8">
                         <div className="d-flex align-items-center justify-content-between">
-                        <h3 className="mb-3 mt-5 profile-title">Profile</h3>
-                        <div className="d-flex justify-content-end mt-3">
-                            <Link to="/home/EditProfile" className="text-decoration-none"><button type="submit" className="d-flex align-items-center btn btn-sm profile-btn "><MdEditSquare className="me-2" />Edit Profile</button></Link>
-                        </div>
+                            <h3 className="mb-3 mt-5 profile-title">Profile</h3>
+                            <div className="d-flex justify-content-end mt-3">
+                                <Link to="/home/EditProfile" className="text-decoration-none"><button type="submit" className="d-flex align-items-center btn btn-sm profile-btn "><MdEditSquare className="me-2" />Edit Profile</button></Link>
+                            </div>
                         </div>
                         <form onSubmit={handleSubmit(onSubmit)} className="form-group bg-light p-5 rounded d-flex justify-content-center">
 
@@ -154,6 +159,7 @@ export default function Profile() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

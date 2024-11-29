@@ -1,120 +1,126 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../src/component/Layout/Navbar';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { MdAccessTimeFilled } from "react-icons/md";
+import axios from 'axios';
 
 export default function Announcement() {
 
-    const [note, setNote] = useState([
-        { id: 1, title: 'Community Initiatives', date: '01/02/2024', time: '10:15 AM', des: 'The celebration of Ganesh Chaturthi involves the installation of clay idols of Ganesa in.' },
+    const [note, setNote] = useState([]); // State for storing announcements
+    const [show, setShow] = useState(false); // Modal visibility for creating announcement
+    const [editIndex, setEditIndex] = useState(null); // To track the index of the note being edited
+    const [showEditModal, setShowEditModal] = useState(false); // Show edit modal
+    const [dropdownIndex, setDropdownIndex] = useState(null); // For dropdown menu
+    const [showDeleteModal, setShowDeleteModal] = useState(false); // For delete confirmation modal
+    const [deleteIndex, setDeleteIndex] = useState(null); // To track the index of the note being deleted
+    const [viewComplaint, setViewComplaint] = useState(null); // For viewing an announcement
 
-        { id: 2, title: 'Community Initiatives', date: '01/02/2024', time: '10:15 AM', des: 'The celebration of Ganesh Chaturthi involves the installation of clay idols of Ganesa in.' },
-
-        { id: 3, title: 'Community Initiatives', date: '01/02/2024', time: '10:15 AM', des: 'The celebration of Ganesh Chaturthi involves the installation of clay idols of Ganesa in.' },
-
-        { id: 4, title: 'Community Initiatives', date: '01/02/2024', time: '10:15 AM', des: 'The celebration of Ganesh Chaturthi involves the installation of clay idols of Ganesa in.' },
-
-    ]);
-
-    const [show, setShow] = useState(false);
-    const [editIndex, setEditIndex] = useState(null);
-    const [showEditModal, setShowEditModal] = useState(false);
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
 
+    // Fetch announcements when the component mounts
+    useEffect(() => {
+        const fetchAnnouncements = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/users/v20/getAnnouncement');
+                setNote(response.data);
+            } catch (error) {
+                console.error('Error fetching announcements:', error);
+            }
+        };
+        fetchAnnouncements();
+    }, []);
+
+    // Handle create/edit announcement modal close
     const handleClose = () => {
         setShow(false);
         reset();
         setEditIndex(null);
+        setShowEditModal(false); // Hide the Edit modal
     };
 
-    const handleShow = () => setShow(true);
-
-    const onSubmit = (data) => {
-        if (editIndex !== null) {
-            const updatedNotes = [...note];
-            updatedNotes[editIndex] = { ...updatedNotes[editIndex], ...data };
-            setNote(updatedNotes);
-        } else {
-            setNote([...note, { id: note.length + 1, ...data }]);
+    // Handle submit of new/edit announcement form
+    const onSubmit = async (data) => {
+        try {
+            if (editIndex !== null) {
+                // Edit existing announcement
+                const updatedNote = { ...note[editIndex], ...data };
+                await axios.put(`http://localhost:8000/api/users/v20/updateAnnouncement/${note[editIndex]._id}`, updatedNote);
+                const updatedNotes = [...note];
+                updatedNotes[editIndex] = updatedNote;
+                setNote(updatedNotes);
+            } else {
+                // Create new announcement
+                const response = await axios.post('http://localhost:8000/api/users/v20/createAnnouncement', data);
+                setNote([...note, response.data]); // Add new announcement to state
+            }
+            handleClose();
+        } catch (error) {
+            console.error('Error saving announcement:', error);
         }
-        handleClose();
     };
 
-
-    const [dropdownIndex, setDropdownIndex] = useState(null);
-
-    const handleView = (index) => {
-        console.log("View item:", note[index]);
-        // Implement view modal logic here
+    // Handle delete confirmation
+    const confirmDelete = async () => {
+        try {
+            if (deleteIndex !== null) {
+                await axios.delete(`http://localhost:8000/api/users/v20/deleteAnnouncement/${note[deleteIndex]._id}`);
+                const updatedNotes = note.filter((_, i) => i !== deleteIndex);
+                setNote(updatedNotes);
+            }
+            setShowDeleteModal(false);
+            setDeleteIndex(null);
+        } catch (error) {
+            console.error('Error deleting announcement:', error);
+        }
     };
 
-    // New state for delete confirmation modal
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [deleteIndex, setDeleteIndex] = useState(null);
+    // Handle edit modal for a specific announcement
+    const handleShowEditModal = (index) => {
+        setEditIndex(index);
+        const selectedNote = note[index];
+        setValue('title', selectedNote.title);
+        setValue('description', selectedNote.description);
+        setValue('date', selectedNote.date);
+        setValue('time', selectedNote.time);
+        setShowEditModal(true);
+    };
 
-    // Functions for delete modal
+    // Handle view modal for a specific announcement
+    const handleShowViewModal = (index) => {
+        setViewComplaint(note[index]);
+    };
+
+    // Handle delete modal for a specific announcement
     const handleShowDeleteModal = (index) => {
         setDeleteIndex(index);
         setShowDeleteModal(true);
     };
 
-    const handleCloseDeleteModal = () => {
-        setShowDeleteModal(false);
-        setDeleteIndex(null);
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);  // Convert the string to a Date object
+        const day = String(date.getDate()).padStart(2, '0');  // Day of the month (01-31)
+        const month = String(date.getMonth() + 1).padStart(2, '0');  // Month (01-12), adding 1 as months are 0-indexed
+        const year = date.getFullYear();  // Year (YYYY)
+    
+        return `${day}/${month}/${year}`;  // Return the formatted date string
     };
 
-    const confirmDelete = () => {
-        if (deleteIndex !== null) {
-            const updatedNotes = note.filter((_, i) => i !== deleteIndex);
-            setNote(updatedNotes);
-        }
-        handleCloseDeleteModal();
-    };
-
-    const handleShowEditModal = (index) => {
-        setEditIndex(index);
-        const selectedNote = note[index];
-        setValue('title', selectedNote.title);
-        setValue('amtPerMember', selectedNote.amtPerMember);
-        setValue('date', selectedNote.date);
-        setValue('dueDate', selectedNote.dueDate);
-        setValue('des', selectedNote.des);
-        setShowEditModal(true);
-    };
-
-    const handleCloseEditModal = () => {
-        setShowEditModal(false);
-        reset();
-        setEditIndex(null);
-    };
-
-    const [showViewModal, setShowViewModal] = useState(false);
-    const [viewComplaint, setViewComplaint] = useState(null);
-
-    const handleShowViewModal = (index) => {
-        setViewComplaint(note[index]);
-        setShowViewModal(true);
-    };
-
-    const handleCloseViewModal = () => setShowViewModal(false);
-
-    const [showSetMaintenanceModal, setShowSetMaintenanceModal] = useState(false);
-
+    
     return (
-        <div className='dashboard-bg' style={{width:"1920px" }}>
+        <div className='dashboard-bg' style={{ width: "1920px" }}>
             <Navbar />
             <div style={{ width: "1620px", marginLeft: "300px" }}>
                 <div className='container-fluid' >
-                    <div className='row p-5'  style={{marginTop:"109px"}}>
+                    <div className='row p-5' style={{ marginTop: "109px" }}>
                         <div className='p-0'>
                             <div className='bg-light'>
                                 <div className='d-flex justify-content-between align-items-center  py-3 px-2'>
-                                    <h3 className=' mb-0  financial-income-title' style={{marginLeft:"10px"}}>Announcement</h3>
+                                    <h3 className=' mb-0  financial-income-title' style={{ marginLeft: "10px" }}>Announcement</h3>
 
                                     <div>
-                                        <button className='set-maintainance-btn d-flex align-items-center other-income-btn' style={{marginRight:"10px"}} onClick={handleShow}> Create Announcement</button>
+                                        <button className='set-maintainance-btn d-flex align-items-center other-income-btn' style={{ marginRight: "10px" }} onClick={() => setShow(true)}> Create Announcement</button>
                                     </div>
                                 </div>
 
@@ -136,8 +142,8 @@ export default function Announcement() {
                                                         </div>
                                                         <div className="mb-3">
                                                             <label className='Form-Label'>Description <span className='text-danger'>*</span></label>
-                                                            <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('des', { required: true })} />
-                                                            {errors.amt && <small className="text-danger">Description is required</small>}
+                                                            <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('description', { required: true })} />
+                                                            {errors.description && <small className="text-danger">Description is required</small>}
                                                         </div>
                                                         <div className='d-flex justify-content-between'>
                                                             <div className="mb-3 w-50 me-2">
@@ -165,7 +171,7 @@ export default function Announcement() {
                                     {note.map((val, index) => (
                                         <div className="col-lg-3 mb-3" key={val.id}>
                                             <div className="card">
-                                                <div className="card-header card-title text-light d-flex align-items-center justify-content-between" style={{ height: "54px", fontSize: "16px", fontWeight: "500" , background:" rgba(86, 120, 233, 1)"}}>
+                                                <div className="card-header card-title text-light d-flex align-items-center justify-content-between" style={{ height: "54px", fontSize: "16px", fontWeight: "500", background: " rgba(86, 120, 233, 1)" }}>
                                                     {val.title}
                                                     <div className='position-relative'>
                                                         {/* Three dots button */}
@@ -207,8 +213,8 @@ export default function Announcement() {
 
                                                                                         <div className="mb-3">
                                                                                             <label className='Form-Label'>Description <span className='text-danger'>*</span></label>
-                                                                                            <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('des', { required: true })} />
-                                                                                            {errors.amt && <small className="text-danger">Description is required</small>}
+                                                                                            <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('description', { required: true })} />
+                                                                                            {errors.description && <small className="text-danger">Description is required</small>}
                                                                                         </div>
 
                                                                                         <div className='d-flex justify-content-between'>
@@ -223,14 +229,14 @@ export default function Announcement() {
                                                                                         </div>
                                                                                     </div>
                                                                                     <div className="px-3 pb-3 d-flex justify-content-between">
-                                                                                        <button type="button" className="btn btn-sm cancle" onClick={handleCloseEditModal}>Cancel</button>
+                                                                                        <button type="button" className="btn btn-sm cancle" onClick={handleClose}>Cancel</button>
                                                                                         <button type="submit" className="btn btn-sm save">Save</button>
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                )}
+                                                                )}  
 
                                                                 <button
                                                                     className="dropdown-item"
@@ -247,29 +253,32 @@ export default function Announcement() {
                                                                 </button>
 
                                                                 {/* delete modal */}
-                                                                <Modal className='custom-modal' show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
-
-                                                                    <Modal.Title className='Modal-Title px-3 pt-3'>Delete Number?</Modal.Title>
-
-                                                                    <Modal.Body>
-                                                                        <p className='Form-p mb-0'>Are you sure you want to delete this Security?</p>
-                                                                    </Modal.Body>
-
-                                                                    <Modal.Footer className='d-flex justify-content-between'>
-                                                                        <Button variant="secondary" className='btn cancle  mt-2' onClick={handleCloseDeleteModal}>Cancel</Button>
-                                                                        <Button variant="danger" className='btn delete' onClick={confirmDelete}>Delete</Button>
-                                                                    </Modal.Footer>
-                                                                </Modal>
+                                                                {showDeleteModal && (
+                                                                    <div className="modal fade show d-block custom-modal" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                                                                        <div className="modal-dialog modal-dialog-centered">
+                                                                            <div className="modal-content">
+                                                                                <h5 className="modal-title Modal-Title p-3 pb-0">Confirm Deletion</h5>
+                                                                                <div className="modal-body">
+                                                                                    <p>Are you sure you want to delete this announcement?</p>
+                                                                                </div>
+                                                                                <div className="px-3 pb-3 d-flex justify-content-between">
+                                                                                    <button type="button" className="btn btn-sm cancle" onClick={() => setShowDeleteModal(false)}>Cancel</button>
+                                                                                    <button type="button" className="btn btn-sm save" onClick={confirmDelete}>Delete</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
 
                                                                 {/* View Modal */}
-                                                                <Modal show={showViewModal} className='custom-modal custom-modal' onHide={handleCloseViewModal} centered>
+                                                           
+                                                                <Modal show={viewComplaint !== null} onHide={() => setViewComplaint(null)} centered>
                                                                     <Modal.Header closeButton>
                                                                         <Modal.Title>View Security Protocol</Modal.Title>
                                                                     </Modal.Header>
                                                                     <Modal.Body>
                                                                         {viewComplaint && (
                                                                             <div>
-
                                                                                 <div className='mb-4'>
                                                                                     <label className='anouncement-view-title'>Title</label>
                                                                                     <p className='mb-0 anouncement-view-p'>{viewComplaint.title}</p>
@@ -277,20 +286,19 @@ export default function Announcement() {
 
                                                                                 <div className='mb-4'>
                                                                                     <label className='anouncement-view-title'>Description</label>
-                                                                                    <p className='mb-0 anouncement-view-p'>{viewComplaint.des}</p>
+                                                                                    <p className='mb-0 anouncement-view-p'>{viewComplaint.description}</p>
                                                                                 </div>
 
                                                                                 <div className='d-flex'>
-                                                                                <div className='mb-4'>
-                                                                                    <label className='anouncement-view-title'>Date</label>
-                                                                                    <p className='mb-0 anouncement-view-p'>{viewComplaint.date}</p>
+                                                                                    <div className='mb-4'>
+                                                                                        <label className='anouncement-view-title'>Date</label>
+                                                                                        <p className='mb-0 anouncement-view-p'>{viewComplaint.date}</p>
+                                                                                    </div>
+                                                                                    <div className='mb-4 ms-5'>
+                                                                                        <label className='anouncement-view-title'>Time</label>
+                                                                                        <p className='mb-0 anouncement-view-p'>{viewComplaint.time}</p>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div className='mb-4 ms-5'>
-                                                                                    <label className='anouncement-view-title'>Time</label>
-                                                                                    <p className='mb-0 anouncement-view-p'>{viewComplaint.time}</p>
-                                                                                </div>
-                                                                                </div>
-
                                                                             </div>
                                                                         )}
                                                                     </Modal.Body>
@@ -302,14 +310,14 @@ export default function Announcement() {
                                                 <div className="card-body">
                                                     <div className="d-flex justify-content-between align-items-center mb-2">
                                                         <h6 className="card-body-title mb-0">Announcement Date</h6>
-                                                        <span className="card-body-title text-dark mb-0 fw-medium">{val.date}</span>
+                                                        <span className="card-body-title text-dark mb-0 fw-medium">{formatDate(val.date)}</span>
                                                     </div>
                                                     <div className="d-flex justify-content-between align-items-center mb-2">
                                                         <h6 className="card-body-title mb-0">Announcement Time</h6>
                                                         <span className="card-body-title text-dark mb-0 fw-medium">{val.time}</span>
                                                     </div>
                                                     <h6 className="card-body-title mb-2">Description</h6>
-                                                    <p className="card-text card-des fw-medium">{val.des}</p>
+                                                    <p className="card-text card-des fw-medium">{val.description}</p>
                                                 </div>
                                             </div>
                                         </div>
