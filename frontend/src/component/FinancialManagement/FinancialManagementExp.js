@@ -18,6 +18,14 @@ export default function FinancialManagementExp() {
   const [editIndex, setEditIndex] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [loading, setLoading] = useState(false); // State for handling loading
+  const [formData, setFormData] = useState({
+    Title: "",
+    description: "",
+    date: "",
+    amount: "",
+    Bill_image: null,
+  }); // Form data state
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -35,6 +43,13 @@ export default function FinancialManagementExp() {
   // Handle show/hide of modals
   const handleShow = () => setShow(true);
   const handleClose = () => {
+    setFormData({
+      Title: "",
+      description: "",
+      date: "",
+      amount: "",
+      Bill_image: null,
+    });
     setShow(false);
     reset();
     setEditIndex(null);
@@ -69,8 +84,24 @@ export default function FinancialManagementExp() {
     handleCloseDeleteModal();
   };
 
+  const handleInputChange = (e) => {
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      setFormData({
+        ...formData,
+        [name]: files[0], // Only taking the first file
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
   // Handle form submit for adding/editing expenses
   const onSubmit = (data) => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("Title", data.Title);
     formData.append("description", data.description);
@@ -79,40 +110,49 @@ export default function FinancialManagementExp() {
     formData.append("Bill_image", data.Bill_image[0]);
 
     if (editIndex !== null) {
+      // Update an existing expense (PUT request)
       axios.put(`http://localhost:8000/api/users/v12/updateExpenses/${exp[editIndex]._id}`, formData)
-        .then(response => {
-          const updatedExpenses = exp.map((item, index) => index === editIndex ? response.data : item);
-          setExp(updatedExpenses);
+        .then(() => {
+          return axios.get('http://localhost:8000/api/users/v12/ViewExpenses'); // Fetch latest data
+        })
+        .then((response) => {
+          setExp(response.data); // Update state with fresh data
           handleClose();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error updating expense:", error);
-        });
+        })
+        .finally(() => setLoading(false)); // Stop loading
+
     } else {
-      axios.post('http://localhost:8000/api/users/v12/createExpenses', formData)
-        .then(response => {
-          setExp([...exp, response.data]);
+      axios.post("http://localhost:8000/api/users/v12/createExpenses", formData)
+        .then((response) => {
+          return axios.get('http://localhost:8000/api/users/v12/ViewExpenses'); // Fetch latest data
+        })
+        .then((response) => {
+          setExp(response.data); // Update state with fresh data
           handleClose();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error adding expense:", error);
         });
     }
   };
-
   // Handle edit modal
   const handleEdit = (index) => {
-    const expenseToEdit = exp[index];
-    setEditIndex(index);
-    setShow(true);
-    reset({
+    setEditIndex(index); // Save the index of the item being edited
+    const expenseToEdit = exp[index]; // Get the selected expense
+    setFormData({
       Title: expenseToEdit.Title,
       description: expenseToEdit.description,
-      date: expenseToEdit.date,
+      date: expenseToEdit.date.split('T')[0], // Format the date (e.g., "YYYY-MM-DD")
       amount: expenseToEdit.amount,
-      Bill_image: expenseToEdit.Bill_image,
+      Bill_image: null, // Reset file input for re-upload
     });
+    handleShow(); // Open the modal
   };
+
+
 
   return (
     <div className="dashboard-bg" style={{ width: "1920px" }}>
@@ -149,18 +189,30 @@ export default function FinancialManagementExp() {
                           <tr key={index} className="bg-light">
                             <td style={{ height: '55px' }} className="financial-Pnumber">{val.Title}</td>
                             <td style={{ height: '55px' }} className="financial-Pnumber">{val.description}</td>
-                            <td style={{ height: '55px' }} className="financial-Pnumber">{val.date}</td>
-                            <td style={{ height: '55px' }} className="financial-Pnumber exp-amt-color">{val.amount}</td>
                             <td style={{ height: '55px' }} className="financial-Pnumber">
-                              {val.Bill_image === 'JPG' ? (
-                                <CiImageOn className="me-1 jpg-btn" style={{ fontSize: '20px' }} />
-                              ) : val.Bill_image === 'PDF' ? (
-                                <BiSolidFilePdf className="me-1 pdf-btn" style={{ fontSize: '20px' }} />
-                              ) : null} {/* No Invalid Format message shown */}
-
-                              {val.Bill_image === 'JPG' || val.Bill_image === 'PDF' ? val.Bill_image : ''} {/* Only show the valid format */}
+                              {new Date(val.date).toLocaleDateString('en-GB')}
+                            </td>
+                            <td style={{ height: '55px' }} className="financial-Pnumber exp-amt-color">
+                              ₹ {new Intl.NumberFormat('en-IN').format(val.amount)}
                             </td>
 
+                            <td style={{ height: '55px' }} className="financial-Pnumber">
+                              {/* Check if Bill_image exists and if it's a string, then check the file extension */}
+                              {val.Bill_image && typeof val.Bill_image === 'string' && (
+                                val.Bill_image.toLowerCase().endsWith('.jpg') || val.Bill_image.toLowerCase().endsWith('.jpeg')
+                              ) ? (
+                                <CiImageOn className="me-1 jpg-btn" style={{ fontSize: '20px' }} />
+                              ) : val.Bill_image && typeof val.Bill_image === 'string' && val.Bill_image.toLowerCase().endsWith('.pdf') ? (
+                                <BiSolidFilePdf className="me-1 pdf-btn" style={{ fontSize: '20px' }} />
+                              ) : null}  {/* No Invalid Format message shown */}
+
+                              {/* Only display the file format (JPG or PDF) */}
+                              {val.Bill_image && typeof val.Bill_image === 'string' && (
+                                val.Bill_image.toLowerCase().endsWith('.jpg') || val.Bill_image.toLowerCase().endsWith('.jpeg') || val.Bill_image.toLowerCase().endsWith('.pdf')
+                              ) ? (
+                                val.Bill_image.toLowerCase().endsWith('.pdf') ? 'PDF' : 'JPG'
+                              ) : ''}
+                            </td>
 
                             <td className="text-center" style={{ verticalAlign: "middle" }}>
                               <div className="d-flex align-items-center justify-content-center">
@@ -188,9 +240,9 @@ export default function FinancialManagementExp() {
                       <Form.Group className="mb-3" controlId="formTitle">
                         <Form.Label className="Form-Label">Title<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
-                          className="Form-Control"
                           type="text"
                           placeholder="Enter Title"
+                          onChange={handleInputChange}
                           {...register('Title', { required: "Title is required" })}
                           isInvalid={errors.Title}
                         />
@@ -202,22 +254,23 @@ export default function FinancialManagementExp() {
                       <Form.Group className="mb-3" controlId="formDescription">
                         <Form.Label className="Form-Label">Description<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
-                          className="Form-Control"
+                        
                           type="text"
                           placeholder="Enter Description"
+                          onChange={handleInputChange}
                           {...register('description', { required: "Description is required" })}
                           isInvalid={errors.description}
                         />
                         <Form.Control.Feedback type="invalid">
-                          {errors.des?.message}
+                          {errors.description?.message}
                         </Form.Control.Feedback>
                       </Form.Group>
 
                       <Form.Group className="mb-3" controlId="formDate">
                         <Form.Label className="Form-Label">Date<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
-                          className="Form-Control"
                           type="date"
+                          onChange={handleInputChange}
                           {...register('date', { required: "Date is required" })}
                           isInvalid={errors.date}
                         />
@@ -229,9 +282,9 @@ export default function FinancialManagementExp() {
                       <Form.Group className="mb-3" controlId="formAmount">
                         <Form.Label className="Form-Label">Amount<span className="text-danger"> *</span></Form.Label>
                         <Form.Control
-                          className="Form-Control"
                           type="number"
                           placeholder="Enter Amount"
+                          onChange={handleInputChange}
                           {...register('amount', { required: "Amount is required" })}
                           isInvalid={errors.amount}
                         />
@@ -243,17 +296,21 @@ export default function FinancialManagementExp() {
                       <Form.Group className="mb-3" controlId="formFile">
                         <Form.Label className="Form-Label">Upload Bill (JPG/PDF)</Form.Label>
                         <Form.Control
-                          className="Form-Control"
                           type="file"
+                          onChange={handleInputChange}
                           {...register('Bill_image', { required: "File is required" })}
                         />
                       </Form.Group>
 
-                      <div className="text-center">
-                        <Button type="submit" className="custom-btn">
-                          {editIndex !== null ? 'Save Changes' : 'Add Expense'}
+                      <div className="d-flex justify-content-between">
+                        <Button variant="secondary" onClick={handleClose} className="btn mt-2 cancle">
+                          Cancel
+                        </Button>
+                        <Button variant="primary" type="submit" className='btn mt-2 save'>
+                          {editIndex !== null ? 'Update' : 'Add'}
                         </Button>
                       </div>
+
                     </Form>
                   </Modal.Body>
                 </Modal>
@@ -268,8 +325,8 @@ export default function FinancialManagementExp() {
                       <div>
                         <p><strong>Title:</strong> {viewComplaint.Title}</p>
                         <p><strong>Description:</strong> {viewComplaint.description}</p>
-                        <p><strong>Date:</strong> {viewComplaint.date}</p>
-                        <p><strong>Amount:</strong> {viewComplaint.amount}</p>
+                        <p><strong>Date:</strong> {new Date(viewComplaint.date).toLocaleDateString('en-GB')}</p>
+                        <p><strong>Amount:</strong> ₹ {new Intl.NumberFormat('en-IN').format(viewComplaint.amount)}</p>
                         <p><strong>Bill Format:</strong> {viewComplaint.Bill_image}</p>
                       </div>
                     )}
