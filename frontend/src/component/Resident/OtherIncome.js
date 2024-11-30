@@ -177,7 +177,7 @@ const OtherIncomeInvoices = () => {
                                             className="btn-confirm mt-0 save"
                                             onClick={handleShowCardDetailsModal}
                                         >
-                                            Pay
+                                            Pay Now
                                         </Button>
                                     </div>
 
