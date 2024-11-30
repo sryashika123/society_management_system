@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import ChatSidebar from './ChatSidebar';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
-import Sidebar from '../Layout/Sidebar';
-import Header from '../Layout/Navbar';
-import Avatar from '../../assets/Avatar.png';
-import call from '../../Icons/call.png';
-import videocall from '../../Icons/videocall.png';
-import threedots from '../../Icons/threedots.png';
+import Sidebar from '../../Layout/Sidebar';
+import Header from '../../Layout/Navbar';
+import Avatar from '../../../assets/Avatar.png';
+import call from '../../../Icons/call.png';
+import videocall from '../../../Icons/videocall.png';
+import threedots from '../../../Icons/threedots.png';
 import './Chat.css';
 
 const ChatLayout = () => {

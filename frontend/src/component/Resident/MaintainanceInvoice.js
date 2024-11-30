@@ -246,7 +246,7 @@ const MaintenanceInvoices = () => {
                                                 Cancel
                                             </Button>
                                             <Button variant="warning" className="btn-confirm mt-2 save" onClick={handleShowCardDetailsModal}>
-                                                Pay 
+                                                Pay Now
                                             </Button>
                                         </div>
                                     </Modal>

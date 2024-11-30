@@ -19,8 +19,8 @@ import FinancialManagementOtherIncome from "../component/FinancialManagement/Fin
 import Announcement from "../component/Announcement";
 import VisitorsTracking from "../component/Security/VisitorsTracking";
 import EmergencyManagement from "../component/Security/EmergencyManagement";
-import EventParticipation from "../component/Resident/EventParticipation";
-import ActivityParticipate from "../component/Resident/ActivityParticipate";
+import EventParticipation from "../component/Resident/Eventparticipate/EventParticipation";
+import ActivityParticipate from "../component/Resident/Eventparticipate/ActivityParticipate";
 import PersonalDetail from "../component/Resident/PersonalDetails";
 import TenantPersonalDetails from "../component/Resident/TenentPersonalDetails";
 import SecurityProtocolsResident from "../component/Resident/SecurityProtocolsResident";
@@ -29,7 +29,8 @@ import RequestSubmission from "../component/Resident/RequestSubmission";
 import MaintainanceInvoice from "../component/Resident/MaintainanceInvoice";
 import OtherIncomeInvoices from "../component/Resident/OtherIncome";
 import ViewInvoice from "../component/Resident/ViewInvoice";
-import ChatLayout from "../component/Resident/Access";
+import ChatLayout from "../component/Resident/Chatapp/Access";
+import Polls from "../component/Resident/Polls";
 
 
 const Home = () => {
@@ -68,6 +69,7 @@ const Home = () => {
       <Route path='/other-income-nvoice' element={<OtherIncomeInvoices />} />
       <Route path='/view-invoice' element={<ViewInvoice />} />
       <Route path='/Access' element={<ChatLayout/>}/>
+      <Route path='/Polls' element={<Polls />} />
 
     </Routes>
   </div>;

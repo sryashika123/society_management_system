@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import Picker from 'emoji-picker-react'; // Import emoji picker
-import attechment from '../../Icons/attachment.png';
-import camera from '../../Icons/camera.png';
-import voice from '../../Icons/voice.png';
-import emoji from '../../Icons/emojis.png';
+import attechment from '../../../Icons/attachment.png';
+import camera from '../../../Icons/camera.png';
+import voice from '../../../Icons/voice.png';
+import emoji from '../../../Icons/emojis.png';
 
 const ChatInput = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');

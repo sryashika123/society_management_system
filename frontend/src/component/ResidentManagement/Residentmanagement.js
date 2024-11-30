@@ -46,7 +46,6 @@ export default function ResidentManagement() {
   const handleDelete = () => {
     if (idToDelete) {
       console.log("Deleting ID:", idToDelete); // Perform the delete action here (e.g., API call or state update)
-      // Reset the ID after deletion
       setIdToDelete(null);
     }
     handleCloseCreateModal();
