@@ -6,14 +6,26 @@ const securitygaurdModel = require("../models/SecuritygaurdModel");
 
 const SecuritygaurdController = require("../controllers/SecuritygaurdController");
 
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
-router.post("/createSecuritygaurd", securitygaurdModel.uploadedAvatar, SecuritygaurdController.createSecuritygaurd);
 
-router.get("/getSecuritygaurd", SecuritygaurdController.getSecuritygaurd);
 
-router.delete("/deleteSecuritygaurd/:id", SecuritygaurdController.deleteSecuritygaurd);
 
-router.put("/updateSecuritygaurd/:id", securitygaurdModel.uploadedAvatar, SecuritygaurdController.updateSecuritygaurd);
+router.post("/createSecuritygaurd",
+    //  authenticateUser , authorizeRoles('admin'), 
+    securitygaurdModel.uploadedAvatar, SecuritygaurdController.createSecuritygaurd);
+
+router.get("/getSecuritygaurd",
+    //  authenticateUser , authorizeRoles('admin'), 
+    SecuritygaurdController.getSecuritygaurd);
+
+router.delete("/deleteSecuritygaurd/:id",
+    //  authenticateUser , authorizeRoles('admin'), 
+    SecuritygaurdController.deleteSecuritygaurd);
+
+router.put("/updateSecuritygaurd/:id",
+    //  authenticateUser , authorizeRoles('admin'), 
+    securitygaurdModel.uploadedAvatar, SecuritygaurdController.updateSecuritygaurd);
 
 
 module.exports = router;        

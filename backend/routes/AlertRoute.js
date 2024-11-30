@@ -4,10 +4,21 @@ const router = express.Router();
 
 const AlertController = require("../controllers/AlertController.js");
 
-router.post("/CreateAlert", AlertController.createAlert);
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
-router.get("/ViewAlert", AlertController.viewAlert);    
 
-router.delete("/DeleteAlert/:id", AlertController.deleteAlert);
+
+
+router.post("/CreateAlert",
+    //  authenticateUser , authorizeRoles('admin'),
+       AlertController.createAlert);
+
+router.get("/ViewAlert",
+    //  authenticateUser , authorizeRoles('admin'),
+       AlertController.viewAlert);    
+
+router.delete("/DeleteAlert/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+       AlertController.deleteAlert);
 
 module.exports = router;    

@@ -4,11 +4,23 @@ const router = express.Router();
 
 const VisitortrackingController = require('../controllers/VisitortrackingController');
 
-router.post("/createVisitortracking", VisitortrackingController.createVisitortracking);
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
-router.get("/getVisitortracking", VisitortrackingController.getVisitortracking);
 
-router.delete("/deleteVisitortracking/:id", VisitortrackingController.deleteVisitortracking);    
+
+
+
+router.post("/createVisitortracking", 
+    // authenticateUser , authorizeRoles('admin'),
+     VisitortrackingController.createVisitortracking);
+
+router.get("/getVisitortracking", 
+    // authenticateUser , authorizeRoles('admin'),
+     VisitortrackingController.getVisitortracking);
+
+router.delete("/deleteVisitortracking/:id", 
+    // authenticateUser , authorizeRoles('admin'),
+     VisitortrackingController.deleteVisitortracking);    
 
 
 module.exports = router;

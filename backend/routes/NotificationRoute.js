@@ -4,23 +4,38 @@ const router = express.Router();
 
 const NotificationController = require('../controllers/NotificationController');
 
-
-router.post('/createNotification', NotificationController.createNotification);
-
-router.get('/getNotifications', NotificationController.getNotifications);
-
-router.patch('/markAsRead/:id/read', NotificationController.markAsRead);
-
-router.delete('/deleteNotification/:id', NotificationController.deleteNotification);
-
-router.delete('/deleteAllNotifications', NotificationController.deleteAllNotifications);
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
 
+router.post('/createNotification',
+    //  authenticateUser , authorizeRoles('admin'),
+      NotificationController.createNotification);
 
-router.patch('/acceptNotification/:id', NotificationController.acceptNotification);
+router.get('/getNotifications',
+    //  authenticateUser , authorizeRoles('admin'),
+      NotificationController.getNotifications);
 
-router.patch('/declineNotification/:id', NotificationController.declineNotification);
+router.patch('/markAsRead/:id/read',
+    //  authenticateUser , authorizeRoles('admin'),
+      NotificationController.markAsRead);
 
+router.delete('/deleteNotification/:id',
+    //  authenticateUser , authorizeRoles('admin'),
+      NotificationController.deleteNotification);
+
+router.delete('/deleteAllNotifications',
+    //  authenticateUser , authorizeRoles('admin'),
+      NotificationController.deleteAllNotifications);
+
+
+
+router.patch('/acceptNotification/:id',
+    //  authenticateUser , authorizeRoles('admin'),
+      NotificationController.acceptNotification);
+
+router.patch('/declineNotification/:id',
+    //  authenticateUser , authorizeRoles('admin'),
+      NotificationController.declineNotification);
 
 
 module.exports = router;

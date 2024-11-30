@@ -4,13 +4,21 @@ const router = express.Router();
 
 const pollController = require("../controllers/PollController");
 
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
 
-router.post("/createPoll", pollController.createPoll);
 
-router.get("/getPoll", pollController.getPoll);
+router.post("/createPoll",
+    //  authenticateUser , authorizeRoles('admin'),
+      pollController.createPoll);
 
-router.delete("/deletePoll/:id", pollController.deletePoll);
+router.get("/getPoll",
+    //  authenticateUser , authorizeRoles('admin'),
+      pollController.getPoll);
+
+router.delete("/deletePoll/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      pollController.deletePoll);
 
 
 module.exports = router;

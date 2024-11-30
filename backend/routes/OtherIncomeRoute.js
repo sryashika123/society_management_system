@@ -4,15 +4,25 @@ const router = express.Router();
 
 const OtherIncomController = require("../controllers/OtherIncomeController");
 
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
 
-router.post("/createOtherIncome", OtherIncomController.createOtherIncome);
 
-router.get("/getOtherIncome", OtherIncomController.getOtherIncome);
+router.post("/createOtherIncome",
+    //  authenticateUser , authorizeRoles('admin'),
+      OtherIncomController.createOtherIncome);
 
-router.delete("/deleteOtherIncome/:id", OtherIncomController.deleteOtherIncome);
+router.get("/getOtherIncome",
+    //  authenticateUser , authorizeRoles('admin'),
+      OtherIncomController.getOtherIncome);
 
-router.put("/updateOtherIncome/:id", OtherIncomController.updateOtherIncome);
+router.delete("/deleteOtherIncome/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      OtherIncomController.deleteOtherIncome);
+
+router.put("/updateOtherIncome/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      OtherIncomController.updateOtherIncome);
 
 
 module.exports = router;

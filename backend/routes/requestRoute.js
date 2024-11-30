@@ -4,14 +4,24 @@ const router = express.Router();
 
 const requestController = require("../controllers/requestController");
 
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
-router.post("/createRequest", requestController.createRequest);
 
-router.get("/getRequest", requestController.getRequest);
+router.post("/createRequest",
+    //  authenticateUser , authorizeRoles('admin'),
+      requestController.createRequest);
 
-router.delete("/deleteRequest/:id", requestController.deleteRequest);
+router.get("/getRequest",
+    //  authenticateUser , authorizeRoles('admin'),
+      requestController.getRequest);
 
-router.put("/updateRequest/:id", requestController.updateRequest);
+router.delete("/deleteRequest/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      requestController.deleteRequest);
+
+router.put("/updateRequest/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      requestController.updateRequest);
 
 
 module.exports = router;

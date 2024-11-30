@@ -8,13 +8,21 @@ const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
 
 
-router.post("/createComplaints", authenticateUser , authorizeRoles('admin'), compalintController.createComplaints);
+router.post("/createComplaints",
+    //  authenticateUser , authorizeRoles('admin'),
+     compalintController.createComplaints);
 
-router.get("/viewComplaints", authenticateUser , authorizeRoles('admin'), compalintController.viewComplaints);
+router.get("/viewComplaints",
+    //  authenticateUser , authorizeRoles('admin'),
+     compalintController.viewComplaints);
 
-router.delete("/deleteComplaints/:id", authenticateUser , authorizeRoles('admin'), compalintController.deleteComplaints);
+router.delete("/deleteComplaints/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+     compalintController.deleteComplaints);
 
-router.put("/updateComplaints/:id", authenticateUser , authorizeRoles('admin'), compalintController.updateComplaints);
+router.put("/updateComplaints/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+     compalintController.updateComplaints);
 
 
 module.exports = router;  
