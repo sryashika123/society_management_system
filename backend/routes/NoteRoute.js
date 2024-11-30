@@ -8,13 +8,21 @@ const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
 
 
-router.post("/createNote" , authenticateUser , authorizeRoles('admin'), NoteController.createNote);
+router.post("/createNote" ,
+    //  authenticateUser , authorizeRoles('admin'),
+      NoteController.createNote);
 
-router.get("/ViewNote", authenticateUser , authorizeRoles('admin') ,  NoteController.ViewNote);
+router.get("/ViewNote",
+    //  authenticateUser , authorizeRoles('admin') ,
+      NoteController.ViewNote);
 
-router.delete("/deleteNote/:id",  authenticateUser , authorizeRoles('admin') , NoteController.deleteNote);
+router.delete("/deleteNote/:id", 
+    //  authenticateUser , authorizeRoles('admin') ,
+      NoteController.deleteNote);
 
-router.put("/updateNote/:id" ,authenticateUser , authorizeRoles('admin') , NoteController.updateNote);
+router.put("/updateNote/:id" ,
+    //  authenticateUser , authorizeRoles('admin') ,
+      NoteController.updateNote);
 
 
 

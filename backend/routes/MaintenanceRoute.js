@@ -4,16 +4,29 @@ const router = express.Router();
 
 const MaintenanceController = require("../controllers/MaintenanceController");
 
+const {authenticateUser , authorizeRoles} = require('../middleware/auth');
 
 
-router.post("/createMaintenance", MaintenanceController.createMaintenance);
 
-router.get("/getAllMaintenances", MaintenanceController.getAllMaintenances);
+router.post("/createMaintenance",
+    //  authenticateUser , authorizeRoles('admin'),
+      MaintenanceController.createMaintenance);
 
-router.put("/updateMaintenance/:id", MaintenanceController.updateMaintenance);
+router.get("/getAllMaintenances",
+    //  authenticateUser , authorizeRoles('admin'),
+      MaintenanceController.getAllMaintenances);
 
-router.delete("/deleteMaintenance/:id", MaintenanceController.deleteMaintenance);
+router.put("/updateMaintenance/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      MaintenanceController.updateMaintenance);
 
-router.get("/getMaintenance/:id", MaintenanceController.getMaintenance);
+router.delete("/deleteMaintenance/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      MaintenanceController.deleteMaintenance);
+
+router.get("/getMaintenance/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      MaintenanceController.getMaintenance);
+
 
 module.exports = router;

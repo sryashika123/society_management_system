@@ -4,7 +4,7 @@ const Admin = require("../models/UserModel");
 
 // Create a new facility
 module.exports.createFacility = async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const { Name, description, Service_date, Remind_before } = req.body;
 
