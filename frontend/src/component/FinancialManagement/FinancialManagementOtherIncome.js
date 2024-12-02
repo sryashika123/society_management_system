@@ -52,6 +52,7 @@ export default function FinancialManagementOtherIncome() {
                 fetchData();
             }
             handleClose();
+            setShowEditModal(false);  // Close the modal after submitting
         } catch (error) {
             console.error("Error saving data:", error);
         }
@@ -65,7 +66,7 @@ export default function FinancialManagementOtherIncome() {
         setValue('Due_Date', selectedNote.Due_Date);
         setValue('Description', selectedNote.Description);
         setValue('Amount', selectedNote.Amount);
-        setShow(true);
+        setShowEditModal(true);
     };
 
     // Handle Dropdown Toggle
@@ -127,10 +128,8 @@ export default function FinancialManagementOtherIncome() {
                                         <div className="modal fade show d-block  custom-modal" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
                                             <div className="modal-dialog modal-dialog-centered">
                                                 <div className="modal-content">
-                                                    {/* Dynamically change the title based on editIndex */}
-                                                    <h5 className="modal-title Modal-Title p-3">
-                                                        {editIndex !== null ? 'Edit Other Income' : 'Create Other Income'}
-                                                    </h5>
+
+                                                    <h5 className="modal-title Modal-Title p-3">Create Other Income</h5>
 
                                                     <form onSubmit={handleSubmit(onSubmit)}>
                                                         <div className="modal-body">
@@ -170,7 +169,6 @@ export default function FinancialManagementOtherIncome() {
                                     )}
 
 
-
                                     <div className="row card-row g-3 ps-3">
                                         {note.map((val, index) => (
                                             <div className="col-lg-3 mb-3" key={val.id}>
@@ -196,6 +194,48 @@ export default function FinancialManagementOtherIncome() {
                                                                     >
                                                                         Edit
                                                                     </button>
+
+
+
+                                                                    {/* Edit Modal */}
+                                                                    {showEditModal && (
+                                                                        <div className="modal fade show d-block custom-modal" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+                                                                            <div className="modal-dialog modal-dialog-centered">
+                                                                                <div className="modal-content">
+                                                                                    <h5 className="modal-title p-3 pb-0">Edit {val.Title}</h5>
+                                                                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                                                                        <div className="modal-body">
+                                                                                            <div className="mb-3">
+                                                                                                <label className='Form-Label'>Amount<span className='text-danger'>*</span></label>
+                                                                                                <input type="text" className="form-control Form-Control" {...register('Amount', { required: true })} placeholder="₹ 0.00" />
+                                                                                                {errors.Amount && <small className="text-danger">Amount is required</small>}
+                                                                                            </div>
+                                                                                            <div className='d-flex justify-content-between'>
+                                                                                                <div className="mb-3">
+                                                                                                    <label className='Form-Label'>Date<span className='text-danger'>*</span></label>
+                                                                                                    <input type="date" className="form-control Form-Control" {...register('Date', { required: true })} />
+                                                                                                </div>
+                                                                                                <div className="mb-3">
+                                                                                                    <label className='Form-Label'>Due Date<span className='text-danger'>*</span></label>
+                                                                                                    <input type="date" className="form-control Form-Control" {...register('Due_Date', { required: true })} />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div className="mb-3">
+                                                                                                <label className='Form-Label'>Description <span className='text-danger'>*</span></label>
+                                                                                                <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('Description', { required: true })} />
+                                                                                                {errors.Description && <small className="text-danger">Description is required</small>}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="px-3 pb-3 d-flex justify-content-between">
+                                                                                            <button type="button" className="btn btn-sm cancle" onClick={() => setShowEditModal(false)}>Cancel</button>
+                                                                                            <button type="submit" className="btn btn-sm save">Save</button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+
 
                                                                     <button
                                                                         className="dropdown-item"
