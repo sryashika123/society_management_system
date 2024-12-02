@@ -1,28 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Layout/Navbar'
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Button, Modal, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 
 export default function FinancialManagementOtherIncome() {
 
-    const [note, setNote] = useState([
-        { id: 1, title: 'Ganesh chaturthi', amtPerMember: '1,500', totalMember: '12', date: '01/02/2024', dueDate: '10/07/2024', des: 'A visual representation of your spending categories.', amt: '1200' },
-
-        { id: 2, title: 'Navratri', amtPerMember: '1,500', totalMember: '12', date: '01/02/2024', dueDate: '10/07/2024', des: 'A visual representation of your spending categories.', amt: '800' },
-
-        { id: 3, title: 'Diwali', amtPerMember: '1,500', totalMember: '12', date: '01/02/2024', dueDate: '10/07/2024', des: 'A visual representation of your spending categories.', amt: '800' },
-
-        { id: 4, title: 'Ganesh chaturthi', amtPerMember: '1,500', totalMember: '12', date: '01/02/2024', dueDate: '10/07/2024', des: 'A visual representation of your spending categories.', amt: '1200' },
-
-    ]);
-
+    const [note, setNote] = useState([]);
     const [show, setShow] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+    const [dropdownIndex, setDropdownIndex] = useState(null); // Add state for dropdown menu
     const [showEditModal, setShowEditModal] = useState(false);
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+
+    // Fetch all data (GET)
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/api/users/v13/getOtherIncome');
+            setNote(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handleClose = () => {
         setShow(false);
@@ -32,64 +40,65 @@ export default function FinancialManagementOtherIncome() {
 
     const handleShow = () => setShow(true);
 
-    const onSubmit = (data) => {
-        if (editIndex !== null) {
-            const updatedNotes = [...note];
-            updatedNotes[editIndex] = { ...updatedNotes[editIndex], ...data };
-            setNote(updatedNotes);
-        } else {
-            setNote([...note, { id: note.length + 1, ...data }]);
+    // Create or Update (POST/PUT)
+    const onSubmit = async (data) => {
+        try {
+            if (editIndex !== null) {
+                const id = note[editIndex]._id; // Assuming '_id' is the identifier
+                await axios.put(`http://localhost:8000/api/users/v13/updateOtherIncome/${id}`, data);
+                fetchData(); // Refresh the list
+            } else {
+                await axios.post('http://localhost:8000/api/users/v13/createOtherIncome', data);
+                fetchData();
+            }
+            handleClose();
+        } catch (error) {
+            console.error("Error saving data:", error);
         }
-        handleClose();
     };
 
-
-    const [dropdownIndex, setDropdownIndex] = useState(null);
-
-    const handleView = (index) => {
-        console.log("View item:", note[index]);
-        // Implement view modal logic here
+    const handleEdit = (index) => {
+        setEditIndex(index);
+        const selectedNote = note[index];
+        setValue('Title', selectedNote.Title);
+        setValue('Date', selectedNote.Date);
+        setValue('Due_Date', selectedNote.Due_Date);
+        setValue('Description', selectedNote.Description);
+        setValue('Amount', selectedNote.Amount);
+        setShow(true);
     };
 
-    // New state for delete confirmation modal
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [deleteIndex, setDeleteIndex] = useState(null);
+    // Handle Dropdown Toggle
+    const handleDropdownToggle = (index) => {
+        setDropdownIndex(dropdownIndex === index ? null : index);
+    };
 
-    // Functions for delete modal
+    // Handle Edit Modal Close
+    const handleCloseEditModal = () => {
+        setDropdownIndex(null); // Close the dropdown when edit modal closes
+    };
+
+    // Delete (DELETE)
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`http://localhost:8000/api/users/v13/deleteOtherIncome/${deleteId}`);
+            fetchData(); // Refresh the list
+            setShowDeleteModal(false);
+        } catch (error) {
+            console.error("Error deleting data:", error);
+        }
+    };
+
     const handleShowDeleteModal = (index) => {
-        setDeleteIndex(index);
+        setDeleteId(note[index]._id);
         setShowDeleteModal(true);
     };
 
     const handleCloseDeleteModal = () => {
         setShowDeleteModal(false);
-        setDeleteIndex(null);
     };
 
-    const confirmDelete = () => {
-        if (deleteIndex !== null) {
-            const updatedNotes = note.filter((_, i) => i !== deleteIndex);
-            setNote(updatedNotes);
-        }
-        handleCloseDeleteModal();
-    };
 
-    const handleShowEditModal = (index) => {
-        setEditIndex(index);
-        const selectedNote = note[index];
-        setValue('title', selectedNote.title);
-        setValue('amtPerMember', selectedNote.amtPerMember);
-        setValue('date', selectedNote.date);
-        setValue('dueDate', selectedNote.dueDate);
-        setValue('des', selectedNote.des);
-        setShowEditModal(true);
-    };
-
-    const handleCloseEditModal = () => {
-        setShowEditModal(false);
-        reset();
-        setEditIndex(null);
-    };
 
     return (
         <div className='dashboard-bg' style={{ width: "1920px" }} >
@@ -97,14 +106,12 @@ export default function FinancialManagementOtherIncome() {
             <div>
                 <div className='income' style={{ marginLeft: "300px", width: "1600px" }}>
 
-                    <div className='row p-5' style={{marginTop:"109px"}}>
+                    <div className='row p-5' style={{ marginTop: "109px" }}>
                         <div className='p-0'>
                             <div className="table-responsive rounded pb-3">
 
                                 <Link to="/home/Financial-Maintenanace" className='btn btn-sm  maintainance-income-btn  maintainance-income-btn-withoutbg' style={{ border: "none" }}>Maintenance</Link>
-
                                 <Link to="/home/Other-Income" className='btn btn-sm  maintainance-income-btn maintainance-income-btn-bg ' style={{ border: "none" }}>Other Income</Link>
-
 
                                 <div className='bg-light'>
                                     <div className='d-flex justify-content-between align-items-center  py-3 px-2'>
@@ -120,34 +127,36 @@ export default function FinancialManagementOtherIncome() {
                                         <div className="modal fade show d-block  custom-modal" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
                                             <div className="modal-dialog modal-dialog-centered">
                                                 <div className="modal-content">
-
-                                                    <h5 className="modal-title Modal-Title p-3">Create Other Income</h5>
+                                                    {/* Dynamically change the title based on editIndex */}
+                                                    <h5 className="modal-title Modal-Title p-3">
+                                                        {editIndex !== null ? 'Edit Other Income' : 'Create Other Income'}
+                                                    </h5>
 
                                                     <form onSubmit={handleSubmit(onSubmit)}>
                                                         <div className="modal-body">
                                                             <div className="mb-3">
                                                                 <label className='Form-Label'>Title <span className='text-danger'>*</span></label>
                                                                 <input type="text" className="form-control Form-Control"
-                                                                    placeholder='Enter Title' {...register('title', { required: true })} />
-                                                                {errors.title && <small className="text-danger">Title is required</small>}
+                                                                    placeholder='Enter Title' {...register('Title', { required: true })} />
+                                                                {errors.Title && <small className="text-danger">Title is required</small>}
                                                             </div>
                                                             <div className="mb-3">
                                                                 <label className='Form-Label'>Date <span className='text-danger'>*</span></label>
-                                                                <input type="date" className="form-control Form-Control" {...register('date', { required: true })} />
+                                                                <input type="date" className="form-control Form-Control" {...register('Date', { required: true })} />
                                                             </div>
                                                             <div className="mb-3">
                                                                 <label className='Form-Label'>Due Date <span className='text-danger'>*</span></label>
-                                                                <input type="date" className="form-control Form-Control" {...register('dueDate', { required: true })} />
+                                                                <input type="date" className="form-control Form-Control" {...register('Due_Date', { required: true })} />
                                                             </div>
                                                             <div className="mb-3">
                                                                 <label className='Form-Label'>Description <span className='text-danger'>*</span></label>
-                                                                <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('des', { required: true })} />
-                                                                {errors.amt && <small className="text-danger">Description is required</small>}
+                                                                <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('Description', { required: true })} />
+                                                                {errors.Description && <small className="text-danger">Description is required</small>}
                                                             </div>
                                                             <div className="mb-3">
                                                                 <label className='Form-Label'>Amount <span className='text-danger'>*</span></label>
-                                                                <input type="text" className="form-control Form-Control" placeholder="₹ 0000" {...register('amtPerMember', { required: true })} />
-                                                                {errors.amtPerMember && <small className="text-danger">Amount is required</small>}
+                                                                <input type="text" className="form-control Form-Control" placeholder="₹ 0000" {...register('Amount', { required: true })} />
+                                                                {errors.Amount && <small className="text-danger">Amount is required</small>}
                                                             </div>
                                                         </div>
                                                         <div className="px-3 pb-3 d-flex justify-content-between">
@@ -161,12 +170,13 @@ export default function FinancialManagementOtherIncome() {
                                     )}
 
 
+
                                     <div className="row card-row g-3 ps-3">
                                         {note.map((val, index) => (
                                             <div className="col-lg-3 mb-3" key={val.id}>
                                                 <div className="card">
                                                     <div className="card-header card-title text-light d-flex align-items-center justify-content-between" style={{ background: "rgba(86, 120, 233, 1)" }}>
-                                                        {val.title}"
+                                                        {val.Title}"
                                                         <div className='position-relative'>
                                                             {/* Three dots button */}
                                                             <button
@@ -182,55 +192,10 @@ export default function FinancialManagementOtherIncome() {
                                                                 <div className="dropdown-menu show position-absolute" style={{ right: 0, top: '100%', zIndex: 10 }}>
                                                                     <button
                                                                         className="dropdown-item"
-                                                                        onClick={() => handleShowEditModal(index)}
+                                                                        onClick={() => handleEdit(index)}
                                                                     >
                                                                         Edit
                                                                     </button>
-
-
-                                                                    {/* Edit Modal */}
-                                                                    {showEditModal && (
-                                                                        <div className="modal fade show d-block custom-modal" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
-                                                                            <div className="modal-dialog modal-dialog-centered">
-                                                                                <div className="modal-content">
-
-                                                                                    <h5 className="modal-title p-3 pb-0">Edit Other Income</h5>
-
-
-                                                                                    <form onSubmit={handleSubmit(onSubmit)}>
-                                                                                        <div className="modal-body">
-                                                                                            <div className="mb-3">
-                                                                                                <label className='Form-Label'>Amount<span className='text-danger'>*</span></label>
-                                                                                                <input type="text" className="form-control Form-Control" {...register('amtPerMember', { required: true })} placeholder="₹ 0.00" />
-                                                                                                {errors.amtPerMember && <small className="text-danger">Amount is required</small>}
-                                                                                            </div>
-
-                                                                                            <div className='d-flex justify-content-between'>
-                                                                                                <div className="mb-3">
-                                                                                                    <label className='Form-Label'>Date<span className='text-danger'>*</span></label>
-                                                                                                    <input type="date" className="form-control Form-Control" {...register('date', { required: true })} />
-                                                                                                </div>
-                                                                                                <div className="mb-3">
-                                                                                                    <label className='Form-Label'>Due Date<span className='text-danger'>*</span></label>
-                                                                                                    <input type="date" className="form-control Form-Control" {...register('dueDate', { required: true })} />
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div className="mb-3">
-                                                                                                <label className='Form-Label'>Description <span className='text-danger'>*</span></label>
-                                                                                                <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('des', { required: true })} />
-                                                                                                {errors.amt && <small className="text-danger">Description is required</small>}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className="px-3 pb-3 d-flex justify-content-between">
-                                                                                            <button type="button" className="btn btn-sm cancle" onClick={handleCloseEditModal}>Cancel</button>
-                                                                                            <button type="submit" className="btn btn-sm save">Save</button>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    )}
 
                                                                     <button
                                                                         className="dropdown-item"
@@ -256,7 +221,7 @@ export default function FinancialManagementOtherIncome() {
 
                                                                         <Modal.Footer className='d-flex justify-content-between'>
                                                                             <Button variant="secondary" className='btn cancle  mt-2' onClick={handleCloseDeleteModal}>Cancel</Button>
-                                                                            <Button variant="danger" className='btn delete' onClick={confirmDelete}>Delete</Button>
+                                                                            <Button variant="danger" className='btn delete' onClick={handleDelete}>Delete</Button>
                                                                         </Modal.Footer>
                                                                     </Modal>
                                                                 </div>
@@ -266,7 +231,7 @@ export default function FinancialManagementOtherIncome() {
                                                     <div className="card-body">
                                                         <div className="d-flex justify-content-between align-items-center mb-2">
                                                             <h6 className="card-body-title mb-0">Amount Per Member</h6>
-                                                            <span className="card-body-title card-body-button mb-0 fw-medium">₹ {val.amtPerMember}</span>
+                                                            <span className="card-body-title card-body-button mb-0 fw-medium">₹ {val.Amount}</span>
                                                         </div>
                                                         <div className="d-flex justify-content-between align-items-center mb-2">
                                                             <h6 className="card-body-title mb-0">Total Member</h6>
@@ -274,14 +239,16 @@ export default function FinancialManagementOtherIncome() {
                                                         </div>
                                                         <div className="d-flex justify-content-between align-items-center mb-2">
                                                             <h6 className="card-body-title mb-0">Date</h6>
-                                                            <span className="card-body-title text-dark mb-0 fw-medium">{val.date}</span>
+                                                            <span className="card-body-title text-dark mb-0 fw-medium"> {new Date(val.Date).toLocaleDateString('en-GB')}
+                                                            </span>
                                                         </div>
                                                         <div className='d-flex justify-content-between align-items-center mb-2'>
                                                             <h6 className="card-body-title mb-0">Due Date</h6>
-                                                            <span className="card-body-title text-dark fw-medium">{val.dueDate}</span>
+                                                            <span className="card-body-title text-dark fw-medium"> {new Date(val.Due_Date).toLocaleDateString('en-GB')}
+                                                            </span>
                                                         </div>
                                                         <h6 className="card-body-title">Description</h6>
-                                                        <p className="card-text card-des fw-medium">{val.des}</p>
+                                                        <p className="card-text card-des fw-medium">{val.Description}</p>
                                                     </div>
                                                 </div>
                                             </div>
