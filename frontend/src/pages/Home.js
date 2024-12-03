@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ResidentManagement from "../component/ResidentManagement/Residentmanagement";
 import Sidebar from "../component/Layout/Sidebar";
-import ResidentForm from "../component/ResidentManagement/ResidentForm";
+// import ResidentForm from "../component/ResidentManagement/ResidentForm";
 import FacilityManagement from "../component/FacilityManagement/FacilityManagement";
 import CreateComplaint from "../component/ComplaintTracking/CreateComplaint";
 import RequestTracking from "../component/ComplaintTracking/RequestTracking";
@@ -21,16 +21,20 @@ import VisitorsTracking from "../component/Security/VisitorsTracking";
 import EmergencyManagement from "../component/Security/EmergencyManagement";
 import EventParticipation from "../component/Resident/Eventparticipate/EventParticipation";
 import ActivityParticipate from "../component/Resident/Eventparticipate/ActivityParticipate";
-import PersonalDetail from "../component/Resident/PersonalDetails";
-import TenantPersonalDetails from "../component/Resident/TenentPersonalDetails";
+import PersonalDetail from "../component/Resident/Personal Details/PersonalDetails";
+import TenantPersonalDetails from "../component/Resident/Personal Details/TenentPersonalDetails";
 import SecurityProtocolsResident from "../component/Resident/SecurityProtocolsResident";
-import ServiceComplaint from "../component/Resident/ServiceComplaint";
-import RequestSubmission from "../component/Resident/RequestSubmission";
-import MaintainanceInvoice from "../component/Resident/MaintainanceInvoice";
-import OtherIncomeInvoices from "../component/Resident/OtherIncome";
+import ServiceComplaint from "../component/Resident/Service and Complaint/ServiceComplaint";
+import RequestSubmission from "../component/Resident/Service and Complaint/RequestSubmission";
+import MaintainanceInvoice from "../component/Resident/Payment Portal/MaintainanceInvoice";
+import OtherIncomeInvoices from "../component/Resident/Payment Portal/OtherIncome";
 import ViewInvoice from "../component/Resident/ViewInvoice";
 import ChatLayout from "../component/Resident/Chatapp/Access";
-import Polls from "../component/Resident/Polls";
+import Polls from "../component/Resident/Chatapp/Polls";
+import OwnerForm from "../component/ResidentManagement/OwnerForm";
+import TenantForm from "../component/ResidentManagement/TenantForm";
+import CommunitiesDiscussion from "../component/Resident/CommumitiesDiscussion";
+import CommunityQuestion from "../component/Resident/CommunityQuestion";
 
 
 const Home = () => {
@@ -42,7 +46,7 @@ const Home = () => {
       <Route path="/dashboard" element={<Dashboard />} />
 
       <Route path="/residentmanagement" element={<ResidentManagement />} />
-      <Route path="/residentForm" element={<ResidentForm />} />
+      <Route path="/ownerform" element={<OwnerForm />} />
       <Route path="/facility-management" element={<FacilityManagement />} />
       <Route path="/create-complaint" element={<CreateComplaint />} />
       <Route path="/request-tracking" element={<RequestTracking />} />
@@ -70,6 +74,10 @@ const Home = () => {
       <Route path='/view-invoice' element={<ViewInvoice />} />
       <Route path='/Access' element={<ChatLayout/>}/>
       <Route path='/Polls' element={<Polls />} />
+      <Route path='/tenant-form' element={<TenantForm />} />
+      <Route path='/Community-Discussion' element={<CommunitiesDiscussion />} />
+          <Route path='/Community-Question' element={<CommunityQuestion />} />
+      
 
     </Routes>
   </div>;

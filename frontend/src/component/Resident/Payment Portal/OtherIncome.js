@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import Sidebar from '../Layout/Sidebar'
-import Navbar from '../Layout/Navbar';
-import balanceRactangle from '../../assets/Rectangle 1063.png'
-import incomeRactangle from '../../assets/Rectangle 1063 (1).png'
+import Sidebar from '../../Layout/Sidebar'
+import Navbar from '../../Layout/Navbar';
+import balanceRactangle from '../../../assets/Rectangle 1063.png'
+import incomeRactangle from '../../../assets/Rectangle 1063 (1).png'
 import { Modal, Button, Form } from 'react-bootstrap';
-import visa from '../../assets/visa-logo.png'
-import mastercard from '../../assets/mastercard-logo.png'
-import cash from '../../assets/cash-logo.png'
+import visa from '../../../assets/visa-logo.png'
+import mastercard from '../../../assets/mastercard-logo.png'
+import cash from '../../../assets/cash-logo.png'
 
 
 const OtherIncomeInvoices = () => {

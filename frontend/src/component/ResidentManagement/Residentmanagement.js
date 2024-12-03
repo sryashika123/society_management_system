@@ -31,7 +31,7 @@ export default function ResidentManagement() {
 
   const handleSave = () => {
     if (selectedStatus === "Occupied" && agreeChecked) {
-      navigate('/home/residentForm');
+      navigate('/home/ownerform');
     } else if (selectedStatus === "Vacate") {
       setShowVacateModal(true);
     }

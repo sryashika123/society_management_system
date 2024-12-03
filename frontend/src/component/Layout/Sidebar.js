@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useLocation } from "react-router-dom";
 import { FaSignOutAlt, FaChevronDown, FaChevronUp, FaBars } from "react-icons/fa";
-
 import "../../style.css";
-
 import dashboardIcon from "../../Icons/image.png";
 import residentIcon from "../../Icons/money.png";
 import financialIcon from "../../Icons/dollar-square.png";
@@ -17,9 +15,10 @@ import personaldetailsIcon from "../../Icons/personalcard.png";
 import securityIcon from "../../Icons/security.png";
 import Logo from "../Logo";
 import HideBgCopy from "../../assets/Hide Bg Copy.png";
-  import BlackImage from '../../assets/Rectangle 1888.png'
+import BlackImage from '../../assets/Rectangle 1888.png'
 import FrameIcon from '../../Icons/Frame.png'
 import EventParticipation from "../../Icons/Events-Participation.png";
+
 
 function Sidebar() {
   const location = useLocation();
