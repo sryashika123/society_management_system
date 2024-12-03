@@ -76,3 +76,15 @@ module.exports.deleteProfile = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+
+exports.getSingleProfile = async (req, res) => {
+    try {
+        const getSingleProfile = await Profile.findById(req.params.id);
+        if (!getSingleProfile) {
+            return res.status(404).json({ message: "Profile record not found" });
+        }
+        res.status(200).json(getSingleProfile);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

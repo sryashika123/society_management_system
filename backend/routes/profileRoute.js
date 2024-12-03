@@ -23,5 +23,8 @@ router.delete("/deleteProfile/:id",
     //  authenticateUser , authorizeRoles('admin'),
       ProfileController.deleteProfile);
 
+router.get("/getSingleProfile/:id",
+    //  authenticateUser , authorizeRoles('admin'),
+      ProfileController.getSingleProfile);
 
 module.exports = router;  
