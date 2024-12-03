@@ -3,6 +3,8 @@ import { Card, Table, Button, Dropdown, Badge, Modal, Image, Form } from 'react-
 import editIcon from "../../assets/edit.png";
 import viewIcon from "../../assets/view.png";
 import deleteIcon from "../../assets/delete.png";
+import axios from 'axios';
+import { useEffect } from 'react';
 
 // Reusable modal component for editing complaints
 
@@ -11,32 +13,46 @@ const ComplaintList = () => {
 
         {
             id: 1,
-            name: 'John Doe',
-            complaint: 'Unethical Behavior',
+            Complaint_name: 'John Doe',
+            Complainer_name: 'Unethical Behavior',
             date: '01/02/2024',
-            priority: 'Medium',
+            Priority: 'Medium',
             status: 'Open',
             imageUrl: 'https://via.placeholder.com/40',
         },
         {
             id: 2,
-            name: 'Jane Smith',
-            complaint: 'Noise Disturbance',
+            Complaint_name: 'Jane Smith',
+            Complainer_name: 'Noise Disturbance',
             date: '02/02/2024',
-            priority: 'High',
+            Priority: 'High',
             status: 'Pending',
             imageUrl: 'https://via.placeholder.com/40',
         },
         {
             id: 3,
-            name: 'Jane Smith',
-            complaint: 'Noise Disturbance',
+            Complaint_name: 'Jane Smith',
+            Complainer_name: 'Noise Disturbance',
             date: '02/02/2024',
-            priority: 'Low',
+            Priority: 'Low',
             status: 'Solve',
             imageUrl: 'https://via.placeholder.com/40',
         },
     ]);
+
+    useEffect(() => {
+        const fetchComplaints = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/users/v4/viewComplaints');
+                setComplaints(response.data); // Assuming response.data contains the complaints
+            } catch (error) {
+                setErrorMessage('Failed to load complaints.');
+                console.error(error); // Log the error for debugging purposes
+            }
+        };
+
+        fetchComplaints();
+    }, []);
 
     const statusBadgeStyle = (status) => {
         if (status === "Pending") return { backgroundColor: " #FFC3131A", color: "#FFC313", fontWeight: '500' };
@@ -67,7 +83,7 @@ const ComplaintList = () => {
     };
 
     const handleSave = () => {
-        if (!selectedComplaint.name || !selectedComplaint.complaint || !selectedComplaint.priority || !selectedComplaint.status) {
+        if (!selectedComplaint.Complaint_name || !selectedComplaint.Complainer_name || !selectedComplaint.Priority || !selectedComplaint.status) {
             setErrorMessage("All fields are required.");
             return;
         }
@@ -85,24 +101,24 @@ const ComplaintList = () => {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteIndex, setDeleteIndex] = useState(null);
-  
+
     // Functions for delete modal
     const handleShowDeleteModal = (index) => {
-      setDeleteIndex(index);
-      setShowDeleteModal(true);
+        setDeleteIndex(index);
+        setShowDeleteModal(true);
     };
-  
+
     const handleCloseDeleteModal = () => {
-      setShowDeleteModal(false);
-      setDeleteIndex(null);
+        setShowDeleteModal(false);
+        setDeleteIndex(null);
     };
-  
+
     const confirmDelete = () => {
-      if (deleteIndex !== null) {
-        const updatedComplaint = complaints.filter((_, i) => i !== deleteIndex);
-        setComplaints(updatedComplaint);
-      }
-      handleCloseDeleteModal();
+        if (deleteIndex !== null) {
+            const updatedComplaint = complaints.filter((_, i) => i !== deleteIndex);
+            setComplaints(updatedComplaint);
+        }
+        handleCloseDeleteModal();
     };
 
     return (
@@ -176,23 +192,23 @@ const ComplaintList = () => {
                                             height={40}
                                             className="me-3"
                                         />
-                                        {complaint.name}
+                                        {complaint.Complaint_name}
                                     </td>
-                                    <td style={{ border: 'none' }}>{complaint.complaint}</td>
-                                    <td className='text-center' style={{ border: 'none' }}>{complaint.date}</td>
+                                    <td style={{ border: 'none' }}>{complaint.Complainer_name}</td>
+                                    <td className='text-center' style={{ border: 'none' }}>{complaint.updatedAt}</td>
                                     <td className='text-center' style={{ border: 'none' }}>
                                         <Badge
                                             pill
                                             style={{ width: '80px', padding: '10px' }}
                                             bg={
-                                                complaint.priority === 'High'
+                                                complaint.Priority === 'High'
                                                     ? 'danger'
-                                                    : complaint.priority === 'Medium'
+                                                    : complaint.Priority === 'Medium'
                                                         ? 'primary'
                                                         : 'success'
                                             }
                                         >
-                                            {complaint.priority}
+                                            {complaint.Priority}
                                         </Badge>
                                     </td>
                                     <td style={{ padding: "15px", textAlign: "center", verticalAlign: "middle", borderBottom: 'none' }}>
@@ -391,17 +407,17 @@ const ComplaintList = () => {
             </Modal>
 
             <Modal className='custom-modal' show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
-                  <Modal.Header>
+                <Modal.Header>
                     <Modal.Title className='Modal-Title'>Delete Number?</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
+                </Modal.Header>
+                <Modal.Body>
                     <p className='Form-p mb-0'>Are you sure you want to delete this?</p>
-                  </Modal.Body>
-                  <Modal.Footer className='d-flex justify-content-between'>
+                </Modal.Body>
+                <Modal.Footer className='d-flex justify-content-between'>
                     <Button variant="secondary" className='btn cancle  mt-2' onClick={handleCloseDeleteModal}>Cancel</Button>
                     <Button variant="danger" className='btn delete' onClick={confirmDelete}>Delete</Button>
-                  </Modal.Footer>
-                </Modal>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 };
