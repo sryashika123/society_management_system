@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../Layout/Sidebar";
 import Header from "../Layout/Navbar";
 import { Button, Table, Form, Modal } from "react-bootstrap";
 import Avtar from "../../assets/Avatar.png";
 import { FaPlus } from "react-icons/fa";
+import axios from "axios";
 
 function VisitorsTracking() {
   const [details, setDetails] = useState([
-    { id: 1, name: "Evelyn Harper", phoneNumber: "9313876347", date: "20/02/2002", unit: "A", number: "1001", time: "3:45 PM" },
-    { id: 2, name: "Esther Howard", phoneNumber: "9313876347", date: "20/02/2002", unit: "B", number: "1002", time: "3:45 PM" },
+
   ]);
 
   const [showModal, setShowModal] = useState(false);
 
   // Form inputs
   const [newVisitor, setNewVisitor] = useState({
-    name: "",
-    phoneNumber: "",
+    Name: "",
+    Phone_number: "",
     date: "",
-    unit: "",
-    number: "",
+    Wing: "",
+    Unit_number: "",
     time: "",
   });
 
@@ -27,46 +27,44 @@ function VisitorsTracking() {
   const handleCloseModal = () => {
     setShowModal(false);
     setNewVisitor({
-      name: "",
-      phoneNumber: "",
+      Name: "",
+      Phone_number: "",
       date: "",
-      unit: "",
-      number: "",
+      Wing: "",
+      Unit_number: "",
       time: "",
     });
   };
-  
+
   // Handle form field changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewVisitor({ ...newVisitor, [name]: value });
   };
 
-  // Handle save button click
-  const handleSaveDetails = () => {
-    if (
-        !newVisitor.name ||
-        !newVisitor.phoneNumber ||
-        !newVisitor.date ||
-        !newVisitor.unit ||
-        !newVisitor.number ||
-        !newVisitor.time
-      ) {
-        alert("All fields marked with * are required!");
-        return;
-      }
-      
-    // Add new entry to the details table
-    setDetails([
-      ...details,
-      {
-        id: details.length + 1, // Unique ID
-        ...newVisitor,
-      },
-    ]);
+  const fetchVisitorDetails = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/users/v9/getVisitorLog");
+      setDetails(response.data);
+    } catch (error) {
+      console.error("Error fetching visitor details:", error);
+    }
+  };
 
-    // Close modal and reset form
-    handleCloseModal();
+  // Fetch visitor details from the API
+  useEffect(() => {
+    fetchVisitorDetails();
+  }, []);
+
+  // Handle save button click
+  const handleSaveDetails = async () => {
+    try {
+      await axios.post("http://localhost:8000/api/users/v9/createVisitorLog", newVisitor);
+      setShowModal(false);
+      fetchVisitorDetails(); // Refresh data after saving
+    } catch (error) {
+      console.error("Error saving visitor details:", error);
+    }
   };
 
   return (
@@ -75,10 +73,10 @@ function VisitorsTracking() {
         <Sidebar />
       </div>
 
-      <div className="flex-grow-1" style={{ width:"1920px" }}>
+      <div className="flex-grow-1" style={{ width: "1920px" }}>
         <Header />
 
-        <div className="container-fluid p-4" style={{ marginTop: "109px", width: "1620px" , marginLeft:"300px" }}>
+        <div className="container-fluid p-4" style={{ marginTop: "109px", width: "1620px", marginLeft: "300px" }}>
           <div
             className="table-responsive"
             style={{
@@ -105,7 +103,7 @@ function VisitorsTracking() {
 
                 <Button
                   className="btn mainColor2 d-flex align-items-center justify-content-center p-2"
-                  style={{ height: "50px", marginBottom: "5px", border:"none" }}
+                  style={{ height: "50px", marginBottom: "5px", border: "none" }}
                   onClick={handleOpenModal}
                 >
                   <FaPlus
@@ -117,7 +115,7 @@ function VisitorsTracking() {
                       marginRight: "8px",
                     }}
                   />
-                 Add Visiter details
+                  Add Visiter details
                 </Button>
               </div>
             </div>
@@ -132,8 +130,8 @@ function VisitorsTracking() {
                 </tr>
               </thead>
               <tbody>
-                {details.map((details) => (
-                  <tr key={details.id} className="text-start" style={{ height: '70px' }}>
+                {details.map((detail, index) => (
+                  <tr key={index} className="text-start" style={{ height: '70px' }}>
                     <td style={{ paddingTop: "15px", paddingBottom: "15px" }}>
                       <div
                         style={{
@@ -148,11 +146,12 @@ function VisitorsTracking() {
                           className="rounded-circle"
                           style={{ width: "30px", height: "30px", marginRight: "10px" }}
                         />
-                        {details.name}
+                        {detail?.Name || "N/A"} {/* Fallback to "N/A" if Name is undefined */}
                       </div>
                     </td>
-                    <td style={{ verticalAlign: "middle" }}>{details.phoneNumber}</td>
-                    <td style={{ verticalAlign: "middle" }}>{details.date}</td>
+                    <td style={{ verticalAlign: "middle" }}>{detail?.Phone_number || "N/A"}</td>
+                    <td style={{ verticalAlign: "middle" }}> {new Date(detail?.date).toLocaleDateString('en-GB')}
+</td>
                     <td style={{ verticalAlign: "middle" }} className="text-center">
                       <div className="d-flex align-items-center justify-content-center gap-2">
                         <div
@@ -168,9 +167,9 @@ function VisitorsTracking() {
                             verticalAlign: "middle",
                           }}
                         >
-                          {details.unit}
+                          {detail?.Wing || "N/A"}
                         </div>
-                        <div>{details.number}</div>
+                        <div>{detail?.Unit_number || "N/A"}</div>
                       </div>
                     </td>
                     <td style={{ verticalAlign: "middle" }} className="text-center">
@@ -186,12 +185,13 @@ function VisitorsTracking() {
                           display: "inline-block",
                         }}
                       >
-                        {details.time}
+                        {detail?.time || "N/A"}
                       </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
+
             </Table>
           </div>
         </div>
@@ -203,100 +203,100 @@ function VisitorsTracking() {
         </Modal.Header>
         <Modal.Body>
           <Form>
-  {/* Visitor Name */}
-  <Form.Group className="mb-3" controlId="formVisitorName">
-    <Form.Label>
-      Visitor Name<span className="text-danger">*</span>
-    </Form.Label>
-    <Form.Control
-      type="text"
-      placeholder="Enter Name"
-      name="name"
-      value={newVisitor.name}
-      onChange={handleInputChange}
-      required
-    />
-  </Form.Group>
+            {/* Visitor Name */}
+            <Form.Group className="mb-3" controlId="formVisitorName">
+              <Form.Label>
+                Visitor Name<span className="text-danger">*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                name="Name"
+                value={newVisitor.Name}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
 
-  {/* Phone Number */}
-  <Form.Group className="mb-3" controlId="formPhoneNumber">
-    <Form.Label>
-      Phone Number<span className="text-danger">*</span>
-    </Form.Label>
-    <Form.Control
-      type="text"
-      placeholder="Enter Phone Number"
-      name="phoneNumber"
-      value={newVisitor.phoneNumber}
-      onChange={handleInputChange}
-      required
-    />
-  </Form.Group>
+            {/* Phone Number */}
+            <Form.Group className="mb-3" controlId="formPhoneNumber">
+              <Form.Label>
+                Phone Number<span className="text-danger">*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Phone Number"
+                name="Phone_number"
+                value={newVisitor.Phone_number}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
 
-  <div className="d-flex gap-2">
-    {/* Wing */}
-    <Form.Group className="mb-3" controlId="formWing">
-      <Form.Label>
-        Wing<span className="text-danger">*</span>
-      </Form.Label>
-      <Form.Control
-        type="text"
-        placeholder="Enter Wing"
-        name="unit"
-        value={newVisitor.unit}
-        onChange={handleInputChange}
-        required
-      />
-    </Form.Group>
+            <div className="d-flex gap-2">
+              {/* Wing */}
+              <Form.Group className="mb-3" controlId="formWing">
+                <Form.Label>
+                  Wing<span className="text-danger">*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Wing"
+                  name="Wing"
+                  value={newVisitor.Wing}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
 
-    {/* Unit Number */}
-    <Form.Group className="mb-3" controlId="formUnitNumber">
-      <Form.Label>
-        Unit Number<span className="text-danger">*</span>
-      </Form.Label>
-      <Form.Control
-        type="text"
-        placeholder="Enter Unit Number"
-        name="number"
-        value={newVisitor.number}
-        onChange={handleInputChange}
-        required
-      />
-    </Form.Group>
-  </div>
+              {/* Unit Number */}
+              <Form.Group className="mb-3" controlId="formUnitNumber">
+                <Form.Label>
+                  Unit Number<span className="text-danger">*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Unit Number"
+                  name="Unit_number"
+                  value={newVisitor.Unit_number}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+            </div>
 
-  <div className="d-flex gap-2">
-    {/* Date */}
-    <Form.Group controlId="formDate">
-      <Form.Label>
-        Date<span className="text-danger">*</span>
-      </Form.Label>
-      <Form.Control
-      style={{width:"180px"}}
-        type="date"
-        name="date"
-        value={newVisitor.date}
-        onChange={handleInputChange}
-        required
-      />
-    </Form.Group>
+            <div className="d-flex gap-2">
+              {/* Date */}
+              <Form.Group controlId="formDate">
+                <Form.Label>
+                  Date<span className="text-danger">*</span>
+                </Form.Label>
+                <Form.Control
+                  style={{ width: "180px" }}
+                  type="date"
+                  name="date"
+                  value={newVisitor.date}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
 
-    {/* Time */}
-    <Form.Group controlId="formTime">
-      <Form.Label>
-        Time<span className="text-danger">*</span>
-      </Form.Label>
-      <Form.Control
-      style={{width:"180px"}}
-        type="time"
-        name="time"
-        value={newVisitor.time}
-        onChange={handleInputChange}
-        required
-      />
-    </Form.Group>
-  </div>
-</Form>
+              {/* Time */}
+              <Form.Group controlId="formTime">
+                <Form.Label>
+                  Time<span className="text-danger">*</span>
+                </Form.Label>
+                <Form.Control
+                  style={{ width: "180px" }}
+                  type="time"
+                  name="time"
+                  value={newVisitor.time}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+            </div>
+          </Form>
         </Modal.Body>
         <Modal.Footer style={{ border: "none" }}>
           <Button
@@ -318,7 +318,7 @@ function VisitorsTracking() {
               height: "51px",
               border: "1px",
               color: "#FFFFFF",
-              
+
             }}
             className="save"
             onClick={handleSaveDetails}
