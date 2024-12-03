@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import Sidebar from "../Layout/Sidebar";
-import Navbar from '../Layout/Navbar';
+import Sidebar from "../../Layout/Sidebar";
+import Navbar from '../../Layout/Navbar';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import balance from '../../assets/total-balance.png'
-import balanceRactangle from '../../assets/Rectangle 1063.png'
-import income from '../../assets/total-income.png'
-import incomeRactangle from '../../assets/Rectangle 1063 (1).png'
-import penaltyRectangle from '../../assets/Rectangle 1063 (2).png'
-import residentprofile from '../../assets/profile.png'
+import balance from '../../../assets/total-balance.png'
+import balanceRactangle from '../../../assets/Rectangle 1063.png'
+import income from '../../../assets/total-income.png'
+import incomeRactangle from '../../../assets/Rectangle 1063 (1).png'
+import penaltyRectangle from '../../../assets/Rectangle 1063 (2).png'
+import residentprofile from '../../../assets/profile.png'
 import { FaImage } from "react-icons/fa";
 
 const TenantPersonalDetails = () => {

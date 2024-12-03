@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Sidebar from "../Layout/Sidebar";
-import Navbar from "../Layout/Navbar";
+import Sidebar from "../../Layout/Sidebar";
+import Navbar from "../../Layout/Navbar";
 import { Link } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Modal, Button, Form } from "react-bootstrap";
@@ -221,12 +221,12 @@ const RequestSubmission = () => {
                   />
                   <Form.Control.Feedback type="invalid">Date is required.</Form.Control.Feedback>
                 </Form.Group>
-                <div className="d-flex justify-content-end">
-                  <Button variant="secondary" onClick={handleClose} className="me-2">
+                <div className="d-flex justify-content-between">
+                  <Button variant="secondary" onClick={handleClose} className="btn mt-2 btn-sm cancle">
                     Cancel
                   </Button>
-                  <Button variant="primary" type="submit">
-                    {editIndex !== null ? "Save Changes" : "Create"}
+                  <Button variant="primary" type="submit" className="btn btn-sm save mt-2">
+                    {editIndex !== null ? "Save " : "Create"}
                   </Button>
                 </div>
               </Form>
@@ -246,14 +246,10 @@ const RequestSubmission = () => {
             <Modal.Body>
               Are you sure you want to delete this request?
             </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseDeleteModal}>
-                Cancel
-              </Button>
-              <Button variant="danger" onClick={confirmDelete}>
-                Delete
-              </Button>
-            </Modal.Footer>
+            <Modal.Footer className='d-flex justify-content-between'>
+                            <Button variant="secondary" className='btn cancle  mt-2' onClick={handleCloseDeleteModal}>Cancel</Button>
+                            <Button variant="danger" className='btn delete' onClick={confirmDelete}>Delete</Button>
+                        </Modal.Footer>
           </Modal>
         </div>
       </div>
