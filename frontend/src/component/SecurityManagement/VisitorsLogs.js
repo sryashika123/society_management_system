@@ -4,13 +4,27 @@ import {Table } from 'react-bootstrap';
 import Sidebar from '../Layout/Sidebar';
 import Avtar from "../../assets/Avatar.png"
 import Header from '../Layout/Navbar';
+import axios from 'axios';
 
 export default function DetailTracking() {
   const [details, setDetails] = useState([
-    { id: 1, name: "Evelyn Harper", phoneNumber: "9313876347", date: "20/02/2002", unit: "A", number: "1001", time: "3:45 PM" },
-    { id: 2, name: "Esther Howard", phoneNumber: "9313876347", date: "20/02/2002", unit: "B", number: "1002", time: "3:45 PM" },
+    { id: 1, Name: "Evelyn Harper", Phone_number: "9313876347", date: "20/02/2002", Wing: "A", Unit_number: "1001", time: "3:45 PM" },
+    { id: 2, Name: "Esther Howard", Phone_number: "9313876347", date: "20/02/2002", Wing: "B", Unit_number: "1002", time: "3:45 PM" },
   ]);
 
+  const fetchVisitorDetails = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/users/v9/getVisitorLog");
+      setDetails(response.data);
+    } catch (error) {
+      console.error("Error fetching visitor details:", error);
+    }
+  };
+
+  // Fetch visitor details from the API
+  useEffect(() => {
+    fetchVisitorDetails();
+  }, []);
 
   return (
     <div className="d-flex flex-column flex-md-row">
@@ -48,11 +62,12 @@ export default function DetailTracking() {
                           className="rounded-circle"
                           style={{ width: "30px", height: "30px", marginRight: "10px" }}
                         />
-                        {details.name}
+                        {details.Name}
                       </div>
                     </td>
-                    <td style={{ verticalAlign: "middle" }} className='text-center'>{details.phoneNumber}</td>
-                    <td style={{ verticalAlign: "middle" }} className="text-center">{details.date}</td>
+                    <td style={{ verticalAlign: "middle" }} className='text-center'>{details.Phone_number}</td>
+                    <td style={{ verticalAlign: "middle" }} className="text-center">{new Date(details.date).toLocaleDateString('en-GB')}
+                    </td>
                     <td style={{ verticalAlign: "middle" }} className="text-center">
                       {/* Unit in a round circle */}
                       <div className="d-flex align-items-center justify-content-center gap-2">
@@ -61,10 +76,10 @@ export default function DetailTracking() {
                             border: "1px solid ", borderRadius: "50%", width: "28px", height: "28px", display: "inline-flex", justifyContent: "center", alignItems: "center", color: "skyblue", verticalAlign: "middle"
                           }}
                         >
-                          {details.unit}
+                          {details.Wing}
                         </div>
                         {/* Unit number without any special formatting */}
-                        <div>{details.number}</div>
+                        <div>{details.Unit_number}</div>
 
                       </div>
                     </td>
