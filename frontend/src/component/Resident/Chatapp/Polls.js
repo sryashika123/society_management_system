@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { IoEyeSharp } from "react-icons/io5";
+
 import profileimg from '../../../assets/profile.png';
 import pollImg from '../../../assets/poll-icon.png';
 import Header from '../../Layout/Navbar';
-import Sidebar from '../../Layout/Sidebar';
 import './Polls.css';
+import Sidebar from '../../Layout/Sidebar';
 
 const Polls = () => {
     const [note, setNote] = useState([
@@ -24,15 +26,26 @@ const Polls = () => {
         const updatedNotes = [...note];
         const pollIndex = updatedNotes.findIndex((poll) => poll.id === pollId);
         const poll = updatedNotes[pollIndex];
-    
-        // Increment vote count for the selected option
+
+        const userVote = userVotes[pollId];
+        if (userVote) {
+            const previousOptionIndex = poll.options.findIndex((opt) => opt.text === userVote);
+            poll.options[previousOptionIndex].votes -= 1;
+
+            if (userVote === optionText) {
+                delete userVotes[pollId];
+                setUserVotes({ ...userVotes });
+                setNote(updatedNotes);
+                return;
+            }
+        }
+
         const selectedOptionIndex = poll.options.findIndex((opt) => opt.text === optionText);
         poll.options[selectedOptionIndex].votes += 1;
-    
-        // Update state with the new note array
+
+        setUserVotes({ ...userVotes, [pollId]: optionText });
         setNote(updatedNotes);
     };
-    
 
     const handleClose = () => {
         setShow(false);
@@ -60,12 +73,12 @@ const Polls = () => {
     return (
         <div className="d-flex flex-column flex-md-row">
             <div className="flex-shrink-0">
-                <Sidebar />
+                <Sidebar/>
             </div>
-            <div className="dashboard-bg" style={{ width: "1920px" }}>
+            <div className="dashboard-bg">
                 <Header />
-                <div style={{marginTop:"109px"}}>
-                    <div className="income" style={{ marginLeft: "300px", width: "1608px" }}>
+                <div style={{ marginTop: "109px"}}>
+                    <div className="income" style={{ marginLeft: "300px"}}>
                         <div className="row p-4">
                             <div className="table-responsive rounded pb-3">
                                 <Link to="/home/Polls" className="btn btn-sm maintainance-income-btn maintainance-income-btn-bg">Own Poll</Link>
@@ -80,7 +93,7 @@ const Polls = () => {
                                         </button>
                                     </div>
 
-                                    {/* Modal */}
+                                  
                                     {show && (
                                         <div className="modal fade show d-block custom-modal" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
                                             <div className="modal-dialog modal-dialog-centered">
