@@ -198,7 +198,7 @@ const RightSection = () => {
 			{/* Right Section */}
       
 
-			<Col xs={12} md={12} className="right-section p-3 " style={{ marginLeft: "300px",width:"1600px" , marginTop:'110px'}} >
+			<Col xs={12} md={12} className="right-section p-3  dashboard-bg" style={{ marginLeft: "300px",width:"1600px" , marginTop:'110px'}} >
       
 
 				{/* Top Cards for Balance Information */}

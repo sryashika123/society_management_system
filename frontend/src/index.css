@@ -655,6 +655,17 @@ input[type=checkbox]:focus {
   padding: 10px 20px;
   border-radius: 5px;
 }
+.card-with-background {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: '10px';
+  height: '105px'; /* Adjust the height as needed */
+  width: "236px";
+}
+
+
+
 
 
 

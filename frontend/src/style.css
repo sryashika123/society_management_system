@@ -662,3 +662,13 @@ body {
   background-color: transparent;
   
 }
+.responsive{
+  margin-left:"310px " !important;
+}
+
+@media  (max-width: 576px) {
+  .responsive{
+    margin-left: 0px;
+  }
+  
+}

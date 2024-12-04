@@ -5,30 +5,63 @@ import Sidebar from '../Layout/Sidebar';
 import Header from '../Layout/Navbar';
 import { LuImagePlus } from 'react-icons/lu';
 const OwnerForm = () => {
-    
+
     const [profilePhoto, setProfilePhoto] = useState(null); // State for profile photo preview
     const [profilePhotoError, setProfilePhotoError] = useState(false); // State for photo error validation
-    const [uploadedFiles, setUploadedFiles] = useState({}); // State for uploaded files preview
     const [memberCount, setMemberCount] = useState(0); // Default is 0, no member forms are visible initially
     const [members, setMembers] = useState([]); // Start with an empty array of members
     const [vehicleCount, setVehicleCount] = useState(0); // Default is 0, no vehicle forms are visible initially
     const [vehicles, setVehicles] = useState([]); // Start with an empty array of vehicles
     const [activeButton, setActiveButton] = useState(''); // State to track active button
     const [formType, setFormType] = useState('owner');
-  const navigate = useNavigate(); // Initialize navigate for redirection
+    const [uploadedFiles, setUploadedFiles] = useState({});
+    const [filePreviews, setFilePreviews] = useState({});
+    const navigate = useNavigate(); // Initialize navigate for redirection
 
-  // Handler for button click
-  const handleButtonClick = (buttonType) => {
-    setActiveButton(buttonType); // Update the active button based on click
+    // Handler for button click
+    const handleButtonClick = (buttonType) => {
+        setActiveButton(buttonType); // Update the active button based on click
 
-    // Navigate based on the button type
-    if (buttonType === 'owner') {
-      // Do something when Owner button is clicked (if any)
-    } else if (buttonType === 'tenant') {
-      navigate('/home/tenant-form'); // Navigate to the Tenant form
-    }
-  };
+        // Navigate based on the button type
+        if (buttonType === 'owner') {
+            // Do something when Owner button is clicked (if any)
+        } else if (buttonType === 'tenant') {
+            navigate('/home/tenant-form'); // Navigate to the Tenant form
+        }
+    };
 
+
+    const onFileChange = (e, fileType) => {
+        const file = e.target.files[0];
+        if (file) {
+            setUploadedFiles((prev) => ({
+                ...prev,
+                [fileType]: file.name,
+            }));
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                setFilePreviews((prev) => ({
+                    ...prev,
+                    [fileType]: reader.result,
+                }));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const removeFile = (fileType) => {
+        setUploadedFiles((prev) => {
+            const updated = { ...prev };
+            delete updated[fileType];
+            return updated;
+        });
+        setFilePreviews((prev) => {
+            const updated = { ...prev };
+            delete updated[fileType];
+            return updated;
+        });
+    };
     // Handle member count change
     const handleMemberCountChange = (event) => {
         const count = parseInt(event.target.value);
@@ -43,7 +76,7 @@ const OwnerForm = () => {
         }
     };
 
-   
+
 
     // Handle vehicle count change
     const handleVehicleCountChange = (event) => {
@@ -103,16 +136,6 @@ const OwnerForm = () => {
         }
     };
 
-    const onFileChange = (e, fileType) => {
-        const file = e.target.files[0];
-        if (file) {
-            setUploadedFiles((prev) => ({
-                ...prev,
-                [fileType]: file.name, // Save file name for preview
-            }));
-        }
-    };
-
     const onSubmit = (data) => {
         if (!profilePhoto) {
             setProfilePhotoError(true); // Show error if profile photo is not uploaded
@@ -139,9 +162,8 @@ const OwnerForm = () => {
                 >
                     <div className="mb-4">
                         <button
-                           className={`btn btn-sm maintainance-income-btn ${
-                            formType === 'owner' ? 'maintainance-income-btn-active' : 'maintainance-income-btn-withoutbg'
-                          }`}
+                            className={`btn btn-sm maintainance-income-btn ${formType === 'owner' ? 'maintainance-income-btn-active' : 'maintainance-income-btn-withoutbg'
+                                }`}
                             onClick={() => handleButtonClick('owner')} // Set active to 'owner' when clicked
                         >
                             Owner
@@ -347,22 +369,36 @@ const OwnerForm = () => {
                                             cursor: "pointer",
                                         }}
                                     >
-                                        <label htmlFor={`${fileType}-upload`} style={{ cursor: 'pointer', color: '#007bff' }}>
-                                            <LuImagePlus
-                                                className="text-center"
-                                                style={{
-                                                    fontSize: '24px',
-                                                    marginBottom: '8px',
-                                                    width: '40px',
-                                                    height: '50px',
-                                                    color: "rgba(167, 167, 167, 1)",
-                                                }}
-                                            />
-                                            <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
-                                            {uploadedFiles[fileType] && (
-                                                <div className="mt-2 text-success">{uploadedFiles[fileType]}</div>
-                                            )}
-                                        </label>
+                                        {!filePreviews[fileType] ? (
+                                            <label htmlFor={`${fileType}-upload`} style={{ cursor: 'pointer', color: '#007bff' }}>
+                                                <LuImagePlus
+                                                    className="text-center"
+                                                    style={{
+                                                        fontSize: '24px',
+                                                        marginBottom: '8px',
+                                                        width: '40px',
+                                                        height: '50px',
+                                                        color: "rgba(167, 167, 167, 1)",
+                                                    }}
+                                                />
+                                                <div>Upload a file <span style={{ color: "black" }}>or drag and drop</span></div>
+                                            </label>
+                                        ) : (
+                                            <div className="mt-2">
+                                                <img
+                                                    src={filePreviews[fileType]}
+                                                    alt={`${fileType} preview`}
+                                                    style={{ width: '100%', maxHeight: '150px', objectFit: 'contain' }}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-danger mt-2"
+                                                    onClick={() => removeFile(fileType)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        )}
                                         <small className="text-muted">PNG, JPG, GIF, PDF up to 10MB</small>
                                         <input
                                             id={`${fileType}-upload`}
@@ -565,8 +601,8 @@ const OwnerForm = () => {
                 <div className="container-fluid " style={{ maxWidth: '1540px', marginLeft: "330px", marginTop: '15px' }}>
                     <form>
                         <div className="d-flex justify-content-end gap-2 ">
-                            <button type="button" className="cancle" style={{ border: "1px solid #202224", padding: "10px ", borderRadius: "10px", background: "#FFFFFF", color: "#202224", }}  >Cancel</button>
-                            <button type="submit" className="save" style={{ borderRadius: "10px", padding: "10px" }}>Create</button>
+                            <button type="button"  style={{ border: "none", padding: "10px ", borderRadius: "10px", background: "#FFFFFF", color: "#202224" , }}  >Cancel</button>
+                            <button type="submit"  style={{ borderRadius: "10px", padding: "10px" }} className='mainColor2 border-0 text-white'>Create</button>
                         </div>
                     </form>
                 </div>

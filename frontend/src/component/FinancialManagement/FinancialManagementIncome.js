@@ -108,7 +108,6 @@ export default function FinancialManagementIncome() {
                 </button>
               </div>
             </div>
-
             {/* Set Maintenance Modal */}
             <Modal show={showSetMaintenanceModal} className='custom-modal' onHide={handleCloseSetMaintenanceModal} centered>
               <Modal.Header>
