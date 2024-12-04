@@ -1,8 +1,8 @@
-const Complaint = require("../models/compalintModel");
+const Complaint = require("../models/ComplaintTrakingModel");
 const Society = require("../models/societyModel");
 const Admin = require("../models/UserModel");
 
-module.exports.createComplaints = async (req, res) => {
+module.exports.createComplaintsTracking = async (req, res) => {
     // console.log(req.body);
     try {
         const { Complaint_name, Complainer_name, description, wing, unit, Priority, status } = req.body;
@@ -26,12 +26,12 @@ module.exports.createComplaints = async (req, res) => {
         res.json(newComplaint);
     } 
     catch (err) { 
-        console.error("Error creating complaint:", err.message);
+        console.error("Error creating ComplaintTracking:", err.message);
         res.status(500).json({ message: "Server error", error: err.message });
     }
 };
 
-module.exports.viewComplaints = async(req,res)=>{
+module.exports.viewComplaintsTracking = async(req,res)=>{
     try{
         const viewComplaints = await Complaint.find();
         res.json(viewComplaints);
@@ -42,12 +42,12 @@ module.exports.viewComplaints = async(req,res)=>{
     }
 }
 
-module.exports.deleteComplaints = async(req,res)=>{
+module.exports.deleteComplaintsTracking = async(req,res)=>{
     try{
         const { id } = req.params;
         const deleteComplaints = await Complaint.findByIdAndDelete(id);
         if(!deleteComplaints){
-            return res.status(404).json({ msg : "Complaint Data Not Found" });
+            return res.status(404).json({ msg : "ComplaintTracking Data Not Found" });
         }
         res.json({ msg: "Complaint deleted succsessfully", deleteComplaints });
     }
@@ -57,7 +57,7 @@ module.exports.deleteComplaints = async(req,res)=>{
     }   
 }
 
-module.exports.updateComplaints = async (req, res) => {
+module.exports.updateComplaintsTracking = async (req, res) => {
     try {
         const { id } = req.params;
         const { Complaint_name, Complainer_name, description, wing, unit, Priority, status } = req.body;
@@ -74,12 +74,12 @@ module.exports.updateComplaints = async (req, res) => {
 
         const updateComplaints = await Complaint.findByIdAndUpdate( id, { Complaint_name, Complainer_name, description, wing, unit, Priority, status }, { new: true } );
         if (!updateComplaints) {
-            return res.status(404).json({ msg: "Complaint Not Found" });
+            return res.status(404).json({ msg: "ComplaintTracking Not Found" });
         }
-        res.json({ msg: "Complaint updated successfully", updateComplaints });
+        res.json({ msg: "ComplaintTracking updated successfully", updateComplaints });
     } 
     catch(err){
-        console.error("Error updating complaint:", err.message);
+        console.error("Error updating ComplaintTracking:", err.message);
         res.status(500).send("Server error, data not updated");
     }
 };
