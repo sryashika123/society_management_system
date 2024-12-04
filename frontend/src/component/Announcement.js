@@ -152,7 +152,7 @@ export default function Announcement() {
                                                             </div>
                                                             <div className="mb-3 w-50 ms-2">
                                                                 <label className='Form-Label'>Announcement Time <span className='text-danger position-relative'>*</span></label>
-                                                                <input type="text" className="form-control Form-Control" {...register('time', { required: true })} /><MdAccessTimeFilled className='position-absolute anouncement-icon' />
+                                                                <input type="time" className="form-control Form-Control" {...register('time', { required: true })} />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -224,7 +224,7 @@ export default function Announcement() {
                                                                                             </div>
                                                                                             <div className="mb-3">
                                                                                                 <label className='Form-Label'>Announcement time<span className='text-danger'>*</span></label>
-                                                                                                <input type="text" className="form-control Form-Control" {...register('time', { required: true })} /><MdAccessTimeFilled className='position-absolute anouncement-icon' />
+                                                                                                <input type="time" className="form-control Form-Control" {...register('time', { required: true })} />
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
