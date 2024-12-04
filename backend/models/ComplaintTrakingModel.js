@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const CompalintSchema = new mongoose.Schema({
-    Complaint_name :{
+const CompalintTrackingSchema = new mongoose.Schema({
+    Complainer_name :{
         type: String,
         required: true
     },
-    Complainer_name :{
+    Complaint_name :{
         type: String,
         required: true
     },
@@ -45,5 +45,5 @@ const CompalintSchema = new mongoose.Schema({
     { timestamps: true }
 );
 
-const Complaint = mongoose.model("Complaint", CompalintSchema);
-module.exports = Complaint;
+const ComplaintTracking = mongoose.model("ComplaintTracking", CompalintTrackingSchema);
+module.exports = ComplaintTracking;

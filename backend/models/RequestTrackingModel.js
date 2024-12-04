@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const requestSchema = new mongoose.Schema({
+const requestTrackingSchema = new mongoose.Schema({
         Requester_Name :{
             type: String,
             required: true
@@ -45,5 +45,5 @@ const requestSchema = new mongoose.Schema({
     { timestamps: true }
 );
 
-const Request = mongoose.model("Request", requestSchema);
-module.exports = Request;
+const RequestTracking = mongoose.model("RequestTracking", requestTrackingSchema);
+module.exports = RequestTracking;
