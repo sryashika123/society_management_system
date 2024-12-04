@@ -252,6 +252,7 @@ export default function SecurityGaurd() {
                 <tr>
                   <th
                     style={{
+                      background: "rgb(185, 198, 242)",
                       fontSize: "15px",
                       fontWeight: "700",
                       width: "200px"
@@ -260,12 +261,12 @@ export default function SecurityGaurd() {
                     Security Guard Name
                   </th>
 
-                  <th style={{ fontSize: "15px" }} className='text-center'>Phone Number</th>
-                  <th style={{ fontSize: "15px" }} className='text-center'>Select Shift</th>
-                  <th style={{ fontSize: "15px" }} className='text-center'>Shift Date</th>
-                  <th style={{ fontSize: "15px" }} className='text-center'>Shift Time</th>
-                  <th style={{ fontSize: "15px" }} className='text-center'>Gender</th>
-                  <th style={{ fontSize: "15px" }} className='text-center'>Action</th>
+                  <th style={{ background: "rgb(185, 198, 242)", fontSize: "15px" }} className='text-center'>Phone Number</th>
+                  <th style={{ background: "rgb(185, 198, 242)", fontSize: "15px" }} className='text-center'>Select Shift</th>
+                  <th style={{ background: "rgb(185, 198, 242)", fontSize: "15px" }} className='text-center'>Shift Date</th>
+                  <th style={{ background: "rgb(185, 198, 242)", fontSize: "15px" }} className='text-center'>Shift Time</th>
+                  <th style={{ background: "rgb(185, 198, 242)", fontSize: "15px" }} className='text-center'>Gender</th>
+                  <th style={{ background: "rgb(185, 198, 242)", fontSize: "15px" }} className='text-center'>Action</th>
                 </tr>
               </thead>
               <tbody>

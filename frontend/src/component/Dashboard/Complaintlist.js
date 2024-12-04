@@ -195,7 +195,8 @@ const ComplaintList = () => {
                                         {complaint.Complaint_name}
                                     </td>
                                     <td style={{ border: 'none' }}>{complaint.Complainer_name}</td>
-                                    <td className='text-center' style={{ border: 'none' }}>{complaint.updatedAt}</td>
+                                    <td className='text-center' style={{ border: 'none' }}>{new Date(complaint.createdAt).toLocaleDateString('en-GB')}
+                                    </td>
                                     <td className='text-center' style={{ border: 'none' }}>
                                         <Badge
                                             pill
@@ -238,11 +239,11 @@ const ComplaintList = () => {
                 <Modal.Body>
                     {selectedComplaint && (
                         <div>
-                            <h6>{selectedComplaint.name}</h6>
-                            <p><strong>Complaint:</strong> {selectedComplaint.complaint}</p>
-                            <p><strong>Date:</strong> {selectedComplaint.date}</p>
+                            <h6>{selectedComplaint.Complaint_name}</h6>
+                            <p><strong>Complaint:</strong> {selectedComplaint.Complainer_name}</p>
+                            <p><strong>Date:</strong> {selectedComplaint.createdAt}</p>
                             <p><strong>Status:</strong> {selectedComplaint.status}</p>
-                            <p><strong>Priority:</strong> {selectedComplaint.priority}</p>
+                            <p><strong>Priority:</strong> {selectedComplaint.Priority}</p>
                         </div>
                     )}
                 </Modal.Body>
@@ -267,11 +268,11 @@ const ComplaintList = () => {
                             </Form.Label>
                             <Form.Control
                                 type="text"
-                                value={selectedComplaint?.name || ""}
+                                value={selectedComplaint?.Complaint_name || ""}
                                 onChange={(e) =>
                                     setSelectedComplaint((prev) => ({
                                         ...prev,
-                                        name: e.target.value,
+                                        Complaint_name: e.target.value,
                                     }))
                                 }
                             />
@@ -282,11 +283,11 @@ const ComplaintList = () => {
                             </Form.Label>
                             <Form.Control
                                 type="text"
-                                value={selectedComplaint?.complaint || ""}
+                                value={selectedComplaint?.Complainer_name || ""}
                                 onChange={(e) =>
                                     setSelectedComplaint((prev) => ({
                                         ...prev,
-                                        type: e.target.value,
+                                        Complainer_name: e.target.value,
                                     }))
                                 }
                             />
@@ -296,12 +297,12 @@ const ComplaintList = () => {
                                 <span className='text-danger'>*</span>
                             </Form.Label>
                             <Form.Control
-                                type="text"
-                                value={selectedComplaint?.date || ""}
+                                type="date"
+                                value={selectedComplaint?.createdAt || ""}
                                 onChange={(e) =>
                                     setSelectedComplaint((prev) => ({
                                         ...prev,
-                                        description: e.target.value,
+                                        createdAt: e.target.value,
                                     }))
                                 }
                             />
@@ -310,6 +311,21 @@ const ComplaintList = () => {
                         <div className='d-flex justify-content-between'>
                             <Form.Group className='mt-3'>
                                 <Form.Label>Wing
+                                    <span className='text-danger'>*</span>
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={selectedComplaint?.wing || ""}
+                                    onChange={(e) =>
+                                        setSelectedComplaint((prev) => ({
+                                            ...prev,
+                                            wing: e.target.value,
+                                        }))
+                                    }
+                                />
+                            </Form.Group>
+                            <Form.Group className='mt-3'>
+                                <Form.Label>Unit
                                     <span className='text-danger'>*</span>
                                 </Form.Label>
                                 <Form.Control
@@ -323,21 +339,6 @@ const ComplaintList = () => {
                                     }
                                 />
                             </Form.Group>
-                            <Form.Group className='mt-3'>
-                                <Form.Label>Unit
-                                    <span className='text-danger'>*</span>
-                                </Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={selectedComplaint?.number || ""}
-                                    onChange={(e) =>
-                                        setSelectedComplaint((prev) => ({
-                                            ...prev,
-                                            number: e.target.value,
-                                        }))
-                                    }
-                                />
-                            </Form.Group>
                         </div>
 
                         <Form.Group className='mt-3'>
@@ -346,21 +347,21 @@ const ComplaintList = () => {
                             </Form.Label>
                             <div className="d-flex justify-content-around  " >
 
-                                {["High", "Medium", "Low"].map((priority) => (
+                                {["High", "Medium", "Low"].map((Priority) => (
                                     <Form.Check
                                         style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingRight: "30px", borderRadius: "5px", paddingTop: "8px", paddingBottom: "8px" }}
                                         type="radio"
-                                        label={priority}
+                                        label={Priority}
                                         name="priority"
-                                        value={priority}
-                                        checked={selectedComplaint?.priority === priority}
+                                        value={Priority}
+                                        checked={selectedComplaint?.Priority === Priority}
                                         onChange={(e) =>
                                             setSelectedComplaint((prev) => ({
                                                 ...prev,
-                                                priority: e.target.value,
+                                                Priority: e.target.value,
                                             }))
                                         }
-                                        key={priority}
+                                        key={Priority}
                                     />
 
                                 ))}

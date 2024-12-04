@@ -121,12 +121,12 @@ function VisitorsTracking() {
             </div>
             <Table hover responsive>
               <thead style={{ background: "rgb(185, 198, 242)", color: "black" }}>
-                <tr className="text-start" style={{ height: '70px' }}>
-                  <th >Visitor Name</th>
-                  <th>Phone Number</th>
-                  <th>Date</th>
-                  <th className="text-center">Unit Number</th>
-                  <th className="text-center">Time</th>
+                <tr className="text-start" style={{ height: '50px' }}>
+                  <th style={{ background: "rgb(185, 198, 242)"}}>Visitor Name</th>
+                  <th style={{ background: "rgb(185, 198, 242)"}}>Phone Number</th>
+                  <th style={{ background: "rgb(185, 198, 242)"}}>Date</th>
+                  <th style={{ background: "rgb(185, 198, 242)"}} className="text-center">Unit Number</th>
+                  <th style={{ background: "rgb(185, 198, 242)"}} className="text-center">Time</th>
                 </tr>
               </thead>
               <tbody>
