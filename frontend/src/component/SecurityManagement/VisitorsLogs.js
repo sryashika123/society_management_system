@@ -8,13 +8,12 @@ import axios from 'axios';
 
 export default function DetailTracking() {
   const [details, setDetails] = useState([
-    { id: 1, Name: "Evelyn Harper", Phone_number: "9313876347", date: "20/02/2002", Wing: "A", Unit_number: "1001", time: "3:45 PM" },
-    { id: 2, Name: "Esther Howard", Phone_number: "9313876347", date: "20/02/2002", Wing: "B", Unit_number: "1002", time: "3:45 PM" },
+   
   ]);
 
   const fetchVisitorDetails = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users/v9/getVisitorLog");
+      const response = await axios.get("http://localhost:8000/api/users/v9/getVisitorTracking");
       setDetails(response.data);
     } catch (error) {
       console.error("Error fetching visitor details:", error);
