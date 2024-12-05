@@ -4,7 +4,7 @@ const Admin = require("../models/UserModel");
 
 module.exports.createAnnouncement = async(req,res) =>{
     try{
-        const { title, description, date, time } = req.body;
+        const { Announcement_Type, title, description, date, time } = req.body;
 
         // const admin = await Admin.findById(adminId);
 		// if (!admin) {
@@ -16,10 +16,10 @@ module.exports.createAnnouncement = async(req,res) =>{
 		//   	return res.status(404).json({ msg: "Society not found" });
 		// }
 
-        if (!title || !description || !date || !time) {
+        if (!Announcement_Type || !title || !description || !date || !time) {
             return res.status(400).json({ msg: "All fields are required." });
         }
-        const newAnnouncement = new Announcement({ title, description, date, time});
+        const newAnnouncement = new Announcement({ Announcement_Type, title, description, date, time});
         await newAnnouncement.save();    
         res.json(newAnnouncement);
     } 
@@ -58,9 +58,13 @@ module.exports.deleteAnnouncement = async(req, res) => {
 module.exports.updateAnnouncement = async(req, res) => {
     try{
         const { id } = req.params;
-        const { title, description, date, time } = req.body;
+        const { Announcement_Type, title, description, date, time } = req.body;
+
+        if (!Announcement_Type || !title || !description || !date || !time) {
+            return res.status(400).json({ msg: "All fields are required." });
+        }
         
-        const updateAnnouncement = await Announcement.findByIdAndUpdate(id, { title, description, date, time}, { new : true });
+        const updateAnnouncement = await Announcement.findByIdAndUpdate(id, { Announcement_Type, title, description, date, time}, { new : true });
         if(!updateAnnouncement){
             res.status(404).json({ msg : "Announcement Data Not Found" });
         }
