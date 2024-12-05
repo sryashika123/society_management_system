@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Dropdown, Button, Container } from 'react-bootstrap';
 import { FaGreaterThan } from "react-icons/fa6";
 import avtar from '../../assets/Avatar.png';
-import { FaBell } from "react-icons/fa";
+import Bellicon from '../../assets/Bellicon.png';
 import { useLocation, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './Navbar.css';
 
@@ -50,16 +50,11 @@ import './Navbar.css';
                             <Nav className="d-flex align-items-center">
                                 {/* Notification Icon */}
                                 <Button
-                                    variant="light"
-                                    className="position-relative me-3 px-2 mt-2 text-black notification-icon"
+                                    variant="none"
+                                    className="position-relative me-3 px-2 mt-2 text-black "
                                     onClick={toggleNotifications}
                                 >
-                                    <FaBell />
-                                    {notifications.length > 0 && (
-                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {notifications.length}
-                                        </span>
-                                    )}
+                                 <img src={Bellicon} />
                                 </Button>
 
                                 {/* Notification Dropdown */}

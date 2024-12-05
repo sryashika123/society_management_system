@@ -123,6 +123,7 @@ export default function ServiceComplaint() {
                                 <div className='row p-3 py-0 overflow-hidden'>
                                     <div className='p-0 bg-light'>
                                         <div className='d-flex justify-content-between align-items-center pb-3 px-3 pt-3'>
+                                            <h3 className='mb-0 financial-income-title'>Complaint</h3>
                                             <h3 className='mb-0 financial-income-Complainer_name'>Complaint</h3>
                                             <button className='set-maintainance-btn d-flex align-items-center p-2' onClick={handleShow}>
                                                 Create Complaint
@@ -212,7 +213,9 @@ export default function ServiceComplaint() {
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formDescription">
-                                    <Form.Label className='Form-Label'>Description<span className="text-danger"> *</span></Form.Label>
+                                    <Form.Label className="Form-Label">
+                                        Description<span className="text-danger"> *</span>
+                                    </Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter Description"
@@ -220,9 +223,10 @@ export default function ServiceComplaint() {
                                         isInvalid={errors.description}
                                     />
                                     <Form.Control.Feedback type="invalid">{errors.description?.message}</Form.Control.Feedback>
+
                                 </Form.Group>
 
-                                <div className='d-flex justify-content-between'>
+                                <div className="d-flex justify-content-between">
                                     <div className="mb-3">
                                         <label className='Form-Label'>Wing<span className='text-danger'> *</span></label>
                                         <input type="text" placeholder='Enter Wing' className="form-control Form-Control" {...register('wing', { required: true })} />
@@ -233,10 +237,13 @@ export default function ServiceComplaint() {
                                     </div>
                                 </div>
 
-                                <Form.Group className="mb-3" controlId="formPriority">
-                                    <Form.Label className='Form-Label'>Priority<span className="text-danger"> *</span></Form.Label>
+                                {/* Priority Section */}
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="Form-Label">
+                                        Priority<span className="text-danger"> *</span>
+                                    </Form.Label>
                                     <div className="d-flex justify-content-start">
-                                        <div className="me-3 radio-btn-box">
+                                        <div className="me-3 radio-btn-box d-flex align-items-center">
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityHigh"
@@ -246,8 +253,9 @@ export default function ServiceComplaint() {
                                                 isInvalid={errors.Priority}
                                                 className="custom-radio"
                                             />
+                                            <label htmlFor="priorityHigh" className="ms-2">High</label>
                                         </div>
-                                        <div className="me-3 radio-btn-box">
+                                        <div className="me-3 radio-btn-box d-flex align-items-center">
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityMedium"
@@ -257,8 +265,9 @@ export default function ServiceComplaint() {
                                                 isInvalid={errors.Priority}
                                                 className="custom-radio"
                                             />
+                                            <label htmlFor="priorityMedium" className="ms-2">Medium</label>
                                         </div>
-                                        <div className='radio-btn-box'>
+                                        <div className="radio-btn-box d-flex align-items-center">
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityLow"
@@ -268,6 +277,7 @@ export default function ServiceComplaint() {
                                                 isInvalid={errors.Priority}
                                                 className="custom-radio"
                                             />
+                                            <label htmlFor="priorityLow" className="ms-2">Low</label>
                                         </div>
                                     </div>
                                     <Form.Control.Feedback type="invalid">
@@ -275,41 +285,44 @@ export default function ServiceComplaint() {
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
+                                {/* Status Section */}
                                 <Form.Group className="mb-3" controlId="formStatus">
-                                    <Form.Label className='Form-Label'>Status<span className="text-danger"> *</span></Form.Label>
+                                    <Form.Label className="Form-Label">
+                                        Status<span className="text-danger"> *</span>
+                                    </Form.Label>
                                     <div className="d-flex justify-content-start">
-                                        <div className="me-3 radio-btn-box">
+                                        <div className="me-3 radio-btn-box d-flex align-items-center">
                                             <Form.Check
                                                 type="radio"
                                                 id="statusOpen"
-                                                label="Open"
-                                                {...register('status', { required: "Status is required" })}
                                                 value="Open"
+                                                {...register("status", { required: "Status is required" })}
                                                 isInvalid={errors.status}
-                                                className="custom-radio"
+                                                className="radio-group"
                                             />
+                                            <label htmlFor="statusOpen" className="ms-2">Open</label>
                                         </div>
-                                        <div className="me-3 radio-btn-box">
+                                        <div className="me-3 radio-btn-box d-flex align-items-center">
                                             <Form.Check
                                                 type="radio"
                                                 id="statusPending"
-                                                label="Pending"
-                                                {...register('status', { required: "Status is required" })}
                                                 value="Pending"
+                                                {...register("status", { required: "Status is required" })}
                                                 isInvalid={errors.status}
-                                                className="custom-radio"
+                                                className="radio-group"
                                             />
+                                            <label htmlFor="statusPending" className="ms-2">Pending</label>
                                         </div>
-                                        <div className='radio-btn-box'>
+                                        <div className="radio-btn-box d-flex align-items-center">
                                             <Form.Check
                                                 type="radio"
                                                 id="statusSolved"
-                                                label="Solve"
-                                                {...register('status', { required: "Status is required" })}
-                                                value="Solve"
+                                                value="Solved"
+                                                {...register("status", { required: "Status is required" })}
                                                 isInvalid={errors.status}
-                                                className="custom-radio"
+                                                className="radio-group"
                                             />
+                                            <label htmlFor="statusSolved" className="ms-2">Solved</label>
                                         </div>
                                     </div>
                                     <Form.Control.Feedback type="invalid">
@@ -317,13 +330,27 @@ export default function ServiceComplaint() {
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
+                                {/* Buttons */}
                                 <div className="d-flex justify-content-between">
-                                    <Button variant="secondary" onClick={handleClose} className="btn mt-2 btn-sm cancle">Cancel</Button>
-                                    <Button variant="primary" type="submit" className='btn btn-sm save mt-2'>Save</Button>
+                                    <Button
+                                        variant="secondary"
+                                        onClick={handleClose}
+                                        className="btn mt-2 btn-sm cancle"
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        variant="primary"
+                                        type="submit"
+                                        className="btn btn-sm save mt-2"
+                                    >
+                                        Save
+                                    </Button>
                                 </div>
                             </Form>
                         </Modal.Body>
                     </Modal>
+
 
                     {/* delete modal */}
                     <Modal className='custom-modal' show={showDeleteModal} onHide={handleCloseDeleteModal} centered>

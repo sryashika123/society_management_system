@@ -286,7 +286,6 @@ const Sidebar = () => {
                position: "absolute",
                left: "-15px", // Adjust this value as needed
                height: "50px",
-               
              }}
            />
           )}

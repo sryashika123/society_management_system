@@ -139,14 +139,17 @@ export default function FinancialManagementOtherIncome() {
                                                                     placeholder='Enter Title' {...register('Title', { required: true })} />
                                                                 {errors.Title && <small className="text-danger">Title is required</small>}
                                                             </div>
-                                                            <div className="mb-3">
-                                                                <label className='Form-Label'>Date <span className='text-danger'>*</span></label>
-                                                                <input type="date" className="form-control Form-Control" {...register('Date', { required: true })} />
+                                                            <div className="row mb-3">
+                                                                <div className="col-md-6">
+                                                                    <label className='Form-Label'>Date <span className='text-danger'>*</span></label>
+                                                                    <input type="date" className="form-control Form-Control" {...register('Date', { required: true })} />
+                                                                </div>
+                                                                <div className="col-md-6">
+                                                                    <label className='Form-Label'>Due Date <span className='text-danger'>*</span></label>
+                                                                    <input type="date" className="form-control Form-Control" {...register('Due_Date', { required: true })} />
+                                                                </div>
                                                             </div>
-                                                            <div className="mb-3">
-                                                                <label className='Form-Label'>Due Date <span className='text-danger'>*</span></label>
-                                                                <input type="date" className="form-control Form-Control" {...register('Due_Date', { required: true })} />
-                                                            </div>
+
                                                             <div className="mb-3">
                                                                 <label className='Form-Label'>Description <span className='text-danger'>*</span></label>
                                                                 <input type="text" className="form-control Form-Control" placeholder='Enter Description' {...register('Description', { required: true })} />

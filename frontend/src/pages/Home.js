@@ -44,7 +44,6 @@ const Home = () => {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/dashboard" element={<Dashboard />} />
-
       <Route path="/residentmanagement" element={<ResidentManagement />} />
       <Route path="/ownerform" element={<OwnerForm />} />
       <Route path="/facility-management" element={<FacilityManagement />} />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Button, InputGroup, FormControl, Container } from 'react-bootstrap';
 import { FiSearch } from "react-icons/fi";
 import avtar from '../../assets/Avatar.png';
-import { FaBell } from "react-icons/fa";
+import Bellicon from '../../assets/Bellicon.png';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
@@ -43,18 +43,14 @@ function Header() {
                         </div>
 
                         {/* Notification Icon */}
-                        <Button
+                        <div
                             variant="light"
-                            className="position-relative me-3 px-2 text-black notification-icon"
+                            className="position-relative me-3 px-2 text-black "
                             onClick={() => setShowNotifications(!showNotifications)}
                         >
-                            <FaBell />
-                            {notifications.length > 0 && (
-                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {notifications.length}
-                                </span>
-                            )}
-                        </Button>
+                            <img src={Bellicon}  />
+                            
+                        </div>
 
                         {/* Notification Dropdown */}
                         {showNotifications && (

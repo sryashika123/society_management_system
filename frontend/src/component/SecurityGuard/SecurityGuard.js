@@ -565,12 +565,12 @@ export default function SecurityGaurd() {
                         </span>
                       </div>
 
-                      {/* Security Guard Image */}
+                      {/* Security Guard Image
                       <div>
                         {guardData.Security_Gard_Image && (
                           <img src={guardData.Security_Gard_Image} alt="Guard" style={{ width: '100px' }} />
                         )}
-                      </div>
+                      </div> */}
 
                     </div>
                   </>

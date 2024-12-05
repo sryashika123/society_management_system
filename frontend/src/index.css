@@ -217,6 +217,11 @@ input[type=checkbox]:focus {
   }
 
 }
+.modal-right .modal-dialog {
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 0;
+}
 
 /* signup form style end */
 /* sidebar start */
@@ -326,6 +331,9 @@ input[type=checkbox]:focus {
   font-size: 14px;
   font-weight: 400;
   color: rgba(167, 167, 167, 1);
+}
+.radio-btn-box .form-check-input {
+  margin-right: 5px; /* Adjust radio spacing */
 }
 
 .custom-radio .form-check-input:checked {

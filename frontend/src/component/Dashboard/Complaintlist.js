@@ -123,7 +123,7 @@ const ComplaintList = () => {
 
     return (
         <>
-            <Card className="mb-4 shadow-sm">
+            <Card className="mb-4 shadow-sm" >
                 <Card.Header style={{ background: 'white', display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ marginTop: '15px' }}>Complaint List</div>
 
@@ -169,8 +169,11 @@ const ComplaintList = () => {
                 </Card.Header>
 
                 {/* Table wrapped inside a div with class 'table-responsive' */}
-                <div className="table-responsive">
-                    <Table responsive>
+                <div className="table-responsive custom-scrollbar" style={{
+								overflowY: 'scroll', // Enable scroll for overflow content
+								maxHeight: '29vh',   // Set max height for column
+							}}>
+                    <Table responsive >
                         <thead style={{ background: "#5678E9", color: "#ffffff" }}>
                             <tr>
                                 <th style={{ backgroundColor: 'rgb(185, 198, 242)' }}>Complainer Name</th>
