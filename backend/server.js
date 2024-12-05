@@ -51,7 +51,7 @@ app.use("/api/users/v5", require("./routes/profileRoute.js"));
 app.use("/api/users/v6", require("./routes/residentRoute.js"));
 app.use("/api/users/v7", require("./routes/RequestTrackingRoute.js"));
 app.use("/api/users/v8", require("./routes/security_protocol_Route.js"));
-app.use("/api/users/v9", require("./routes/visitorLogRoute.js"));
+app.use("/api/users/v9", require("./routes/visitorTrackingRoute.js"));
 app.use("/api/users/v10", require("./routes/SecuritygaurdRoute.js"));
 app.use("/api/users/v11", require("./routes/NoteRoute.js"));
 app.use("/api/users/v12", require("./routes/ExpensesRoute.js"));
