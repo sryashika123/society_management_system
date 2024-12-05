@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const VisitorLogSchema = new mongoose.Schema({
+const VisitorTrackingSchema = new mongoose.Schema({
     Name: {
         type: String,
         required: true
@@ -37,5 +37,5 @@ const VisitorLogSchema = new mongoose.Schema({
     }
 });
 
-const VisitorLog = mongoose.model('Visitorlog', VisitorLogSchema);
-module.exports = VisitorLog;
+const VisitorTracking = mongoose.model('VisitorTracking', VisitorTrackingSchema);
+module.exports = VisitorTracking;
