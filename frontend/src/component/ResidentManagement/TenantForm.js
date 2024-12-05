@@ -129,7 +129,7 @@ const TenantForm = () => {
             <div className="flex-shrink-0">
                 <Sidebar />
             </div>
-            <div className="dashboard-bg " style={{ width: "1900px", marginTop: "109px" }}>
+            <div className="dashboard-bg " style={{ width: "1900px", marginTop: "80px" }}>
                 <div>
                     <Header />
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaUser, FaHome, FaTag,  FaPlus } from 'react-icons/fa'; // Using react-icons as placeholders
 import Sidebar from '../Layout/Sidebar';
@@ -9,6 +9,9 @@ import Avtar from '../../assets/Avatar.png';
 import Header from '../Layout/Navbar';
 import Edit from '../../assets/edit.png';
 import View from '../../assets/view.png';
+import { IoEyeSharp } from 'react-icons/io5';
+import viewFile1 from '../../assets/Component 54.png';
+import viewFile2 from '../../assets/Component 55.png';
 
 
 export default function ResidentManagement() {
@@ -28,6 +31,9 @@ export default function ResidentManagement() {
   const handleCloseModal = () => setShowModal(false);
   const handleCloseVacateModal = () => setShowVacateModal(false);
   const handleCloseCreateModal = () => setShowCreateModal(false); // Close create modal
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
 
   const handleSave = () => {
     if (selectedStatus === "Occupied" && agreeChecked) {
@@ -37,6 +43,13 @@ export default function ResidentManagement() {
     }
     handleCloseModal();
   };
+  const handleShow = () => setShow(true);
+
+  const [viewDetails, setViewDetails] = useState([
+    {
+      wing: 'A', unit: '101', age: '20', gender: 'Male', fName: 'Roger Lubin', pnumber: '9123455555', relation: 'Brother'
+    }
+  ])
 
   const handleCreateClick = () => {
     setShowVacateModal(false); // Close the vacate modal
@@ -205,7 +218,7 @@ export default function ResidentManagement() {
                     </td>
                     <td className="text-center">
                       <span
-                        className="badge"
+                        className="badge "
                         style={{
                           backgroundColor: resident.unitStatus === "Occupied" ? "#ECFFFF" :
                             resident.unitStatus === "Vacate" ? "#FFF6FF" : "#F6F8FB",
@@ -237,7 +250,7 @@ export default function ResidentManagement() {
                       style={{ verticalAlign: "middle" }}>
                       <div className="d-flex align-items-center justify-content-center">
                         <img src={Edit} className="text-success me-2 " onClick={handleOpenModal} style={{ cursor: "pointer", width: "25px" }} />
-                        <img src={View} className="text-primary me-2" style={{ cursor: "pointer", width: "30px" }} />
+                        <img src={View} className="text-success me-2" style={{ cursor: "pointer" }} onClick={handleShow} />
                       </div>
                     </td>
                   </tr>
@@ -257,7 +270,7 @@ export default function ResidentManagement() {
                   <div className="d-flex mb-3" style={{ gap: "70px" }}>
                     <Form.Check
                       style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingTop: "8px", paddingBottom: "8px", paddingRight: "30px", borderRadius: "5px" }}
-                      className='radio-group '
+                      className='radio-group text-center ' 
                       type="radio"
                       label="Occupied"
                       name="residenceStatus"
@@ -268,7 +281,7 @@ export default function ResidentManagement() {
                     <Form.Check
                       style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingTop: "8px", paddingBottom: "8px", paddingRight: "30px", borderRadius: "5px" }}
                       type="radio"
-                      className='radio-group'
+                      className='radio-group text-center'
                       label="Vacate"
                       name="residenceStatus"
                       value="Vacate"
@@ -351,6 +364,157 @@ export default function ResidentManagement() {
               <Button style={{ width: "175px", height: "51px", border: "1px", padding: "10px 55px 10px 55px", color: "white", background: " rgba(231, 76, 60, 1)" }} variant="secondary" onClick={handleDelete}>Conform</Button>
             </Modal.Footer>
           </Modal>
+
+{/* View Modal */}
+
+          <Modal show={show} onHide={handleClose}  className="modal-right custom-scrollbar">
+            <Modal.Header>
+              <Modal.Title style={{fontSize: '20px'}}>View Owner Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="text-center mb-0">
+                <img
+                  src={Avtar}
+                  alt="Profile"
+                  className="rounded-circle mb-1"
+                  width={90}
+                />
+                <h3 style={{fontSize: '24px'}} className='mb-1'>Roger Lubin</h3>
+                <p>RogerLubin@gmail.com</p>
+              </div>
+
+              <div className="mb-0">
+                {
+                  viewDetails.map((val) => {
+                    return (
+                      <div className='p-2 mb-3'>
+                        <div className='d-flex align-items-center justify-content-between p-2 my-2 rounded' style={{
+                          boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                        }}>
+                          <p className='mb-1' style={{ fontWeight: '600' }}>Wing </p>
+                          <p className='mb-1'>{val.wing}</p>
+                        </div>
+                        <div className='d-flex align-items-center justify-content-between p-2 my-2 rounded' style={{
+                          boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                        }}>
+                          <p className='mb-1' style={{ fontWeight: '600' }}>Unit </p>
+                          <p className='mb-1'>{val.unit}</p>
+                        </div>
+                        <div className='d-flex align-items-center justify-content-between p-2 my-2 rounded' style={{
+                          boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                        }}>
+                          <p className='mb-1' style={{ fontWeight: '600' }}>Age </p>
+                          <p className='mb-1'>{val.age}</p>
+                        </div>
+                        <div className='d-flex align-items-center justify-content-between p-2 my-2 rounded' style={{
+                          boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                        }}>
+                          <p className='mb-1' style={{ fontWeight: '600' }}>Gender </p>
+                          <p className='mb-1'>{val.gender}</p>
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+
+
+                <div className="row card-row g-3 pe-0">
+                  <div className="card-header card-title "  >
+                      <h6 className='rounded-top p-3 ps-4 pt-0' style={{ fontWeight: '600' }}>Document</h6>
+
+                      <div className="d-flex align-items-center justify-content-between mb-3 py-2 px-3 ms-3 border rounded">
+                        <div className='d-flex align-items-center'>
+                          <div className="pe-3">
+                            <img src={viewFile1} alt="" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-gray-800 text-lg mb-0">
+                              Essential Aadharcard Front Side.JPG
+                            </p>
+                            <p className="text-sm text-gray-600 mb-0">
+                              3.5 MB
+                            </p>
+                          </div>
+                        </div>
+                        <div><IoEyeSharp style={{ color: 'rgba(167, 167, 167, 1)', fontSize: '20px' }} /></div>
+                      </div>
+
+                      <div className="d-flex align-items-center justify-content-between mb-3 py-2 px-3 ms-3 border rounded">
+                        <div className='d-flex align-items-center'>
+                          <div className="pe-3" >
+                            <img src={viewFile2} alt="" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-gray-800 text-lg mb-0">
+                              Essential Aadharcard Front Side.JPG
+                            </p>
+                            <p className="text-sm text-gray-600 mb-0">
+                              3.5 MB
+                            </p>
+                          </div>
+                        </div>
+                        <div><IoEyeSharp style={{ color: 'rgba(167, 167, 167, 1)', fontSize: '20px' }} /></div>
+                      </div>
+                    </div>
+
+
+                </div>
+
+                <div className="row card-row g-3 pe-0 ps-3">
+                  <div className="card-header card-title text-light border border-top-0" >
+                    <h6 style={{ background: "rgba(86, 120, 233, 1)" }} className='rounded-top p-3'>Member Counting</h6>
+                    {
+                      viewDetails.map((val, index) => (
+                        <div key={val.id}>
+                          <div className="card border-0">
+
+                            <div className="card-body">
+                              <div className="d-flex justify-content-between align-items-center p-2" style={{
+                                boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                              }}>
+                                <h6 className=" text-dark mb-0" style={{ fontWeight: '600', fontSize: '14px' }}>First Name</h6>
+                                <span className="card-body-title">{val.fName}</span>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center  p-2" style={{
+                                boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                              }}>
+                                <h6 className=" mb-0 text-dark" style={{ fontWeight: '600', fontSize: '14px' }}>Phone No</h6>
+                                <span className="card-body-title">{val.pnumber}</span>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center p-2" style={{
+                                boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                              }}>
+                                <h6 className=" mb-0 text-dark" style={{ fontWeight: '600', fontSize: '14px' }}>Age</h6>
+                                <span className="card-body-title">{val.age}</span>
+                              </div>
+                              <div className='d-flex justify-content-between align-items-center p-2' style={{
+                                boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                              }}>
+                                <h6 className=" mb-0 text-dark" style={{ fontWeight: '600', fontSize: '14px' }}>Gender</h6>
+                                <span className="card-body-title ">{val.gender}</span>
+                              </div>
+                              <div className='d-flex justify-content-between align-items-center mb-0 p-2 pb-0' style={{
+                                boxShadow: '0px 0px 35px 0px rgba(0, 0, 0, 0.06)'
+                              }}>
+                                <h6 className="e text-dark" style={{ fontWeight: '600', fontSize: '14px' }}>Relation</h6>
+                                <p className="card-body-title">{val.relation}</p>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+
+                </div>
+              </div>
+
+
+            </Modal.Body>
+            
+          </Modal>
+
+          
         </div>
       </div>
     </div>
