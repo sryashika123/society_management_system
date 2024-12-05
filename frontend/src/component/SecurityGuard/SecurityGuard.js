@@ -66,10 +66,11 @@ export default function SecurityGaurd() {
 
   const handleShowEdit = (guard) => {
     setIsEdit(true);
-    setEditGuardId(guard._id);
-    setNewGuard(guard); // Pre-fill the form with the selected guard's data
+    setEditGuardId(guard._id);  // Ensure this ID is set
+    setNewGuard(guard);  // Pre-fill the form with the selected guard's data
     setShowModal(true);
   };
+  
 
   // Show the view modal for guard details
   const handleShowView = (guard) => {
@@ -170,19 +171,30 @@ export default function SecurityGaurd() {
     e.preventDefault();
 
     try {
-      console.log('FormData being submitted:', formData);
-
       if (isEdit && editGuardId) {
-        // Edit existing guard
+        // Update existing guard
         await axios.put(`http://localhost:8000/api/users/v10/updateSecuritygaurd/${editGuardId}`, formData);
       } else {
-        // Add new guard
+        // Create new guard
         await axios.post('http://localhost:8000/api/users/v10/createSecuritygaurd', formData);
       }
-
+  
+      // Close the modal and reset states after successful operation
       setShowModal(false);
-
-      // Refresh the guards list after saving
+      setIsEdit(false);
+      setEditGuardId(null);  // Reset the edit ID to prevent leftover state
+      setNewGuard({
+        Full_name: '',
+        Phone_number: '',
+        gender: '',
+        shift: 'Day',
+        Shift_Date: '',
+        Shift_time: '',
+        Security_Gard_Image: null,
+        Aadhar_card: null,
+      });
+  
+      // Refresh the guard list after operation
       const response = await axios.get('http://localhost:8000/api/users/v10/getSecuritygaurd');
       setGuards(response.data);
     } catch (error) {
@@ -393,7 +405,7 @@ export default function SecurityGaurd() {
                     </td>
                     <td className='text-center' style={{ verticalAlign: "middle" }}>
                       <div className="d-flex align-items-center justify-content-center">
-                        <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleEdit(guard._id)} />
+                        <img src={Edit} className="text-success me-2" style={{ cursor: "pointer" }} onClick={() => handleShowEdit(guard)} />
                         <img src={View} className="text-primary me-2" style={{ cursor: "pointer" }} onClick={() => handleShowView(guard)} />
                         <img src={Delete} className="text-danger" style={{ cursor: "pointer" }} onClick={() => handleDelete(guard._id)} />
                       </div>

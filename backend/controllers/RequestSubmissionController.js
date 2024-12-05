@@ -1,8 +1,8 @@
-const Request = require("../models/requestModel");
+const Request = require("../models/RequestSubmissionModel");
 const Society = require("../models/societyModel");
 const Admin = require("../models/UserModel");
 
-module.exports.createRequest = async(req,res)=>{
+module.exports.createRequestSubmission = async(req,res)=>{
     //  console.log(req.body);
      try {
         const { Requester_Name, Request_name, Request_Date, wing, unit, Priority, status} = req.body;
@@ -25,12 +25,12 @@ module.exports.createRequest = async(req,res)=>{
         res.json(newRequest);
     } 
     catch(err){ 
-        console.error("Error creating Request:", err.message);
+        console.error("Error creating RequestSubmission:", err.message);
         res.status(500).json({ message: "Server error", error: err.message });
     }
 }
 
-module.exports.getRequest = async(req, res)=> {
+module.exports.getRequestSubmission = async(req, res)=> {
     try{
         const ViewAllRequest = await Request.find();
         res.json(ViewAllRequest);
@@ -41,14 +41,14 @@ module.exports.getRequest = async(req, res)=> {
     }
 }
 
-module.exports.deleteRequest = async(req, res)=> {
+module.exports.deleteRequestSubmission = async(req, res)=> {
     try{
         const { id } = req.params;
         const deleteRequests = await Request.findByIdAndDelete(id);
         if(!deleteRequests){
-            return res.status(404).json({ msg : "Request data Not Found" });
+            return res.status(404).json({ msg : "RequestSubmission data Not Found" });
         }
-        res.json({ msg: "Request deleted succsessfully", deleteRequests });
+        res.json({ msg: "RequestSubmission deleted succsessfully", deleteRequests });
     }
     catch(err){
         console.log(err.message);
@@ -56,7 +56,7 @@ module.exports.deleteRequest = async(req, res)=> {
     }   
 }
 
-module.exports.updateRequest = async(req, res) => {
+module.exports.updateRequestSubmission = async(req, res) => {
     try {
         const { id } = req.params;
         const { Requester_Name, Request_name, Request_Date, wing, unit, Priority, status } = req.body;
@@ -73,12 +73,12 @@ module.exports.updateRequest = async(req, res) => {
 
         const updateRequest = await Request.findByIdAndUpdate( id, { Requester_Name, Request_name, Request_Date, wing, unit, Priority, status }, { new: true } );
         if (!updateRequest) {
-            return res.status(404).json({ msg: "Request Not Found" });
+            return res.status(404).json({ msg: "RequestSubmission Not Found" });
         }
-        res.json({ msg: "Request updated successfully", updateRequest });
+        res.json({ msg: "RequestSubmission updated successfully", updateRequest });
     } 
     catch(err){
-        console.error("Error updating Request:", err.message);
+        console.error("Error updating RequestSubmission:", err.message);
         res.status(500).send("Server error, data not updated");
     }
 }

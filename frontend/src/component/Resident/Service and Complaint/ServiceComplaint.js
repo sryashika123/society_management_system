@@ -1,26 +1,38 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import Sidebar from '../../Layout/Sidebar'
-import Navbar from '../../Layout/Navbar';
+import Sidebar from '../../Layout/Sidebar'; // Ensure this path is correct
+import Navbar from '../../Layout/Navbar'; // Ensure this path is correct
+import axios from 'axios';
 
-const ServiceComplaint = () => {
+export default function ServiceComplaint() {
 
     const [note, setNote] = useState([
-        { id: 1, title: 'Unethical Behavior', des: 'Regular waste collection services.', date: '01/07/2024', status: 'Open' },
-        { id: 2, title: 'Preventive Measures', des: 'Expenses will way sense for you..', date: '01/07/2024', status: 'Open' },
-        { id: 3, title: 'Unethical Behavior', des: 'Regular waste collection services.', date: '01/07/2024', status: 'Open' },
-        { id: 4, title: 'Preventive Measures', des: 'Expenses will way sense for you..', date: '01/07/2024', status: 'Open' },
-        { id: 5, title: 'Unethical Behavior', des: 'Regular waste collection services.', date: '01/07/2024', status: 'Open' },
-        { id: 6, title: 'Preventive Measures', des: 'Expenses will way sense for you..', date: '01/07/2024', status: 'Open' },
+        { id: 1, Complainer_name: 'Unethical Behavior', des: 'Regular waste collection services.', date: '01/07/2024', status: 'Open' },
+        { id: 2, Complainer_name: 'Preventive Measures', des: 'Expenses will way sense for you..', date: '01/07/2024', status: 'Open' },
+        { id: 3, Complainer_name: 'Unethical Behavior', des: 'Regular waste collection services.', date: '01/07/2024', status: 'Open' },
+        { id: 4, Complainer_name: 'Preventive Measures', des: 'Expenses will way sense for you..', date: '01/07/2024', status: 'Open' },
+        { id: 5, Complainer_name: 'Unethical Behavior', des: 'Regular waste collection services.', date: '01/07/2024', status: 'Open' },
+        { id: 6, Complainer_name: 'Preventive Measures', des: 'Expenses will way sense for you..', date: '01/07/2024', status: 'Open' },
     ]);
 
     const [show, setShow] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
     const [dropdownIndex, setDropdownIndex] = useState(null);
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+
+    // Fetch complaints from API
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/users/v4/viewComplaintsSubmission')  // Adjust the endpoint as needed
+            .then(response => {
+                setNote(response.data);
+            })
+            .catch(error => {
+                console.error("There was an error fetching the complaints!", error);
+            });
+    }, []);
 
     // Open and close modal
     const handleClose = () => {
@@ -30,25 +42,24 @@ const ServiceComplaint = () => {
     };
     const handleShow = () => setShow(true);
 
-    // Handle form submission
+    // Handle form submission (POST request)
     const onSubmit = (data) => {
-        if (editIndex !== null) {
-            // Update existing note
-            const updatedNotes = [...note];
-            updatedNotes[editIndex] = { ...updatedNotes[editIndex], ...data };
-            setNote(updatedNotes);
-        } else {
-            // Add new note
-            setNote([...note, { id: note.length + 1, ...data }]);
-        }
-        handleClose();
+        // Add new note (POST request)
+        axios.post('http://localhost:8000/api/users/v4/createComplaintsSubmission', data)
+            .then(response => {
+                setNote([...note, response.data]);  // Add the new complaint
+                handleClose();
+            })
+            .catch(error => {
+                console.error("There was an error adding the complaint!", error);
+            });
     };
 
     // Handle editing a specific note
     const handleEdit = (index) => {
         setEditIndex(index);
         const noteToEdit = note[index];
-        setValue('title', noteToEdit.title);
+        setValue('Complainer_name', noteToEdit.Complainer_name);
         setValue('des', noteToEdit.des);
         setValue('date', noteToEdit.date);
         setValue('amt', noteToEdit.amt);
@@ -78,10 +89,17 @@ const ServiceComplaint = () => {
 
     const confirmDelete = () => {
         if (deleteIndex !== null) {
-            const updatedComplaint = note.filter((_, i) => i !== deleteIndex);
-            setNote(updatedComplaint);
+            // Delete complaint (DELETE request)
+            axios.delete(`http://localhost:8000/api/users/v4/deleteComplaintsSubmission/${note[deleteIndex]._id}`)
+                .then(response => {
+                    const updatedComplaint = note.filter((_, i) => i !== deleteIndex);
+                    setNote(updatedComplaint);
+                    handleCloseDeleteModal();
+                })
+                .catch(error => {
+                    console.error("There was an error deleting the complaint!", error);
+                });
         }
-        handleCloseDeleteModal();
     };
 
     return (
@@ -90,7 +108,7 @@ const ServiceComplaint = () => {
             <Navbar />
             <div style={{ marginLeft: '300px' }}>
 
-                <div className='container-fluid ' style={{ marginTop: '109px' }}>
+                <div className='container-fluid ' style={{ marginTop: '109px', width: "1600px" }}>
 
                     <div className='row p-4'>
 
@@ -106,6 +124,7 @@ const ServiceComplaint = () => {
                                     <div className='p-0 bg-light'>
                                         <div className='d-flex justify-content-between align-items-center pb-3 px-3 pt-3'>
                                             <h3 className='mb-0 financial-income-title'>Complaint</h3>
+                                            <h3 className='mb-0 financial-income-Complainer_name'>Complaint</h3>
                                             <button className='set-maintainance-btn d-flex align-items-center p-2' onClick={handleShow}>
                                                 Create Complaint
                                             </button>
@@ -115,8 +134,8 @@ const ServiceComplaint = () => {
                                             {note.map((val, index) => (
                                                 <div className="col-lg-3 mb-3" key={val.id}>
                                                     <div className="card">
-                                                        <div className="card-header card-title text-light d-flex align-items-center justify-content-between py-3" style={{ background: "rgba(86, 120, 233, 1)" }}>
-                                                            {val.title}
+                                                        <div className="card-header card-Complainer_name text-light d-flex align-items-center justify-content-between py-3" style={{ background: "rgba(86, 120, 233, 1)" }}>
+                                                            {val.Complainer_name}
                                                             <div className='position-relative'>
                                                                 <button
                                                                     className="btn btn-light p-0 mt-0"
@@ -139,15 +158,16 @@ const ServiceComplaint = () => {
                                                         </div>
                                                         <div className="card-body">
                                                             <div className="d-flex justify-content-between align-items-center mb-2">
-                                                                <h6 className="card-body-title mb-0 fw-medium">Request Date</h6>
-                                                                <span className="card-body-title mb-0 fw-medium text-dark"> {val.date}</span>
+                                                                <h6 className="card-body-Complainer_name mb-0 fw-medium">Request Date</h6>
+                                                                <span className="card-body-Complainer_name mb-0 fw-medium text-dark">   {new Date(val.updatedAt).toLocaleDateString('en-GB')}
+                                                                </span>
                                                             </div>
                                                             <div className="d-flex justify-content-between align-items-center mb-2">
-                                                                <h6 className="card-body-title mb-0 fw-medium">Status</h6>
-                                                                <span className="card-body-title card-body-button mb-0 fw-medium"> {val.status}</span>
+                                                                <h6 className="card-body-Complainer_name mb-0 fw-medium">Status</h6>
+                                                                <span className="card-body-Complainer_name card-body-button mb-0 fw-medium"> {val.status}</span>
                                                             </div>
-                                                            <h6 className="card-des-title fw-medium">Description</h6>
-                                                            <p className="card-body-title text-dark fw-medium mb-0">{val.des}</p>
+                                                            <h6 className="card-des-Complainer_name fw-medium">Description</h6>
+                                                            <p className="card-body-Complainer_name text-dark fw-medium mb-0">{val.description}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -164,38 +184,32 @@ const ServiceComplaint = () => {
                     {/* Add/Edit Modal */}
                     <Modal show={show} onHide={handleClose} centered className="custom-modal">
                         <Modal.Header>
-                            <Modal.Title className="Modal-Title">Create Complaint</Modal.Title>
+                            <Modal.Title className='Modal-Complainer_name'>
+                                Create Complaint
+                            </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Form onSubmit={handleSubmit(onSubmit)}>
-                                <Form.Group className="mb-3" controlId="formTitle">
-                                    <Form.Label className="Form-Label">
-                                        Complainer Name<span className="text-danger"> *</span>
-                                    </Form.Label>
+                                <Form.Group className="mb-3" controlId="formComplainer_name">
+                                    <Form.Label className='Form-Label'> Complainer Name<span className="text-danger"> *</span></Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter Name"
-                                        {...register("complainerName", { required: "Complainer name is required" })}
-                                        isInvalid={errors.complainerName}
+                                        {...register('Complainer_name', { required: "Complainer_name is required" })}
+                                        isInvalid={errors.Complainer_name}
                                     />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.complainerName?.message}
-                                    </Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">{errors.Complainer_name?.message}</Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formComplaintName">
-                                    <Form.Label className="Form-Label">
-                                        Complaint Name<span className="text-danger"> *</span>
-                                    </Form.Label>
+                                <Form.Group className="mb-3" controlId="formComplainer_name">
+                                    <Form.Label className='Form-Label'> Complaint Name<span className="text-danger"> *</span></Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter Complaint Name"
-                                        {...register("complaintName", { required: "Complaint name is required" })}
-                                        isInvalid={errors.complaintName}
+                                        placeholder="Enter Name"
+                                        {...register('Complaint_name', { required: "Complaint_name is required" })}
+                                        isInvalid={errors.Complaint_name}
                                     />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.complaintName?.message}
-                                    </Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">{errors.Complaint_name?.message}</Form.Control.Feedback>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formDescription">
@@ -205,36 +219,21 @@ const ServiceComplaint = () => {
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter Description"
-                                        {...register("description", { required: "Description is required" })}
+                                        {...register('description', { required: "description is required" })}
                                         isInvalid={errors.description}
                                     />
-                                    <Form.Control.Feedback type="invalid">
-                                        {errors.description?.message}
-                                    </Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">{errors.description?.message}</Form.Control.Feedback>
+
                                 </Form.Group>
 
                                 <div className="d-flex justify-content-between">
                                     <div className="mb-3">
-                                        <label className="Form-Label">
-                                            Wing<span className="text-danger"> *</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Wing"
-                                            className="form-control Form-Control"
-                                            {...register("wing", { required: true })}
-                                        />
+                                        <label className='Form-Label'>Wing<span className='text-danger'> *</span></label>
+                                        <input type="text" placeholder='Enter Wing' className="form-control Form-Control" {...register('wing', { required: true })} />
                                     </div>
                                     <div className="mb-3">
-                                        <label className="Form-Label">
-                                            Unit<span className="text-danger"> *</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Unit"
-                                            className="form-control Form-Control"
-                                            {...register("unit", { required: true })}
-                                        />
+                                        <label className='Form-Label'>Unit<span className='text-danger'> *</span></label>
+                                        <input type="text" placeholder='Enter Unit' className="form-control Form-Control" {...register('unit', { required: true })} />
                                     </div>
                                 </div>
 
@@ -248,10 +247,11 @@ const ServiceComplaint = () => {
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityHigh"
+                                                label="High"
+                                                {...register('Priority', { required: "Priority is required" })}
                                                 value="High"
-                                                {...register("priority", { required: "Priority is required" })}
-                                                isInvalid={errors.priority}
-                                                className="radio-group"
+                                                isInvalid={errors.Priority}
+                                                className="custom-radio"
                                             />
                                             <label htmlFor="priorityHigh" className="ms-2">High</label>
                                         </div>
@@ -259,10 +259,11 @@ const ServiceComplaint = () => {
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityMedium"
+                                                label="Medium"
+                                                {...register('Priority', { required: "Priority is required" })}
                                                 value="Medium"
-                                                {...register("priority", { required: "Priority is required" })}
-                                                isInvalid={errors.priority}
-                                                className="radio-group"
+                                                isInvalid={errors.Priority}
+                                                className="custom-radio"
                                             />
                                             <label htmlFor="priorityMedium" className="ms-2">Medium</label>
                                         </div>
@@ -270,16 +271,17 @@ const ServiceComplaint = () => {
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityLow"
+                                                label="Low"
+                                                {...register('Priority', { required: "Priority is required" })}
                                                 value="Low"
-                                                {...register("priority", { required: "Priority is required" })}
-                                                isInvalid={errors.priority}
-                                                className="radio-group"
+                                                isInvalid={errors.Priority}
+                                                className="custom-radio"
                                             />
                                             <label htmlFor="priorityLow" className="ms-2">Low</label>
                                         </div>
                                     </div>
                                     <Form.Control.Feedback type="invalid">
-                                        {errors.priority?.message}
+                                        {errors.Priority?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
@@ -353,7 +355,7 @@ const ServiceComplaint = () => {
                     {/* delete modal */}
                     <Modal className='custom-modal' show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
                         <Modal.Header>
-                            <Modal.Title className='Modal-Title'>Delete Complain?</Modal.Title>
+                            <Modal.Title className='Modal-Complainer_name'>Delete Complain?</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <p className='Form-p mb-0'>Are you sure you want to delate this Complain?</p>
@@ -368,5 +370,3 @@ const ServiceComplaint = () => {
         </div>
     )
 }
-
-export default ServiceComplaint

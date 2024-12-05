@@ -6,7 +6,7 @@ import Bellicon from '../../assets/Bellicon.png';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-export default function Header() {
+function Header() {
     const [notifications, setNotifications] = useState([
         'New habit reminder',
         'Goal achieved!',
@@ -101,3 +101,4 @@ export default function Header() {
         </div>
     );
 }
+export default  Header;
