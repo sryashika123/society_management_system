@@ -44,7 +44,7 @@ function VisitorsTracking() {
 
   const fetchVisitorDetails = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users/v9/getVisitorLog");
+      const response = await axios.get("http://localhost:8000/api/users/v9/getVisitorTracking");
       setDetails(response.data);
     } catch (error) {
       console.error("Error fetching visitor details:", error);
@@ -59,7 +59,7 @@ function VisitorsTracking() {
   // Handle save button click
   const handleSaveDetails = async () => {
     try {
-      await axios.post("http://localhost:8000/api/users/v9/createVisitorLog", newVisitor);
+      await axios.post("http://localhost:8000/api/users/v9/createVisitorTracking", newVisitor);
       setShowModal(false);
       fetchVisitorDetails(); // Refresh data after saving
     } catch (error) {
