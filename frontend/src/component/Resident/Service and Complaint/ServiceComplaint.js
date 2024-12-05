@@ -124,7 +124,6 @@ export default function ServiceComplaint() {
                                     <div className='p-0 bg-light'>
                                         <div className='d-flex justify-content-between align-items-center pb-3 px-3 pt-3'>
                                             <h3 className='mb-0 financial-income-title'>Complaint</h3>
-                                            <h3 className='mb-0 financial-income-Complainer_name'>Complaint</h3>
                                             <button className='set-maintainance-btn d-flex align-items-center p-2' onClick={handleShow}>
                                                 Create Complaint
                                             </button>
@@ -247,11 +246,10 @@ export default function ServiceComplaint() {
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityHigh"
-                                                label="High"
                                                 {...register('Priority', { required: "Priority is required" })}
                                                 value="High"
                                                 isInvalid={errors.Priority}
-                                                className="custom-radio"
+                                                className="radio-group"
                                             />
                                             <label htmlFor="priorityHigh" className="ms-2">High</label>
                                         </div>
@@ -259,11 +257,11 @@ export default function ServiceComplaint() {
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityMedium"
-                                                label="Medium"
+                                              
                                                 {...register('Priority', { required: "Priority is required" })}
                                                 value="Medium"
                                                 isInvalid={errors.Priority}
-                                                className="custom-radio"
+                                                className="radio-group"
                                             />
                                             <label htmlFor="priorityMedium" className="ms-2">Medium</label>
                                         </div>
@@ -271,11 +269,11 @@ export default function ServiceComplaint() {
                                             <Form.Check
                                                 type="radio"
                                                 id="priorityLow"
-                                                label="Low"
+                                                
                                                 {...register('Priority', { required: "Priority is required" })}
                                                 value="Low"
                                                 isInvalid={errors.Priority}
-                                                className="custom-radio"
+                                                className="radio-group"
                                             />
                                             <label htmlFor="priorityLow" className="ms-2">Low</label>
                                         </div>
@@ -316,8 +314,8 @@ export default function ServiceComplaint() {
                                         <div className="radio-btn-box d-flex align-items-center">
                                             <Form.Check
                                                 type="radio"
-                                                id="statusSolved"
-                                                value="Solved"
+                                                id="statusSolve"
+                                                value="Solve"
                                                 {...register("status", { required: "Status is required" })}
                                                 isInvalid={errors.status}
                                                 className="radio-group"
