@@ -39,7 +39,7 @@ export default function RequestTracking() {
 
   useEffect(() => {
     // Fetch requests from the backend when the component is mounted
-    axios.get("http://localhost:8000/api/users/v7/getRequest")
+    axios.get("http://localhost:8000/api/users/v7/getRequestTracking")
       .then(response => {
         setRequests(response.data);
       })
@@ -63,9 +63,9 @@ export default function RequestTracking() {
       return;
     }
 
-    axios.put(`http://localhost:8000/api/users/v7/updateRequest/${selectedRequest._id}`, selectedRequest)
+    axios.put(`http://localhost:8000/api/users/v7/updateRequestTracking/${selectedRequest._id}`, selectedRequest)
       .then((response) => {
-        axios.get('http://localhost:8000/api/users/v7/getRequest')
+        axios.get('http://localhost:8000/api/users/v7/getRequestTracking')
           .then((updatedRequestsResponse) => {
             setRequests(updatedRequestsResponse.data); // Update the state with the new data
             setShowModal(false); // Close the modal
@@ -112,7 +112,7 @@ export default function RequestTracking() {
       return;
     }
 
-    axios.post("http://localhost:8000/api/users/v7/createRequest", newRequest)
+    axios.post("http://localhost:8000/api/users/v7/createRequestTracking", newRequest)
       .then(response => {
         setRequests([...requests, response.data]);
         setNewRequest({
@@ -152,7 +152,7 @@ export default function RequestTracking() {
 
     try {
       // Make the API call to delete the request from the backend
-      const response = await axios.delete(`http://localhost:8000/api/users/v7/deleteRequest/${deleteRequestId}`);
+      const response = await axios.delete(`http://localhost:8000/api/users/v7/deleteRequestTracking/${deleteRequestId}`);
       console.log('Delete response:', response);
 
       // If deletion was unsuccessful, revert the optimistic update
