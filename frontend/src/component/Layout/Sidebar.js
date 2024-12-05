@@ -20,7 +20,7 @@ import FrameIcon from '../../Icons/Frame.png'
 import EventParticipation from "../../Icons/Events-Participation.png";
 
 
-function Sidebar() {
+const Sidebar = () => {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("");
   const [isComplaintDropdownOpen, setComplaintDropdownOpen] = useState(false);
