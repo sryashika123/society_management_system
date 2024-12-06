@@ -1,7 +1,7 @@
 const User = require('../models/UserModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { sendMail } = require('../utils/nodEmailer');
+const { sendMail } = require('../utils/nodemailer');
 const otpService = require('../utils/otpService');
 const Society = require("../models/societyModel");
 const Resident = require("../models/residentModel");
