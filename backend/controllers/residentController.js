@@ -1,6 +1,7 @@
 const Resident = require('../models/residentModel'); 
 const fs = require("fs");
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 require('dotenv').config();
 const Society = require("../models/societyModel");
@@ -43,6 +44,8 @@ const sendMail = async (to, password) => {
         console.log("Attempting to send email to:", to);
         await transporter.sendMail(mailOptions);
         console.log("Password email sent successfully to:", to);
+        console.log("Password:", password);
+        
     }
     catch(error){
         console.error("Error sending email:", error);
@@ -54,30 +57,32 @@ const sendMail = async (to, password) => {
 module.exports.createResident = async (req, res) => {
     try{
         const{
-            role, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, Email, age, gender, wing, unit, Relation,
-            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId
+            type, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, Email, age, gender, wing, unit, Relation,
+            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId ,role,password
         } = req.body;
 
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
+        // const admin = await Admin.findById(adminId);
+		// if (!admin) {
+		//   	return res.status(404).json({ msg: "Admin not found" });
+		// }
 
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
+        // const society = await Society.findById(societyId);
+		// if (!society) {
+		//   	return res.status(404).json({ msg: "Society not found" });
+		// }
+        const randomPassword = generateRandomPassword();
+        const hashedPassword = await bcrypt.hash(randomPassword, 10);
 
-        if(!role || !["owner", "tenant"].includes(role.toLowerCase())){
-            return res.status(400).json({ msg: "Invalid role. Must be 'owner' or 'tenant'." });
+        if(!type || !["owner", "tenant"].includes(type.toLowerCase())){
+            return res.status(400).json({ msg: "Invalid type. Must be 'owner' or 'tenant'." });
         }
 
         let residentData = { 
-            role: role.toLowerCase(), Full_name, Phone_number, Email, age, gender, wing, unit, Relation, 
-            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId
+            type:type.toLowerCase(), Full_name, Phone_number, Email, age, gender, wing, unit, Relation, 
+            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId,role,password:hashedPassword,
         };
 
-        if(role.toLowerCase() === "tenant"){
+        if(type.toLowerCase() === "tenant"){
             residentData.ownerName = ownerName;
             residentData.ownerPhone = ownerPhone;
             residentData.ownerAddress = ownerAddress;
@@ -93,13 +98,16 @@ module.exports.createResident = async (req, res) => {
                 }
             });
         }
+        
         const newResident = new Resident(residentData);
         await newResident.save();
-        // console.log(`${role} created successfully:`, newResident);
+        // console.log(`${type} created successfully:`, newResident);
+        
 
-        const randomPassword = generateRandomPassword();
         await sendMail(Email, randomPassword);
-        res.json({ msg: `${role} created successfully`, resident: newResident });
+        res.json({ msg: `${type} created successfully`, resident: newResident });
+        console.log(`${type} created successfully:`, newResident);
+        
     }
     catch(err){
         console.error("Error creating resident:", err.message);
@@ -170,7 +178,7 @@ module.exports.updateResident = async (req, res) => {
             res.status(404).json({ msg: "Resident data not found" });
         }
         const {
-            role, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, Email, age, gender, wing, unit, Relation, 
+            type, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, Email, age, gender, wing, unit, Relation, 
             Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus } = req.body;
 
         let updateFields = {};
@@ -183,7 +191,7 @@ module.exports.updateResident = async (req, res) => {
         addFields([ 'ownerName', 'ownerPhone', 'ownerAddress', 'Full_name', 'Phone_number', 'Email', 'age', 'gender', 'wing', 'unit',
             'Relation', 'Member_Counting', 'vehicle_Counting', 'vehicle_Type', 'vehicle_Name', 'vehicle_Number', 'residentStatus' ]);
 
-        if(role && role.toLowerCase() === "tenant"){
+        if(type && type.toLowerCase() === "tenant"){
             addFields(['ownerName', 'ownerPhone', 'ownerAddress']);
         }
         if(req.files){
