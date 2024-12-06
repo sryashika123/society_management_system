@@ -7,6 +7,7 @@ import '../style.css';
 import Logo from './Logo';
 import axios from 'axios';
 
+
 function Login() {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const navigate = useNavigate();
@@ -23,6 +24,8 @@ function Login() {
 			console.log('Login successful:', response.data);
 			alert('Login successful!');
 			navigate('/home');
+			
+
 
 		} catch (error) {
 			console.error('Error during login:', error);
