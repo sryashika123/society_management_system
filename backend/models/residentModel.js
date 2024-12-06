@@ -8,7 +8,7 @@ const FILE_PATH = "/uploads/resident_image";
 
 
 const residentSchema = new mongoose.Schema({
-    role: {
+    type: {
         type: String,
         enum: ['owner', 'tenant'], // Define the possible roles    
     },
@@ -31,6 +31,7 @@ const residentSchema = new mongoose.Schema({
     },
     Email: {
         type: String,
+        unique: true,
         required: true
     },
     age: {
@@ -93,16 +94,20 @@ const residentSchema = new mongoose.Schema({
         enum: ['Occupied', 'Vacate'],
         default: 'Occupied' 
     },
-    adminId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Admin', 
-        // required: true 
+    password: {
+        type: String,
+        required: true
     },
-    societyId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Society',
-        // required: true
-    }
+    // adminId: { 
+    //     type: mongoose.Schema.Types.ObjectId, 
+    //     ref: 'Admin', 
+    //     required: true 
+    // },
+    // societyId: { 
+    //     type: mongoose.Schema.Types.ObjectId, 
+    //     ref: 'Society',
+    //     required: true
+    // }
 });
 const storage1 = multer.diskStorage({
     destination: function (req, file, cb) {
