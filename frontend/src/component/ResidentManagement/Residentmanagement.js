@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Modal, Form, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaUser, FaHome, FaTag,  FaPlus } from 'react-icons/fa'; // Using react-icons as placeholders
+import { FaUser, FaHome, FaTag, FaPlus } from 'react-icons/fa'; // Using react-icons as placeholders
 import Sidebar from '../Layout/Sidebar';
 import '../../style.css';
 import Avtar from '../../assets/Avatar.png';
@@ -10,6 +10,7 @@ import Header from '../Layout/Navbar';
 import Edit from '../../assets/edit.png';
 import View from '../../assets/view.png';
 import { IoEyeSharp } from 'react-icons/io5';
+import Avtarclean from '../../assets/Avatar plain.png';
 import viewFile1 from '../../assets/Component 54.png';
 import viewFile2 from '../../assets/Component 55.png';
 
@@ -78,7 +79,7 @@ export default function ResidentManagement() {
 
       <div className="flex-grow-1  dashboard-bg container-fluid  " style={{ width: "1920px" }}>
         <Header />
-        <div className="container-fluid stickyheader"  style={{ marginLeft: "300px", width: "1590px",marginTop:"109px" }}>
+        <div className="container-fluid stickyheader" style={{ marginLeft: "300px", width: "1590px", marginTop: "109px" }}>
 
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px", marginLeft: "10px" }}>
@@ -185,7 +186,7 @@ export default function ResidentManagement() {
                     <td className="px-3">
                       <div style={imageColumnStyle} className="text-center">
                         <img
-                          src={Avtar}
+                          src={resident.unitStatus === "occupied" ? Avtar : Avtarclean} 
                           alt="avatar"
                           className="rounded-circle"
                           style={{
@@ -195,6 +196,7 @@ export default function ResidentManagement() {
                             border: "2px solid #F4F4F4",
                           }}
                         />
+
                         <span
                           style={{
                             fontFamily: "Poppins",
@@ -270,7 +272,7 @@ export default function ResidentManagement() {
                   <div className="d-flex mb-3" style={{ gap: "70px" }}>
                     <Form.Check
                       style={{ border: "1px solid rgba(211, 211, 211, 1)", paddingLeft: "30px", paddingTop: "8px", paddingBottom: "8px", paddingRight: "30px", borderRadius: "5px" }}
-                      className='radio-group text-center ' 
+                      className='radio-group text-center '
                       type="radio"
                       label="Occupied"
                       name="residenceStatus"
@@ -365,11 +367,11 @@ export default function ResidentManagement() {
             </Modal.Footer>
           </Modal>
 
-{/* View Modal */}
+          {/* View Modal */}
 
-          <Modal show={show} onHide={handleClose}  className="modal-right custom-scrollbar">
+          <Modal show={show} onHide={handleClose} className="modal-right custom-scrollbar">
             <Modal.Header>
-              <Modal.Title style={{fontSize: '20px'}}>View Owner Details</Modal.Title>
+              <Modal.Title style={{ fontSize: '20px' }}>View Owner Details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div className="text-center mb-0">
@@ -379,7 +381,7 @@ export default function ResidentManagement() {
                   className="rounded-circle mb-1"
                   width={90}
                 />
-                <h3 style={{fontSize: '24px'}} className='mb-1'>Roger Lubin</h3>
+                <h3 style={{ fontSize: '24px' }} className='mb-1'>Roger Lubin</h3>
                 <p>RogerLubin@gmail.com</p>
               </div>
 
@@ -420,42 +422,42 @@ export default function ResidentManagement() {
 
                 <div className="row card-row g-3 pe-0">
                   <div className="card-header card-title "  >
-                      <h6 className='rounded-top p-3 ps-4 pt-0' style={{ fontWeight: '600' }}>Document</h6>
+                    <h6 className='rounded-top p-3 ps-4 pt-0' style={{ fontWeight: '600' }}>Document</h6>
 
-                      <div className="d-flex align-items-center justify-content-between mb-3 py-2 px-3 ms-3 border rounded">
-                        <div className='d-flex align-items-center'>
-                          <div className="pe-3">
-                            <img src={viewFile1} alt="" />
-                          </div>
-                          <div>
-                            <p className="font-semibold text-gray-800 text-lg mb-0">
-                              Essential Aadharcard Front Side.JPG
-                            </p>
-                            <p className="text-sm text-gray-600 mb-0">
-                              3.5 MB
-                            </p>
-                          </div>
+                    <div className="d-flex align-items-center justify-content-between mb-3 py-2 px-3 ms-3 border rounded">
+                      <div className='d-flex align-items-center'>
+                        <div className="pe-3">
+                          <img src={viewFile1} alt="" />
                         </div>
-                        <div><IoEyeSharp style={{ color: 'rgba(167, 167, 167, 1)', fontSize: '20px' }} /></div>
-                      </div>
-
-                      <div className="d-flex align-items-center justify-content-between mb-3 py-2 px-3 ms-3 border rounded">
-                        <div className='d-flex align-items-center'>
-                          <div className="pe-3" >
-                            <img src={viewFile2} alt="" />
-                          </div>
-                          <div>
-                            <p className="font-semibold text-gray-800 text-lg mb-0">
-                              Essential Aadharcard Front Side.JPG
-                            </p>
-                            <p className="text-sm text-gray-600 mb-0">
-                              3.5 MB
-                            </p>
-                          </div>
+                        <div>
+                          <p className="font-semibold text-gray-800 text-lg mb-0">
+                            Essential Aadharcard Front Side.JPG
+                          </p>
+                          <p className="text-sm text-gray-600 mb-0">
+                            3.5 MB
+                          </p>
                         </div>
-                        <div><IoEyeSharp style={{ color: 'rgba(167, 167, 167, 1)', fontSize: '20px' }} /></div>
                       </div>
+                      <div><IoEyeSharp style={{ color: 'rgba(167, 167, 167, 1)', fontSize: '20px' }} /></div>
                     </div>
+
+                    <div className="d-flex align-items-center justify-content-between mb-3 py-2 px-3 ms-3 border rounded">
+                      <div className='d-flex align-items-center'>
+                        <div className="pe-3" >
+                          <img src={viewFile2} alt="" />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-gray-800 text-lg mb-0">
+                            Essential Aadharcard Front Side.JPG
+                          </p>
+                          <p className="text-sm text-gray-600 mb-0">
+                            3.5 MB
+                          </p>
+                        </div>
+                      </div>
+                      <div><IoEyeSharp style={{ color: 'rgba(167, 167, 167, 1)', fontSize: '20px' }} /></div>
+                    </div>
+                  </div>
 
 
                 </div>
@@ -511,10 +513,10 @@ export default function ResidentManagement() {
 
 
             </Modal.Body>
-            
+
           </Modal>
 
-          
+
         </div>
       </div>
     </div>
