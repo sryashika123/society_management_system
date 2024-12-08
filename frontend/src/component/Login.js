@@ -6,51 +6,32 @@ import loginImage from '../assets/login.png';
 import '../style.css';
 import Logo from './Logo';
 import axios from 'axios';
-import { useState } from 'react';
 
 
 function Login() {
-	const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const navigate = useNavigate(); // Use the hook here inside the component
-  const [errors, setErrors] = useState('');
+	const { register, handleSubmit, formState: { errors } } = useForm();
+	const navigate = useNavigate();
 
-  const onSubmit = async (event) => {
-	event.preventDefault();
-  
-	try {
-	  const response = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(credentials),
-	  });
-  
-	  const data = await response.json();
-  
-	  if (data.success) {
-		console.log('Login successful!');
-		
-		// Save token and role to localStorage
-		localStorage.setItem('token', data.token);
-		localStorage.setItem('role', data.role);
-  
-		// Redirect based on role
-		if (data.role === 'admin') {
-		  navigate('/dashboard');
-		} else if (data.role === 'resident') {
-		  navigate('/events-and-participation');
-		} else if (data.role === 'security') {
-		  navigate('/visitor-tracking');
+	const onSubmit = async (data) => {
+		try {
+			// Send POST request to the backend API
+			const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
+				email: data.email,
+				password: data.password,
+			}, {
+				withCredentials: true
+			});
+			console.log('Login successful:', response.data);
+			alert('Login successful!');
+			navigate('/home');
+			
+
+
+		} catch (error) {
+			console.error('Error during login:', error);
+			alert(error.response?.data?.message || 'An error occurred. Please try again later.'); // Handle backend error message
 		}
-	  } else {
-		console.error('Login failed:', data.message);
-	  }
-	} catch (error) {
-	  console.error('Error during login:', error);
-	}
-  };
-  
-  
-
+	};
 	
 
 
@@ -75,7 +56,7 @@ function Login() {
 				<div className="right-sec col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
 					<div className="login-form-container p-4 shadow-lg bg-white rounded">
 						<h2>Login</h2>
-						<form onSubmit={onSubmit}>
+						<form onSubmit={handleSubmit(onSubmit)}>
 							<div className="mb-3">
 								<label htmlFor="Email" className="form-label">
 									Email or Phone <span className="text-danger">*</span>
@@ -85,11 +66,10 @@ function Login() {
 									className={`form-control ${errors.email ? 'is-invalid' : ''}`} // Corrected here
 									id="Email"
 									placeholder="Enter Email or Phone"
-									value={credentials.email} 
-									onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
+									{...register('email', { required: 'Email or phone is required' })}
 								/>
 
-								{errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
+								{errors.email && <div className="invalid-feedback">{errors.Email.message}</div>}
 							</div>
 
 							<div className="mb-3">
@@ -101,8 +81,7 @@ function Login() {
 									className={`form-control ${errors.password ? 'is-invalid' : ''}`} // Corrected here
 									id="password"
 									placeholder="Enter Password"
-									value={credentials.password}
-									onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+									{...register('password', { required: 'Password is required' })}
 								/>
 								{errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
 							</div>
@@ -113,7 +92,7 @@ function Login() {
 										type="checkbox"
 										className="form-check-input"
 										id="rememberMe"
-										
+										{...register('rememberMe')}
 									/>
 									<label className="form-check-label" htmlFor="rememberMe">
 										Remember me
