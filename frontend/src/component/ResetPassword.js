@@ -21,7 +21,7 @@ function ResetPassword() {
 
     console.log('Payload:', { email, password  });
     try {
-      const response = await axios.post('http://localhost:8000/api/users/reset-password', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/reset-password`, {
        email,
         password
       });

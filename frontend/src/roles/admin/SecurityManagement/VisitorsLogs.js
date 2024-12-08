@@ -13,7 +13,7 @@ export default function DetailTracking() {
 
   const fetchVisitorDetails = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users/v9/getVisitorTracking");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v9/getVisitorTracking`);
       setDetails(response.data);
     } catch (error) {
       console.error("Error fetching visitor details:", error);

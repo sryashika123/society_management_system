@@ -25,7 +25,7 @@ export default function ServiceComplaint() {
 
     // Fetch complaints from API
     useEffect(() => {
-        axios.get('http://localhost:8000/api/users/v4/viewComplaintsSubmission')  // Adjust the endpoint as needed
+        axios.get(`${process.env.REACT_APP_API_URL}/users/v4/viewComplaintsSubmission`)  // Adjust the endpoint as needed
             .then(response => {
                 setNote(response.data);
             })
@@ -45,7 +45,7 @@ export default function ServiceComplaint() {
     // Handle form submission (POST request)
     const onSubmit = (data) => {
         // Add new note (POST request)
-        axios.post('http://localhost:8000/api/users/v4/createComplaintsSubmission', data)
+        axios.post(`${process.env.REACT_APP_API_URL}/users/v4/createComplaintsSubmission`, data)
             .then(response => {
                 setNote([...note, response.data]);  // Add the new complaint
                 handleClose();
@@ -90,7 +90,7 @@ export default function ServiceComplaint() {
     const confirmDelete = () => {
         if (deleteIndex !== null) {
             // Delete complaint (DELETE request)
-            axios.delete(`http://localhost:8000/api/users/v4/deleteComplaintsSubmission/${note[deleteIndex]._id}`)
+            axios.delete(`${process.env.REACT_APP_API_URL}/users/v4/deleteComplaintsSubmission/${note[deleteIndex]._id}`)
                 .then(response => {
                     const updatedComplaint = note.filter((_, i) => i !== deleteIndex);
                     setNote(updatedComplaint);

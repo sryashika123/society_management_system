@@ -42,7 +42,7 @@ export default function SecurityGaurd() {
 
   const fetchGuardData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/users/v10/getSecuritygaurd');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v10/getSecuritygaurd`);
       setGuards(response.data);
     } catch (error) {
       console.error('Error fetching guards:', error);
@@ -173,10 +173,10 @@ export default function SecurityGaurd() {
     try {
       if (isEdit && editGuardId) {
         // Update existing guard
-        await axios.put(`http://localhost:8000/api/users/v10/updateSecuritygaurd/${editGuardId}`, formData);
+        await axios.put(`${process.env.REACT_APP_API_URL}/users/v10/updateSecuritygaurd/${editGuardId}`, formData);
       } else {
         // Create new guard
-        await axios.post('http://localhost:8000/api/users/v10/createSecuritygaurd', formData);
+        await axios.post(`${process.env.REACT_APP_API_URL}/users/v10/createSecuritygaurd`, formData);
       }
   
       // Close the modal and reset states after successful operation
@@ -195,7 +195,7 @@ export default function SecurityGaurd() {
       });
   
       // Refresh the guard list after operation
-      const response = await axios.get('http://localhost:8000/api/users/v10/getSecuritygaurd');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v10/getSecuritygaurd`);
       setGuards(response.data);
     } catch (error) {
       console.error('Error saving guard:', error.response || error);
@@ -206,9 +206,9 @@ export default function SecurityGaurd() {
 
   const handleDeleteConfirmation = async () => {
     try {
-      await axios.delete(`http://localhost:8000/api/users/v10/deleteSecuritygaurd/${guardToDelete}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/users/v10/deleteSecuritygaurd/${guardToDelete}`);
       setShowDeleteModal(false);
-      const response = await axios.get("http://localhost:8000/api/users/v10/getSecuritygaurd");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v10/getSecuritygaurd`);
       setGuards(response.data);
     } catch (error) {
       console.error("Error deleting guard:", error);

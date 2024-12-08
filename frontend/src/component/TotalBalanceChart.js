@@ -68,7 +68,7 @@ export default function TotalBalanceChart() {
 
 	// Fetch important numbers
 	const fetchImportantNumbers = () => {
-		axios.get('http://localhost:8000/api/users/v3/getImportantNum')
+		axios.get(`${process.env.REACT_APP_API_URL}/users/v3/getImportantNum`)
 			.then(response => setImportantNumbers(response.data))
 			.catch(error => console.error('Error fetching important numbers:', error));
 	};
@@ -111,7 +111,7 @@ export default function TotalBalanceChart() {
 		if (isAddMode) {
 		  // Add new contact
 		  axios
-			.post("http://localhost:8000/api/users/v3/createImportantNum", data)
+			.post(`${process.env.REACT_APP_API_URL}/users/v3/createImportantNum`, data)
 			.then((response) => {
 			  setImportantNumbers([...importantNumbers, response.data]);
 			  setShowModal(false);
@@ -122,7 +122,7 @@ export default function TotalBalanceChart() {
 		} else {
 		  // Update existing contact
 		  axios
-			.put(`http://localhost:8000/api/users/v3/updateImportantNum/${editData._id}`, data)
+			.put(`${process.env.REACT_APP_API_URL}/users/v3/updateImportantNum/${editData._id}`, data)
 			.then((response) => {
 			  const updatedNumbers = [...importantNumbers];
 			  updatedNumbers[editIndex] = response.data.updateImportantNum;
@@ -136,7 +136,7 @@ export default function TotalBalanceChart() {
 
 	// Confirm deletion
 	const confirmDelete = () => {
-		axios.delete(`http://localhost:8000/api/users/v3/deleteImportantNum/${selectedId}`)
+		axios.delete(`${process.env.REACT_APP_API_URL}/users/v3/deleteImportantNum/${selectedId}`)
 			.then(() => {
 				setImportantNumbers(importantNumbers.filter((_, i) => i !== selectedIndex));
 				setShowDeleteModal(false);

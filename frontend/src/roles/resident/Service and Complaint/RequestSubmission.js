@@ -21,7 +21,7 @@ const RequestSubmission = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/users/v18/getRequestSubmission');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v18/getRequestSubmission`);
         setNote(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -41,7 +41,7 @@ const RequestSubmission = () => {
   // Handle form submission
   const onSubmit = (data) => {
     // Add new note (POST request)
-    axios.post('http://localhost:8000/api/users/v18/createRequestSubmission', data)
+    axios.post(`${process.env.REACT_APP_API_URL}/users/v18/createRequestSubmission`, data)
         .then(response => {
             setNote([...note, response.data]);  // Add the new complaint
             handleClose();
@@ -76,7 +76,7 @@ const RequestSubmission = () => {
   const confirmDelete = async () => {
     if (deleteIndex !== null) {
       // Delete complaint (DELETE request)
-      axios.delete(`http://localhost:8000/api/users/v18/deleteRequestSubmission/${note[deleteIndex]._id}`)
+      axios.delete(`${process.env.REACT_APP_API_URL}/users/v18/deleteRequestSubmission/${note[deleteIndex]._id}`)
           .then(response => {
               const updatedComplaint = note.filter((_, i) => i !== deleteIndex);
               setNote(updatedComplaint);

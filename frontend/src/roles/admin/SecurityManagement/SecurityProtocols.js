@@ -22,7 +22,7 @@ export default function SecurityProtocols() {
  // Fetch protocols
  const fetchProtocols = () => {
   axios
-    .get("http://localhost:8000/api/users/v8/get_security_protocol")
+    .get(`${process.env.REACT_APP_API_URL}/users/v8/get_security_protocol`)
     .then((response) => setProtocols(response.data))
     .catch((error) => console.error("Error fetching protocols:", error));
 };
@@ -72,7 +72,7 @@ useEffect(() => {
     if (isEdit) {
       console.log("Edit Protocol ID:", editProtocolId);
       axios
-        .put(`http://localhost:8000/api/users/v8/update_security_protocol/${editProtocolId}`, protocolData)
+        .put(`${process.env.REACT_APP_API_URL}/users/v8/update_security_protocol/${editProtocolId}`, protocolData)
         .then(() => {
           console.log("Protocol updated successfully");
           fetchProtocols();
@@ -81,7 +81,7 @@ useEffect(() => {
         .catch((error) => console.error("Error updating protocol:", error));
     } else {
       axios
-        .post("http://localhost:8000/api/users/v8/create_security_protocol", protocolData)
+        .post(`${process.env.REACT_APP_API_URL}/users/v8/create_security_protocol`, protocolData)
         .then(() => {
           console.log("Protocol created successfully");
           fetchProtocols();
@@ -94,7 +94,7 @@ useEffect(() => {
   
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:8000/api/users/v8/delete_security_protocol/${deleteProtocolId}`)
+    axios.delete(`${process.env.REACT_APP_API_URL}/users/v8/delete_security_protocol/${deleteProtocolId}`)
       .then((response) => {
         setProtocols((prevProtocols) =>
           prevProtocols.filter((protocol) => protocol._id !== deleteProtocolId)
