@@ -13,10 +13,10 @@ const EventParticipation = () => {
 
   return (
     <div className='dashboard-bg w-100'>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className='d-flex' style={{ width: "1900px" }}>
         <Navbar />
-        <div style={{ marginLeft: '300px' }}>
+        <div className='marginLeft'>
           <div className='container-fluid' style={{ marginTop: "109px" }}>
             <div className='row p-4' style={{ width: '1600px' }}>
               <div className="table-responsive rounded pb-3">

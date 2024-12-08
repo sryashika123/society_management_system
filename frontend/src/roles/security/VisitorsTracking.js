@@ -122,11 +122,11 @@ function VisitorsTracking() {
             <Table hover responsive>
               <thead style={{ background: "rgb(185, 198, 242)", color: "black" }}>
                 <tr className="text-start" style={{ height: '50px' }}>
-                  <th style={{ background: "rgb(185, 198, 242)"}}>Visitor Name</th>
-                  <th style={{ background: "rgb(185, 198, 242)"}}>Phone Number</th>
-                  <th style={{ background: "rgb(185, 198, 242)"}}>Date</th>
-                  <th style={{ background: "rgb(185, 198, 242)"}} className="text-center">Unit Number</th>
-                  <th style={{ background: "rgb(185, 198, 242)"}} className="text-center">Time</th>
+                  <th style={{ background: "rgb(185, 198, 242)" }}>Visitor Name</th>
+                  <th style={{ background: "rgb(185, 198, 242)" }}>Phone Number</th>
+                  <th style={{ background: "rgb(185, 198, 242)" }}>Date</th>
+                  <th style={{ background: "rgb(185, 198, 242)" }} className="text-center">Unit Number</th>
+                  <th style={{ background: "rgb(185, 198, 242)" }} className="text-center">Time</th>
                 </tr>
               </thead>
               <tbody>
@@ -151,7 +151,7 @@ function VisitorsTracking() {
                     </td>
                     <td style={{ verticalAlign: "middle" }}>{detail?.Phone_number || "N/A"}</td>
                     <td style={{ verticalAlign: "middle" }}> {new Date(detail?.date).toLocaleDateString('en-GB')}
-</td>
+                    </td>
                     <td style={{ verticalAlign: "middle" }} className="text-center">
                       <div className="d-flex align-items-center justify-content-center gap-2">
                         <div

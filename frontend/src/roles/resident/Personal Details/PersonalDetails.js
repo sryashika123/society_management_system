@@ -47,9 +47,9 @@ const PersonalDetail = () => {
 
     return (
         <div className='dashboard-bg w-100'  >
-            <Sidebar/>
+            {/* <Sidebar/> */}
             <Navbar />
-            <div style={{ marginLeft: '300px' }}>
+            <div className='marginLeft'>
                 <div className='container-fluid'>
                     <div className='row p-4 pe-3' style={{marginTop:"109px"}}>
                         
