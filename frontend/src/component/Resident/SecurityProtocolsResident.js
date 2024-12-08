@@ -25,12 +25,11 @@ const SecurityProtocolsResident = () => {
       <div className="bg-white border-bottom shadow-sm mb-4">
         <Header />
       </div>
-
       {/* Main Content */}
       <div className="d-flex flex-grow-1">
         {/* Sidebar */}
         <div className="text-white p-3" >
-          <Sidebar />
+          {/* <Sidebar /> */}
         </div>
 
         {/* Main Content Area */}
@@ -65,9 +64,10 @@ const SecurityProtocolsResident = () => {
             </div>
           </div>
         </div>
+        </div>
 
       </div>
-    </div>
+    
   );
 };
 
