@@ -29,7 +29,7 @@ const residentSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    Email: {
+    email: {
         type: String,
         unique: true,
         required: true
