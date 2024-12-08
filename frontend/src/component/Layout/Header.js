@@ -64,26 +64,14 @@ function Header() {
             <Navbar expand="lg" className="navbar bg-white border-bottom" style={{ height: "109px" }}>
                 <Container fluid>
 
-                    <Navbar.Brand className="d-none d-lg-block w-20 ms-4">
-                        <InputGroup
-                            className="align-items-center search-bar rounded-2 px-3 py-2"
-                            style={{ marginLeft: "290px", width: "300px" }}
-                        >
-                            {/* Search Bar for Large Screens */}
-                            <div className="d-none d-md-block ">
-                                <div className="input-group">
-                                    <span className="input-group-text search-icon border " style={{ maxHeight: "38px" }}>
-                                        <FiSearch />
-                                    </span>
-
-                                    <FormControl
-                                        className="form-control border-start-0 ps-0 search-input
-                                        "
-                                        placeholder="Search Here"
-                                        aria-label="Search"
-                                    />
-                                </div>
-                            </div>
+                <Navbar.Brand className="d-none d-lg-block w-20" style={{marginLeft:"20px"}}>
+                        <InputGroup className="align-items-center search-bar rounded-2 px-3 py-2"  style={{marginLeft:"300px", width:"335px"}}>
+                            <FiSearch className="search-icon" />
+                            <FormControl
+                                className="border-0"
+                                placeholder="Search Here"
+                                aria-label="Search"
+                            />
                         </InputGroup>
                     </Navbar.Brand>
 
@@ -106,7 +94,7 @@ function Header() {
 
                         {showNotifications && (
                             <div
-                                className="notification-dropdown bg-white border shadow-sm px-3 py-2 rounded"
+                                className="notification-dropdown bg-white border shadow-sm px-3 py-2 rounded "
                                 style={{
                                     position: 'absolute',
                                     right: '150px',
@@ -134,14 +122,14 @@ function Header() {
                                         />
                                     )}
                                 </div>
-                                <ul className="list-unstyled">
+                                <ul className="list-unstyled ">
                                     {notifications.length > 0 ? (
                                         notifications.map((notification, index) => (
                                             <li
                                                 key={index}
                                                 className="border-bottom text-dark"
                                             >
-                                                <div className="d-flex">
+                                                <div className="d-flex my-3">
                                                     {/* Notification Image */}
                                                     <div className="flex-shrink-0 pe-3">
                                                         <img src={notification.img} alt="Notification" />
@@ -214,7 +202,7 @@ function Header() {
 
                         <div className="d-flex align-items-center">
                             <Link
-                                to="/profile"
+                                to="/home/profile"
                                 className="d-flex align-items-center text-decoration-none"
                             >
                                 <img
