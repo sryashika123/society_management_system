@@ -120,53 +120,81 @@
 // export default App;
 
 
-import React, { useState } from 'react';
-import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+// import React, { useState } from 'react';
+// import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+// import Login from './component/Login';
+// import Signup from './component/Signup';
+// import ForgotPassword from './component/ForgotPassword';
+// import EnterOtp from './component/EnterOtp';
+// import ResetPassword from './component/ResetPassword';
+// import Unauthorized from './component/Unauthorized';
+// import ProtectedRoute from './component/ProtectedRoute';
+
+// // Importing Routes for Each Role
+// import AdminRoutes from './routes/AdminRoutes';
+// import ResidentRoutes from './routes/ResidentRoutes';
+// import SecurityRoutes from './routes/SecurityRoutes';
+
+// function App() {
+//   const [userRole, setUserRole] = useState(''); // Store user role after login
+
+//   // Function to determine role-based routes
+//   const renderRoleBasedRoutes = () => {
+//     switch (userRole) {
+//       case 'admin':
+//         return <AdminRoutes />;
+//       case 'resident':
+//         return <ResidentRoutes />;
+//       case 'security':
+//         return <SecurityRoutes />;
+//       default:
+//         return <Route path="*" element={<Navigate to="/" />} />;
+//     }
+//   };
+
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         {/* Public Routes */}
+//         <Route path="/" element={<Login />} />
+//         <Route path="/signup" element={<Signup />} />
+//         <Route path="/forgot-password" element={<ForgotPassword />} />
+//         <Route path="/enter-otp" element={<EnterOtp />} />
+//         <Route path="/reset-password" element={<ResetPassword />} />
+//         <Route path="/unauthorized" element={<Unauthorized />} />
+
+//         {/* Role-Based Routes */}
+//         {renderRoleBasedRoutes()}
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './component/Login';
-import Signup from './component/Signup';
-import ForgotPassword from './component/ForgotPassword';
+import ForgotPassword from './component/ForgotPassword'; // Create this component
+import 'bootstrap/dist/css/bootstrap.min.css';
 import EnterOtp from './component/EnterOtp';
 import ResetPassword from './component/ResetPassword';
-import Unauthorized from './component/Unauthorized';
-import ProtectedRoute from './component/ProtectedRoute';
-
-// Importing Routes for Each Role
-import AdminRoutes from './routes/AdminRoutes';
-import ResidentRoutes from './routes/ResidentRoutes';
-import SecurityRoutes from './routes/SecurityRoutes';
-
+import Home from './pages/Home';
+import Signup from './component/Signup.js'
 function App() {
-  const [userRole, setUserRole] = useState(''); // Store user role after login
-
-  // Function to determine role-based routes
-  const renderRoleBasedRoutes = () => {
-    switch (userRole) {
-      case 'admin':
-        return <AdminRoutes />;
-      case 'resident':
-        return <ResidentRoutes />;
-      case 'security':
-        return <SecurityRoutes />;
-      default:
-        return <Route path="*" element={<Navigate to="/" />} />;
-    }
-  };
-
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/enter-otp" element={<EnterOtp />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-
-        {/* Role-Based Routes */}
-        {renderRoleBasedRoutes()}
-      </Routes>
-    </BrowserRouter>
+    <div className="d-flex">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route element={<Signup />} path='/signup' />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/enter-otp" element={<EnterOtp />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/home/*" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
