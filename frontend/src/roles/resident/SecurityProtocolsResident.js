@@ -10,7 +10,7 @@ const SecurityProtocolsResident = () => {
 
   const fetchProtocols = () => {
     axios
-      .get("http://localhost:8000/api/users/v8/get_security_protocol")
+      .get(`${process.env.REACT_APP_API_URL}/users/v8/get_security_protocol`)
       .then((response) => setProtocols(response.data))
       .catch((error) => console.error("Error fetching protocols:", error));
   };

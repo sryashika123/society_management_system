@@ -30,7 +30,7 @@ export default function ComplaintTracking() {
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/users/v23/viewComplaintsTracking');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v23/viewComplaintsTracking`);
         setComplaints(response.data); // Assuming response.data contains the complaints
       } catch (error) {
         setErrorMessage('Failed to load complaints.');
@@ -53,7 +53,7 @@ export default function ComplaintTracking() {
       // Log the newComplaint object to ensure it's correct
       console.log(newComplaint);
   
-      const response = await axios.post('http://localhost:8000/api/users/v23/createComplaintsTracking', newComplaint);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/v23/createComplaintsTracking`, newComplaint);
       
       // Log the response to check if it's correct
       console.log(response.data);
@@ -100,7 +100,7 @@ export default function ComplaintTracking() {
       console.log(selectedComplaint);
   
       // Send the PUT request to update the complaint
-      const response = await axios.put(`http://localhost:8000/api/users/v23/updateComplaintsTracking/${selectedComplaint._id}`, selectedComplaint);
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}/users/v23/updateComplaintsTracking/${selectedComplaint._id}`, selectedComplaint);
   
       // Log the response data for debugging
       console.log(response.data);
@@ -108,7 +108,7 @@ export default function ComplaintTracking() {
       // Optionally, re-fetch the complaints list to ensure it's up to date
       const fetchComplaints = async () => {
         try {
-          const result = await axios.get('http://localhost:8000/api/users/v23/viewComplaintsTracking');
+          const result = await axios.get(`${process.env.REACT_APP_API_URL}/users/v23/viewComplaintsTracking`);
           setComplaints(result.data);  // Re-fetch complaints
         } catch (error) {
           setErrorMessage('Failed to load complaints.');
@@ -147,7 +147,7 @@ export default function ComplaintTracking() {
 
     try {
       // Make the API call to delete the request from the backend
-      const response = await axios.delete(`http://localhost:8000/api/users/v23/deleteComplaintsTracking/${deleteComplaintId}`);
+      const response = await axios.delete(`${process.env.REACT_APP_API_URL}/users/v23/deleteComplaintsTracking/${deleteComplaintId}`);
       console.log('Delete response:', response);
 
       // If deletion was unsuccessful, revert the optimistic update

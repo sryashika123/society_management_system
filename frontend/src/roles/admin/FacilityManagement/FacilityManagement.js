@@ -77,7 +77,7 @@ const FacilityManagement = () => {
 
   const loadFacilities = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/users/v14/getFacility`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v14/getFacility`);
       setFacilities(response.data);
     } catch (error) {
       console.error("Error fetching facilities:", error);
@@ -96,11 +96,11 @@ const FacilityManagement = () => {
       if (isEditing) {
         const id = facilities[editIndex]._id;
         await axios.put(
-          `http://localhost:8000/api/users/v14/updateFacility/${id}`,
+          `${process.env.REACT_APP_API_URL}/users/v14/updateFacility/${id}`,
           facilityData
         );
       } else {
-        await axios.post(`http://localhost:8000/api/users/v14/createFacility`, facilityData);
+        await axios.post(`${process.env.REACT_APP_API_URL}/users/v14/createFacility`, facilityData);
       }
       loadFacilities();
       handleCloseModal();

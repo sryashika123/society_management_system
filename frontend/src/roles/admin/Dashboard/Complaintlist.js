@@ -43,7 +43,7 @@ const ComplaintList = () => {
     useEffect(() => {
         const fetchComplaints = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/users/v23/viewComplaintsTracking');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v23/viewComplaintsTracking`);
                 setComplaints(response.data); // Assuming response.data contains the complaints
             } catch (error) {
                 setErrorMessage('Failed to load complaints.');

@@ -20,7 +20,7 @@ export default function FinancialManagementNote() {
   // Fetch notes from backend
   const fetchNotes = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users/v11/ViewNote");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v11/ViewNote`);
       setNote(response.data);
     } catch (error) {
       console.error("Error fetching notes:", error.message);
@@ -51,13 +51,13 @@ export default function FinancialManagementNote() {
         const updatedData = { title: data.title, description: data.description, date: data.date, amt: data.amt };
   
         const response = await axios.put(
-          `http://localhost:8000/api/users/v11/updateNote/${noteId}`,
+          `${process.env.REACT_APP_API_URL}/users/v11/updateNote/${noteId}`,
           updatedData
         );
         console.log("Update response:", response);  // Log the response from the backend
       } else {
         // Create new note request
-        const response = await axios.post("http://localhost:8000/api/users/v11/createNote", data);
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/v11/createNote`, data);
         console.log("Create response:", response);  // Log the response for creation
       }
       fetchNotes(); // Fetch updated list after saving

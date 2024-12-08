@@ -23,7 +23,7 @@ export default function Announcement() {
     useEffect(() => {
         const fetchAnnouncements = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/users/v20/getAnnouncement');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v20/getAnnouncement`);
                 setNote(response.data);
             } catch (error) {
                 console.error('Error fetching announcements:', error);
@@ -46,13 +46,13 @@ export default function Announcement() {
             if (editIndex !== null) {
                 // Edit existing announcement
                 const updatedNote = { ...note[editIndex], ...data };
-                await axios.put(`http://localhost:8000/api/users/v20/updateAnnouncement/${note[editIndex]._id}`, updatedNote);
+                await axios.put(`${process.env.REACT_APP_API_URL}/users/v20/updateAnnouncement/${note[editIndex]._id}`, updatedNote);
                 const updatedNotes = [...note];
                 updatedNotes[editIndex] = updatedNote;
                 setNote(updatedNotes);
             } else {
                 // Create new announcement
-                const response = await axios.post('http://localhost:8000/api/users/v20/createAnnouncement', data);
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/v20/createAnnouncement`, data);
                 setNote([...note, response.data]); // Add new announcement to state
             }
             handleClose();
@@ -65,7 +65,7 @@ export default function Announcement() {
     const confirmDelete = async () => {
         try {
             if (deleteIndex !== null) {
-                await axios.delete(`http://localhost:8000/api/users/v20/deleteAnnouncement/${note[deleteIndex]._id}`);
+                await axios.delete(`${process.env.REACT_APP_API_URL}/users/v20/deleteAnnouncement/${note[deleteIndex]._id}`);
                 const updatedNotes = note.filter((_, i) => i !== deleteIndex);
                 setNote(updatedNotes);
             }

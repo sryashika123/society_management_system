@@ -21,7 +21,7 @@ export default function FinancialManagementOtherIncome() {
     // Fetch all data (GET)
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/users/v13/getOtherIncome');
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v13/getOtherIncome`);
             setNote(response.data);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -45,10 +45,10 @@ export default function FinancialManagementOtherIncome() {
         try {
             if (editIndex !== null) {
                 const id = note[editIndex]._id; // Assuming '_id' is the identifier
-                await axios.put(`http://localhost:8000/api/users/v13/updateOtherIncome/${id}`, data);
+                await axios.put(`${process.env.REACT_APP_API_URL}/users/v13/updateOtherIncome/${id}`, data);
                 fetchData(); // Refresh the list
             } else {
-                await axios.post('http://localhost:8000/api/users/v13/createOtherIncome', data);
+                await axios.post(`${process.env.REACT_APP_API_URL}/users/v13/createOtherIncome`, data);
                 fetchData();
             }
             handleClose();
@@ -82,7 +82,7 @@ export default function FinancialManagementOtherIncome() {
     // Delete (DELETE)
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:8000/api/users/v13/deleteOtherIncome/${deleteId}`);
+            await axios.delete(`${process.env.REACT_APP_API_URL}/users/v13/deleteOtherIncome/${deleteId}`);
             fetchData(); // Refresh the list
             setShowDeleteModal(false);
         } catch (error) {

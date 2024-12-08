@@ -34,7 +34,7 @@ export default function FinancialManagementExp() {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/users/v12/ViewExpenses');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v12/ViewExpenses`);
         setExp(response.data);
       } catch (error) {
         console.error('Error fetching expenses:', error);
@@ -57,7 +57,7 @@ export default function FinancialManagementExp() {
     if (deleteIndex !== null) {
       const expenseToDelete = exp[deleteIndex];
       try {
-        await axios.delete(`http://localhost:8000/api/users/v12/deleteExpenses/${expenseToDelete._id}`);
+        await axios.delete(`${process.env.REACT_APP_API_URL}/users/v12/deleteExpenses/${expenseToDelete._id}`);
         const updatedExpenses = exp.filter((_, index) => index !== deleteIndex);
         setExp(updatedExpenses);
         handleCloseDeleteModal();
@@ -91,9 +91,9 @@ export default function FinancialManagementExp() {
     try {
       if (editIndex !== null) {
 
-        axios.put(`http://localhost:8000/api/users/v12/updateExpenses/${exp[editIndex]._id}`, formData)
+        axios.put(`${process.env.REACT_APP_API_URL}/users/v12/updateExpenses/${exp[editIndex]._id}`, formData)
           .then(() => {
-            return axios.get('http://localhost:8000/api/users/v12/ViewExpenses'); // Fetch latest data
+            return axios.get(`${process.env.REACT_APP_API_URL}/users/v12/ViewExpenses`); // Fetch latest data
           })
           .then((response) => {
             setExp(response.data); // Update state with fresh data
@@ -104,9 +104,9 @@ export default function FinancialManagementExp() {
           })
 
       } else {
-        axios.post("http://localhost:8000/api/users/v12/createExpenses", formData)
+        axios.post(`${process.env.REACT_APP_API_URL}/users/v12/createExpenses`, formData)
           .then((response) => {
-            return axios.get('http://localhost:8000/api/users/v12/ViewExpenses'); // Fetch latest data
+            return axios.get(`${process.env.REACT_APP_API_URL}/users/v12/ViewExpenses`); // Fetch latest data
           })
           .then((response) => {
             setExp(response.data); // Update state with fresh data
