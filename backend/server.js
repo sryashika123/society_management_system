@@ -24,8 +24,7 @@ const societyRoutes = require('./routes/societyRoutes.js');
 
 const app = express();
 
-const server = http.createServer(app);
-const io = socketIo(server);
+
 
 dotenv.config();
 // connectDB();
@@ -88,6 +87,8 @@ app.post('/api/upload', upload.single('media'), (req, res) => {
 });
 
 
+const server = http.createServer(app);
+const io = socketIo(server);
 io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
   
