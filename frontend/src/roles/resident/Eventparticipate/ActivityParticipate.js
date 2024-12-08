@@ -13,12 +13,12 @@ const ActivityParticipation = () => {
 
   return (
     <div className='dashboard-bg' style={{ width: "1900px" }}>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div>
         <Navbar />
       </div>
 
-      <div style={{ marginLeft: '300px', marginTop: "109px", width: "1600px" }}>
+      <div style={{  marginTop: "109px", width: "1600px" }} className='marginLeft'>
         <div className='container-fluid'>
           <div className='row p-4'>
             <div className="table-responsive rounded pb-3">

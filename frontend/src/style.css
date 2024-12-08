@@ -26,6 +26,35 @@
 
 /* login css */
 
+/* sidebar css start */
+
+@media (max-width: 576px) {
+  .sidebar {
+    transform: translateX(-100%); /* Hide the sidebar by default on mobile */
+  }
+
+  .sidebar.show {
+    transform: translateX(0); /* Show sidebar when toggled */
+  }
+}
+
+@media (min-width: 576px) {
+  .sidebar {
+    transform: none; /* Keep sidebar visible on larger screens */
+    visibility: visible !important;
+  }
+}
+
+.marginLeft {
+  margin-left: 300px;
+}
+
+@media (max-width: 576px) {
+  .marginLeft {
+    margin-left: 0px;
+  }
+}
+
 
 /* Adjust the layout for smaller screens */
 .right-sec {

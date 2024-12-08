@@ -91,11 +91,11 @@ const RequestSubmission = () => {
 
   return (
     <div className='dashboard-bg w-100' >
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Navbar />
       <div className='marginLeft'>
 
-        <div className='container-fluid ' style={{ marginTop: "109px", marginLeft: "300px", width: "1600px" }}>
+        <div className='container-fluid ' style={{ marginTop: "109px", width: "1600px" }}>
 
           <div className='row p-4'>
 

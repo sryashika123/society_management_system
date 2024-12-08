@@ -52,26 +52,12 @@ const CommunitiesDiscussion = () => {
         }
     }, []); // The useEffect will run only once when the component mounts
 
-
-
-    // locastorage 
-    // useEffect(() => {
-    //     // "newQuestions" તરીકે ઘણી બધી માહિતી localStorage માંથી મેળવો.
-    //     const newQuestions = JSON.parse(localStorage.getItem('newQuestions')) || [];
-        
-    //     if (newQuestions.length > 0) {
-    //         setCardData(prevData => [...prevData, ...newQuestions]);
-            
-    //         // localStorage માંથી જો બધું વાપરી લીધું હોય તો તેને સાફ કરો.
-    //         localStorage.removeItem('newQuestions');
-    //     }
-    // }, []); // ફક્ત કૉમ્પોનેન્ટનું માઉન્ટ સમયે ચાલે
     
     return (
         <div className='dashboard-bg w-100'>
-            <Sidebar />
+            {/* <Sidebar /> */}
             <Navbar />
-            <div className="container-fluid p-3" style={{ marginLeft: "315px", width: "1590px", marginTop: "109px" }}>
+            <div className="container-fluid p-3 marginLeft" style={{   marginLeft:"315px", width: "1590px", marginTop: "109px" }}>
                 <div className="row">
                     {/* Left Sidebar */}
                     <div className="col-md-3 chat-sidebar p-0">
