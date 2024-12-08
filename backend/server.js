@@ -20,6 +20,9 @@ const multer = require('multer');
 
 const Message = require('./models/MessageModel.js');
 
+const societyRoutes = require('./routes/societyRoutes.js');
+
+
 const app = express();
 
 const server = http.createServer(app);
@@ -36,15 +39,15 @@ app.use(
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true // enable set cookies
     }
-));
+    ));
 
 
-app.use(cookieParser()); 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", require("./routes/UserRoute.js"));
-app.use("/api/users/v2", require("./routes/societyRoutes.js"));
+app.use("/api/users/v2", societyRoutes);
 app.use("/api/users/v3", require("./routes/ImportantNumroute.js"));
 app.use("/api/users/v4", require("./routes/CompalintSubmissionRoute.js"));
 app.use("/api/users/v5", require("./routes/profileRoute.js"));
@@ -71,7 +74,7 @@ app.use("/api/users/v23", require("./routes/ComplaintTrackingRoute.js"));
 const storage = multer.diskStorage({
     destination: '/uploads/Chat-Image',
     filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname));
+        cb(null, Date.now() + path.extname(file.originalname));
     },
 });
 const upload = multer({ storage });
@@ -79,32 +82,32 @@ const upload = multer({ storage });
 
 app.post('/api/upload', upload.single('media'), (req, res) => {
     if (req.file) {
-      res.json({ mediaUrl: `/uploads/${req.file.filename}` });
+        res.json({ mediaUrl: `/uploads/${req.file.filename}` });
     } else {
-      res.status(400).json({ error: 'No file uploaded' });
+        res.status(400).json({ error: 'No file uploaded' });
     }
 });
 
 
 io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
-  
+
     // Join event
     socket.on('join', async ({ userId, receiverId }) => {
         socket.userId = userId;
-  
+
         // Fetch chat history between userId and receiverId
         const messages = await Message.find({
             $or: [
-            { senderId: userId, receiverId },
-            { senderId: receiverId, receiverId: userId },
+                { senderId: userId, receiverId },
+                { senderId: receiverId, receiverId: userId },
             ],
         }).sort({ createdAt: 1 });
-  
+
         // Send chat history to the user
         socket.emit('chat history', messages);
     });
-  
+
     // Handle private messages
     socket.on('private message', async (msg) => {
         // Save message to the database
@@ -114,12 +117,12 @@ io.on('connection', (socket) => {
             message: msg.message,
             media: msg.media,
         });
-  
+
         // Emit the message to both sender and receiver
         io.to(socket.id).emit('private message', savedMessage); // To sender
         socket.broadcast.emit('private message', savedMessage); // To receiver
     });
-  
+
     // Disconnect event
     socket.on('disconnect', () => {
         console.log(`User ${socket.userId || 'unknown'} disconnected`);
