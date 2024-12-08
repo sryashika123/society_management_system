@@ -32,11 +32,13 @@ const Sidebar = () => {
   const [isPaymentPortalDropdownOpen, setPaymentPortalDropdownOpen] = useState(false);
   const [isCommunityDropdownOpen, setCommunityDropdownOpen] = useState(false);
 
+  const role = localStorage.getItem('role');
+
   // Update active item on location change
   useEffect(() => {
     const currentPath = location.pathname;
     let foundActiveItem = false;
-    menuItems.forEach((item) => {
+    allMenuItems.forEach((item) => {
       if (item.subItems) {
         item.subItems.forEach((subItem) => {
           if (currentPath === subItem.path) {
@@ -90,7 +92,7 @@ const Sidebar = () => {
       setSecurityDropdownOpen(false);
       setGeneralSecurityDropdownOpen(false);
       setPaymentPortalDropdownOpen(!isPaymentPortalDropdownOpen);
-    } 
+    }
     else if (key === "Community") {
       setFinancialDropdownOpen(false);
       setComplaintDropdownOpen(false);
@@ -116,42 +118,42 @@ const Sidebar = () => {
     };
   }, []);
 
-  const menuItems = [
+  const allMenuItems = [
     {
       key: "dashboard",
       label: "Dashboard",
       icon: <img src={dashboardIcon} />,
-      path: "/home/dashboard",
+      path: "/dashboard",
     },
     {
       key: "residentmanagement",
       label: "Resident Management",
       icon: <img src={residentIcon} />,
-      path: "/home/residentmanagement",
+      path: "/residentmanagement",
     },
     {
       key: "financialmanagement",
       label: "Financial Management",
       icon: <img src={financialIcon} />,
       subItems: [
-        { key: "income", label: "Income", path: "/home/Financial-Maintenanace" },
-        { key: "expenses", label: "Expenses", path: "/home/expense" },
-        { key: "note", label: "Note", path: "/home/note" },
+        { key: "income", label: "Income", path: " /Financial-Maintenanace" },
+        { key: "expenses", label: "Expenses", path: " /expense" },
+        { key: "note", label: "Note", path: " /note" },
       ],
     },
     {
       key: "facility-management",
       label: "Facility Management",
       icon: <img src={facalityIcon} />,
-      path: "/home/facility-management",
+      path: "/facility-management",
     },
     {
       key: "complaint-tracking",
       label: "Complaint Tracking",
       icon: <img src={complainrtrackingIcon} />,
       subItems: [
-        { key: "request-tracking", label: "Request Tracking", path: "/home/request-tracking" },
-        { key: "create-complaint", label: "Create Complaint", path: "/home/create-complaint" },
+        { key: "request-tracking", label: "Request Tracking", path: " /request-tracking" },
+        { key: "create-complaint", label: "Create Complaint", path: " /create-complaint" },
       ],
     },
     {
@@ -159,62 +161,62 @@ const Sidebar = () => {
       label: "Security Management",
       icon: <img src={securitymanagementIcon} />,
       subItems: [
-        { key: "visitors-log", label: "Visitors Log", path: "/home/visitors-log" },
-        { key: "security-protocols", label: "Security Protocols", path: "/home/security-protocols" },
+        { key: "visitors-log", label: "Visitors Log", path: " /visitors-log" },
+        { key: "security-protocols", label: "Security Protocols", path: " /security-protocols" },
       ],
     },
     {
       key: "security-guard",
       label: "Security Guard",
       icon: <img src={securityguardIcon} />,
-      path: "/home/security-guard",
+      path: " /security-guard",
     },
     {
       key: "announcement",
       label: "Announcement",
       icon: <img src={announcementIcon} />,
-      path: "/home/announcement",
+      path: " /announcement",
     },
     {
       key: "security",
       label: "Security",
       icon: <img src={securityIcon} />,
       subItems: [
-        { key: "visitor-tracking", label: "Visitor Tracking", path: "/home/visitor-tracking" },
-        { key: "emergency-management", label: "Emergency Management", path: "/home/emergency-management" },
+        { key: "visitor-tracking", label: "Visitor Tracking", path: " /visitor-tracking" },
+        { key: "emergency-management", label: "Emergency Management", path: " /emergency-management" },
       ],
     },
     {
       key: "personal-details",
       label: "Personal Details",
       icon: <img src={personaldetailsIcon} />,
-      path: "/home/personal-details",
+      path: " /personal-details",
     },
     {
       key: "Resident-Protocols",
       label: "Security protocols",
       icon: <img src={FrameIcon} />,
-      path: "/home/Resident-Protocols",
+      path: " /Resident-Protocols",
     },
     {
       key: "Event-Participation",
       label: "Event Participation",
       icon: <img src={EventParticipation} />,
-      path: "/home/events-and-participation",
+      path: " /events-and-participation",
     },
     {
       key: "service-and-complaint",
       label: "Service And Complaint",
       icon: <img src={personaldetailsIcon} />,
-      path: "/home/service-and-complaint",
+      path: " /service-and-complaint",
     },
     {
       key: "payment-portal",
       label: "Payment Portal",
       icon: <img src={securityIcon} />,
       subItems: [
-        { key: "maintenance-invoices", label: "Maintenance Invoices", path: "/home/maintenance-invoices" },
-        { key: "other-income-nvoice", label: "Other Income Invoice", path: "/home/other-income-nvoice" },
+        { key: "maintenance-invoices", label: "Maintenance Invoices", path: " /maintenance-invoices" },
+        { key: "other-income-nvoice", label: "Other Income Invoice", path: " /other-income-nvoice" },
       ],
     },
     {
@@ -222,22 +224,35 @@ const Sidebar = () => {
       label: "Community",
       icon: <img src={financialIcon} />,
       subItems: [
-        { key: "Access", label: "Access Forums", path: "/home/Access" },
-        { key: "Polls", label: "Polls", path: "/home/Polls" },
-        { key: "Community-Discussion", label: "Communities Discussion", path: "/home/Community-Discussion" },
+        { key: "Access", label: "Access Forums", path: " /Access" },
+        { key: "Polls", label: "Polls", path: " /Polls" },
+        { key: "Community-Discussion", label: "Communities Discussion", path: " /Community-Discussion" },
       ],
     },
 
-    
+
   ];
 
+  // Define filtered menu items based on the user's role
+  const filteredMenuItems = allMenuItems.filter((item) => {
+    if (role === 'Admin') return true;  // Admin can see everything
+    if (role === 'Resident') {
+      return !item.subItems || item.key === 'dashboard' || item.key === 'complaint-tracking' || item.key === 'payment-portal';
+    }
+    if (role === 'Security') {
+      return !item.subItems || item.key === 'security-management' || item.key === 'security-guard';
+    }
+    return false; // Default to showing nothing for unknown roles
+  });
+
+
   return (
-    <div style={{fontSize:"14px"}}>
+    <div style={{ fontSize: "14px" }}>
       <button
         className="btn btn-primary d-sm-none d-md-none d-lg-none"
         onClick={() => setSidebarOpen(!isSidebarOpen)}
         style={{
-          position: "fixed", 
+          position: "fixed",
           top: "10px",
           left: "10px",
           zIndex: 1050,
@@ -255,11 +270,11 @@ const Sidebar = () => {
           width: "300px",
           zIndex: 1049,
           transition: "transform 0.3s ease",
-          transform: isSidebarOpen || !isMobile ? "translateX(0)" : "translateX(-100%)", 
-          
+          transform: isSidebarOpen || !isMobile ? "translateX(0)" : "translateX(-100%)",
+
         }}
         aria-labelledby="offcanvasExampleLabel"
-        
+
       >
         <div className="offcanvas-header justify-content-center">
           <h1 className="offcanvas-title mainColor" id="offcanvasExampleLabel">
@@ -269,108 +284,108 @@ const Sidebar = () => {
         <hr />
 
         <div className="offcanvas-body ">
-        <ul className="list-unstyled">
-  {menuItems.map((item) =>
-    item.subItems ? (
-      <li key={item.key} className="position-relative p-3 rounded">
-        <div
-          className="d-flex align-items-center justify-content-between"
-          style={{ cursor: "pointer", color: "black" }}
-          onClick={() => handleDropdownClick(item.key)}
-        >
-          {activeItem === item.key && (
-           <img
-             src={HideBgCopy}
-             alt="Active Indicator"
-             style={{
-               position: "absolute",
-               left: "-15px", // Adjust this value as needed
-               height: "50px",
-             }}
-           />
-          )}
-          <div className="d-flex align-items-center">
-            {item.icon}
-            <span className="ms-2">{item.label}</span>
-          </div>
-          {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
-          (item.key === "security-management" && isSecurityDropdownOpen) ||
-          (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
-          (item.key === "security" && isGeneralSecurityDropdownOpen) ||
-          (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ||
-          (item.key === "Community" && isCommunityDropdownOpen) ? (
-            <FaChevronUp />
-          ) : (
-            <FaChevronDown />
-          )}
-        </div>
-        {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
-        (item.key === "security-management" && isSecurityDropdownOpen) ||
-        (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
-        (item.key === "security" && isGeneralSecurityDropdownOpen) ||
-        (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ||
-        (item.key === "Community" && isCommunityDropdownOpen) ? (
-          <ul className="list-unstyled ms-4">
-            {item.subItems.map((subItem) => (
-              <li key={subItem.key} className="p-2 rounded position-relative">
-                {activeItem === subItem.key && (
-                  <img
-                    src={BlackImage}
-                    alt="Active Indicator" // Adding alt for better accessibility
+          <ul className="list-unstyled">
+            {allMenuItems.map((item) =>
+              item.subItems ? (
+                <li key={item.key} className="position-relative p-3 rounded">
+                  <div
+                    className="d-flex align-items-center justify-content-between"
+                    style={{ cursor: "pointer", color: "black" }}
+                    onClick={() => handleDropdownClick(item.key)}
+                  >
+                    {activeItem === item.key && (
+                      <img
+                        src={HideBgCopy}
+                        alt="Active Indicator"
+                        style={{
+                          position: "absolute",
+                          left: "-15px", // Adjust this value as needed
+                          height: "50px",
+                        }}
+                      />
+                    )}
+                    <div className="d-flex align-items-center">
+                      {item.icon}
+                      <span className="ms-2">{item.label}</span>
+                    </div>
+                    {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
+                      (item.key === "security-management" && isSecurityDropdownOpen) ||
+                      (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
+                      (item.key === "security" && isGeneralSecurityDropdownOpen) ||
+                      (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ||
+                      (item.key === "Community" && isCommunityDropdownOpen) ? (
+                      <FaChevronUp />
+                    ) : (
+                      <FaChevronDown />
+                    )}
+                  </div>
+                  {(item.key === "complaint-tracking" && isComplaintDropdownOpen) ||
+                    (item.key === "security-management" && isSecurityDropdownOpen) ||
+                    (item.key === "financialmanagement" && isFinancialDropdownOpen) ||
+                    (item.key === "security" && isGeneralSecurityDropdownOpen) ||
+                    (item.key === "payment-portal" && isPaymentPortalDropdownOpen) ||
+                    (item.key === "Community" && isCommunityDropdownOpen) ? (
+                    <ul className="list-unstyled ms-4">
+                      {item.subItems.map((subItem) => (
+                        <li key={subItem.key} className="p-2 rounded position-relative">
+                          {activeItem === subItem.key && (
+                            <img
+                              src={BlackImage}
+                              alt="Active Indicator" // Adding alt for better accessibility
+                              style={{
+                                position: "absolute",
+                                left: "-15px", // Adjust this value as needed
+                                height: "30px",
+                              }}
+                            />
+                          )}
+                          <Link
+                            to={subItem.path}
+                            className="d-flex align-items-center"
+                            style={{
+                              textDecoration: "none",
+                              fontWeight: activeItem === subItem.key ? "bold" : "normal", // Bold only active submenu item
+                              color: "black", // Ensure consistent text color for submenu
+                            }}
+                            onClick={() => setActiveItem(subItem.key)} // Ensure submenu item gets set as active
+                          >
+                            <span>{subItem.label}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </li>
+              ) : (
+                <li key={item.key} className={`p-3 rounded position-relative ${activeItem === item.key ? "mainColor2" : ""}`}>
+                  {activeItem === item.key && (
+                    <img
+                      src={HideBgCopy}
+                      alt="Active Indicator"
+                      style={{
+                        position: "absolute",
+                        left: "-15px", // Adjust this value as needed
+                        height: "50px",
+                        top: "2px"
+                      }}
+                    />
+                  )}
+                  <Link
+                    to={item.path}
+                    className="d-flex align-items-center"
                     style={{
-                      position: "absolute",
-                      left: "-15px", // Adjust this value as needed
-                      height: "30px",
+                      textDecoration: "none",
+                      color: activeItem === item.key ? "white" : "black",
                     }}
-                  />
-                )}
-                <Link
-                  to={subItem.path}
-                  className="d-flex align-items-center"
-                  style={{
-                    textDecoration: "none",
-                    fontWeight: activeItem === subItem.key ? "bold" : "normal", // Bold only active submenu item
-                    color: "black", // Ensure consistent text color for submenu
-                  }}
-                  onClick={() => setActiveItem(subItem.key)} // Ensure submenu item gets set as active
-                >
-                  <span>{subItem.label}</span>
-                </Link>
-              </li>
-            ))}
+                    onClick={() => setActiveItem(item.key)}
+                  >
+                    {item.icon}
+                    <span className="ms-2">{item.label}</span>
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
-        ) : null}
-      </li>
-    ) : (
-      <li key={item.key} className={`p-3 rounded position-relative ${activeItem === item.key ? "mainColor2" : ""}`}>
-        {activeItem === item.key && (
-         <img
-           src={HideBgCopy}
-           alt="Active Indicator"
-           style={{
-             position: "absolute",
-             left: "-15px", // Adjust this value as needed
-             height: "50px",
-             top:"2px"
-           }}
-         />
-        )}
-        <Link
-          to={item.path}
-          className="d-flex align-items-center"
-          style={{
-            textDecoration: "none",
-            color: activeItem === item.key ? "white" : "black",
-          }}
-          onClick={() => setActiveItem(item.key)}
-        >
-          {item.icon}
-          <span className="ms-2">{item.label}</span>
-        </Link>
-      </li>
-    )
-  )}
-</ul>
 
         </div>
 
