@@ -31,9 +31,17 @@ const Sidebar = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 576); // Mobile screen check
   const [isPaymentPortalDropdownOpen, setPaymentPortalDropdownOpen] = useState(false);
   const [isCommunityDropdownOpen, setCommunityDropdownOpen] = useState(false);
+  
 
   // Update active item on location change
   useEffect(() => {
+    const savedSidebarState = localStorage.getItem("sidebarState");
+    if (savedSidebarState === "open") {
+      setSidebarOpen(true);
+    } else {
+      setSidebarOpen(false);
+    }
+
     const currentPath = location.pathname;
     let foundActiveItem = false;
     menuItems.forEach((item) => {
@@ -61,6 +69,7 @@ const Sidebar = () => {
       setActiveItem("");
     }
   }, [location]);
+
 
   const handleDropdownClick = (key) => {
     if (key === "complaint-tracking") {
@@ -115,6 +124,15 @@ const Sidebar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleSidebarToggle = () => {
+    setSidebarOpen((prev) => {
+      const newState = !prev;
+      // Save sidebar state in localStorage
+      localStorage.setItem("sidebarState", newState ? "open" : "closed");
+      return newState;
+    });
+  };
 
   const menuItems = [
     {
@@ -233,11 +251,11 @@ const Sidebar = () => {
 
   return (
     <div style={{fontSize:"14px"}}>
-      <button
-        className="btn btn-primary d-sm-none d-md-none d-lg-none"
-        onClick={() => setSidebarOpen(!isSidebarOpen)}
+       <button
+        className="btn  d-sm-none d-md-none d-lg-none mt-3"
+        onClick={handleSidebarToggle}
         style={{
-          position: "fixed", 
+          position: "fixed",
           top: "10px",
           left: "10px",
           zIndex: 1050,
@@ -255,13 +273,11 @@ const Sidebar = () => {
           width: "300px",
           zIndex: 1049,
           transition: "transform 0.3s ease",
-          transform: isSidebarOpen || !isMobile ? "translateX(0)" : "translateX(-100%)", 
-          
+          transform: isSidebarOpen || !isMobile ? "translateX(0)" : "translateX(-100%)",
         }}
         aria-labelledby="offcanvasExampleLabel"
-        
       >
-        <div className="offcanvas-header justify-content-center">
+        <div className="offcanvas-header justify-content-center ">
           <h1 className="offcanvas-title mainColor" id="offcanvasExampleLabel">
             <Logo />
           </h1>

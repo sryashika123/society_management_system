@@ -73,12 +73,12 @@ const Polls = () => {
     return (
         <div className="d-flex flex-column flex-md-row">
             <div className="flex-shrink-0">
-                <Sidebar/>
+                {/* <Sidebar/> */}
             </div>
             <div className="dashboard-bg">
                 <Header />
-                <div style={{ marginTop: "109px"}}>
-                    <div className="income" style={{ marginLeft: "300px"}}>
+                <div style={{ marginTop: "109px"}} className='marginLeft'>
+                    <div className="income" >
                         <div className="row p-4">
                             <div className="table-responsive rounded pb-3">
                                 <Link to="/home/Polls" className="btn btn-sm maintainance-income-btn maintainance-income-btn-bg">Own Poll</Link>

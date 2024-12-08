@@ -104,9 +104,9 @@ export default function ServiceComplaint() {
 
     return (
         <div className='dashboard-bg w-100'>
-            <Sidebar />
+            {/* <Sidebar /> */}
             <Navbar />
-            <div style={{ marginLeft: '300px' }}>
+            <div className='marginLeft'>
 
                 <div className='container-fluid ' style={{ marginTop: '109px', width: "1600px" }}>
 

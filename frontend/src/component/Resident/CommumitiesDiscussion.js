@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Sidebar from '../Layout/Sidebar';
+// import Sidebar from '../Layout/Sidebar';
 import Navbar from '../Layout/Navbar';
 import ChatSidebar from '../Resident/Chatapp/ChatSidebar';
 import Avtar from '../../assets/Avatar plain.png';
@@ -69,9 +69,9 @@ const CommunitiesDiscussion = () => {
     
     return (
         <div className='dashboard-bg w-100'>
-            <Sidebar />
+            {/* <Sidebar /> */}
             <Navbar />
-            <div className="container-fluid p-3" style={{ marginLeft: "315px", width: "1590px", marginTop: "109px" }}>
+            <div className="container-fluid p-3 marginLeft" style={{   marginLeft:"315px", width: "1590px", marginTop: "109px" }}>
                 <div className="row">
                     {/* Left Sidebar */}
                     <div className="col-md-3 chat-sidebar p-0">

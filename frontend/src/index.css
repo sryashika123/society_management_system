@@ -226,6 +226,25 @@ input[type=checkbox]:focus {
 /* signup form style end */
 /* sidebar start */
 
+.notification-dropdown {
+  border-radius: 6px;
+  /* max-height: 741px; */
+  overflow-y: auto;
+  font-size: 0.9rem;
+  width: 540px;
+  position: absolute;
+  right: 150px;
+  top: 90px;
+  z-index: 1000;
+}
+
+.notificationButton-timestamp {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+
 /* table complaint */
 .complaint-btn{
   width: 183px !important;
