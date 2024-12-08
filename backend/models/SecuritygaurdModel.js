@@ -15,6 +15,10 @@ const SecuritygaurdSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    email : {
+        type: String,
+        unique: true,
+    },
     Phone_number: {
         type: Number,
         required: true
@@ -50,7 +54,11 @@ const SecuritygaurdSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Society',
         // required: true
-    }
+    },
+    password: {
+        type: String,
+        required: true
+    },
 }); 
 
 

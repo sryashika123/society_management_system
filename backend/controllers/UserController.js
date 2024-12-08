@@ -43,6 +43,8 @@ module.exports.login = async (req, res,err) => {
 
 	try{
 		const { email, password } = req.body;
+		// console.log( password);
+		
 	  let user = await User.findOne({ email });
   
 	  if (!user) {
@@ -51,12 +53,14 @@ module.exports.login = async (req, res,err) => {
   
 	  if (!user) {
 		user = await SecurityGuard.findOne({ email });
+		// console.log( password);
 	  }
   
 	  if (!user) {
 		return res.status(400).json({ message: "email not exists" });
 	  }
 	  const isMatch = await bcrypt.compare(password, user.password);
+	//   console.log(isMatch);
 	  if (!isMatch) {
 		return res.status(400).json({ message: "password do not match" });
 	  }
