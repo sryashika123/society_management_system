@@ -15,7 +15,7 @@ function ForgotPassword() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/users/forgot-password', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/forgot-password`, {
         email: data.email,
       });
 

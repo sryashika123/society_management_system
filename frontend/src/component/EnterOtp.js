@@ -42,7 +42,7 @@ function EnterOtp() {
   const handleVerifyOtp = async () => {
     const otpCode = otp.join('');
     try {
-      const response = await axios.post('http://localhost:8000/api/users/verify-otp', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/verify-otp`, {
         email: state.email,
         otp: otpCode,
       });
@@ -63,7 +63,7 @@ function EnterOtp() {
     setResendAvailable(false);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/users/resendotp', { email: state.email });
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/resendotp`, { email: state.email });
       if (response.status === 200) {
       if (response.data) {
         alert('OTP resent successfully.');

@@ -38,7 +38,7 @@ export default function Signup() {
     useEffect(() => {
         const fetchSocieties = async () => {
             try {
-                const response = await axios.get("http://localhost:8000/api/users/v2/getSociytey");
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/v2/getSociytey`);
                 setSocieties(response.data);
             } catch (error) {
                 console.error("Error fetching societies:", error.message);
@@ -63,7 +63,7 @@ export default function Signup() {
         };
 
         try {
-            const response = await axios.post("http://localhost:8000/api/users/register", payload);
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/register`, payload);
             alert("User registered successfully!");
             // console.log(response.data);
             console.log("Registration Response:", response); // Log response to verify success
@@ -76,7 +76,7 @@ export default function Signup() {
 
     const handleNewSocietySubmit = async (newData) => {
         try {
-            const response = await axios.post("http://localhost:8000/api/users/v2/createSociety", newData);
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/v2/createSociety`, newData);
 
             alert("Society created successfully!");
 

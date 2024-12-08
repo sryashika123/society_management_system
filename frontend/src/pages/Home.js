@@ -1,43 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import ResidentManagement from "../component/ResidentManagement/Residentmanagement";
+import ResidentManagement from "../roles/admin/ResidentManagement/Residentmanagement";
 import Sidebar from "../component/Layout/Sidebar";
 // import ResidentForm from "../component/ResidentManagement/ResidentForm";
-import FacilityManagement from "../component/FacilityManagement/FacilityManagement";
-import CreateComplaint from "../component/ComplaintTracking/CreateComplaint";
-import RequestTracking from "../component/ComplaintTracking/RequestTracking";
-import VisitorsLogs from "../component/SecurityManagement/VisitorsLogs";
-import SecurityProtocols from "../component/SecurityManagement/SecurityProtocols";
-import SecurityGuard from "../component/SecurityGuard/SecurityGuard";
-import Dashboard from "../component/Dashboard/Dashboard";
-import FinancialManagementIncome from "../component/FinancialManagement/FinancialManagementIncome";
-import FinancialManagementExp from "../component/FinancialManagement/FinancialManagementExp";
-import FinancialManagementNote from "../component/FinancialManagement/FinancialManagementNote";
-import Profile from "../component/Profile/Profile";
-import EditProfile from "../component/EditProfile";
-import FinancialManagementOtherIncome from "../component/FinancialManagement/FinancialManagementOtherIncome";
-import Announcement from "../component/Announcement";
-import VisitorsTracking from "../component/Security/VisitorsTracking";
-import EmergencyManagement from "../component/Security/EmergencyManagement";
-import EventParticipation from "../component/Resident/Eventparticipate/EventParticipation";
-import ActivityParticipate from "../component/Resident/Eventparticipate/ActivityParticipate";
-import PersonalDetail from "../component/Resident/Personal Details/PersonalDetails";
-import TenantPersonalDetails from "../component/Resident/Personal Details/TenentPersonalDetails";
-import SecurityProtocolsResident from "../component/Resident/SecurityProtocolsResident";
-import ServiceComplaint from "../component/Resident/Service and Complaint/ServiceComplaint";
-import RequestSubmission from "../component/Resident/Service and Complaint/RequestSubmission";
-import MaintainanceInvoice from "../component/Resident/Payment Portal/MaintainanceInvoice";
-import OtherIncomeInvoices from "../component/Resident/Payment Portal/OtherIncome";
-import ViewInvoice from "../component/Resident/ViewInvoice";
-import ChatLayout from "../component/Resident/Chatapp/Access";
-import Polls from "../component/Resident/Chatapp/Polls";
-import OwnerForm from "../component/ResidentManagement/OwnerForm";
-import TenantForm from "../component/ResidentManagement/TenantForm";
-import CommunitiesDiscussion from "../component/Resident/CommumitiesDiscussion";
-import CommunityQuestion from "../component/Resident/CommunityQuestion";
+import FacilityManagement from "../roles/admin/FacilityManagement/FacilityManagement";
+import CreateComplaint from "../roles/admin/ComplaintTracking/CreateComplaint";
+import RequestTracking from "../roles/admin/ComplaintTracking/RequestTracking";
+import VisitorsLogs from "../roles/admin/SecurityManagement/VisitorsLogs";  
+import SecurityProtocols from "../roles/admin/SecurityManagement/SecurityProtocols";
+import SecurityGuard from "../roles/admin/SecurityGuard/SecurityGuard";
+import Dashboard from "../roles/admin/Dashboard/Dashboard";
+import FinancialManagementIncome from "../roles/admin/FinancialManagement/FinancialManagementIncome";
+import FinancialManagementExp from "../roles/admin/FinancialManagement/FinancialManagementExp";
+import FinancialManagementNote from "../roles/admin/FinancialManagement/FinancialManagementNote";
+import Profile from "../roles/admin/Profile/Profile";
+import EditProfile from "../roles/admin/EditProfile";
+import FinancialManagementOtherIncome from "../roles/admin/FinancialManagement/FinancialManagementOtherIncome";
+import Announcement from "../roles/admin/Announcement";
+import VisitorsTracking from "../roles/security/VisitorsTracking";
+import EmergencyManagement from "../roles/security/EmergencyManagement";
+import EventParticipation from "../roles/resident/Eventparticipate/EventParticipation";
+import ActivityParticipate from "../roles/resident/Eventparticipate/ActivityParticipate";
+import PersonalDetail from "../roles/resident/Personal Details/PersonalDetails";
+import TenantPersonalDetails from "../roles/resident/Personal Details/TenentPersonalDetails";
+import SecurityProtocolsResident from "../roles/resident/SecurityProtocolsResident";
+import ServiceComplaint from "../roles/resident/Service and Complaint/ServiceComplaint";
+import RequestSubmission from "../roles/resident/Service and Complaint/RequestSubmission";
+import MaintainanceInvoice from "../roles/resident/Payment Portal/MaintainanceInvoice";
+import OtherIncomeInvoices from "../roles/resident/Payment Portal/OtherIncome";
+import ViewInvoice from "../roles/resident/ViewInvoice";
+import ChatLayout from "../roles/resident/Chatapp/Access";
+import Polls from "../roles/resident/Chatapp/Polls";
+import OwnerForm from "../roles/admin/ResidentManagement/OwnerForm";
+import TenantForm from "../roles/admin/ResidentManagement/TenantForm";
+import CommunitiesDiscussion from "../roles/resident/CommumitiesDiscussion";
+import CommunityQuestion from "../roles/resident/CommunityQuestion";
 
 
 const Home = () => {
+  const [userRole, setUserRole] = useState(''); // Login pachi role set thase
+
   return <div>
     <Sidebar />
 
@@ -71,16 +73,18 @@ const Home = () => {
       <Route path='/maintenance-invoices' element={<MaintainanceInvoice />} />
       <Route path='/other-income-nvoice' element={<OtherIncomeInvoices />} />
       <Route path='/view-invoice' element={<ViewInvoice />} />
-      <Route path='/Access' element={<ChatLayout/>}/>
+      <Route path='/Access' element={<ChatLayout />} />
       <Route path='/Polls' element={<Polls />} />
       <Route path='/tenant-form' element={<TenantForm />} />
       <Route path='/Community-Discussion' element={<CommunitiesDiscussion />} />
-          <Route path='/Community-Question' element={<CommunityQuestion />} />
-      
+      <Route path='/Community-Question' element={<CommunityQuestion />} />
+
 
     </Routes>
   </div>;
 };
+
+
 
 export default Home;
 
