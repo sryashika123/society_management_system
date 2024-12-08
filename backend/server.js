@@ -20,6 +20,8 @@ const multer = require('multer');
 
 const Message = require('./models/MessageModel.js');
 
+const societyRoutes = require('./routes/societyRoutes.js');
+
 const app = express();
 
 const server = http.createServer(app);
@@ -44,7 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", require("./routes/UserRoute.js"));
-app.use("/api/users/v2", require("./routes/societyRoutes.js"));
+app.use("/api/users/v2", societyRoutes);
 app.use("/api/users/v3", require("./routes/ImportantNumroute.js"));
 app.use("/api/users/v4", require("./routes/CompalintSubmissionRoute.js"));
 app.use("/api/users/v5", require("./routes/profileRoute.js"));
