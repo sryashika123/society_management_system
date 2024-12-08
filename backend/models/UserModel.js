@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true,
-        unique: true,
     },
     country: {
         type: String,
@@ -60,7 +59,7 @@ const userSchema = new mongoose.Schema({
     },   
     role: {
         type: String,
-        enum: ['admin', 'user'], // Define the possible roles    
+        enum: ['admin', 'user', 'securityGard'], // Define the possible roles    
     },
 });
 

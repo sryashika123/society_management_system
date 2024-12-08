@@ -16,6 +16,8 @@ router.get("/getAllMaintenances",
     //  authenticateUser , authorizeRoles('admin'),
       MaintenanceController.getAllMaintenances);
 
+router.get("/password_match", MaintenanceController.password_match);
+
 router.put("/updateMaintenance/:id",
     //  authenticateUser , authorizeRoles('admin'),
       MaintenanceController.updateMaintenance);

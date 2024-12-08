@@ -4,8 +4,10 @@ const jwt = require('jsonwebtoken');
 const { sendMail } = require('../utils/nodemailer');
 const otpService = require('../utils/otpService');
 const Society = require("../models/societyModel");
+const Resident = require("../models/residentModel");
+const SecurityGuard = require("../models/SecuritygaurdModel")
 
-// Register
+
 module.exports.register = async (req, res) => {
 	try{
 		const { firstName, lastName, email, phone, country, state, city, select_society, password, confirmPassword , role} = req.body;
@@ -41,16 +43,27 @@ module.exports.login = async (req, res,err) => {
 
 	try{
 		const { email, password } = req.body;
-		const user = await User.findOne({ email });
+		// console.log( password);
 		
-		if(!user){
-			return res.status(400).json({ msg: 'User not found' });
-		}
-
-		const isMatch = await bcrypt.compare(password, user.password);
-		if(!isMatch){
-			return res.status(400).json({ msg: 'Invalid Password' });
-		}
+	  let user = await User.findOne({ email });
+  
+	  if (!user) {
+		user = await Resident.findOne({ email });
+	  }
+  
+	  if (!user) {
+		user = await SecurityGuard.findOne({ email });
+		// console.log( password);
+	  }
+  
+	  if (!user) {
+		return res.status(400).json({ message: "email not exists" });
+	  }
+	  const isMatch = await bcrypt.compare(password, user.password);
+	//   console.log(isMatch);
+	  if (!isMatch) {
+		return res.status(400).json({ message: "password do not match" });
+	  }
 
 		const payload = {
 			user: { user: user },

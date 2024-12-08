@@ -3,37 +3,94 @@ const fs = require('fs');
 const path = require('path');
 const Society = require("../models/societyModel");
 const Admin = require("../models/UserModel");
+const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+
+
+
+// email sending setup
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.email_USER,  
+        pass: process.env.email_PASS
+    },
+    tls: {
+        rejectUnauthorized: false 
+    }
+});
+
+// generate a random password
+const generateRandomPassword = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+    let password = '';
+    for(let i = 0; i < 12; i++){  // Length of the password
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        password += characters[randomIndex];
+    }
+    return password;
+};
+
+// Function to send reset email
+const sendMail = async (to, password) => {
+    const mailOptions = {
+        from: "<arjun.chauhan@swiftrut.com>",
+        to: to,
+        subject: 'Account Created - Your Temporary Password',
+        text: `Your new password is: ${password}\n\nPlease use this password to log in to your account.`,
+    };
+
+    try{
+        console.log("Attempting to send email to:", to);
+        await transporter.sendMail(mailOptions);
+        console.log("Password email sent successfully to:", to);
+        console.log("Password:", password);
+        
+    }
+    catch(error){
+        console.error("Error sending email:", error);
+        console.error("Stack trace:", error.stack);
+        throw new Error("Error sending email");
+    }
+};
 
 module.exports.createSecuritygaurd = async (req, res) => {
-    try{
-        // Trim any extra spaces from keys
-        if(req.body['Shift_time ']){
+    try {
+         // Trim any extra spaces from keys
+         if(req.body['Shift_time ']){
             req.body.Shift_time = req.body['Shift_time '].trim();
             delete req.body['Shift_time ']; // Remove the incorrect key
+        }
+        
+        // Sanitize and validate email
+        if (!req.body.email) {
+            return res.status(400).json({ message: 'Email is required' });
+        }
+        const email = req.body.email.trim();
+
+        // Check for duplicate email
+        const existingGuard = await Securitygaurd.findOne({ email });
+        if (existingGuard) {
+            return res.status(400).json({ message: 'A Security Guard with this email already exists' });
         }
 
         const { Full_name, Phone_number, gender, shift, Shift_Date, Shift_time } = req.body;
 
-        // const admin = await Admin.findById(adminId);
-		// if (!admin) {
-		//   	return res.status(404).json({ msg: "Admin not found" });
-		// }
-
-        // const society = await Society.findById(societyId);
-		// if (!society) {
-		//   	return res.status(404).json({ msg: "Society not found" });
-		// }
-
-        if(!Shift_time){
+        if (!Shift_time) {
             return res.status(400).json({ message: 'Shift_time is required' });
         }
 
-        if(!req.files || !req.files.Security_Gard_Image || !req.files.Aadhar_card){
+        if (!req.files || !req.files.Security_Gard_Image || !req.files.Aadhar_card) {
             return res.status(400).json({ message: 'Please upload both Security Guard image and Aadhar card' });
         }
+
+        const randomPassword = generateRandomPassword();
+        const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
         const basePath = '/uploads/Security-Gaurd-image/';
         const newSecurityGaurd = new Securitygaurd({
             Full_name,
+            email,
             Phone_number,
             gender,
             shift,
@@ -41,18 +98,24 @@ module.exports.createSecuritygaurd = async (req, res) => {
             Shift_time,
             Security_Gard_Image: basePath + req.files.Security_Gard_Image[0].filename,
             Aadhar_card: basePath + req.files.Aadhar_card[0].filename,
-            // adminId, 
-            // societyId
+            password: hashedPassword,
         });
 
         await newSecurityGaurd.save();
+        await sendMail(email, randomPassword);
+
         res.status(201).json({ message: 'Security Guard created successfully', data: newSecurityGaurd });
-    } 
-    catch(err){
+    } catch (err) {
+        if (err.code === 11000) {
+            return res.status(400).json({ message: 'Duplicate email entry detected. Please use a different email.' });
+        }
         console.error("Error creating SecurityGaurd:", err.message);
         res.status(500).json({ message: 'Server error while creating SecurityGaurd', err: err.message });
     }
 };
+
+
+
 
 module.exports.getSecuritygaurd = async (req,res) =>{
     try{

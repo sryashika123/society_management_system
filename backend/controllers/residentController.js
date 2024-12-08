@@ -1,18 +1,19 @@
 const Resident = require('../models/residentModel'); 
 const fs = require("fs");
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 require('dotenv').config();
 const Society = require("../models/societyModel");
 const Admin = require("../models/UserModel");
 
 
-// Email sending setup
+// email sending setup
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL_USER,  
-        pass: process.env.EMAIL_PASS
+        user: process.env.email_USER,  
+        pass: process.env.email_PASS
     },
     tls: {
         rejectUnauthorized: false 
@@ -43,6 +44,8 @@ const sendMail = async (to, password) => {
         console.log("Attempting to send email to:", to);
         await transporter.sendMail(mailOptions);
         console.log("Password email sent successfully to:", to);
+        console.log("Password:", password);
+        
     }
     catch(error){
         console.error("Error sending email:", error);
@@ -52,39 +55,34 @@ const sendMail = async (to, password) => {
 };
 
 module.exports.createResident = async (req, res) => {
-    try{
-        const{
-            role, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, Email, age, gender, wing, unit, Relation,
-            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId
+    try {
+        const {
+            type, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, email, age, gender, wing, unit, Relation,
+            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId, role
         } = req.body;
 
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
+        // Generate random password
+        const randomPassword = generateRandomPassword();
+        const hashedPassword = await bcrypt.hash(randomPassword, 10); // Hash the password
 
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
-
-        if(!role || !["owner", "tenant"].includes(role.toLowerCase())){
-            return res.status(400).json({ msg: "Invalid role. Must be 'owner' or 'tenant'." });
+        if (!type || !["owner", "tenant"].includes(type.toLowerCase())) {
+            return res.status(400).json({ msg: "Invalid type. Must be 'owner' or 'tenant'." });
         }
 
-        let residentData = { 
-            role: role.toLowerCase(), Full_name, Phone_number, Email, age, gender, wing, unit, Relation, 
-            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId
+        let residentData = {
+            type: type.toLowerCase(), Full_name, Phone_number, email, age, gender, wing, unit, Relation,
+            Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus, adminId, societyId, role, password: hashedPassword,
         };
 
-        if(role.toLowerCase() === "tenant"){
+        if (type.toLowerCase() === "tenant") {
             residentData.ownerName = ownerName;
             residentData.ownerPhone = ownerPhone;
             residentData.ownerAddress = ownerAddress;
         }
-        if(req.files){
+
+        if (req.files) {
             const fileFields = [
-                "Profile_Photo", "Aadhar_card_frontSide", "Aadhar_card_backSide", 
+                "Profile_Photo", "Aadhar_card_frontSide", "Aadhar_card_backSide",
                 "Address_Proof_VeraBill_or_LightBill", "Rent_Agreement"
             ];
             fileFields.forEach(field => {
@@ -93,19 +91,22 @@ module.exports.createResident = async (req, res) => {
                 }
             });
         }
+
         const newResident = new Resident(residentData);
         await newResident.save();
-        // console.log(`${role} created successfully:`, newResident);
 
-        const randomPassword = generateRandomPassword();
-        await sendMail(Email, randomPassword);
-        res.json({ msg: `${role} created successfully`, resident: newResident });
-    }
-    catch(err){
+        // Send email with the random password
+        await sendMail(email, randomPassword);
+
+        res.json({ msg: `${type} created successfully`, resident: newResident });
+        // console.log(`${type} created successfully:`, newResident);
+
+    } catch (err) {
         console.error("Error creating resident:", err.message);
         res.status(400).json({ err: err.message });
     }
 };
+
 
 module.exports.getAllResident = async (req, res) => {
     try{
@@ -170,7 +171,7 @@ module.exports.updateResident = async (req, res) => {
             res.status(404).json({ msg: "Resident data not found" });
         }
         const {
-            role, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, Email, age, gender, wing, unit, Relation, 
+            type, ownerName, ownerPhone, ownerAddress, Full_name, Phone_number, email, age, gender, wing, unit, Relation, 
             Member_Counting, vehicle_Counting, vehicle_Type, vehicle_Name, vehicle_Number, residentStatus } = req.body;
 
         let updateFields = {};
@@ -180,10 +181,10 @@ module.exports.updateResident = async (req, res) => {
             });
         };
 
-        addFields([ 'ownerName', 'ownerPhone', 'ownerAddress', 'Full_name', 'Phone_number', 'Email', 'age', 'gender', 'wing', 'unit',
+        addFields([ 'ownerName', 'ownerPhone', 'ownerAddress', 'Full_name', 'Phone_number', 'email', 'age', 'gender', 'wing', 'unit',
             'Relation', 'Member_Counting', 'vehicle_Counting', 'vehicle_Type', 'vehicle_Name', 'vehicle_Number', 'residentStatus' ]);
 
-        if(role && role.toLowerCase() === "tenant"){
+        if(type && type.toLowerCase() === "tenant"){
             addFields(['ownerName', 'ownerPhone', 'ownerAddress']);
         }
         if(req.files){
