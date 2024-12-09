@@ -52,3 +52,76 @@
   .notification-icon {
     border: 1px solid rgba(211, 211, 211, 1)
   }
+
+  /* Header base styling */
+  .header {
+    width: 100%; /* Ensure full width on all screens */
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0; /* Ensure it's at the left edge */
+    right: 0; /* Ensure it's at the right edge */
+}
+
+.navbar {
+    width: 100%; /* Ensures navbar is 100% wide */
+    height: auto;
+}
+
+.search-bar {
+    max-width: 335px;
+    width: 100%;
+    background: #f6f8fb;
+    border-radius: 5px;
+}
+
+.notification-icon {
+    background: none;
+    border: none;
+}
+
+.notification-dropdown {
+    position: absolute;
+    right: 20px;
+    top: 80px;
+    width: 90%;
+    max-width: 540px;
+    background: white;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.notification-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    /* For smaller screen devices */
+    .navbar {
+        width: 100%; /* Ensure navbar occupies full width */
+    }
+
+    .search-bar {
+        max-width: 100%;
+    }
+
+    .notification-dropdown {
+        width: 100%;
+    }
+
+    .header {
+        width: 100%; /* Ensure header takes full width */
+    }
+
+    .notification-icon {
+        font-size: 1.5rem;
+    }
+}

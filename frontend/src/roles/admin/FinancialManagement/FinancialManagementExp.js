@@ -155,18 +155,18 @@ export default function FinancialManagementExp() {
       <Navbar />
       <div style={{ marginLeft: "300px" }}>
         <div className="container-fluid income">
-          <div className="row p-5" style={{ marginTop: "109px" }}>
+          <div className="row p-5" style={{ marginTop: "70px" }}>
             <div className="p-0">
               <div className="table-responsive rounded pb-3">
                 <div className="bg-light">
                   <div className="d-flex justify-content-between align-items-center py-3 px-2">
-                    <h3 className="mb-0 financial-income-title">Add Expenses Details</h3>
+                    <h3 className="mb-0 financial-income-title ms-2">Add Expenses Details</h3>
                     <div>
                       <button
                         className="set-maintainance-btn d-flex align-items-center"
                         onClick={handleShow}
                       >
-                        <FaPlusSquare className="me-2" /> Add New Expenses details
+                        <FaPlusSquare className="me-2 " /> Add New Expenses details
                       </button>
                     </div>
                   </div>

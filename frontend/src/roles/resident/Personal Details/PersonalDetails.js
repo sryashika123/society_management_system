@@ -51,7 +51,7 @@ const PersonalDetail = () => {
             <Navbar />
             <div className='marginLeft'>
                 <div className='container-fluid'>
-                    <div className='row p-4 pe-3' style={{marginTop:"109px"}}>
+                    <div className='row p-4 pe-3' style={{marginTop:"70px"}}>
                         
                             <div className="table-responsive rounded pb-3">
 

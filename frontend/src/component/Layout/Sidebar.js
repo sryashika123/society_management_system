@@ -278,9 +278,9 @@ const Sidebar = () => {
         aria-labelledby="offcanvasExampleLabel"
       >
         <div className="offcanvas-header justify-content-center ">
-          <h1 className="offcanvas-title mainColor" id="offcanvasExampleLabel">
+          <h5 className="offcanvas-title mainColor" id="offcanvasExampleLabel">
             <Logo />
-          </h1>
+          </h5>
         </div>
         <hr />
 
