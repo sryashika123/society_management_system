@@ -26,7 +26,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 dotenv.config();
-// connectDB();
+db();
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
