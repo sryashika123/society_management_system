@@ -4,35 +4,77 @@ const Admin = require("../models/UserModel");
 const bcrypt = require('bcrypt');
 
 exports.createMaintenance = async (req, res) => {
-    try{
-        const { Maintenance_amount, Penalty_Amount, Due_date, lastDate, penaltyAppliedAfterDays, status, Payment_Method,  adminId, societyId } = req.body;
-        const admin = await Admin.findById(adminId);
-		if (!admin) {
-		  	return res.status(404).json({ msg: "Admin not found" });
-		}
+    try {
+        const { Maintenance_amount, Penalty_Amount, Due_date, lastDate, penaltyAppliedAfterDays, status, Payment_Method, adminId, societyId } = req.body;
 
-        const society = await Society.findById(societyId);
-		if (!society) {
-		  	return res.status(404).json({ msg: "Society not found" });
-		}
+        // Check if Admin exists
+        // const admin = await Admin.findById(adminId);
+        // if (!admin) {
+        //     return res.status(404).json({ msg: "Admin not found" });
+        // }
 
-        const maintenance = new Maintenance({ Maintenance_amount, Penalty_Amount, Due_date, lastDate, penaltyAppliedAfterDays, status, Payment_Method,  adminId, societyId });
+        // // Check if Society exists
+        // const society = await Society.findById(societyId);
+        // if (!society) {
+        //     return res.status(404).json({ msg: "Society not found" });
+        // }
+
+        const penaltyStartDate = new Date(Due_date);
+        penaltyStartDate.setDate(penaltyStartDate.getDate() + penaltyAppliedAfterDays);
+
+        const maintenance = new Maintenance({
+            Maintenance_amount,
+            Penalty_Amount,
+            Due_date,
+            lastDate,
+            penaltyAppliedAfterDays,
+            status,
+            Payment_Method,
+            adminId,
+            societyId,
+            penaltyStartDate,
+        });
+
         await maintenance.save();
         res.status(201).json(maintenance);
-    }
-    catch(error){
+    } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
 
+function calculatePenalty(maintenance) {
+    const currentDate = new Date();
+    const penaltyStartDate = new Date(maintenance.Due_date);
+    penaltyStartDate.setDate(penaltyStartDate.getDate() + maintenance.penaltyAppliedAfterDays);
+
+    console.log("Current Date:", currentDate);
+    console.log("Penalty Start Date:", penaltyStartDate);
+
+    if (currentDate > penaltyStartDate) {
+        const daysOverdue = Math.floor((currentDate - penaltyStartDate) / (1000 * 60 * 60 * 24));
+        console.log("Days Overdue:", daysOverdue);
+        const totalPenalty = maintenance.Penalty_Amount * maintenance.penaltyAppliedAfterDays;
+        console.log("Total Penalty:", totalPenalty);
+        // return daysOverdue * maintenance.Penalty_Amount; 
+        return totalPenalty;
+    }
+
+    console.log("No penalty applied.");
+    return 0;
+}
 
 exports.getAllMaintenances = async (req, res) => {
-    try{
+    try {
         const maintenances = await Maintenance.find();
-        res.status(200).json(maintenances);
-    }
-    catch(error){
-        console.error(err.message);
+
+        const updatedMaintenances = maintenances.map(maintenance => ({
+            ...maintenance.toObject(),
+            calculatedPenalty: calculatePenalty(maintenance),
+        }));
+
+        res.status(200).json(updatedMaintenances);
+    } catch (error) {
+        console.error(error.message);
         res.status(500).json({ error: error.message });
     }
 };
