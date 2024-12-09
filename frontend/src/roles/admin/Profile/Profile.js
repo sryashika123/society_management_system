@@ -49,7 +49,7 @@ export default function Profile() {
       </div>
       <div className="profile-dashboard-bg dashboard-bg" style={{ width: "1910px" }}>
         <Navbar />
-        <div className="" style={{ marginLeft: "300px" , marginTop:"109px"}}>
+        <div className="" style={{ marginLeft: "300px" , marginTop:"70px"}}>
           <div className="d-flex justify-content-center profile-bg">
             <div className="col-lg-6">
               <div className="d-flex align-items-center justify-content-between">

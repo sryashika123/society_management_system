@@ -66,7 +66,7 @@ const ChatLayout = () => {
       <div className="flex-grow-1 dashboard-bg">
         <Header />
 
-        <div className="container-fluid p-3 marginLeft" style={{  marginLeft:"315px" , width: "1600px",marginTop:"109px" }}>
+        <div className="container-fluid p-3 marginLeft" style={{  marginLeft:"315px" , width: "1600px",marginTop:"70px" }}>
           <div className="row">
             {/* Left Sidebar */}
             <div className="col-md-3 chat-sidebar custom-scrollbar p-0">

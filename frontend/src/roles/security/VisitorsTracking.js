@@ -76,7 +76,7 @@ function VisitorsTracking() {
       <div className="flex-grow-1" style={{ width: "1920px" }}>
         <Header />
 
-        <div className="container-fluid p-4" style={{ marginTop: "109px", width: "1620px", marginLeft: "300px" }}>
+        <div className="container-fluid p-4" style={{ marginTop: "70px", width: "1620px", marginLeft: "300px" }}>
           <div
             className="table-responsive"
             style={{

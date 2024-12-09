@@ -77,7 +77,7 @@ const Polls = () => {
             </div>
             <div className="dashboard-bg">
                 <Header />
-                <div style={{ marginTop: "109px"}} className='marginLeft'>
+                <div style={{ marginTop: "70px"}} className='marginLeft'>
                     <div className="income" >
                         <div className="row p-4">
                             <div className="table-responsive rounded pb-3">

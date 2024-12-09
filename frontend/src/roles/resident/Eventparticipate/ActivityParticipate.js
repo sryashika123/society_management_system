@@ -18,7 +18,7 @@ const ActivityParticipation = () => {
         <Navbar />
       </div>
 
-      <div style={{  marginTop: "109px", width: "1600px" }} className='marginLeft'>
+      <div style={{  marginTop: "70px", width: "1600px" }} className='marginLeft'>
         <div className='container-fluid'>
           <div className='row p-4'>
             <div className="table-responsive rounded pb-3">

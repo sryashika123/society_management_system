@@ -95,7 +95,7 @@ const RequestSubmission = () => {
       <Navbar />
       <div className='marginLeft'>
 
-        <div className='container-fluid ' style={{ marginTop: "109px", width: "1600px" }}>
+        <div className='container-fluid ' style={{ marginTop: "70px", width: "1600px" }}>
 
           <div className='row p-4'>
 

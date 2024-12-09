@@ -79,7 +79,7 @@ export default function ResidentManagement() {
 
       <div className="flex-grow-1  dashboard-bg container-fluid  " style={{ width: "1920px" }}>
         <Header />
-        <div className="container-fluid stickyheader" style={{ marginLeft: "300px", width: "1590px", marginTop: "109px" }}>
+        <div className="container-fluid stickyheader" style={{ marginLeft: "300px", width: "1590px", marginTop: "90px" }}>
 
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px", marginLeft: "10px" }}>
