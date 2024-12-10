@@ -71,8 +71,8 @@ export default function Header() {
 
     return (
         <>
-            <div className='header ' style={{ position: "fixed", top: "0px", zIndex: "999" }}>
-                <Navbar expand="sm" className="navbar bg-white  border-bottom p-4" style={{ height: "109px", width: "1920px" }}>
+            <div className='nav ' style={{ position: "fixed", top: "0px", zIndex: "999" ,height:"70px"}}>
+                <Navbar expand="lg" className="navbar bg-white  border-bottom ms-4 ">
                     <Container fluid style={{ marginLeft: "280px" }}>
                         {/* Breadcrumb */}
                         <h5 className='home-routing'>
@@ -207,7 +207,7 @@ export default function Header() {
 
                                 <div className="d-flex align-items-center">
                                     <Link
-                                        to="/profile"
+                                        to="/home/profile"
                                         className="d-flex align-items-center text-decoration-none"
                                     >
                                         <img

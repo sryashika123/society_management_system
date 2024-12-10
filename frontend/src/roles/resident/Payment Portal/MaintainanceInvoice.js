@@ -57,7 +57,7 @@ const MaintenanceInvoices = () => {
             <Navbar />
 
             <div style={{ marginLeft: '300px' }}>
-                <div className='container-fluid' style={{marginTop:"109px",width:"1600px"}}>
+                <div className='container-fluid' style={{marginTop:"70px",width:"1600px"}}>
                     <div className='row p-4 '>
                         
                             <div className="table-responsive rounded pb-3" >

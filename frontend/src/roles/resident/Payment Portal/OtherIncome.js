@@ -56,7 +56,7 @@ const OtherIncomeInvoices = () => {
 
             <div style={{ marginLeft: '300px' }}>
                 <div className='container-fluid '  >
-                    <div className='row p-4  ' style={{ marginTop: "109px", width: "1620px" }} >
+                    <div className='row p-4  ' style={{ marginTop: "70px", width: "1620px" }} >
 
                         <div className="table-responsive pb-3 " >
 

@@ -17,7 +17,7 @@ const EventParticipation = () => {
       <div className='d-flex' style={{ width: "1900px" }}>
         <Navbar />
         <div className='marginLeft'>
-          <div className='container-fluid' style={{ marginTop: "109px" }}>
+          <div className='container-fluid' style={{ marginTop: "70px" }}>
             <div className='row p-4' style={{ width: '1600px' }}>
               <div className="table-responsive rounded pb-3">
                 <Link to="/home/events-and-participation" className='btn btn-sm maintainance-income-btn maintainance-income-btn-bg complaint-btn'>

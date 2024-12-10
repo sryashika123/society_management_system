@@ -20,3 +20,14 @@
     font-weight: 700;
     color: black;
   }
+  .nav{
+    width: 100%; /* Ensure full width on all screens */
+    position: fixed;
+    height: 80px !important; 
+    z-index: 999;
+    top: 0;
+    left: 0; /* Ensure it's at the left edge */
+    right: 0; /* Ensure it's at the right edge */
+  } 
+
+  

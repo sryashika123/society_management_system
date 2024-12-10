@@ -44,7 +44,7 @@ function EditProfile() {
 
       <div className="profile-dashboard-bg dashboard-bg" style={{ width: "1910px" }}>
         <Navbar />
-        <div className="" style={{ marginLeft: "280px" , marginTop: "109px"}}>
+        <div className="" style={{ marginLeft: "280px" , marginTop: "70px"}}>
           <div className="d-flex justify-content-center profile-bg">
             <div className="col-lg-8">
               <h3 className="mb-3 mt-5 profile-title">Edit Profile</h3>

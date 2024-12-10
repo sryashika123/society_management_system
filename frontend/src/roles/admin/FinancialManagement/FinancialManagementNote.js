@@ -93,10 +93,10 @@ export default function FinancialManagementNote() {
     <div className='dashboard-bg' style={{  width: "1920px" }}>
       <Navbar />
       <div className='container-fluid' style={{marginLeft:"300px", width:"1620px", }}>
-        <div className='row p-5' style={{marginTop:"109px"}}>
+        <div className='row p-5' style={{marginTop:"70px"}}>
           <div className='p-0 bg-light'>
             <div className='d-flex justify-content-between align-items-center py-3 px-2'>
-              <h3 className='mb-0 financial-income-title'>Note</h3>
+              <h3 className='mb-0 financial-income-title ms-2 '>Note</h3>
               <button className='set-maintainance-btn d-flex align-items-center' onClick={handleShow}>
                 Create Note
               </button>

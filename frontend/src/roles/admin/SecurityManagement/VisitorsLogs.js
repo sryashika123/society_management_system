@@ -33,7 +33,7 @@ export default function DetailTracking() {
 
       <div className="flex-grow-1 dashboard-bg"  style={{ width:"1920px" }}>
         <Header/>
-        <div className="container-fluid  p-4" style={{ marginTop: "109px" ,width:"1620px",marginLeft:"300px"}}>
+        <div className="container-fluid  p-4" style={{ marginTop: "70px" ,width:"1620px",marginLeft:"300px"}}>
           
 
           <div className="table-responsive" style={{ border: "1px solid #ddd", borderRadius: "8px", boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)", overflow: "hidden", backgroundColor: "#fff", padding: "20px", marginTop: "20px" }}>

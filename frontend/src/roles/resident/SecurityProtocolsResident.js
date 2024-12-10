@@ -33,7 +33,7 @@ const SecurityProtocolsResident = () => {
         </div>
 
         {/* Main Content Area */}
-        <div className="p-3 flex-grow-1 " style={{ marginRight: "15px", marginLeft: "280px", width: "1565px", marginTop: "109px" }}>
+        <div className="p-3 flex-grow-1 " style={{ marginRight: "15px", marginLeft: "280px", width: "1565px", marginTop: "70px" }}>
           <div className="row">
             <div className="col-12">
               <div className="table-responsive bg-white shadow-sm rounded p-3">
