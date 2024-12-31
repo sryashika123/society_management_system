@@ -26,7 +26,7 @@ export default function ComplaintTracking() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false); // State for view modal
   const [errorMessage, setErrorMessage] = useState('');
-
+ 
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
