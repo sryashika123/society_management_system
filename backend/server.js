@@ -32,7 +32,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: process.env.Frontend_Url,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true // enable set cookies
     }
@@ -44,7 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", require("./routes/UserRoute.js"));
-app.use("/api/users/v2", require("./routes/societyroutes.js"));
+app.use("/api/users/v2", require("./routes/societyRoutes.js"));
 app.use("/api/users/v3", require("./routes/ImportantNumroute.js"));
 app.use("/api/users/v4", require("./routes/CompalintSubmissionRoute.js"));
 app.use("/api/users/v5", require("./routes/profileRoute.js"));
@@ -69,7 +69,7 @@ app.use("/api/users/v23", require("./routes/ComplaintTrackingRoute.js"));
 
 
 const storage = multer.diskStorage({
-    destination: './uploads/Chat-Image',
+    destination: '/uploads/Chat-Image',
     filename: (req, file, cb) => {
       cb(null, Date.now() + path.extname(file.originalname));
     },
